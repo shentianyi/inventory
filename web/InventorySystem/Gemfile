@@ -12,6 +12,7 @@ gem 'bcrypt'
 gem 'annotate'
 gem 'simple_form'
 gem 'will_paginate', '~> 3.0.6'
+gem 'rename'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
