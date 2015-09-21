@@ -1,0 +1,65 @@
+<%= form_for(@inventory) do |f| %>
+  <% if @inventory.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@inventory.errors.count, "error") %> prohibited this inventory from being saved:</h2>
+
+      <ul>
+      <% @inventory.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :department %><br>
+    <%= f.text_field :department %>
+  </div>
+  <div class="field">
+    <%= f.label :position %><br>
+    <%= f.text_field :position %>
+  </div>
+  <div class="field">
+    <%= f.label :part %><br>
+    <%= f.text_field :part %>
+  </div>
+  <div class="field">
+    <%= f.label :part_type %><br>
+    <%= f.text_field :part_type %>
+  </div>
+  <div class="field">
+    <%= f.label :check_qty %><br>
+    <%= f.text_field :check_qty %>
+  </div>
+  <div class="field">
+    <%= f.label :check_user %><br>
+    <%= f.text_field :check_user %>
+  </div>
+  <div class="field">
+    <%= f.label :check_time %><br>
+    <%= f.datetime_select :check_time %>
+  </div>
+  <div class="field">
+    <%= f.label :random_check_qty %><br>
+    <%= f.text_field :random_check_qty %>
+  </div>
+  <div class="field">
+    <%= f.label :random_check_user %><br>
+    <%= f.text_field :random_check_user %>
+  </div>
+  <div class="field">
+    <%= f.label :random_check_time %><br>
+    <%= f.datetime_select :random_check_time %>
+  </div>
+  <div class="field">
+    <%= f.label :is_random_check %><br>
+    <%= f.check_box :is_random_check %>
+  </div>
+  <div class="field">
+    <%= f.label :ios_created_id %><br>
+    <%= f.text_field :ios_created_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @inventory.department %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @inventory.position %>
+</p>
+
+<p>
+  <strong>Part:</strong>
+  <%= @inventory.part %>
+</p>
+
+<p>
+  <strong>Part type:</strong>
+  <%= @inventory.part_type %>
+</p>
+
+<p>
+  <strong>Check qty:</strong>
+  <%= @inventory.check_qty %>
+</p>
+
+<p>
+  <strong>Check user:</strong>
+  <%= @inventory.check_user %>
+</p>
+
+<p>
+  <strong>Check time:</strong>
+  <%= @inventory.check_time %>
+</p>
+
+<p>
+  <strong>Random check qty:</strong>
+  <%= @inventory.random_check_qty %>
+</p>
+
+<p>
+  <strong>Random check user:</strong>
+  <%= @inventory.random_check_user %>
+</p>
+
+<p>
+  <strong>Random check time:</strong>
+  <%= @inventory.random_check_time %>
+</p>
+
+<p>
+  <strong>Is random check:</strong>
+  <%= @inventory.is_random_check %>
+</p>
+
+<p>
+  <strong>Ios created:</strong>
+  <%= @inventory.ios_created_id %>
+</p>
+
+<%= link_to 'Edit', edit_inventory_path(@inventory) %> |
+<%= link_to 'Back', inventories_path %>
