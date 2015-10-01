@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
+  get 'file/download'
   get 'dashboard/index'
   root to: 'dashboard#index'
-  resources :inventories
+  resources :inventories do
+    collection do
+      match :import, action: :import, via: [:get, :post]
+    end
+  end
+  
+  
   resources :users
   
 end

@@ -1,10 +1,29 @@
 class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :edit, :update, :destroy]
 
+  def import
+    if request.post?
+      msg = Message.new
+      tmp_file_path = 'uploadfiles'
+      
+      begin
+        file = params[:files][0]
+        fd = FileData.new(data: file, oriName: file.original_filename, path: tmp_file_path, pathName: "#{Time.now.strftime('%Y%m%d%H%M%S%L')}~#{file.original_filename}")
+        fd.save
+        msg = Excel::ExcelService.import(fd)
+      rescue => e
+        msg.content = e.message
+      end
+      render json: msg
+    end
+  end
+
   # GET /inventories
   # GET /inventories.json
   def index
-    @inventories = Inventory.all
+    @inventories = Inventory
+    @inventories = @inventories.search(params[:search]) if params[:search]
+    @inventories = @inventories.paginate(page: params[:page])
   end
 
   # GET /inventories/1
