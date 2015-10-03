@@ -1,10 +1,4 @@
-<div id="handle-dialog-modal">
-     <div class="handle-dialog-modal-content">
-          <p>
-               <img src="/assets/loading.gif" />&nbsp;&nbsp;
-          </p>
-     </div>
-</div>
+
 <div id="dialog-overlay"></div><p id="notice"><%= notice %></p>
 <script type="text/javascript">
     $(function () {
@@ -12,14 +6,21 @@
     });
 </script>
 <h1>零件库位基础信息</h1>
-<div>
+<p>
 	<%= form_tag inventories_path, :method => 'get' do %>
 		<p>
-			<%= text_field_tag :search, params[:search] %>
-			<%= submit_tag "查询", :name => nil %>
+			<%= hidden_field_tag :search, value=true %>
+			部门：<%= text_field_tag :department, params[:department]%>
+			库位号：从<%= text_field_tag :position_begin, params[:position_begin]%>到<%= text_field_tag :position_end, params[:position_end]%>
+			零件号：<%= text_field_tag :part, params[:part]%>
+			是否是iOS新建：<%= select_tag :ios_created_id, options_for_select([["是", 1],["否", 0]]) %>
+			是否是抽盘：<%= select_tag :is_random_check,  options_for_select([["是", 1],["否", 0]]) %>
+			显示方式:
+			  <%= select_tag :format, options_for_select([["Web", "html"],["Excel File(MS 07 or later)", "xlsx"]], "html") %>
+			<%= submit_tag "查询", :name => nil, class: 'btn btn-primary' %>
 		</p>
 	<% end%>
-</div>
+</p>
 <p>
 	<%= link_to '创建零件库存信息', new_inventory_path, class: 'btn btn-default' %>
 	<a name="down_template" href="/file/download?folder=inventory&file=inventory_template.xlsx" class='btn btn-default' >下载模版</a>
@@ -57,10 +58,10 @@
         <td><%= inventory.part_type %></td>
         <td><%= inventory.check_qty %></td>
         <td><%= inventory.check_user %></td>
-        <td><%= inventory.check_time %></td>
+        <td><%= inventory.check_time.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%= inventory.random_check_qty %></td>
         <td><%= inventory.random_check_user %></td>
-        <td><%= inventory.random_check_time %></td>
+        <td><%= inventory.random_check_time.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%= inventory.is_random_check %></td>
         <td><%= inventory.ios_created_id %></td>
         <td><%= link_to 'Show', inventory %></td>

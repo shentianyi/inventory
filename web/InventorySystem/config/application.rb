@@ -24,5 +24,9 @@ module InventorySystem
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    
+    config.time_zone = 'Beijing' 
+    config.active_record.default_timezone = :local
+    config.i18n.default_locale = "zh-CN"
   end
 end

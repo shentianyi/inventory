@@ -30,10 +30,10 @@ class InventoryService
       operator = params[:operator].to_s;
       case operator
       when 'new'
-        data = { department: params[:department], position: params[:position], part: params[:part], part_type: params[:part_type]}
+        data = { department: params[:department], position: params[:position], part: params[:part], part_type: params[:part_type], ios_created_id: '', check_time: DateTime.now, random_check_time: DateTime.now}
         Inventory.create!(data)
       when 'update'
-        puts "---------------testing update"
+        # puts "---------------testing update"
         inventory = Inventory.where(part: params[:part], position: params[:position]).first
         if inventory
           inventory.update!(department: params[:department],  part_type: params[:part_type]) 
