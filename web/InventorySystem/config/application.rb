@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 module InventorySystem
   class Application < Rails::Application
-    
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
     config.autoload_paths += %W(#{config.root}/lib)
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -27,6 +27,6 @@ module InventorySystem
     
     config.time_zone = 'Beijing' 
     config.active_record.default_timezone = :local
-    config.i18n.default_locale = "zh-CN"
+    
   end
 end

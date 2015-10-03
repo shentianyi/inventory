@@ -1,2 +1,26 @@
-<h1>Dashboard#index</h1>
-<p>Find me in app/views/dashboard/index.html.erb</p>
+<h1>盘点统计</h1>
+
+<div class="row">
+  <div class="col-xs-6">
+	<h3>全盘进度</h3>
+	<!--<%= pie_chart Inventory.group(:check_qty).count%>-->
+	<%= pie_chart({"全盘数据" => Inventory.where("check_qty != ''").count, "总数据" => Inventory.where("check_qty = '' or check_qty is null").count}) %>
+  </div>
+  <div class="col-xs-6">
+	<h3>抽盘进度</h3>
+	<%= pie_chart ({"已抽盘数据" => Inventory.check.where("random_check_qty != ''").count, "总抽盘数据" => Inventory.where("check_qty != ''").count}) %>
+  </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+  	<h3>每小时全盘数据量统计</h3>
+  	<!--<%= pie_chart Inventory.group(:check_qty).count%>-->
+  	<%= column_chart Inventory.group(:check_time).count %>
+    </div>
+    <div class="col-xs-6">
+  	<h3>每小时抽盘盘数据量统计</h3>
+  	<!--<%= pie_chart Inventory.group(:check_qty).count%>-->
+  	<%= column_chart Inventory.where("random_check_qty != ''").group(:random_check_time).count %>
+    </div>
+    </div>
+</div>

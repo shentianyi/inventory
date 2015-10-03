@@ -23,6 +23,8 @@ class Inventory < ActiveRecord::Base
   validates :department, :position, :part, :part_type, presence: true
   validates :position, :part, uniqueness: true
   
+  scope :check, -> { where("check_qty != '' or check_qty is not null")}
+  
   self.per_page = 50
   
   def self.search(search)
