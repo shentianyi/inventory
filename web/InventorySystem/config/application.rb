@@ -9,7 +9,13 @@ Bundler.require(*Rails.groups)
 module InventorySystem
   class Application < Rails::Application
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
+   
     config.autoload_paths += %W(#{config.root}/lib)
+    
+    %w{api service}.each do |namespace|
+      config.paths.add File.join('app', namespace), glob: File.join('**', '*.rb')
+      config.autoload_paths += Dir[Rails.root.join('app', namespace, '**')]
+    end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -24,7 +30,6 @@ module InventorySystem
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-    
     config.time_zone = 'Beijing' 
     config.active_record.default_timezone = :local
     

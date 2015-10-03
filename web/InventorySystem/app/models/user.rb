@@ -15,6 +15,18 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :nr
   self.per_page = 50
   
+  def self.auth name
+    
+    user = User.find_by_nr(name)
+    user
+    # if user
+#       msg = "员工号正确"
+#     else
+#       msg = "员工号错误"
+#     end
+#     msg
+  end
+  
   def self.search(search)
     if search
       where("name LIKE ?", "%#{search}%")
