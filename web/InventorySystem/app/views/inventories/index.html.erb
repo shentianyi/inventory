@@ -6,6 +6,7 @@
     });
 </script>
 <h1>零件库位基础信息</h1>
+<hr />
 <p>
 	<%= form_tag inventories_path, :method => 'get' do %>
 		<p>
@@ -21,14 +22,15 @@
 		</p>
 	<% end%>
 </p>
-<p>
+<div class="btn-group">
 	<%= link_to '创建零件库存信息', new_inventory_path, class: 'btn btn-default' %>
 	<a name="down_template" href="/file/download?folder=inventory&file=inventory_template.xlsx" class='btn btn-default' >下载模版</a>
-	<input id="item-data-uploader" type="file" name="files[]" data-url="/inventories/import"/>
+<!--	<input id="item-data-uploader" type="file" name="files[]" data-url="/inventories/import"/>
 
-    <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
-	<%= link_to '上传数据', import_inventories_path, class: 'btn btn-primary' %>
-</p>
+    <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>-->
+	<%= link_to '上传数据', import_inventories_path, class: 'btn btn-primary'  %>
+	<%= link_to '盘点统计', root_path, class: 'btn btn-primary'  %>
+</div>
 <%= will_paginate @inventories, :container => false %>
 <table class="table table-striped table-hover table-bordered" id="editable-sample">
   <thead>
@@ -45,7 +47,7 @@
       <th>抽盘时间</th>
       <th>是否抽盘</th>
       <th>iOS新建id</th>
-      <th colspan="3"></th>
+      <th colspan="3">管理</th>
     </tr>
   </thead>
 
