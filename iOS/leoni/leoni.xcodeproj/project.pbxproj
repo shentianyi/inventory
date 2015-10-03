@@ -83,6 +83,9 @@
 		942E94321BC01A4A00FB5CD0 /* leoni */ = {
 			isa = PBXGroup;
 			children = (
+				942E945E1BC01ACA00FB5CD0 /* controller */,
+				942E945D1BC01ABD00FB5CD0 /* view */,
+				942E945C1BC01AAD00FB5CD0 /* model */,
 				942E94371BC01A4A00FB5CD0 /* AppDelegate.h */,
 				942E94381BC01A4A00FB5CD0 /* AppDelegate.m */,
 				942E943D1BC01A4A00FB5CD0 /* ViewController.h */,
@@ -120,6 +123,27 @@
 				942E94511BC01A4A00FB5CD0 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		942E945C1BC01AAD00FB5CD0 /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
+		942E945D1BC01ABD00FB5CD0 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
+		942E945E1BC01ACA00FB5CD0 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -354,6 +378,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = leoni/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -364,6 +389,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = leoni/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
