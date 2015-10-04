@@ -25,21 +25,62 @@
 }
 
 - (NSString *)ServerURL{
-    NSArray *document_dictionary = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *document = [document_dictionary firstObject];
-//    NSString *path = [document stringByAppendingPathComponent:@"ip.address.archive"];
-    NSString *ip = [[self URLDictionary] objectForKey:@"ip"];
-    NSString *port = [[self URLDictionary] objectForKey:@"port"];
+
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"server.plist"];
     
+    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath])
+    {
+        plistPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"plist"];
+    }
+    
+    NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    NSString *ip = [dict objectForKey:@"ip"];
+    NSString *port = [dict objectForKey:@"port"];
+  
     return [ip stringByAppendingString:port];;
+    
+}
+
+- (void)UpdateServerURLwithIP: (NSString *)ipString withProt: (NSString *)portString {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"server.plist"];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath])
+    {
+        plistPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"plist"];
+    }
+    
+    NSMutableDictionary *plistdict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    [plistdict removeObjectForKey: @"ip"];
+    [plistdict setObject:ipString forKey:@"ip"];
+    
+    [plistdict removeObjectForKey: @"port"];
+    [plistdict setObject:portString forKey:@"port"];
+   
+    [plistdict writeToFile:plistPath atomically:YES];
+    
     
 }
 
 
 - (NSMutableDictionary *)URLDictionary{
-    NSString *plist_path = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"plist"];
-    NSMutableDictionary *url_dictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:plist_path];
-    return url_dictionary;
+//    NSString *plist_path = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"plist"];
+//    NSMutableDictionary *url_dictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:plist_path];
+//    return url_dictionary;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"server.plist"];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath])
+    {
+        plistPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"plist"];
+    }
+    
+    NSMutableDictionary *plistdict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    return plistdict;
 }
 
 - (NSString *)login{

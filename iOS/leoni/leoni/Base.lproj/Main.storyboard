@@ -114,7 +114,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务器地址" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nuc-oP-lbl">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务器IP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nuc-oP-lbl">
                                 <rect key="frame" x="150" y="153" width="300" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="DrQ-eK-XhX"/>
@@ -133,7 +133,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务器请求数量" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zNf-d3-Tbv">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务器端口" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zNf-d3-Tbv">
                                 <rect key="frame" x="150" y="283" width="300" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="67E-e9-Vpd"/>
@@ -152,6 +152,25 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务器请求数量" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kwJ-8M-Ye3">
+                                <rect key="frame" x="150" y="397" width="300" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="IBK-IU-PV3"/>
+                                    <constraint firstAttribute="height" constant="21" id="P8E-wc-9U1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0m9-JB-hBg">
+                                <rect key="frame" x="150" y="440" width="300" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="8fg-d8-4w9"/>
+                                    <constraint firstAttribute="width" constant="300" id="HcJ-Tn-JOc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -159,8 +178,12 @@
                             <constraint firstItem="zNf-d3-Tbv" firstAttribute="top" secondItem="Nuc-oP-lbl" secondAttribute="bottom" constant="109" id="0dS-wn-GSR"/>
                             <constraint firstAttribute="centerX" secondItem="Nuc-oP-lbl" secondAttribute="centerX" id="0qN-SK-zZa"/>
                             <constraint firstItem="zNf-d3-Tbv" firstAttribute="centerX" secondItem="Nuc-oP-lbl" secondAttribute="centerX" id="0up-SM-4n1"/>
+                            <constraint firstItem="kwJ-8M-Ye3" firstAttribute="top" secondItem="Nuc-oP-lbl" secondAttribute="bottom" constant="223" id="Ag2-99-eeh"/>
                             <constraint firstItem="rhN-RS-B92" firstAttribute="centerX" secondItem="Nuc-oP-lbl" secondAttribute="centerX" id="CcS-Dg-8ld"/>
+                            <constraint firstItem="0m9-JB-hBg" firstAttribute="centerX" secondItem="Nuc-oP-lbl" secondAttribute="centerX" id="Kc1-QP-GOR"/>
+                            <constraint firstItem="0m9-JB-hBg" firstAttribute="top" secondItem="Nuc-oP-lbl" secondAttribute="bottom" constant="266" id="NIS-L1-8Cs"/>
                             <constraint firstItem="ezo-m3-ns7" firstAttribute="centerX" secondItem="Nuc-oP-lbl" secondAttribute="centerX" id="OI7-yD-CSA"/>
+                            <constraint firstItem="kwJ-8M-Ye3" firstAttribute="centerX" secondItem="Nuc-oP-lbl" secondAttribute="centerX" id="QQR-ly-Uy3"/>
                             <constraint firstItem="Nuc-oP-lbl" firstAttribute="top" secondItem="iSC-hB-zR1" secondAttribute="top" constant="153" id="WDb-yl-Hzw"/>
                             <constraint firstItem="rhN-RS-B92" firstAttribute="top" secondItem="Nuc-oP-lbl" secondAttribute="bottom" constant="152" id="oxL-cQ-jay"/>
                         </constraints>
@@ -177,10 +200,15 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="ipTextField" destination="ezo-m3-ns7" id="FVe-JC-H7f"/>
+                        <outlet property="portTextField" destination="rhN-RS-B92" id="FLd-zG-4QA"/>
+                        <outlet property="requestTextField" destination="0m9-JB-hBg" id="vC0-uU-8gM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bs2-hd-kNf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1975" y="93"/>
+            <point key="canvasLocation" x="2069" y="93"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gRF-UA-ckH">

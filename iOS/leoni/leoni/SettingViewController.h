@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AFNetHelper.h"
 
-@interface SettingViewController : UIViewController
+@interface SettingViewController : UIViewController<UITextFieldDelegate>
 - (IBAction)backAction:(id)sender;
 - (IBAction)saveAction:(id)sender;
-
+@property (weak, nonatomic) IBOutlet UITextField *ipTextField;
+@property (weak, nonatomic) IBOutlet UITextField *portTextField;
+@property (weak, nonatomic) IBOutlet UITextField *requestTextField;
+@property (nonatomic, retain) AFNetHelper *afnet_helper;
 @end
