@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "SettingViewController.h"
+#import "MBProgressHUD.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
@@ -23,7 +24,30 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.nameTextField.delegate = self;
+    _user = [[UserMoel alloc] init];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
     
+    
+}
+
+-(void)dismissKeyboard {
+    NSArray *subviews = [self.view subviews];
+    for (id objInput in subviews) {
+        if ([objInput isKindOfClass:[UITextField class]]) {
+            UITextField *theTextField = objInput;
+            if ([objInput isFirstResponder]) {
+                [theTextField resignFirstResponder];
+            }
+        }
+    }
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    
+    [textField resignFirstResponder];
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,11 +70,42 @@
 
 - (IBAction)SettingAction:(id)sender
 {
+    
     [self performSegueWithIdentifier:@"toSetting" sender:self];
 }
 
 - (IBAction)loginAction:(id)sender {
-    [self performSegueWithIdentifier:@"toDashboard" sender:self];
+    
+    NSString *nr = self.nameTextField.text;
+    if (nr.length > 0){
+        __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText = @"加载中...";
+    
+        [self.user loginWithNr:nr block:^(UserEntity *user_entity, NSError *error) {
+        
+            if (user_entity) {
+                hud.mode = MBProgressHUDModeText;
+                hud.labelText = @"登陆成功";
+                [hud hide:YES afterDelay:1.5f];
+                [self performSegueWithIdentifier:@"toDashboard" sender:self];
+            }
+            else {
+                hud.mode = MBProgressHUDModeText;
+                
+                hud.labelText = [NSString stringWithFormat:@"%@", error.userInfo];
+                [hud hide:YES afterDelay:1.5f];
+            }
+        }];
+    }
+    else{
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                      message:@"请填写员工号"
+                                                     delegate:self
+                                            cancelButtonTitle:@"ok"
+                                            otherButtonTitles:nil];
+        [alert show];
+    }
+        
 }
 
 @end

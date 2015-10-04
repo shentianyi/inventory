@@ -10,9 +10,9 @@ module V1
       post :login do
         user = User.auth(params[:name])
         if user
-          {result: 1, content: "successful"}
+          {result: 1, content: user}
         else
-          {result: 0, content: "failure"}
+          {result: 0, content: "验证失败，请重试"}
         end
       end
     end

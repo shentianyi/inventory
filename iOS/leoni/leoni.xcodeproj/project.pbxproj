@@ -20,6 +20,11 @@
 		94A359371BC0EF28008910EB /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359361BC0EF28008910EB /* DashboardViewController.m */; };
 		94A3593A1BC0F208008910EB /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359391BC0F208008910EB /* ProfileViewController.m */; };
 		94A3593D1BC0F7EA008910EB /* DashboardProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A3593C1BC0F7EA008910EB /* DashboardProfileViewController.m */; };
+		94A359401BC10701008910EB /* AFNetHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A3593F1BC10701008910EB /* AFNetHelper.m */; };
+		94A359421BC10914008910EB /* server.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94A359411BC10914008910EB /* server.plist */; };
+		94A359451BC109B7008910EB /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359441BC109B7008910EB /* UserModel.m */; };
+		94A359491BC115F4008910EB /* UserEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359481BC115F4008910EB /* UserEntity.m */; };
+		94A3594C1BC121EE008910EB /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A3594B1BC121EE008910EB /* MBProgressHUD.m */; };
 		FD4E319BD32BEE598B283BDF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DD0E03D04E30B34C3CA012 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +66,15 @@
 		94A359391BC0F208008910EB /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		94A3593B1BC0F7EA008910EB /* DashboardProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardProfileViewController.h; sourceTree = "<group>"; };
 		94A3593C1BC0F7EA008910EB /* DashboardProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardProfileViewController.m; sourceTree = "<group>"; };
+		94A3593E1BC10701008910EB /* AFNetHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetHelper.h; sourceTree = "<group>"; };
+		94A3593F1BC10701008910EB /* AFNetHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetHelper.m; sourceTree = "<group>"; };
+		94A359411BC10914008910EB /* server.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = server.plist; sourceTree = "<group>"; };
+		94A359431BC109B7008910EB /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
+		94A359441BC109B7008910EB /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		94A359471BC115F4008910EB /* UserEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserEntity.h; sourceTree = "<group>"; };
+		94A359481BC115F4008910EB /* UserEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserEntity.m; sourceTree = "<group>"; };
+		94A3594A1BC121EE008910EB /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		94A3594B1BC121EE008910EB /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		94EE4129EF8FEB5C1ADB5023 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,7 +129,8 @@
 		942E94321BC01A4A00FB5CD0 /* leoni */ = {
 			isa = PBXGroup;
 			children = (
-				94A359301BC0D931008910EB /* vender */,
+				94A359461BC115E1008910EB /* entity */,
+				94A359301BC0D931008910EB /* vendor */,
 				942E945E1BC01ACA00FB5CD0 /* controller */,
 				942E945D1BC01ABD00FB5CD0 /* view */,
 				942E945C1BC01AAD00FB5CD0 /* model */,
@@ -137,6 +152,7 @@
 			children = (
 				942E94341BC01A4A00FB5CD0 /* Info.plist */,
 				942E94351BC01A4A00FB5CD0 /* main.m */,
+				94A359411BC10914008910EB /* server.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -161,6 +177,8 @@
 		942E945C1BC01AAD00FB5CD0 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				94A359431BC109B7008910EB /* UserModel.h */,
+				94A359441BC109B7008910EB /* UserModel.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -189,12 +207,25 @@
 			name = controller;
 			sourceTree = "<group>";
 		};
-		94A359301BC0D931008910EB /* vender */ = {
+		94A359301BC0D931008910EB /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				94A3594A1BC121EE008910EB /* MBProgressHUD.h */,
+				94A3594B1BC121EE008910EB /* MBProgressHUD.m */,
 				94A359311BC0D955008910EB /* Captuvo.h */,
+				94A3593E1BC10701008910EB /* AFNetHelper.h */,
+				94A3593F1BC10701008910EB /* AFNetHelper.m */,
 			);
-			name = vender;
+			name = vendor;
+			sourceTree = "<group>";
+		};
+		94A359461BC115E1008910EB /* entity */ = {
+			isa = PBXGroup;
+			children = (
+				94A359471BC115F4008910EB /* UserEntity.h */,
+				94A359481BC115F4008910EB /* UserEntity.m */,
+			);
+			name = entity;
 			sourceTree = "<group>";
 		};
 		B071B307EB3056C125C78490 /* Frameworks */ = {
@@ -288,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				942E94421BC01A4A00FB5CD0 /* Main.storyboard in Resources */,
+				94A359421BC10914008910EB /* server.plist in Resources */,
 				942E94471BC01A4A00FB5CD0 /* LaunchScreen.xib in Resources */,
 				942E94441BC01A4A00FB5CD0 /* Images.xcassets in Resources */,
 			);
@@ -343,9 +375,13 @@
 				942E94391BC01A4A00FB5CD0 /* AppDelegate.m in Sources */,
 				942E943C1BC01A4A00FB5CD0 /* leoni.xcdatamodeld in Sources */,
 				94A3593A1BC0F208008910EB /* ProfileViewController.m in Sources */,
+				94A359491BC115F4008910EB /* UserEntity.m in Sources */,
 				942E943F1BC01A4A00FB5CD0 /* ViewController.m in Sources */,
+				94A359401BC10701008910EB /* AFNetHelper.m in Sources */,
 				94A3593D1BC0F7EA008910EB /* DashboardProfileViewController.m in Sources */,
+				94A359451BC109B7008910EB /* UserModel.m in Sources */,
 				94A359371BC0EF28008910EB /* DashboardViewController.m in Sources */,
+				94A3594C1BC121EE008910EB /* MBProgressHUD.m in Sources */,
 				942E94361BC01A4A00FB5CD0 /* main.m in Sources */,
 				94A3592F1BC0C461008910EB /* LoginViewController.m in Sources */,
 				94A359341BC0E3AD008910EB /* SettingViewController.m in Sources */,

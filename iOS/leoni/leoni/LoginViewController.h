@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserModel.h"
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 
+@property (nonatomic, readwrite, retain) UserMoel* user;
 @end
