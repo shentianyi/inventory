@@ -15,6 +15,11 @@
 		942E94441BC01A4A00FB5CD0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 942E94431BC01A4A00FB5CD0 /* Images.xcassets */; };
 		942E94471BC01A4A00FB5CD0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 942E94451BC01A4A00FB5CD0 /* LaunchScreen.xib */; };
 		942E94531BC01A4A00FB5CD0 /* leoniTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 942E94521BC01A4A00FB5CD0 /* leoniTests.m */; };
+		94A3592F1BC0C461008910EB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A3592E1BC0C461008910EB /* LoginViewController.m */; };
+		94A359341BC0E3AD008910EB /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359331BC0E3AD008910EB /* SettingViewController.m */; };
+		94A359371BC0EF28008910EB /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359361BC0EF28008910EB /* DashboardViewController.m */; };
+		94A3593A1BC0F208008910EB /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359391BC0F208008910EB /* ProfileViewController.m */; };
+		94A3593D1BC0F7EA008910EB /* DashboardProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A3593C1BC0F7EA008910EB /* DashboardProfileViewController.m */; };
 		FD4E319BD32BEE598B283BDF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DD0E03D04E30B34C3CA012 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +50,17 @@
 		942E944C1BC01A4A00FB5CD0 /* leoniTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = leoniTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		942E94511BC01A4A00FB5CD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		942E94521BC01A4A00FB5CD0 /* leoniTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = leoniTests.m; sourceTree = "<group>"; };
+		94A3592D1BC0C461008910EB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		94A3592E1BC0C461008910EB /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		94A359311BC0D955008910EB /* Captuvo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Captuvo.h; sourceTree = "<group>"; };
+		94A359321BC0E3AD008910EB /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		94A359331BC0E3AD008910EB /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		94A359351BC0EF28008910EB /* DashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardViewController.h; sourceTree = "<group>"; };
+		94A359361BC0EF28008910EB /* DashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardViewController.m; sourceTree = "<group>"; };
+		94A359381BC0F208008910EB /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		94A359391BC0F208008910EB /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		94A3593B1BC0F7EA008910EB /* DashboardProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardProfileViewController.h; sourceTree = "<group>"; };
+		94A3593C1BC0F7EA008910EB /* DashboardProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardProfileViewController.m; sourceTree = "<group>"; };
 		94EE4129EF8FEB5C1ADB5023 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +115,7 @@
 		942E94321BC01A4A00FB5CD0 /* leoni */ = {
 			isa = PBXGroup;
 			children = (
+				94A359301BC0D931008910EB /* vender */,
 				942E945E1BC01ACA00FB5CD0 /* controller */,
 				942E945D1BC01ABD00FB5CD0 /* view */,
 				942E945C1BC01AAD00FB5CD0 /* model */,
@@ -158,8 +175,26 @@
 		942E945E1BC01ACA00FB5CD0 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				94A3592D1BC0C461008910EB /* LoginViewController.h */,
+				94A3592E1BC0C461008910EB /* LoginViewController.m */,
+				94A359321BC0E3AD008910EB /* SettingViewController.h */,
+				94A359331BC0E3AD008910EB /* SettingViewController.m */,
+				94A359351BC0EF28008910EB /* DashboardViewController.h */,
+				94A359361BC0EF28008910EB /* DashboardViewController.m */,
+				94A359381BC0F208008910EB /* ProfileViewController.h */,
+				94A359391BC0F208008910EB /* ProfileViewController.m */,
+				94A3593B1BC0F7EA008910EB /* DashboardProfileViewController.h */,
+				94A3593C1BC0F7EA008910EB /* DashboardProfileViewController.m */,
 			);
 			name = controller;
+			sourceTree = "<group>";
+		};
+		94A359301BC0D931008910EB /* vender */ = {
+			isa = PBXGroup;
+			children = (
+				94A359311BC0D955008910EB /* Captuvo.h */,
+			);
+			name = vender;
 			sourceTree = "<group>";
 		};
 		B071B307EB3056C125C78490 /* Frameworks */ = {
@@ -307,8 +342,13 @@
 			files = (
 				942E94391BC01A4A00FB5CD0 /* AppDelegate.m in Sources */,
 				942E943C1BC01A4A00FB5CD0 /* leoni.xcdatamodeld in Sources */,
+				94A3593A1BC0F208008910EB /* ProfileViewController.m in Sources */,
 				942E943F1BC01A4A00FB5CD0 /* ViewController.m in Sources */,
+				94A3593D1BC0F7EA008910EB /* DashboardProfileViewController.m in Sources */,
+				94A359371BC0EF28008910EB /* DashboardViewController.m in Sources */,
 				942E94361BC01A4A00FB5CD0 /* main.m in Sources */,
+				94A3592F1BC0C461008910EB /* LoginViewController.m in Sources */,
+				94A359341BC0E3AD008910EB /* SettingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
