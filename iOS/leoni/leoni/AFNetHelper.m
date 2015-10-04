@@ -28,14 +28,19 @@
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
-    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"server.plist"];
+    NSString *path = [documentsPath stringByAppendingPathComponent:@"server.plist"];
     
-    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath])
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:path])
     {
-        plistPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"plist"];
+        NSLog(@"===== testing YES");
+        
+        NSString *bundle = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"plist"];
+        [fileManager copyItemAtPath:bundle toPath: path error: nil];
     }
+
     
-    NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:path];
     NSString *ip = [dict objectForKey:@"ip"];
     NSString *port = [dict objectForKey:@"port"];
   
@@ -46,21 +51,25 @@
 - (void)UpdateServerURLwithIP: (NSString *)ipString withProt: (NSString *)portString {
     NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
-    NSString *plistPath = [documentsPath stringByAppendingPathComponent:@"server.plist"];
+    NSString *path = [documentsPath stringByAppendingPathComponent:@"server.plist"];
     
-    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath])
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:path])
     {
-        plistPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"plist"];
+        NSLog(@"===== testing YES");
+
+        NSString *bundle = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"plist"];
+        [fileManager copyItemAtPath:bundle toPath: path error: nil];
     }
     
-    NSMutableDictionary *plistdict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    NSMutableDictionary *plistdict = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
     [plistdict removeObjectForKey: @"ip"];
     [plistdict setObject:ipString forKey:@"ip"];
     NSLog(@"===== testing %@", ipString);
     [plistdict removeObjectForKey: @"port"];
     [plistdict setObject:portString forKey:@"port"];
    NSLog(@"===== testing %@", portString);
-    [plistdict writeToFile:plistPath atomically:YES];
+    [plistdict writeToFile:path atomically:YES];
     
     
 }
