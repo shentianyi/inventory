@@ -8,6 +8,7 @@
 
 #import "SettingViewController.h"
 #import "AFNetHelper.h"
+#import "MBProgressHUD.h"
 
 @interface SettingViewController ()
 
@@ -23,7 +24,31 @@
     self.requestTextField.delegate = self;
     _afnet_helper  = [[AFNetHelper alloc] init];
 
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+    
+    
 }
+
+-(void)dismissKeyboard {
+    NSArray *subviews = [self.view subviews];
+    for (id objInput in subviews) {
+        if ([objInput isKindOfClass:[UITextField class]]) {
+            UITextField *theTextField = objInput;
+            if ([objInput isFirstResponder]) {
+                [theTextField resignFirstResponder];
+            }
+        }
+    }
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    
+    [textField resignFirstResponder];
+    return NO;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -60,6 +85,31 @@
 - (IBAction)saveAction:(id)sender {
     if (self.ipTextField.text.length > 0 && self.portTextField.text.length > 0) {
         [self.afnet_helper UpdateServerURLwithIP:self.ipTextField.text withProt:self.portTextField.text];
+        
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                      message:@"设置成功"
+                                                     delegate:self
+                                            cancelButtonTitle:@"ok"
+                                            otherButtonTitles:nil];
+        [alert show];
+
+        
+    }
+    else {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        
+        hud.labelText = [NSString stringWithFormat:@"设置失败"];
+        [hud hide:YES afterDelay:1.5f];
+    }
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
     
 }

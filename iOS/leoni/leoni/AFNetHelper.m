@@ -56,10 +56,10 @@
     NSMutableDictionary *plistdict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
     [plistdict removeObjectForKey: @"ip"];
     [plistdict setObject:ipString forKey:@"ip"];
-    
+    NSLog(@"===== testing %@", ipString);
     [plistdict removeObjectForKey: @"port"];
     [plistdict setObject:portString forKey:@"port"];
-   
+   NSLog(@"===== testing %@", portString);
     [plistdict writeToFile:plistPath atomically:YES];
     
     

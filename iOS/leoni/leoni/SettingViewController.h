@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AFNetHelper.h"
 
-@interface SettingViewController : UIViewController<UITextFieldDelegate>
+@interface SettingViewController : UIViewController<UITextFieldDelegate, UIAlertViewDelegate>
 - (IBAction)backAction:(id)sender;
 - (IBAction)saveAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *ipTextField;
