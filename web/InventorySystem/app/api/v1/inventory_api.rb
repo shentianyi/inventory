@@ -19,7 +19,7 @@ module V1
           if inventories.count > 1
             {result: 0, content: "此库位包含多个零件，请手动录入"}
           else
-            {result: 1, content: inventories[0] }
+            {result: 1, content: inventories}
           end
         else
           {result: 0, content: "不存在库位信息，请手动录入"} 

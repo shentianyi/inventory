@@ -34,9 +34,11 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
+	<key>UISupportedExternalAccessoryProtocols</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
+		<string>com.honeywell.scansled.protocol.decoder</string>
+		<string>com.honeywell.scansled.protocol.msr</string>
+		<string>com.honeywell.scansled.protocol.pm</string>
 	</array>
 </dict>
 </plist>

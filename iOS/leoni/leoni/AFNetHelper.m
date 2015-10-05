@@ -39,7 +39,7 @@
         [fileManager copyItemAtPath:bundle toPath: path error: nil];
     }
 
-    
+    NSLog(@"===== go testing YES");
     NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:path];
     NSString *ip = [dict objectForKey:@"ip"];
     NSString *port = [dict objectForKey:@"port"];
@@ -96,6 +96,13 @@
     NSString *server_url = [self ServerURL];
     NSString *login_url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"login"]];
     return [login_url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSString *)query {
+    NSString *server_url = [self ServerURL];
+    NSString *url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"query"]];
+    return [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
 }
 
 @end

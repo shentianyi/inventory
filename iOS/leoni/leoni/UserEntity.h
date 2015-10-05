@@ -12,5 +12,6 @@
 
 @property (nonatomic, copy) NSString *nr_string;
 
+
 - (id)initWithNr: (NSString *)nr;
 @end

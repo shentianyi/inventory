@@ -505,6 +505,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="checkAction:" destination="lxT-4h-Ke7" eventType="touchUpInside" id="8dH-5g-9uK"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -534,6 +537,13 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="全盘" id="NJ9-1b-eIS"/>
+                    <connections>
+                        <outlet property="departmentTextField" destination="L3w-Pc-Uh9" id="9Vf-gF-a5o"/>
+                        <outlet property="partTextField" destination="lfi-xt-yfS" id="jo0-ML-Mcw"/>
+                        <outlet property="partTypeTextField" destination="AlN-H4-N62" id="qOO-bH-m2Z"/>
+                        <outlet property="positionTextField" destination="FTQ-dX-KgA" id="iqG-zK-CdB"/>
+                        <outlet property="qtyTextField" destination="TtK-PM-ZZB" id="yKd-Gd-UYw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QQ0-FK-EnM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

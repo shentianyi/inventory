@@ -8,5 +8,7 @@
 	<string>:3000</string>
 	<key>login</key>
 	<string>/api/v1/user/login</string>
+	<key>query</key>
+	<string>/api/v1/inventory/query</string>
 </dict>
 </plist>

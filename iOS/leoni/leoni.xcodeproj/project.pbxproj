@@ -18,6 +18,10 @@
 		9463F0341BC20DD600280D38 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9463F0331BC20DD600280D38 /* KeychainItemWrapper.m */; };
 		9463F0371BC244BE00280D38 /* CheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9463F0361BC244BE00280D38 /* CheckViewController.m */; };
 		9463F03A1BC2450600280D38 /* CheckCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9463F0391BC2450600280D38 /* CheckCreateViewController.m */; };
+		9463F03D1BC27B0400280D38 /* InventoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9463F03C1BC27B0400280D38 /* InventoryModel.m */; };
+		9463F0411BC2803A00280D38 /* libCaptuvoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9463F0401BC2803A00280D38 /* libCaptuvoSDK.a */; };
+		9463F0431BC2804C00280D38 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9463F0421BC2804C00280D38 /* ExternalAccessory.framework */; };
+		9463F0461BC297A900280D38 /* InventoryEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9463F0451BC297A900280D38 /* InventoryEntity.m */; };
 		94A3592F1BC0C461008910EB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A3592E1BC0C461008910EB /* LoginViewController.m */; };
 		94A359341BC0E3AD008910EB /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359331BC0E3AD008910EB /* SettingViewController.m */; };
 		94A359371BC0EF28008910EB /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359361BC0EF28008910EB /* DashboardViewController.m */; };
@@ -64,6 +68,12 @@
 		9463F0361BC244BE00280D38 /* CheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckViewController.m; sourceTree = "<group>"; };
 		9463F0381BC2450600280D38 /* CheckCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckCreateViewController.h; sourceTree = "<group>"; };
 		9463F0391BC2450600280D38 /* CheckCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckCreateViewController.m; sourceTree = "<group>"; };
+		9463F03B1BC27B0400280D38 /* InventoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryModel.h; sourceTree = "<group>"; };
+		9463F03C1BC27B0400280D38 /* InventoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryModel.m; sourceTree = "<group>"; };
+		9463F0401BC2803A00280D38 /* libCaptuvoSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCaptuvoSDK.a; sourceTree = "<group>"; };
+		9463F0421BC2804C00280D38 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		9463F0441BC297A900280D38 /* InventoryEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryEntity.h; sourceTree = "<group>"; };
+		9463F0451BC297A900280D38 /* InventoryEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryEntity.m; sourceTree = "<group>"; };
 		94A3592D1BC0C461008910EB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		94A3592E1BC0C461008910EB /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		94A359311BC0D955008910EB /* Captuvo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Captuvo.h; sourceTree = "<group>"; };
@@ -92,6 +102,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9463F0431BC2804C00280D38 /* ExternalAccessory.framework in Frameworks */,
+				9463F0411BC2803A00280D38 /* libCaptuvoSDK.a in Frameworks */,
 				FD4E319BD32BEE598B283BDF /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -188,6 +200,8 @@
 			children = (
 				94A359431BC109B7008910EB /* UserModel.h */,
 				94A359441BC109B7008910EB /* UserModel.m */,
+				9463F03B1BC27B0400280D38 /* InventoryModel.h */,
+				9463F03C1BC27B0400280D38 /* InventoryModel.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -239,6 +253,8 @@
 			children = (
 				94A359471BC115F4008910EB /* UserEntity.h */,
 				94A359481BC115F4008910EB /* UserEntity.m */,
+				9463F0441BC297A900280D38 /* InventoryEntity.h */,
+				9463F0451BC297A900280D38 /* InventoryEntity.m */,
 			);
 			name = entity;
 			sourceTree = "<group>";
@@ -246,6 +262,8 @@
 		B071B307EB3056C125C78490 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9463F0421BC2804C00280D38 /* ExternalAccessory.framework */,
+				9463F0401BC2803A00280D38 /* libCaptuvoSDK.a */,
 				65DD0E03D04E30B34C3CA012 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -397,7 +415,9 @@
 				9463F0341BC20DD600280D38 /* KeychainItemWrapper.m in Sources */,
 				9463F03A1BC2450600280D38 /* CheckCreateViewController.m in Sources */,
 				94A3593D1BC0F7EA008910EB /* DashboardProfileViewController.m in Sources */,
+				9463F0461BC297A900280D38 /* InventoryEntity.m in Sources */,
 				94A359451BC109B7008910EB /* UserModel.m in Sources */,
+				9463F03D1BC27B0400280D38 /* InventoryModel.m in Sources */,
 				94A359371BC0EF28008910EB /* DashboardViewController.m in Sources */,
 				94A3594C1BC121EE008910EB /* MBProgressHUD.m in Sources */,
 				942E94361BC01A4A00FB5CD0 /* main.m in Sources */,
@@ -537,6 +557,11 @@
 				INFOPLIST_FILE = leoni/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/ryan/Documents/Codes/ObjectiveC/fc_ios/Material,
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -552,6 +577,11 @@
 				INFOPLIST_FILE = leoni/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/ryan/Documents/Codes/ObjectiveC/fc_ios/Material,
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
