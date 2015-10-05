@@ -35,6 +35,11 @@ class Inventory < ActiveRecord::Base
     end
   end
   
+  def self.check_for_search(search)
+    puts "======testing"
+    where("position=?", search)
+  end
+  
   def self.search_by_condition(department, position_begin, position_end, part, ios_created_id, is_random_check)
     inventories = Inventory
     condition = {}
