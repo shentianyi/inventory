@@ -1,19 +1,18 @@
 //
-//  ProfileViewController.m
+//  CheckViewController.m
 //  leoni
 //
-//  Created by ryan on 10/4/15.
+//  Created by ryan on 10/5/15.
 //  Copyright (c) 2015 ryan. All rights reserved.
 //
 
-#import "ProfileViewController.h"
-#import "KeychainItemWrapper.h"
+#import "CheckViewController.h"
 
-@interface ProfileViewController ()
+@interface CheckViewController ()
 
 @end
 
-@implementation ProfileViewController
+@implementation CheckViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,7 +24,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-
 /*
 #pragma mark - Navigation
 
@@ -36,11 +34,4 @@
 }
 */
 
-- (IBAction)quitAction:(id)sender {
-      [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)loadData {
-    
-}
 @end

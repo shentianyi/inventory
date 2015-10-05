@@ -10,5 +10,6 @@
 
 @interface DashboardProfileViewController : UIViewController
 - (IBAction)quitAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *nrLabel;
 
 @end

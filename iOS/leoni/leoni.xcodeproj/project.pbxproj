@@ -15,6 +15,9 @@
 		942E94441BC01A4A00FB5CD0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 942E94431BC01A4A00FB5CD0 /* Images.xcassets */; };
 		942E94471BC01A4A00FB5CD0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 942E94451BC01A4A00FB5CD0 /* LaunchScreen.xib */; };
 		942E94531BC01A4A00FB5CD0 /* leoniTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 942E94521BC01A4A00FB5CD0 /* leoniTests.m */; };
+		9463F0341BC20DD600280D38 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9463F0331BC20DD600280D38 /* KeychainItemWrapper.m */; };
+		9463F0371BC244BE00280D38 /* CheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9463F0361BC244BE00280D38 /* CheckViewController.m */; };
+		9463F03A1BC2450600280D38 /* CheckCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9463F0391BC2450600280D38 /* CheckCreateViewController.m */; };
 		94A3592F1BC0C461008910EB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A3592E1BC0C461008910EB /* LoginViewController.m */; };
 		94A359341BC0E3AD008910EB /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359331BC0E3AD008910EB /* SettingViewController.m */; };
 		94A359371BC0EF28008910EB /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359361BC0EF28008910EB /* DashboardViewController.m */; };
@@ -55,6 +58,12 @@
 		942E944C1BC01A4A00FB5CD0 /* leoniTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = leoniTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		942E94511BC01A4A00FB5CD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		942E94521BC01A4A00FB5CD0 /* leoniTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = leoniTests.m; sourceTree = "<group>"; };
+		9463F0321BC20DD600280D38 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		9463F0331BC20DD600280D38 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
+		9463F0351BC244BE00280D38 /* CheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckViewController.h; sourceTree = "<group>"; };
+		9463F0361BC244BE00280D38 /* CheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckViewController.m; sourceTree = "<group>"; };
+		9463F0381BC2450600280D38 /* CheckCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckCreateViewController.h; sourceTree = "<group>"; };
+		9463F0391BC2450600280D38 /* CheckCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckCreateViewController.m; sourceTree = "<group>"; };
 		94A3592D1BC0C461008910EB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		94A3592E1BC0C461008910EB /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		94A359311BC0D955008910EB /* Captuvo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Captuvo.h; sourceTree = "<group>"; };
@@ -203,6 +212,10 @@
 				94A359391BC0F208008910EB /* ProfileViewController.m */,
 				94A3593B1BC0F7EA008910EB /* DashboardProfileViewController.h */,
 				94A3593C1BC0F7EA008910EB /* DashboardProfileViewController.m */,
+				9463F0351BC244BE00280D38 /* CheckViewController.h */,
+				9463F0361BC244BE00280D38 /* CheckViewController.m */,
+				9463F0381BC2450600280D38 /* CheckCreateViewController.h */,
+				9463F0391BC2450600280D38 /* CheckCreateViewController.m */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -210,6 +223,8 @@
 		94A359301BC0D931008910EB /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				9463F0321BC20DD600280D38 /* KeychainItemWrapper.h */,
+				9463F0331BC20DD600280D38 /* KeychainItemWrapper.m */,
 				94A3594A1BC121EE008910EB /* MBProgressHUD.h */,
 				94A3594B1BC121EE008910EB /* MBProgressHUD.m */,
 				94A359311BC0D955008910EB /* Captuvo.h */,
@@ -287,6 +302,7 @@
 				TargetAttributes = {
 					942E942F1BC01A4A00FB5CD0 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = ALEL54CX66;
 					};
 					942E944B1BC01A4A00FB5CD0 = {
 						CreatedOnToolsVersion = 6.4;
@@ -378,12 +394,15 @@
 				94A359491BC115F4008910EB /* UserEntity.m in Sources */,
 				942E943F1BC01A4A00FB5CD0 /* ViewController.m in Sources */,
 				94A359401BC10701008910EB /* AFNetHelper.m in Sources */,
+				9463F0341BC20DD600280D38 /* KeychainItemWrapper.m in Sources */,
+				9463F03A1BC2450600280D38 /* CheckCreateViewController.m in Sources */,
 				94A3593D1BC0F7EA008910EB /* DashboardProfileViewController.m in Sources */,
 				94A359451BC109B7008910EB /* UserModel.m in Sources */,
 				94A359371BC0EF28008910EB /* DashboardViewController.m in Sources */,
 				94A3594C1BC121EE008910EB /* MBProgressHUD.m in Sources */,
 				942E94361BC01A4A00FB5CD0 /* main.m in Sources */,
 				94A3592F1BC0C461008910EB /* LoginViewController.m in Sources */,
+				9463F0371BC244BE00280D38 /* CheckViewController.m in Sources */,
 				94A359341BC0E3AD008910EB /* SettingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -513,10 +532,13 @@
 			baseConfigurationReference = 444761C8CCFDCCE9DECDA580 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = leoni/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -525,10 +547,13 @@
 			baseConfigurationReference = 94EE4129EF8FEB5C1ADB5023 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = leoni/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

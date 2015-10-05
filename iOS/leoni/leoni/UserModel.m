@@ -36,6 +36,12 @@
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 //              NSLog(@"======= testing%@", error.description);
               if (block) {
+//                  NSString *jsonString = [NSString stringWithFormat: @"{\"content\":网络故障请联系管理员}"];
+//                  NSData *data = [jsonString dataUsingEncoding: NSUTF8StringEncoding];
+//                  id dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+//                  NSError *customError = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:[dict objectForKey: @"content"]];
+                 NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:[NSString stringWithFormat:@"网络故障请联系管理员" ]];
+                  
                   block(nil, error);
               }
           }

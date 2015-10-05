@@ -7,6 +7,7 @@
 //
 
 #import "DashboardProfileViewController.h"
+#import "KeychainItemWrapper.h"
 
 @interface DashboardProfileViewController ()
 
@@ -23,6 +24,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    KeychainItemWrapper *keyChain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
+    if ([keyChain objectForKey:(__bridge id)kSecAttrAccount]) {
+        self.nrLabel.text = [NSString stringWithFormat:@"员工号:%@", [keyChain objectForKey:(__bridge  id)kSecAttrAccount]];
+    }
+}
+
 
 /*
 #pragma mark - Navigation

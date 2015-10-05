@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "SettingViewController.h"
 #import "MBProgressHUD.h"
+#import "KeychainItemWrapper.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
@@ -76,6 +77,8 @@
 
 - (IBAction)loginAction:(id)sender {
     
+    KeychainItemWrapper *keychain=[[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni"                                                                    accessGroup:nil];
+    
     NSString *nr = self.nameTextField.text;
     if (nr.length > 0){
         __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -87,6 +90,8 @@
                 hud.mode = MBProgressHUDModeText;
                 hud.labelText = @"登陆成功";
                 [hud hide:YES afterDelay:1.5f];
+                [keychain setObject:nr forKey:(__bridge id)kSecAttrAccount];
+                
                 [self performSegueWithIdentifier:@"toDashboard" sender:self];
             }
             else {
