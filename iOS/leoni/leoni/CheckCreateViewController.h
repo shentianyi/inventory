@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Captuvo.h"
+#import "InventoryModel.h"
 
-@interface CheckCreateViewController : UIViewController
+@interface CheckCreateViewController : UIViewController<UITextFieldDelegate, CaptuvoEventsProtocol>
+@property (weak, nonatomic) IBOutlet UITextField *positionTextField;
+@property (weak, nonatomic) IBOutlet UITextField *partTextField;
+@property (weak, nonatomic) IBOutlet UITextField *departmentTextField;
+@property (weak, nonatomic) IBOutlet UITextField *partTypeTextField;
+@property (weak, nonatomic) IBOutlet UITextField *checkQtyTextField;
+@property (nonatomic,retain) InventoryModel *inventory;
+- (IBAction)saveAction:(id)sender;
+
 
 @end

@@ -8,8 +8,13 @@
 
 #import "InventoryModel.h"
 #import "AFNetHelper.h"
+#import "DBManager.h"
 
+@interface InventoryModel()
 
+@property (nonatomic, retain)DBManager *db;
+
+@end
 
 @implementation InventoryModel
 
@@ -17,6 +22,7 @@
     self = [super init];
     if (self) {
         _afnet = [[AFNetHelper alloc] init];
+        _db = [[DBManager alloc] init];
     }
     return self;
 }
@@ -86,6 +92,28 @@
                   block(nil, error);
               }
           }];
+}
+
+- (void)createWithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType WithChcekQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser {
+    self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
+    NSString *query;
+    NSString *uuid = [[NSUUID UUID] UUIDString];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    NSString *checkTime = [NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:[NSDate date]]];
+
+//    if (self.recordIDToEdit == -1) {
+        query = [NSString stringWithFormat:@"insert into inventories values(null, '%@', '%@', '%@', '%@', '%@', '%@', '%@', null, null, null, null, '%@')", department, position, part, partType, checkQty, checkUser, checkTime, uuid];
+        [self.db executeQuery:query];
+        if (self.db.affectedRows != 0) {
+            NSLog(@"======== success =========");
+        }
+        else {
+            NSLog(@"========= failure ========");
+        }
+//    }else {
+//        NSLog(@"somthing is happen");
+//    }
 }
 
 @end

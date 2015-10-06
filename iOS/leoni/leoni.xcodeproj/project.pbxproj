@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9429571E1BC3B7D000C35462 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429571D1BC3B7D000C35462 /* DBManager.m */; };
+		942957201BC3B7E200C35462 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9429571F1BC3B7E200C35462 /* libsqlite3.dylib */; };
+		942957221BC3CBF100C35462 /* inventorydb.sql in Resources */ = {isa = PBXBuildFile; fileRef = 942957211BC3CBF100C35462 /* inventorydb.sql */; };
 		942E94361BC01A4A00FB5CD0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 942E94351BC01A4A00FB5CD0 /* main.m */; };
 		942E94391BC01A4A00FB5CD0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 942E94381BC01A4A00FB5CD0 /* AppDelegate.m */; };
 		942E943C1BC01A4A00FB5CD0 /* leoni.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 942E943A1BC01A4A00FB5CD0 /* leoni.xcdatamodeld */; };
@@ -48,6 +51,10 @@
 /* Begin PBXFileReference section */
 		444761C8CCFDCCE9DECDA580 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		65DD0E03D04E30B34C3CA012 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9429571C1BC3B7D000C35462 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
+		9429571D1BC3B7D000C35462 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		9429571F1BC3B7E200C35462 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		942957211BC3CBF100C35462 /* inventorydb.sql */ = {isa = PBXFileReference; lastKnownFileType = file; path = inventorydb.sql; sourceTree = "<group>"; };
 		942E94301BC01A4A00FB5CD0 /* leoni.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = leoni.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		942E94341BC01A4A00FB5CD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		942E94351BC01A4A00FB5CD0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -102,6 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				942957201BC3B7E200C35462 /* libsqlite3.dylib in Frameworks */,
 				9463F0431BC2804C00280D38 /* ExternalAccessory.framework in Frameworks */,
 				9463F0411BC2803A00280D38 /* libCaptuvoSDK.a in Frameworks */,
 				FD4E319BD32BEE598B283BDF /* libPods.a in Frameworks */,
@@ -171,6 +179,7 @@
 		942E94331BC01A4A00FB5CD0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				942957211BC3CBF100C35462 /* inventorydb.sql */,
 				942E94341BC01A4A00FB5CD0 /* Info.plist */,
 				942E94351BC01A4A00FB5CD0 /* main.m */,
 				94A359411BC10914008910EB /* server.plist */,
@@ -244,6 +253,8 @@
 				94A359311BC0D955008910EB /* Captuvo.h */,
 				94A3593E1BC10701008910EB /* AFNetHelper.h */,
 				94A3593F1BC10701008910EB /* AFNetHelper.m */,
+				9429571C1BC3B7D000C35462 /* DBManager.h */,
+				9429571D1BC3B7D000C35462 /* DBManager.m */,
 			);
 			name = vendor;
 			sourceTree = "<group>";
@@ -262,6 +273,7 @@
 		B071B307EB3056C125C78490 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9429571F1BC3B7E200C35462 /* libsqlite3.dylib */,
 				9463F0421BC2804C00280D38 /* ExternalAccessory.framework */,
 				9463F0401BC2803A00280D38 /* libCaptuvoSDK.a */,
 				65DD0E03D04E30B34C3CA012 /* libPods.a */,
@@ -356,6 +368,7 @@
 				94A359421BC10914008910EB /* server.plist in Resources */,
 				942E94471BC01A4A00FB5CD0 /* LaunchScreen.xib in Resources */,
 				942E94441BC01A4A00FB5CD0 /* Images.xcassets in Resources */,
+				942957221BC3CBF100C35462 /* inventorydb.sql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +427,7 @@
 				94A359401BC10701008910EB /* AFNetHelper.m in Sources */,
 				9463F0341BC20DD600280D38 /* KeychainItemWrapper.m in Sources */,
 				9463F03A1BC2450600280D38 /* CheckCreateViewController.m in Sources */,
+				9429571E1BC3B7D000C35462 /* DBManager.m in Sources */,
 				94A3593D1BC0F7EA008910EB /* DashboardProfileViewController.m in Sources */,
 				9463F0461BC297A900280D38 /* InventoryEntity.m in Sources */,
 				94A359451BC109B7008910EB /* UserModel.m in Sources */,

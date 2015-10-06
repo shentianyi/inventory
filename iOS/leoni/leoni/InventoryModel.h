@@ -13,9 +13,13 @@
 @interface InventoryModel : NSObject
 
 @property (retain, nonatomic) AFNetHelper *afnet;
+@property (nonatomic) int recordIDToEdit;
+
 
 - (void)queryWithPosition: (NSString *)positionString block:(void(^)(InventoryEntity *inventory_entity, NSError *error))block;
 
 - (void)checkWithPosition: (NSString *)position WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser block:(void(^)(NSString *msgString, NSError *error))block;
+
+- (void)createWithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType WithChcekQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser;
 
 @end
