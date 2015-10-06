@@ -10,6 +10,7 @@
 		9429571E1BC3B7D000C35462 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429571D1BC3B7D000C35462 /* DBManager.m */; };
 		942957201BC3B7E200C35462 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9429571F1BC3B7E200C35462 /* libsqlite3.dylib */; };
 		942957221BC3CBF100C35462 /* inventorydb.sql in Resources */ = {isa = PBXBuildFile; fileRef = 942957211BC3CBF100C35462 /* inventorydb.sql */; };
+		942957251BC3F43C00C35462 /* CheckListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 942957241BC3F43C00C35462 /* CheckListViewController.m */; };
 		942E94361BC01A4A00FB5CD0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 942E94351BC01A4A00FB5CD0 /* main.m */; };
 		942E94391BC01A4A00FB5CD0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 942E94381BC01A4A00FB5CD0 /* AppDelegate.m */; };
 		942E943C1BC01A4A00FB5CD0 /* leoni.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 942E943A1BC01A4A00FB5CD0 /* leoni.xcdatamodeld */; };
@@ -55,6 +56,8 @@
 		9429571D1BC3B7D000C35462 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		9429571F1BC3B7E200C35462 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		942957211BC3CBF100C35462 /* inventorydb.sql */ = {isa = PBXFileReference; lastKnownFileType = file; path = inventorydb.sql; sourceTree = "<group>"; };
+		942957231BC3F43C00C35462 /* CheckListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckListViewController.h; sourceTree = "<group>"; };
+		942957241BC3F43C00C35462 /* CheckListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckListViewController.m; sourceTree = "<group>"; };
 		942E94301BC01A4A00FB5CD0 /* leoni.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = leoni.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		942E94341BC01A4A00FB5CD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		942E94351BC01A4A00FB5CD0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -239,6 +242,8 @@
 				9463F0361BC244BE00280D38 /* CheckViewController.m */,
 				9463F0381BC2450600280D38 /* CheckCreateViewController.h */,
 				9463F0391BC2450600280D38 /* CheckCreateViewController.m */,
+				942957231BC3F43C00C35462 /* CheckListViewController.h */,
+				942957241BC3F43C00C35462 /* CheckListViewController.m */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -424,6 +429,7 @@
 				94A3593A1BC0F208008910EB /* ProfileViewController.m in Sources */,
 				94A359491BC115F4008910EB /* UserEntity.m in Sources */,
 				942E943F1BC01A4A00FB5CD0 /* ViewController.m in Sources */,
+				942957251BC3F43C00C35462 /* CheckListViewController.m in Sources */,
 				94A359401BC10701008910EB /* AFNetHelper.m in Sources */,
 				9463F0341BC20DD600280D38 /* KeychainItemWrapper.m in Sources */,
 				9463F03A1BC2450600280D38 /* CheckCreateViewController.m in Sources */,

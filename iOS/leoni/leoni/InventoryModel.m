@@ -94,7 +94,7 @@
           }];
 }
 
-- (void)createWithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType WithChcekQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser {
+- (void)createWithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType WithChcekQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser block:(void(^)(NSString *, NSError *))block{
     self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
     NSString *query;
     NSString *uuid = [[NSUUID UUID] UUIDString];
@@ -106,14 +106,31 @@
         query = [NSString stringWithFormat:@"insert into inventories values(null, '%@', '%@', '%@', '%@', '%@', '%@', '%@', null, null, null, null, '%@')", department, position, part, partType, checkQty, checkUser, checkTime, uuid];
         [self.db executeQuery:query];
         if (self.db.affectedRows != 0) {
-            NSLog(@"======== success =========");
+//            NSLog(@"======== success =========");
+            NSString *msgString = @"操作成功";
+//            NSLog(@"testing ========= checkWithPosition =======%@", msgString);
+            if (block) {
+                block(msgString, nil);
+            }
         }
         else {
-            NSLog(@"========= failure ========");
+            if (block) {
+                NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo: @"操作失败"];
+                block(nil, error);
+            }
+//            NSLog(@"========= failure ========");
         }
 //    }else {
 //        NSLog(@"somthing is happen");
 //    }
+}
+
+- (NSArray *)getList {
+    self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
+    NSString *query;
+    query = [NSString stringWithFormat:@"select * from inventories where check_qty != ''"];
+    NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: query]];
+    return arrayData;
 }
 
 @end
