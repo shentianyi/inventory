@@ -17,5 +17,6 @@
 - (void)UpdateServerURLwithIP: (NSString *)ipString withProt: (NSString *)portString;
 - (NSString *)login;
 - (NSString *)query;
+- (NSString *)check;
 
 @end

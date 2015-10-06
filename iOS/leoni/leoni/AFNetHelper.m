@@ -33,13 +33,13 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if (![fileManager fileExistsAtPath:path])
     {
-        NSLog(@"===== testing YES");
+//        NSLog(@"===== testing YES");
         
         NSString *bundle = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"plist"];
         [fileManager copyItemAtPath:bundle toPath: path error: nil];
     }
 
-    NSLog(@"===== go testing YES");
+//    NSLog(@"===== go testing YES");
     NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:path];
     NSString *ip = [dict objectForKey:@"ip"];
     NSString *port = [dict objectForKey:@"port"];
@@ -65,10 +65,10 @@
     NSMutableDictionary *plistdict = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
     [plistdict removeObjectForKey: @"ip"];
     [plistdict setObject:ipString forKey:@"ip"];
-    NSLog(@"===== testing %@", ipString);
+//    NSLog(@"===== testing %@", ipString);
     [plistdict removeObjectForKey: @"port"];
     [plistdict setObject:portString forKey:@"port"];
-   NSLog(@"===== testing %@", portString);
+//   NSLog(@"===== testing %@", portString);
     [plistdict writeToFile:path atomically:YES];
     
     
@@ -101,6 +101,13 @@
 - (NSString *)query {
     NSString *server_url = [self ServerURL];
     NSString *url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"query"]];
+    return [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+}
+
+- (NSString *)check {
+    NSString *server_url = [self ServerURL];
+    NSString *url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"check"]];
     return [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
 }

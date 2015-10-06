@@ -35,8 +35,7 @@ module V1
       end
       post :check_data do
         puts "======testing"
-        inventory = Inventory.check_for_search(params[:position])
-        
+        inventory = Inventory.check_for_search(params[:position])      
         if inventory.present?
           if inventory.count == 1
             if inventory[0].update!(check_qty: params[:check_qty],  check_user: params[:check_user], check_time: params[:check_time])
