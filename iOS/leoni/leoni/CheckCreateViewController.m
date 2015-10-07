@@ -19,6 +19,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+    
+    
+}
+
+-(void)dismissKeyboard {
+    NSArray *subviews = [self.view subviews];
+    for (id objInput in subviews) {
+        if ([objInput isKindOfClass:[UITextField class]]) {
+            UITextField *theTextField = objInput;
+            if ([objInput isFirstResponder]) {
+                [theTextField resignFirstResponder];
+            }
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -102,7 +118,9 @@
     if (textField == self.positionTextField) {
         [self validPosition:textField];
     }
+    [textField resignFirstResponder];
     return NO;
+    
 }
 
 /*
@@ -120,7 +138,7 @@
     hud.labelText = @"加载中...";
     
     if ([self isPureFloat:self.checkQtyTextField.text] || [self isPureInt:self.checkQtyTextField.text]){
-        if ([self validPosition:self.positionTextField]) {
+//        if ([self validPosition:self.positionTextField]) {
             InventoryModel *inventory = [[InventoryModel alloc] init];
             KeychainItemWrapper *keyChain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
             [inventory createWithPosition:self.positionTextField.text WithPart:self.partTextField.text WithDepartment:self.departmentTextField.text WithPartType:self.partTypeTextField.text WithChcekQty:self.checkQtyTextField.text WithCheckUser: [keyChain objectForKey:(__bridge  id)kSecAttrAccount] block:^(NSString *msgString, NSError *error){
@@ -132,15 +150,22 @@
                     
                 }
                 else {
-                    
+                    NSArray *subviews = [self.view subviews];
+                    for (id objInput in subviews) {
+                        if ([objInput isKindOfClass:[UITextField class]]) {
+                            UITextField *theTextField = objInput;
+                            theTextField.text = @"";
+                        }
+                    }
+                    [self.positionTextField isFirstResponder];
                 }
             }];
 
-        }
-        else
-        {
-        
-        }
+//        }
+//        else
+//        {
+//        
+//        }
     }
     else {
         hud.mode = MBProgressHUDModeText;

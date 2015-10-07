@@ -12,7 +12,8 @@
 @interface CheckListViewController ()
 
 @property(nonatomic, strong) UITableView *table;
-@property (nonatomic, strong) NSArray* arrayInventories;
+@property (nonatomic, strong) NSMutableArray* arrayInventories;
+@property (nonatomic, strong) NSMutableArray *searchResult;
 @end
 
 @implementation CheckListViewController
@@ -21,6 +22,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self loadData];
+//    
+//    UISearchBar *searchBar = [UISearchBar new];
+////    searchBar.showsCancelButton = YES;
+//    searchBar.translucent = NO;
+//    [searchBar sizeToFit];
+//    UIView *barWrapper = [[UIView alloc]initWithFrame:searchBar.bounds];
+//    [barWrapper addSubview:searchBar];
+//    self.navigationItem.titleView = barWrapper;
+    
+    UISearchBar  *sBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,10,self.navigationController.navigationBar.bounds.size.width,self.navigationController.navigationBar.bounds.size.height/2)];
+    sBar.delegate = self;
+    [self.navigationController.navigationBar addSubview:sBar];
+    
+    self.searchResult = [NSMutableArray arrayWithCapacity:[self.arrayInventories count]];
+ 
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,16 +54,17 @@
     self.table.delegate=self;
     self.table.dataSource=self;
     [self.view addSubview:self.table];
+    CGRect rect = self.navigationController.navigationBar.frame;
     
-//    _dataArray = [[NSMutableArray alloc]init];
-//    _currentPage = 1;
-//    _socialModel = [[Social alloc] init];
-//    
-}
+    float y = rect.size.height + rect.origin.y;
+    self.table.contentInset = UIEdgeInsetsMake(y, 0, 0, 0);
+    }
 
 - (void)loadData {
+    self.arrayInventories = [[NSMutableArray alloc]init];
     InventoryModel *inventory = [[InventoryModel alloc] init];
     self.arrayInventories = [inventory getList];
+    
     [self.table reloadData];
 }
 
@@ -58,8 +75,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.arrayInventories.count;
-//    return 1;
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        return [self.searchResult count];
+    }
+    else
+    {
+        NSLog(@"===  %d",self.arrayInventories.count);
+        return self.arrayInventories.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -71,15 +95,41 @@
     // Using a cell identifier will allow your app to reuse cells as they come and go from the screen.
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifer];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifer];
     }
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", [self.arrayInventories objectAtIndex:indexPath.row]];
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        cell.textLabel.text = [self.searchResult objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        InventoryEntity *entity = self.arrayInventories[indexPath.row];
+        NSLog(@"entity %@%@", entity.position, entity.part);
+        cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@ 零件: %@", indexPath.row+1, entity.position, entity.part];
     
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"Age: %@", [[self.arrPeopleInfo objectAtIndex:indexPath.row] objectAtIndex:indexOfAge]];
-    
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘数量: %@ 抽盘数量: %@", entity.check_qty, @""];
+        UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 18.0 ];
+        cell.textLabel.font  = myFont;
+        cell.detailTextLabel.font = myFont;
+    }
     return cell;
     
+}
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    [self.searchResult removeAllObjects];
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF contains[c] %@", searchText];
+    
+    self.searchResult = [NSMutableArray arrayWithArray: [self.arrayInventories filteredArrayUsingPredicate:resultPredicate]];
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    
+    return YES;
 }
 
 /*

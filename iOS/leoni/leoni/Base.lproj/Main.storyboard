@@ -798,20 +798,11 @@
             </objects>
             <point key="canvasLocation" x="3588" y="-186"/>
         </scene>
-        <!--列表-->
+        <!--Check List View Controller-->
         <scene sceneID="GIm-Py-Vt3">
             <objects>
                 <viewController id="nCU-aW-g79" customClass="CheckListViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="nPc-Y8-WQd"/>
-                        <viewControllerLayoutGuide type="bottom" id="MJF-Bd-g48"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Rvp-EK-Qfm">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="列表" id="gyA-RL-pxo"/>
+                    <navigationItem key="navigationItem" id="gyA-RL-pxo"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mf8-ZI-t6y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

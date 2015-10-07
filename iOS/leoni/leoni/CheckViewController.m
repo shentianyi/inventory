@@ -130,6 +130,7 @@
                 
             }
             else {
+                
                 //                self.positionTextField.text = self.departmentTextField.text = self.partTextField.text = self.
                 NSArray *subviews = [self.view subviews];
                 for (id objInput in subviews) {

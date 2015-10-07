@@ -14,8 +14,14 @@
 @property (nonatomic, copy) NSString *department;
 @property (nonatomic, copy) NSString *part;
 @property (nonatomic, copy) NSString *part_type;
+@property (nonatomic, copy) NSString *check_qty;
+@property (nonatomic, copy) NSString *check_user;
+@property (nonatomic, copy) NSString *check_time;
+@property (nonatomic, copy) NSString *ios_created_id;
 
 - (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type;
+
+- (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser WithCheckTime: (NSString *)checkTime WithiOSCreatedID: (NSString *)iOSCreatedId;
 
 - (id)initWithObject: (NSDictionary *)dictionary;
 
