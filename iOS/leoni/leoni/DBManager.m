@@ -105,11 +105,15 @@
                     for (int i=0; i<totalColumns; i++){
                         // Convert the column data to text (characters).
                         char *dbDataAsChars = (char *)sqlite3_column_text(compiledStatement, i);
-                        
+
+
                         // If there are contents in the currenct column (field) then add them to the current row array.
                         if (dbDataAsChars != NULL) {
                             // Convert the characters to string.
                             [arrDataRow addObject:[NSString  stringWithUTF8String:dbDataAsChars]];
+                        }else
+                        {
+                           [arrDataRow addObject:[NSString  stringWithFormat:@""]];
                         }
                         
                         // Keep the current column name.
