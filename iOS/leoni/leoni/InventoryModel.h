@@ -22,6 +22,6 @@
 
 - (void)createWithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType WithChcekQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser block:(void(^)(NSString *msgString, NSError *error))block;
 
-- (NSMutableArray *)getList;
+- (NSMutableArray *)getListWithPosition: (NSString *)position;
 
 @end

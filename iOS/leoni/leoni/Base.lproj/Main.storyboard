@@ -380,8 +380,8 @@
                     <connections>
                         <segue destination="fHg-Wc-AMn" kind="relationship" relationship="viewControllers" id="mXZ-yR-YkB"/>
                         <segue destination="uzC-7m-RKh" kind="relationship" relationship="viewControllers" id="Fb6-eA-iYC"/>
-                        <segue destination="1TF-lb-wOF" kind="relationship" relationship="viewControllers" id="BCT-ss-IRJ"/>
                         <segue destination="Rg1-g4-pmd" kind="relationship" relationship="viewControllers" id="vIE-r3-VM0"/>
+                        <segue destination="1TF-lb-wOF" kind="relationship" relationship="viewControllers" id="BCT-ss-IRJ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i1S-x5-znX" userLabel="First Responder" sceneMemberID="firstResponder"/>

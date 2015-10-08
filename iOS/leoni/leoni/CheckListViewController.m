@@ -14,6 +14,7 @@
 @property(nonatomic, strong) UITableView *table;
 @property (nonatomic, strong) NSMutableArray* arrayInventories;
 @property (nonatomic, strong) NSMutableArray *searchResult;
+@property (nonatomic,strong) UISearchBar *searchBar;
 @end
 
 @implementation CheckListViewController
@@ -31,9 +32,11 @@
 //    [barWrapper addSubview:searchBar];
 //    self.navigationItem.titleView = barWrapper;
     
-    UISearchBar  *sBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,10,self.navigationController.navigationBar.bounds.size.width,self.navigationController.navigationBar.bounds.size.height/2)];
-    sBar.delegate = self;
-    [self.navigationController.navigationBar addSubview:sBar];
+    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,10,self.navigationController.navigationBar.bounds.size.width,self.navigationController.navigationBar.bounds.size.height/2)];
+    self.searchBar.showsCancelButton = YES;
+    self.searchBar.delegate = self;
+    [self.searchBar setPlaceholder:@"搜索库位"];
+    [self.navigationController.navigationBar addSubview:self.searchBar];
     
     self.searchResult = [NSMutableArray arrayWithCapacity:[self.arrayInventories count]];
  
@@ -63,7 +66,7 @@
 - (void)loadData {
     self.arrayInventories = [[NSMutableArray alloc]init];
     InventoryModel *inventory = [[InventoryModel alloc] init];
-    self.arrayInventories = [inventory getList];
+    self.arrayInventories = [inventory getListWithPosition:@""];
     
     [self.table reloadData];
 }
@@ -84,6 +87,13 @@
         NSLog(@"===  %d",self.arrayInventories.count);
         return self.arrayInventories.count;
     }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *sectionName = [NSString stringWithFormat: @"已盘点%ld", (long)self.arrayInventories.count];
+    
+    return sectionName;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -117,8 +127,27 @@
     
 }
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder];
+    //Do some search
+    NSLog(@"=== testing search %@", searchBar.text);
+    InventoryModel *inventory = [[InventoryModel alloc] init];
+    self.arrayInventories = [inventory getListWithPosition:self.searchBar.text];
+    
+    [self.table reloadData];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+//    [searchBar resignFirstResponder];
+//    [searchBar setShowsCancelButton:NO animated:YES];
+//    NSLog(@"=== testing cancel ");
+    [self loadData];
+}
+
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
+    
+    NSLog(@"=== testing search");
     [self.searchResult removeAllObjects];
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF contains[c] %@", searchText];
     
@@ -127,6 +156,7 @@
 
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
+    NSLog(@"=== testing search");
     [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     
     return YES;

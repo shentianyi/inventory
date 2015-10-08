@@ -126,10 +126,16 @@
 //    }
 }
 
-- (NSMutableArray *)getList {
+- (NSMutableArray *)getListWithPosition: (NSString *)position {
     self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
     NSString *query;
-    query = [NSString stringWithFormat:@"select * from inventories where check_qty != '' order by check_time desc"];
+    if ([position isEqualToString:@""]) {
+        query = [NSString stringWithFormat:@"select * from inventories where check_qty != '' order by check_time desc"];
+    }
+    else {
+        query = [NSString stringWithFormat:@"select * from inventories where position like '%%%@%%' and check_qty != '' order by check_time desc", position];
+    }
+    NSLog(@"=== test query %@", query);
     NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: query]];
     
     NSMutableArray *tableArray = [[NSMutableArray alloc] init];
