@@ -382,6 +382,7 @@
                         <segue destination="uzC-7m-RKh" kind="relationship" relationship="viewControllers" id="Fb6-eA-iYC"/>
                         <segue destination="Rg1-g4-pmd" kind="relationship" relationship="viewControllers" id="vIE-r3-VM0"/>
                         <segue destination="1TF-lb-wOF" kind="relationship" relationship="viewControllers" id="BCT-ss-IRJ"/>
+                        <segue destination="RfL-73-Gsu" kind="relationship" relationship="viewControllers" id="76L-c9-hDt"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i1S-x5-znX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -548,7 +549,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QQ0-FK-EnM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4941" y="-427"/>
+            <point key="canvasLocation" x="4351" y="-835"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eHN-Ro-0hU">
@@ -747,7 +748,50 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1le-Zu-5mU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5646" y="349"/>
+            <point key="canvasLocation" x="4351" y="-186"/>
+        </scene>
+        <!--全盘-->
+        <scene sceneID="HFi-nT-XVf">
+            <objects>
+                <viewController id="8qB-VB-D9U" customClass="CheckSynchronizeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3l6-xO-HzR"/>
+                        <viewControllerLayoutGuide type="bottom" id="9ZT-ho-Gqm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2V6-aU-yzJ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iqV-yb-4Mq">
+                                <rect key="frame" x="150" y="169" width="300" height="40"/>
+                                <color key="backgroundColor" red="0.34018288000000002" green="0.73630819520000002" blue="0.37557483359999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="下载数据">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="downloadAction:" destination="8qB-VB-D9U" eventType="touchUpInside" id="jHp-b7-GPP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPQ-Es-YtL">
+                                <rect key="frame" x="150" y="285" width="300" height="40"/>
+                                <color key="backgroundColor" red="0.96470588239999999" green="0.58418863060000004" blue="0.1336645638" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="上传数据">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="uploadAction:" destination="8qB-VB-D9U" eventType="touchUpInside" id="orT-q0-abF"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="全盘" id="lfR-Hm-C5f"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3zV-uP-Dq1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6150" y="673"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="6Im-Qf-3SL">
@@ -777,7 +821,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cxk-w9-45w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6492" y="935"/>
+            <point key="canvasLocation" x="4900" y="1405"/>
         </scene>
         <!--录入-->
         <scene sceneID="TRM-Bg-mHm">
@@ -863,6 +907,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Ly-C9-GBt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3588" y="480"/>
+        </scene>
+        <!--数据-->
+        <scene sceneID="cxW-z2-afZ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RfL-73-Gsu" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="数据" id="w97-R0-E58"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sJm-7C-ktX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="8qB-VB-D9U" kind="relationship" relationship="rootViewController" id="K3R-uF-kOz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cRR-Po-0rM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5338" y="673"/>
         </scene>
     </scenes>
 </document>

@@ -36,6 +36,7 @@
 		94A359451BC109B7008910EB /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359441BC109B7008910EB /* UserModel.m */; };
 		94A359491BC115F4008910EB /* UserEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359481BC115F4008910EB /* UserEntity.m */; };
 		94A3594C1BC121EE008910EB /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A3594B1BC121EE008910EB /* MBProgressHUD.m */; };
+		94D29B701BC89A2F00313DC7 /* CheckSynchronizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94D29B6F1BC89A2F00313DC7 /* CheckSynchronizeViewController.m */; };
 		FD4E319BD32BEE598B283BDF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DD0E03D04E30B34C3CA012 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +105,8 @@
 		94A359481BC115F4008910EB /* UserEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserEntity.m; sourceTree = "<group>"; };
 		94A3594A1BC121EE008910EB /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		94A3594B1BC121EE008910EB /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		94D29B6E1BC89A2F00313DC7 /* CheckSynchronizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckSynchronizeViewController.h; sourceTree = "<group>"; };
+		94D29B6F1BC89A2F00313DC7 /* CheckSynchronizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckSynchronizeViewController.m; sourceTree = "<group>"; };
 		94EE4129EF8FEB5C1ADB5023 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -244,6 +247,8 @@
 				9463F0391BC2450600280D38 /* CheckCreateViewController.m */,
 				942957231BC3F43C00C35462 /* CheckListViewController.h */,
 				942957241BC3F43C00C35462 /* CheckListViewController.m */,
+				94D29B6E1BC89A2F00313DC7 /* CheckSynchronizeViewController.h */,
+				94D29B6F1BC89A2F00313DC7 /* CheckSynchronizeViewController.m */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -435,6 +440,7 @@
 				9463F03A1BC2450600280D38 /* CheckCreateViewController.m in Sources */,
 				9429571E1BC3B7D000C35462 /* DBManager.m in Sources */,
 				94A3593D1BC0F7EA008910EB /* DashboardProfileViewController.m in Sources */,
+				94D29B701BC89A2F00313DC7 /* CheckSynchronizeViewController.m in Sources */,
 				9463F0461BC297A900280D38 /* InventoryEntity.m in Sources */,
 				94A359451BC109B7008910EB /* UserModel.m in Sources */,
 				9463F03D1BC27B0400280D38 /* InventoryModel.m in Sources */,

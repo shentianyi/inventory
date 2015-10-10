@@ -84,11 +84,11 @@ module V1
         requires :check_qty, type: String
         requires :check_user, type: String
         requires :check_time, type: String
-        requires :ios_created_id: type: String
+        requires :ios_created_id, type: String
       end
       post :upload_check_data do
         if params[:id].blank?
-          inventory = Inventory.new(department: params[:department], position: params[:position], part: params[:part], part_type: params[:part_type], check_qty: param[:check_qty], check_user: params[:check_user]. check_time: params[:check_time], ios_created_id: params[:ios_created_id])
+          inventory = Inventory.new(department: params[:department], position: params[:position], part: params[:part], part_type: params[:part_type], check_qty: param[:check_qty], check_user: params[:check_user], check_time: params[:check_time], ios_created_id: params[:ios_created_id])
           if inventory.save!
             {result:1, content: inventory}
           else
@@ -96,7 +96,7 @@ module V1
           end
         else
           inventory = Inventory.find(params[:id])
-          if inventory.update!(check_qty: param[:check_qty], check_user: params[:check_user]. check_time: params[:check_time])
+          if inventory.update!(check_qty: param[:check_qty], check_user: params[:check_user], check_time: params[:check_time])
             {result:1, content: inventory}
           else
             {result:0, content: '更新数据失败'}
