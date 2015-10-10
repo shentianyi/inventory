@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CheckSynchronizeViewController : UIViewController
+@interface CheckSynchronizeViewController : UIViewController<UIAlertViewDelegate>
 - (IBAction)downloadAction:(id)sender;
 - (IBAction)uploadAction:(id)sender;
-
+@property (nonatomic, strong ) UIProgressView *progressView;
+@property (nonatomic, strong) NSTimer *myTimer;
 @end
