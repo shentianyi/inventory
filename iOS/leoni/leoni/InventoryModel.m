@@ -156,13 +156,86 @@
         
         NSString *ios_created_id = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"ios_created_id"]];
 //         NSString *ios_created_id = @"";
-//        NSString *idString = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"id"]];
-        InventoryEntity *entity = [[InventoryEntity alloc] initWithPosition:position withDepartment:department withPart:part withPartType:part_type WithCheckQty:check_qty WithCheckUser:check_user WithCheckTime:check_time WithiOSCreatedID:ios_created_id];
+        NSString *idString = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"id"]];
+        InventoryEntity *entity = [[InventoryEntity alloc] initWithPosition:position withDepartment:department withPart:part withPartType:part_type WithCheckQty:check_qty WithCheckUser:check_user WithCheckTime:check_time WithiOSCreatedID:ios_created_id WithID:idString];
          NSLog(@"========= %@,%@,%@,%@,time:%@",position, department, check_qty, check_user, check_time);
         [tableArray addObject:entity];
-//        NSLog(@" numutable %d", [tableArray count]);
+       NSLog(@" numutable %d", [tableArray count]);
     }
     return tableArray;
+}
+
+
+- (BOOL)uploadCheckData: (InventoryEntity *)entity {
+//    NSMutableArray *tableArray = [[NSMutableArray alloc] init];
+//    tableArray = [self getListWithPosition:@""];
+    __block BOOL boolResult = false;
+    AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
+//    NSInteger countInt = 0;
+//    countInt = [tableArray count];
+//    for (int i=0; i< [tableArray count]; i++) {
+    InventoryEntity *inventory = [[InventoryEntity alloc] init];
+//        inventory = tableArray[i];
+    inventory = entity;
+    [manager POST:[self.afnet uploadCheckData]
+           parameters:@{@"id" : inventory.inventory_id, @"department" : inventory.department, @"position" : inventory.position, @"part" : inventory.part, @"part_type" : inventory.part_type, @"check_qty" : inventory.check_qty, @"check_user" : inventory.check_user, @"check_time" :inventory.check_time, @"ios_created_id" : inventory.ios_created_id}
+              success:^(AFHTTPRequestOperation * operation, id responseObject) {
+                  NSLog(@"testing ========= checkWithPosition =======%@", responseObject);
+                  if([responseObject[@"result"] integerValue]== 1 ){
+//                      NSString *msgString = responseObject[@"content"];
+                      NSLog(@"========= upload =======%@", inventory.ios_created_id);
+//                      
+//                      if (block) {
+//                          block(countInt, nil);
+//                      }
+                      boolResult = true;
+                  }
+//                  else {
+//                      NSLog(@"=======error ios_created_id is %@", inventory.ios_created_id);
+//                      NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:responseObject[@"content"]];
+////                      if (block) {
+////                          block(-1, error);
+////                      }
+//                  }
+                  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  
+//                  if (block) {
+//                      block(-1, error);
+//                  }
+
+              }];
+    return boolResult;
+
+
+}
+
+- (NSInteger)getTotal {
+    __block NSInteger intTotal = 0;
+    AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
+    [manager POST:[self.afnet getTotal]
+       parameters:@{}
+          success:^(AFHTTPRequestOperation * operation, id responseObject) {
+              NSLog(@"log =========  getTotal =======%@", responseObject);
+
+              if([responseObject[@"result"] integerValue]== 1 ){
+                  intTotal = responseObject[@"content"];
+              }
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              //                  if (block) {
+              //                      block(-1, error);
+              //                  }
+              
+          }];
+    return intTotal;
+}
+
+- (void)downloadCheckData {
+    
 }
 
 @end

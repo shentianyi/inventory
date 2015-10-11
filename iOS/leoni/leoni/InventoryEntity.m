@@ -21,7 +21,7 @@
     return self;
 }
 
-- (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser WithCheckTime: (NSString *)checkTime WithiOSCreatedID: (NSString *)iOSCreatedId {
+- (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser WithCheckTime: (NSString *)checkTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID:(NSString *)idString {
     self = [super init];
     if (self) {
         self.position = position;
@@ -32,6 +32,7 @@
         self.check_user = checkUser;
         self.check_time = checkTime;
         self.ios_created_id = iOSCreatedId;
+        self.inventory_id = idString;
 
     }
     return self;

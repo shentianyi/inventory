@@ -18,5 +18,9 @@
 - (NSString *)login;
 - (NSString *)query;
 - (NSString *)check;
+- (NSString *)uploadCheckData;
+- (NSString *)getTotal;
+- (NSString *)downloadCheckData;
+
 
 @end

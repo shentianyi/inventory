@@ -7,6 +7,8 @@
 //
 
 #import "CheckSynchronizeViewController.h"
+#import "InventoryModel.h"
+#import "MBProgressHUD.h"
 
 @interface CheckSynchronizeViewController ()
 @property (nonatomic, strong) UIAlertView *downloadAlert;
@@ -63,21 +65,54 @@
     if (alertView == self.uploadAlert) {
         if(buttonIndex == 0){
             NSLog(@"0");
-            self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateUI:) userInfo:nil repeats:YES]; 
+            self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(uploadUpdateUI: ) userInfo:nil repeats:YES];
             [self.progressView setHidden: NO];
-            
         }
-
         else if(buttonIndex == 1){
             NSLog(@"1");
         }
     } else {
-        
+        if(buttonIndex == 0){
+            
+            self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(downloadUpdateUI:) userInfo:nil repeats:YES];
+            [self.progressView setHidden: NO];
+
+        }
     }
     
 }
 
-- (void)updateUI:(NSTimer *)timer
+
+
+- (void)uploadUpdateUI:(NSTimer *)timer
+{
+    InventoryModel *model = [[InventoryModel alloc] init];
+    NSMutableArray *tableArray = [[NSMutableArray alloc] init];
+    tableArray = [model getListWithPosition:@""];
+
+//    static int count =0; count++;
+    
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"加载中...";
+
+    NSInteger countInt = 0;
+    countInt = [tableArray count];
+    if (countInt > 0) {
+        [hud hide:YES afterDelay:1.5f];
+        
+        for (int i=0; i< [tableArray count]; i++) {
+            InventoryEntity *entity =tableArray[i];
+            [model uploadCheckData: entity];
+            self.progressView.progress = (float)i/countInt;
+        }
+        [self.myTimer invalidate];
+        self.myTimer = nil;
+
+    }
+    
+}
+
+- (void)downloadUpdateUI:(NSTimer *)timer
 {
     static int count =0; count++;
     
@@ -88,7 +123,7 @@
     {
         [self.myTimer invalidate];
         self.myTimer = nil;
-    } 
+    }
 }
 
 - (IBAction)uploadAction:(id)sender {

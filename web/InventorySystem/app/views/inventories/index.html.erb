@@ -63,7 +63,7 @@
         <td><%= inventory.check_time.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%= inventory.random_check_qty %></td>
         <td><%= inventory.random_check_user %></td>
-        <td><%= inventory.random_check_time.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= inventory.random_check_time.strftime("%Y-%m-%d %H:%M:%S") if !inventory.random_check_time.nil? %></td>
         <td><%= inventory.is_random_check %></td>
         <td><%= inventory.ios_created_id %></td>
         <td><%= link_to 'Show', inventory %></td>

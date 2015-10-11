@@ -10,6 +10,7 @@
 
 @interface InventoryEntity : NSObject
 
+@property (nonatomic, copy) NSString *inventory_id;
 @property (nonatomic, copy) NSString *position;
 @property (nonatomic, copy) NSString *department;
 @property (nonatomic, copy) NSString *part;
@@ -21,7 +22,7 @@
 
 - (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type;
 
-- (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser WithCheckTime: (NSString *)checkTime WithiOSCreatedID: (NSString *)iOSCreatedId;
+- (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser WithCheckTime: (NSString *)checkTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID: (NSString *)idString;
 
 - (id)initWithObject: (NSDictionary *)dictionary;
 

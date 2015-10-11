@@ -53,7 +53,7 @@ module V1
       
       desc "get checkdata page size"
       get :get_total do
-        inventories = Inventory.check.paginate(page: params[:page])
+        inventories = Inventory.check)
         if inventories.present?
           {result:1, content: inventories.total_pages}
         else
@@ -65,7 +65,7 @@ module V1
       params do
         requires :page, type: String
       end
-      get :down_check_data do
+      get :download_check_data do
         inventories = Inventory.check.paginate(page: params[:page])
         if inventories.present?
           {result:1, content: inventories}
@@ -88,7 +88,7 @@ module V1
       end
       post :upload_check_data do
         if params[:id].blank?
-          inventory = Inventory.new(department: params[:department], position: params[:position], part: params[:part], part_type: params[:part_type], check_qty: param[:check_qty], check_user: params[:check_user], check_time: params[:check_time], ios_created_id: params[:ios_created_id])
+          inventory = Inventory.new(department: params[:department], position: params[:position], part: params[:part], part_type: params[:part_type], check_qty: params[:check_qty], check_user: params[:check_user], check_time: params[:check_time], ios_created_id: params[:ios_created_id])
           if inventory.save!
             {result:1, content: inventory}
           else
@@ -96,10 +96,12 @@ module V1
           end
         else
           inventory = Inventory.find(params[:id])
-          if inventory.update!(check_qty: param[:check_qty], check_user: params[:check_user], check_time: params[:check_time])
-            {result:1, content: inventory}
-          else
-            {result:0, content: '更新数据失败'}
+          if inventory.present?
+            if inventory.update!(check_qty: params[:check_qty], check_user: params[:check_user], check_time: params[:check_time])
+              {result:1, content: inventory}
+            else
+              {result:0, content: '更新数据失败'}
+            end
           end
         end
       end

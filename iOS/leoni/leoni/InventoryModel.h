@@ -24,4 +24,8 @@
 
 - (NSMutableArray *)getListWithPosition: (NSString *)position;
 
+- (BOOL)uploadCheckData: (InventoryEntity *)entity;
+
+
+
 @end
