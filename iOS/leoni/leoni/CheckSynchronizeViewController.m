@@ -10,9 +10,11 @@
 #import "InventoryModel.h"
 #import "MBProgressHUD.h"
 
+
 @interface CheckSynchronizeViewController ()
 @property (nonatomic, strong) UIAlertView *downloadAlert;
 @property (nonatomic, strong) UIAlertView *uploadAlert;
+@property NSInteger integerCount;
 @end
 
 @implementation CheckSynchronizeViewController
@@ -37,6 +39,7 @@
     self.progressView.center = self.view.center;
     [self.view addSubview:self.progressView];
     [self.progressView setHidden:YES];
+    self.integerCount = 0;
 
 }
 
@@ -114,19 +117,103 @@
 
 - (void)downloadUpdateUI:(NSTimer *)timer
 {
-    static int count =0; count++;
+//    static int count =0; count++;
+//    
+//    if (count <=10)
+//    {
+//        self.progressView.progress = (float)count/10.0f;
+//    } else
+//    {
+//        [self.myTimer invalidate];
+//        self.myTimer = nil;
+//    }
     
-    if (count <=10)
-    {
-        self.progressView.progress = (float)count/10.0f;
-    } else
-    {
-        [self.myTimer invalidate];
-        self.myTimer = nil;
-    }
+    [self downloadCheckData];
+//    [self.myTimer invalidate];
+//    self.myTimer = nil;
 }
 
 - (IBAction)uploadAction:(id)sender {
     [self.uploadAlert show];
 }
+
+- (void)downloadCheckData {
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    hud.labelText = @"加载中...";
+    InventoryModel *model = [[InventoryModel alloc] init];
+//    [model webGetListWithPage: 1 block:^(NSMutableArray *tableArray, NSInteger intCount, NSError *error) {
+//        if (intCount >0) {
+//            [hud hide:YES];
+//            // 清空本地数据
+//            [model localDeleteData:@""];
+//            for (int i = 0; i < intCount; i++){
+//                self.progressView.progress = (float)i/checkDataCount;
+//                // 翻页获取web数据
+//                [model webGetListWithPage:i block:^(NSMutableArray *tableArray, NSError *error) {
+//                    NSMutableArray *tableArrayData = tableArray;
+//                    if ([tableArrayData count] > 0) {
+//                        for (int j =0; j< [tableArrayData count]; j++) {
+//                            InventoryEntity *entity = [[InventoryEntity alloc] init];
+//                            entity = tableArrayData[j];
+//                            // 插入本地数据
+//                            [model localCreateCheckData:entity];
+//                        }
+//                    }
+//                }];
+//                
+//            }
+//        }else{
+//            hud.mode = MBProgressHUDModeText;
+//            hud.labelText = @"服务端暂无数据";
+//            [hud hide:YES afterDelay:1.5f];
+//            
+//        }
+//
+//    }];
+      [model getTotalBlock:^(NSInteger intCount, NSError *error) {
+          if (intCount > 0) {
+              
+              self.integerCount = intCount;
+              NSLog(@"testing ===   self.integerCount %d", self.integerCount);
+//        }else{
+//            hud.mode = MBProgressHUDModeText;
+//            hud.labelText = @"服务端暂无数据";
+//            [hud hide:YES afterDelay:1.5f];
+//            
+//        }
+//
+//    }];
+          }
+          else {
+              NSLog(@"testing ===   count < 0");
+          }
+      }];
+    if (self.integerCount >0) {
+//                [hud hide:YES];
+                // 清空本地数据
+        [model localDeleteData:@""];
+        for (int i = 1; i < self.integerCount + 1; i++){
+            self.progressView.progress = (float)i/self.integerCount;
+                        // 翻页获取web数据
+                        [model webGetListWithPage:i block:^(NSMutableArray *tableArray, NSError *error) {
+                            NSMutableArray *tableArrayData = tableArray;
+                            if ([tableArrayData count] > 0) {
+                                for (int j =0; j< [tableArrayData count]; j++) {
+                                    InventoryEntity *entity = [[InventoryEntity alloc] init];
+                                    entity = tableArrayData[j];
+                                    // 插入本地数据
+                                    [model localCreateCheckData:entity];
+                                }
+                            }
+                        }];
+                        
+        }
+        [self.myTimer invalidate];
+        self.myTimer = nil;
+
+    }
+
+    
+}
+
 @end

@@ -19,6 +19,11 @@
 @property (nonatomic, copy) NSString *check_user;
 @property (nonatomic, copy) NSString *check_time;
 @property (nonatomic, copy) NSString *ios_created_id;
+@property (nonatomic, copy) NSString *random_check_qty;
+@property (nonatomic, copy) NSString *random_check_user;
+@property (nonatomic, copy) NSString *random_check_time;
+@property (nonatomic, copy) NSString *is_random_check;
+
 
 - (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type;
 

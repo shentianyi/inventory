@@ -211,18 +211,75 @@
 
 }
 
-- (NSInteger)getTotal {
-    __block NSInteger intTotal = 0;
+- (void)getTotalBlock:(void (^)(NSInteger, NSError *))block {
+    
     AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
-    [manager POST:[self.afnet getTotal]
-       parameters:@{}
+    [manager GET:[self.afnet getTotal]
+       parameters:nil
           success:^(AFHTTPRequestOperation * operation, id responseObject) {
               NSLog(@"log =========  getTotal =======%@", responseObject);
-
               if([responseObject[@"result"] integerValue]== 1 ){
-                  intTotal = responseObject[@"content"];
+                  
+                  NSInteger intTotal = 0;
+                  intTotal = [responseObject[@"content"] integerValue];
+                  if (block) {
+                      block(intTotal, nil);
+                  }
+                  
+              }else {
+                  if (block) {
+                      block(-1, nil);
+                  }
               }
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               
+              if (block) {
+                  block(-1, error);
+              }
+          NSLog(@"log =========  getTotal =======%@", error.description);
+          }];
+}
+
+//- (NSInteger)getTotal {
+//    int i = 0;
+//    AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
+//    [manager GET:[self.afnet getTotal]
+//      parameters:nil
+//         success:^(AFHTTPRequestOperation * operation, id responseObject) {
+//             if([responseObject[@"result"] integerValue]== 1 ){
+//                 int intTotal = 0;
+//                 intTotal = responseObject[@"content"];
+//                 i = intTotal;
+//            }
+//         }
+//         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//         }];
+//}
+
+
+- (void)webGetListWithPage:(NSInteger )page block:(void (^)(NSMutableArray *, NSError *))block {
+    NSString *strPage = [NSString stringWithFormat:@"%ld", (long)page];
+//    __block NSMutableArray *tableData = [[NSMutableArray alloc] init];
+    AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
+    [manager POST:[self.afnet downloadCheckData]
+       parameters:@{@"page": strPage }
+          success:^(AFHTTPRequestOperation * operation, id responseObject) {
+              NSLog(@"log =========  downloadCheckData =======%@", responseObject);
+              
+              if([responseObject[@"result"] integerValue]== 1 ){
+                  NSArray *arrayResult = responseObject[@"content"];
+                  NSMutableArray *tableData = [[NSMutableArray alloc] init];
+//                  NSInteger count = responseObject[@"total_pages"];
+
+                  for(int i=0; i<arrayResult.count; i++){
+                      InventoryEntity *entity=[[InventoryEntity alloc] initWithObject:arrayResult[i]];
+                      [tableData addObject:entity];
+                  }
+                  if (block) {
+                      block(tableData,nil);
+                  }
+              }
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               
@@ -231,11 +288,56 @@
               //                  }
               
           }];
-    return intTotal;
+//    return tableData;
 }
 
 - (void)downloadCheckData {
     
+}
+
+/*
+ 本地清空数据
+ Ryan 2015.10.12
+
+ */
+- (void)localDeleteData: (NSString *)strPosition {
+    self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
+    NSString *query;
+    if ([strPosition isEqualToString:@""]) {
+        query = [NSString stringWithFormat:@"delete from inventories"];
+    }
+    else {
+        query = [NSString stringWithFormat:@"select from inventories where position like '%%%@%%' ", strPosition];
+    }
+    
+//    NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: query]];
+    [self.db executeQuery:query];
+    NSLog(@"=== test query %@", query);
+}
+
+/*
+ 本地创建全盘数据
+ Ryan 2015.10.12
+ */
+- (void)localCreateCheckData: (InventoryEntity *)entity {
+    self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
+    NSString *query;
+//    NSString *uuid = [[NSUUID UUID] UUIDString];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    NSString *checkTime = [NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:[NSDate date]]];
+//    
+    //    if (self.recordIDToEdit == -1) {
+    query = [NSString stringWithFormat:@"insert into inventories (id, department, position, part, part_type, check_qty, check_user, check_time, random_check_qty, random_check_user, random_check_time, is_random_check, ios_created_id) values('%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@')", entity.inventory_id, entity.department, entity.position, entity.part, entity.part_type, entity.check_qty, entity.check_user, entity.check_time, entity.random_check_qty, entity.random_check_user, entity.random_check_time, entity.ios_created_id];
+    NSLog(@"===== query is %@", query);
+    [self.db executeQuery:query];
+    if (self.db.affectedRows != 0) {
+        NSLog(@"======== success position %@=========", entity.position);
+        
+    }
+    else {
+        NSLog(@"======== fail position %@=========", entity.position);
+    }
 }
 
 @end

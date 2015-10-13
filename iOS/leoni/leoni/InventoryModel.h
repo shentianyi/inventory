@@ -22,10 +22,15 @@
 
 - (void)createWithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType WithChcekQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser block:(void(^)(NSString *msgString, NSError *error))block;
 
+- (void)localDeleteData: (NSString *)strPosition;
+- (void)localCreateCheckData: (InventoryEntity *)entity;
+
 - (NSMutableArray *)getListWithPosition: (NSString *)position;
 
 - (BOOL)uploadCheckData: (InventoryEntity *)entity;
 
+- (void)getTotalBlock:(void(^)(NSInteger intCount, NSError *error))block;
 
+- (NSMutableArray *)webGetListWithPage: (NSInteger )page block:(void (^)(NSMutableArray * tableArray, NSError *error))block;
 
 @end
