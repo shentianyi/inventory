@@ -16,4 +16,6 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "Captuvo.h"
+#import "MBProgressHUD.h"
+#import "KeychainItemWrapper.h"
 #endif

@@ -21,6 +21,7 @@
 - (NSString *)uploadCheckData;
 - (NSString *)getTotal;
 - (NSString *)downloadCheckData;
+- (NSString *)randomCheckData;
 
 
 @end

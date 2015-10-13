@@ -47,4 +47,8 @@
 - (IBAction)quanpanAction:(id)sender {
     [self loginSameAction:@"quan_pan"];
 }
+
+- (IBAction)randomCheckAction:(id)sender {
+    [self loginSameAction:@"RandomCheckTab"];
+}
 @end

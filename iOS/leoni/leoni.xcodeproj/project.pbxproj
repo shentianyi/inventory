@@ -19,6 +19,7 @@
 		942E94441BC01A4A00FB5CD0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 942E94431BC01A4A00FB5CD0 /* Images.xcassets */; };
 		942E94471BC01A4A00FB5CD0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 942E94451BC01A4A00FB5CD0 /* LaunchScreen.xib */; };
 		942E94531BC01A4A00FB5CD0 /* leoniTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 942E94521BC01A4A00FB5CD0 /* leoniTests.m */; };
+		945F64CB1BCD2BE5000AB38C /* RandomCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 945F64CA1BCD2BE5000AB38C /* RandomCheckViewController.m */; };
 		9463F0341BC20DD600280D38 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9463F0331BC20DD600280D38 /* KeychainItemWrapper.m */; };
 		9463F0371BC244BE00280D38 /* CheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9463F0361BC244BE00280D38 /* CheckViewController.m */; };
 		9463F03A1BC2450600280D38 /* CheckCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9463F0391BC2450600280D38 /* CheckCreateViewController.m */; };
@@ -74,6 +75,8 @@
 		942E94511BC01A4A00FB5CD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		942E94521BC01A4A00FB5CD0 /* leoniTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = leoniTests.m; sourceTree = "<group>"; };
 		945F64C81BCD11FD000AB38C /* leoni-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "leoni-Prefix.pch"; sourceTree = "<group>"; };
+		945F64C91BCD2BE5000AB38C /* RandomCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomCheckViewController.h; sourceTree = "<group>"; };
+		945F64CA1BCD2BE5000AB38C /* RandomCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomCheckViewController.m; sourceTree = "<group>"; };
 		9463F0321BC20DD600280D38 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
 		9463F0331BC20DD600280D38 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		9463F0351BC244BE00280D38 /* CheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckViewController.h; sourceTree = "<group>"; };
@@ -251,6 +254,8 @@
 				942957241BC3F43C00C35462 /* CheckListViewController.m */,
 				94D29B6E1BC89A2F00313DC7 /* CheckSynchronizeViewController.h */,
 				94D29B6F1BC89A2F00313DC7 /* CheckSynchronizeViewController.m */,
+				945F64C91BCD2BE5000AB38C /* RandomCheckViewController.h */,
+				945F64CA1BCD2BE5000AB38C /* RandomCheckViewController.m */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -447,6 +452,7 @@
 				94A359451BC109B7008910EB /* UserModel.m in Sources */,
 				9463F03D1BC27B0400280D38 /* InventoryModel.m in Sources */,
 				94A359371BC0EF28008910EB /* DashboardViewController.m in Sources */,
+				945F64CB1BCD2BE5000AB38C /* RandomCheckViewController.m in Sources */,
 				94A3594C1BC121EE008910EB /* MBProgressHUD.m in Sources */,
 				942E94361BC01A4A00FB5CD0 /* main.m in Sources */,
 				94A3592F1BC0C461008910EB /* LoginViewController.m in Sources */,

@@ -51,6 +51,31 @@ module V1
         end
       end
       
+      desc "random_check"
+      params do
+        requires :position, type: String
+        requires :random_check_qty, type: String
+        requires :random_check_user, type: String
+        requires :random_check_time, type: String
+      end
+      post :random_check_data do
+        puts "======testing"
+        inventory = Inventory.check_for_search(params[:position])      
+        if inventory.present?
+          if inventory.count == 1
+            if inventory[0].update!(random_check_qty: params[:random_check_qty],  random_check_user: params[:random_check_user], random_check_time: params[:random_check_time])
+              {result: 1, content: "操作成功" }
+            else
+              {result: 0, content: "操作失败" }
+            end
+          else
+            {result: 0, content: "此库位包含多个零件，请手动录入"}
+          end
+        else
+          {result: 0, content: "不存在库位信息，请手动录入"}   
+        end
+      end
+      
       desc "get checkdata page size"
       get :get_total do
         inventories = Inventory.check.paginate(page: '1')

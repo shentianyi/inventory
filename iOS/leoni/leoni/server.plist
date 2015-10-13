@@ -18,5 +18,7 @@
 	<string>/api/v1/inventory/get_total</string>
 	<key>download_check_data</key>
 	<string>/api/v1/inventory/download_check_data</string>
+	<key>random_check_data</key>
+	<string>/api/v1/inventory/random_check_data</string>
 </dict>
 </plist>
