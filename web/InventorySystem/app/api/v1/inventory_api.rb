@@ -134,6 +134,25 @@ module V1
           end
         end
       end
+    
+      desc "get random check data"
+      params do
+        requires :page, type: String
+      end
+      get :get_random_check_data do
+        inventories = Inventory.random_check.order(created_at: :desc).paginate(page: params[:page])
+        if inventories.present?
+          present :result, 1
+          present :total_pages, inventories.total_pages
+          present :current_page, inventories.current_page
+          present :content, inventories 
+        else
+          present :result, 0
+          present :content, "暂无数据"
+        end
+      end
+    
+    
     end
   end
 end
