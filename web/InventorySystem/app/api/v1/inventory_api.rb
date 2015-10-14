@@ -63,7 +63,7 @@ module V1
         inventory = Inventory.check_for_search(params[:position])      
         if inventory.present?
           if inventory.count == 1
-            if inventory[0].update!(random_check_qty: params[:random_check_qty],  random_check_user: params[:random_check_user], random_check_time: params[:random_check_time])
+            if inventory[0].update!(random_check_qty: params[:random_check_qty],  random_check_user: params[:random_check_user], random_check_time: params[:random_check_time], is_random_check: true)
               {result: 1, content: "操作成功" }
             else
               {result: 0, content: "操作失败" }
