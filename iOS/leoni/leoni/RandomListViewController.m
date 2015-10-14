@@ -7,10 +7,10 @@
 //
 
 #import "RandomListViewController.h"
+#import "InventoryModel.h"
 
 @interface RandomListViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *randomTableView;
-
 @property (nonatomic, strong) NSMutableArray* arrayInventories;
 @end
 
@@ -19,33 +19,45 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.randomTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.randomTableView.delegate = self;
+    self.randomTableView.dataSource = self;
+
+    [self.view addSubview:self.randomTableView];
+//    CGRect rect = self.navigationController.navigationBar.frame;
+//    
+//    float y = rect.size.height + rect.origin.y;
+//    self.randomTableView.contentInset = UIEdgeInsetsMake(y, 0, 0, 0);
+//
+    [self loadData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-    [self.view addSubview:self.randomTableView];
-    CGRect rect = self.navigationController.navigationBar.frame;
-    
-    float y = rect.size.height + rect.origin.y;
-    self.randomTableView.contentInset = UIEdgeInsetsMake(y, 0, 0, 0);
 }
 
 - (void)loadData {
     self.arrayInventories = [[NSMutableArray alloc]init];
     InventoryModel *inventory = [[InventoryModel alloc] init];
-    self.arrayInventories = [inventory getListWithPosition:@""];
+    [inventory webGetRandomCheckData:1 block:^(NSMutableArray *tableArray, NSError *error) {
+        if ([tableArray count] > 0) {
+            self.arrayInventories = tableArray;
+            [self.randomTableView reloadData];
+        }
+    }];
     
-    [self.table reloadData];
+    
 }
 
-- (UITableView *)randomTableView {
-    if (!_randomTableView) {
-        _randomTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        _randomTableView.delegate = self;
-    }
-    return _randomTableView;
-}
+//- (UITableView *)randomTableView {
+//    if (!_randomTableView) {
+//        _randomTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+//        _randomTableView.delegate = self;
+//        _randomTableView.dataSource = self;
+//    }
+//    return _randomTableView;
+//}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -94,7 +106,7 @@
         NSLog(@"entity %@%@", entity.position, entity.part);
         cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@ 零件: %@", indexPath.row+1, entity.position, entity.part];
         
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘数量: %@ 抽盘数量: %@", entity.check_qty, @""];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘数量: %@ 抽盘数量: %@", entity.check_qty, entity.random_check_qty];
         UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 18.0 ];
         cell.textLabel.font  = myFont;
         cell.detailTextLabel.font = myFont;

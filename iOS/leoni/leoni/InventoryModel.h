@@ -15,6 +15,7 @@
 @property (retain, nonatomic) AFNetHelper *afnet;
 @property (nonatomic) int recordIDToEdit;
 
+- (void)webGetRandomCheckData: (NSInteger)pageInteger block:(void(^)(NSMutableArray *tableArray, NSError *error))block;
 
 - (void)queryWithPosition: (NSString *)positionString block:(void(^)(InventoryEntity *inventory_entity, NSError *error))block;
 
