@@ -27,40 +27,75 @@
     return self;
 }
 
-- (void)webGetRandomCheckData: (NSInteger)pageInteger block:(void(^)(NSMutableArray *tableArray, NSError *error))block {
+- (void)webGetRandomCheckData: (NSString *)strPage block:(void(^)(NSMutableArray *tableArray, NSError *error))block {
     NSMutableArray *tableArray =[[NSMutableArray alloc] init];
     AFNetHelper *afnet_helper = [[AFNetHelper alloc] init];
     AFHTTPRequestOperationManager *manager = [afnet_helper basicManager];
-    NSString *pageString = [NSString stringWithFormat:@"%d", pageInteger];
-    [manager GET:[afnet_helper getRandomCheckData]
-      parameters:@{@"page" : pageString}
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             NSLog(@" log==== webGetRandomCheckData====== %@", responseObject);
-             if([responseObject[@"result"] integerValue]== 1 ){
-                 NSArray *arrayResult = responseObject[@"content"];
-                 for(int i=0; i<arrayResult.count; i++){
-                     InventoryEntity *inventory =[[InventoryEntity alloc] initWithObject:arrayResult[i]];
-                     [tableArray addObject: inventory];
+    NSString *pageString = strPage;
+    
+    if (pageString == nil) {
+        [manager GET:[afnet_helper getRandomCheckData]
+          parameters:@{}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 NSLog(@" log==== webGetRandomCheckData====== %@", responseObject);
+                 if([responseObject[@"result"] integerValue]== 1 ){
+                     NSArray *arrayResult = responseObject[@"content"];
+                     for(int i=0; i<arrayResult.count; i++){
+                         InventoryEntity *inventory =[[InventoryEntity alloc] initWithObject:arrayResult[i]];
+                         [tableArray addObject: inventory];
+                     }
+                     if (block) {
+                         block(tableArray, nil);
+                     }
                  }
-                 if (block) {
-                     block(tableArray, nil);
+                 else{
+                     if (block) {
+                         NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:responseObject[@"content"]];
+                         block(nil, error);
+                     }
                  }
              }
-             else{
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  if (block) {
-                     NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:responseObject[@"content"]];
+                     NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:[NSString stringWithFormat:@"网络故障请联系管理员" ]];
                      block(nil, error);
                  }
              }
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             if (block) {
-                 NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:[NSString stringWithFormat:@"网络故障请联系管理员" ]];
-                 block(nil, error);
+         
+         ];
+    } else {
+        [manager GET:[afnet_helper getRandomCheckData]
+          parameters:@{@"position" : pageString}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 NSLog(@" log==== webGetRandomCheckData====== %@", responseObject);
+                 if([responseObject[@"result"] integerValue]== 1 ){
+                     NSArray *arrayResult = responseObject[@"content"];
+                     for(int i=0; i<arrayResult.count; i++){
+                         InventoryEntity *inventory =[[InventoryEntity alloc] initWithObject:arrayResult[i]];
+                         [tableArray addObject: inventory];
+                     }
+                     if (block) {
+                         block(tableArray, nil);
+                     }
+                 }
+                 else{
+                     if (block) {
+                         NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:responseObject[@"content"]];
+                         block(nil, error);
+                     }
+                 }
              }
-         }
-     
-     ];
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 if (block) {
+                     NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:[NSString stringWithFormat:@"网络故障请联系管理员" ]];
+                     block(nil, error);
+                 }
+             }
+         
+         ];
+    }
+    
+    
 
 }
 

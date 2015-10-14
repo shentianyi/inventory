@@ -137,14 +137,20 @@ module V1
     
       desc "get random check data"
       params do
-        requires :page, type: String
+        # requires :page, type: String
+        optional :position, type: String
       end
       get :get_random_check_data do
-        inventories = Inventory.random_check.order(created_at: :desc).paginate(page: params[:page])
+        if params[:position].blank?
+          inventories = Inventory.random_check.order(created_at: :desc)
+        else
+          inventories = Inventory.random_check.where("position LIKE ?", "%#{params[:position]}%").order(created_at: :desc)
+        end
+        
         if inventories.present?
           present :result, 1
-          present :total_pages, inventories.total_pages
-          present :current_page, inventories.current_page
+          # present :total_pages, inventories.total_pages
+          # present :current_page, inventories.current_page
           present :content, inventories 
         else
           present :result, 0
