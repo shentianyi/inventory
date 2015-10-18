@@ -154,12 +154,12 @@
               self.integerCount = intCount;
               self.totalInventories = intCount * [self.page_size intValue];
               [self.model localDeleteData:@""];
-              NSLog(@"log === total is %d  self.integerCount %d", self.totalInventories, self.integerCount);
+//              NSLog(@"log === total is %d  self.integerCount %d", self.totalInventories, self.integerCount);
               if (self.integerCount >0) {
                   [self.progressView setHidden: NO];
                   for (int i=1; i<= self.integerCount; i++) {
                       [self updateCheckDataPage:i withPageSize:self.page_size];
-                      NSLog(@"current is %d", i);
+//                      NSLog(@"current is %d", i);
                       
                   }
               } else {
@@ -179,12 +179,13 @@
         if ([tableArray count] > 0) {
             for (int i=0; i< [tableArray count]; i++) {
                 InventoryEntity *entity = [[InventoryEntity alloc] init];
-                entity = tableArray[0];
+                entity = tableArray[i];
+                NSLog(@"log === updateCheckDataPage entity.id %@", entity.inventory_id);
                 [self.model localCreateCheckData:entity];
                 self.countInventories++;
                 self.progressView.progress = (float)self.countInventories/self.totalInventories;
                 
-                NSLog(@"log=============current count%d insert data%d and page %d", self.countInventories, i, page );
+                NSLog(@"log=============current count%d insert data%@ and page %d", self.countInventories, entity.inventory_id, page );
             }
         }
     }];

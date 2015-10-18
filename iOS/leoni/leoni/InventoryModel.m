@@ -445,6 +445,7 @@
 
                   for(int i=0; i<arrayResult.count; i++){
                       InventoryEntity *entity=[[InventoryEntity alloc] initWithObject:arrayResult[i]];
+//                      NSLog(@"log webGetListWithPage ======  %@",entity.inventory_id);
                       [tableData addObject:entity];
                   }
                   if (block) {
