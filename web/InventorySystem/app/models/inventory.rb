@@ -27,7 +27,7 @@ class Inventory < ActiveRecord::Base
   scope :random_check, -> {where("random_check_qty !='' or random_check_qty is not null")}
   self.per_page = 50
   # default.scope
-  
+  default_scope { order('id DESC') }
   def self.search(search)
     if search
       where("part LIKE ?", "%#{search}%")

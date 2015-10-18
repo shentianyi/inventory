@@ -134,6 +134,9 @@ module V1
           end
         end
       end
+      
+      
+      
     
       desc "get random check data"
       params do
@@ -158,6 +161,31 @@ module V1
         end
       end
     
+    
+      desc "upload random_check_data"
+      params do
+        requires :id, type: Integer
+        requires :random_check_qty, type: String
+        requires :random_check_user, type: String
+        requires :random_check_time, type: String
+      end
+      post :upload_random_check_data do
+        if params[:id].blank?
+          {result:0, content: '数据不完整'}  
+        else
+          inventory = Inventory.find(params[:id])
+          if inventory.present?
+            if inventory.update!(random_check_qty: params[:random_check_qty], random_check_user: params[:random_check_user], random_check_time: params[:random_check_time], is_random_check: true)
+              {result:1, content: inventory}
+            else
+              {result:0, content: '更新数据失败'}
+            end
+          else
+            {result:0, content: '查无此数据'}  
+            
+          end
+        end
+      end
     
     end
   end

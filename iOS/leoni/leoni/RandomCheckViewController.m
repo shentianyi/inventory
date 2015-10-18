@@ -11,6 +11,7 @@
 
 @interface RandomCheckViewController ()
 @property (nonatomic, retain) InventoryModel *inventory;
+@property (nonatomic, retain) InventoryEntity *entity;
 @end
 
 @implementation RandomCheckViewController
@@ -19,7 +20,7 @@
     [super viewDidLoad];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
-    
+    self.entity = [[InventoryEntity alloc] init];
     
 }
 
@@ -93,11 +94,12 @@
                 [self.partTypeTextField setEnabled: NO];
 //                [self.partTypeTextField resignFirstResponder];
                 
-                self.checkQtyTextField.text = [NSString stringWithFormat:@"%@", inventory_entity.check_qty ];
+                self.checkQtyTextField.text = [NSString stringWithFormat:@"%@", (inventory_entity.check_qty == NULL)? @"0": inventory_entity.check_qty];
 //                NSLog(@"testing %@", inventory_entity.check_qty);
                 [self.checkQtyTextField setEnabled: NO];
 //                [self.checkQtyTextField resignFirstResponder];
-
+                self.entity = inventory_entity;
+                NSLog(@"current ios_created_id %@", self.entity.ios_created_id);
                 
                 [hud hide:YES];
                 
@@ -131,34 +133,84 @@
     if ([self isPureFloat:self.randomCheckQtyTextField.text] || [self isPureInt:self.randomCheckQtyTextField.text]){
         InventoryModel *inventory = [[InventoryModel alloc] init];
         KeychainItemWrapper *keyChain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
+        NSString *nameString = [keyChain objectForKey:(__bridge  id)kSecAttrAccount];
+//        ******************
+//        upload to server
+//        ******************
         
-        [inventory webRandomCheckWithPosition:self.positionTextField.text WithRandomCheckQty:self.randomCheckQtyTextField.text WithRandomCheckUser:[keyChain objectForKey:(__bridge  id)kSecAttrAccount] block:^(NSString *msgString, NSError *error) {
-           
-            hud.mode = MBProgressHUDModeText;
-            hud.labelText = [NSString stringWithFormat:@"%@", msgString];
-            [hud hide:YES afterDelay:1.5f];
-            if (error) {
-                
+        
+//        [inventory webRandomCheckWithPosition:self.positionTextField.text WithRandomCheckQty:self.randomCheckQtyTextField.text WithRandomCheckUser:[keyChain objectForKey:(__bridge  id)kSecAttrAccount] block:^(NSString *msgString, NSError *error) {
+//           
+//            hud.mode = MBProgressHUDModeText;
+//            hud.labelText = [NSString stringWithFormat:@"%@", msgString];
+//            [hud hide:YES afterDelay:1.5f];
+//            if (error) {
+//                
+//            }
+//            else {
+//                
+//                //                self.positionTextField.text = self.departmentTextField.text = self.partTextField.text = self.
+//                NSArray *subviews = [self.view subviews];
+//                for (id objInput in subviews) {
+//                    if ([objInput isKindOfClass:[UITextField class]]) {
+//                        UITextField *theTextField = objInput;
+//                        theTextField.text = @"";
+//                    }
+//                }
+//                [self.positionTextField isFirstResponder];
+//            }
+//        }];
+        
+        
+        //        ******************
+        //        save to local
+        //        ******************
+        
+        [self saveLocalData:nameString];
+        hud.labelText = [NSString stringWithFormat:@"操作成功"];
+        [hud hide:YES afterDelay:1.5f];
+
+        NSArray *subviews = [self.view subviews];
+        for (id objInput in subviews) {
+            if ([objInput isKindOfClass:[UITextField class]]) {
+                UITextField *theTextField = objInput;
+                theTextField.text = @"";
             }
-            else {
-                
-                //                self.positionTextField.text = self.departmentTextField.text = self.partTextField.text = self.
-                NSArray *subviews = [self.view subviews];
-                for (id objInput in subviews) {
-                    if ([objInput isKindOfClass:[UITextField class]]) {
-                        UITextField *theTextField = objInput;
-                        theTextField.text = @"";
-                    }
-                }
-                [self.positionTextField isFirstResponder];
-            }
-        }];
+        }
+        [self.positionTextField isFirstResponder];
+        
     }
     else {
         hud.mode = MBProgressHUDModeText;
         hud.labelText = [NSString stringWithFormat:@"请输入抽盘数量"];
         [hud hide:YES afterDelay:1.5f];
     }
+}
+
+- (void)saveLocalData: (NSString *)nameString {
+//    NSString *uuid = [[NSUUID UUID] UUIDString];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *randomCheckTime = [NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:[NSDate date]]];
+    
+    InventoryEntity *entityNew = [[InventoryEntity alloc] init];
+    entityNew.department = self.departmentTextField.text;
+    entityNew.position = self.positionTextField.text;
+    entityNew.part = self.partTextField.text;
+    entityNew.part_type = self.partTypeTextField.text;
+    entityNew.check_qty = self.checkQtyTextField.text;
+    entityNew.check_user = self.entity.check_user;
+    entityNew.check_time = self.entity.check_time;
+//    entityNew.check_time = randomCheckTime;
+
+    entityNew.random_check_qty = self.randomCheckQtyTextField.text;
+    entityNew.random_check_user = nameString;
+    entityNew.random_check_time = randomCheckTime;
+    entityNew.inventory_id = self.entity.inventory_id;
+    entityNew.ios_created_id = [NSString stringWithFormat:@"%@", (self.entity.ios_created_id == NULL)? @"": self.entity.ios_created_id];
+    entityNew.is_random_check = @"true";
+
+    [self.inventory localCreateCheckData:entityNew];
 }
 
 - (BOOL)isPureInt:(NSString*)string{

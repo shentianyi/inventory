@@ -38,6 +38,23 @@
     return self;
 }
 
+- (id)initRandomCheckDataWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID:(NSString *)idString {
+    self = [super init];
+    if (self) {
+        self.position = position;
+        self.department = department;
+        self.part = part;
+        self.part_type = part_type;
+        self.random_check_qty = randomCheckQty;
+        self.random_check_user = randomCheckUser;
+        self.random_check_time = randomCheckTime;
+        self.ios_created_id = iOSCreatedId;
+        self.inventory_id = idString;
+        
+    }
+    return self;
+}
+
 
 -(instancetype)initWithObject:(NSDictionary *)dictionary
 {

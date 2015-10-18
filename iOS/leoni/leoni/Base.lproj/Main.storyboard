@@ -1197,10 +1197,10 @@
             </objects>
             <point key="canvasLocation" x="2488" y="3029"/>
         </scene>
-        <!--View Controller-->
+        <!--抽盘-->
         <scene sceneID="zN6-tr-rWs">
             <objects>
-                <viewController id="Dze-LR-WFv" sceneMemberID="viewController">
+                <viewController id="Dze-LR-WFv" customClass="RandomCheckSynchronizeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kA6-O6-l7c"/>
                         <viewControllerLayoutGuide type="bottom" id="i9P-s0-vCq"/>
@@ -1208,9 +1208,48 @@
                     <view key="view" contentMode="scaleToFill" id="z03-eJ-nRs">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JxW-iH-TQx">
+                                <rect key="frame" x="150" y="135" width="300" height="30"/>
+                                <color key="backgroundColor" red="0.34018288000000002" green="0.73630819520000002" blue="0.37557483359999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="YZu-MV-hXv"/>
+                                    <constraint firstAttribute="width" constant="300" id="z3g-u6-ytB"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="上传数据">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="uploadAction:" destination="Dze-LR-WFv" eventType="touchUpInside" id="RZh-fR-mxc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nf7-9n-Ih4">
+                                <rect key="frame" x="150" y="87" width="300" height="30"/>
+                                <color key="backgroundColor" red="0.96470588239999999" green="0.58418863060000004" blue="0.1336645638" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="G5h-VH-q9Q"/>
+                                    <constraint firstAttribute="height" constant="30" id="iH7-wx-u55"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="下载数据">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="downloadAction:" destination="Dze-LR-WFv" eventType="touchUpInside" id="ftM-7f-mJE"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="JxW-iH-TQx" firstAttribute="top" secondItem="nf7-9n-Ih4" secondAttribute="bottom" constant="18" id="cxg-Rx-JBt"/>
+                            <constraint firstAttribute="centerX" secondItem="nf7-9n-Ih4" secondAttribute="centerX" id="gcd-7T-N74"/>
+                            <constraint firstItem="JxW-iH-TQx" firstAttribute="centerX" secondItem="nf7-9n-Ih4" secondAttribute="centerX" id="nh0-h4-e5E"/>
+                            <constraint firstItem="nf7-9n-Ih4" firstAttribute="top" secondItem="z03-eJ-nRs" secondAttribute="top" constant="87" id="uHL-3i-bx9"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="gtF-Qp-W6N"/>
+                    <navigationItem key="navigationItem" title="抽盘" id="gtF-Qp-W6N"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Ea-W3-JPO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

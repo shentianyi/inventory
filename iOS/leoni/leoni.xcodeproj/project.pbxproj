@@ -27,6 +27,7 @@
 		9463F0411BC2803A00280D38 /* libCaptuvoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9463F0401BC2803A00280D38 /* libCaptuvoSDK.a */; };
 		9463F0431BC2804C00280D38 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9463F0421BC2804C00280D38 /* ExternalAccessory.framework */; };
 		9463F0461BC297A900280D38 /* InventoryEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9463F0451BC297A900280D38 /* InventoryEntity.m */; };
+		9478AC251BD216BF007FDA17 /* RandomCheckSynchronizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9478AC241BD216BF007FDA17 /* RandomCheckSynchronizeViewController.m */; };
 		949658131BCE7F03006DACA7 /* RandomListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 949658121BCE7F03006DACA7 /* RandomListViewController.m */; };
 		94A3592F1BC0C461008910EB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A3592E1BC0C461008910EB /* LoginViewController.m */; };
 		94A359341BC0E3AD008910EB /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A359331BC0E3AD008910EB /* SettingViewController.m */; };
@@ -90,6 +91,8 @@
 		9463F0421BC2804C00280D38 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		9463F0441BC297A900280D38 /* InventoryEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryEntity.h; sourceTree = "<group>"; };
 		9463F0451BC297A900280D38 /* InventoryEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryEntity.m; sourceTree = "<group>"; };
+		9478AC231BD216BF007FDA17 /* RandomCheckSynchronizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomCheckSynchronizeViewController.h; sourceTree = "<group>"; };
+		9478AC241BD216BF007FDA17 /* RandomCheckSynchronizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomCheckSynchronizeViewController.m; sourceTree = "<group>"; };
 		949658111BCE7F03006DACA7 /* RandomListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomListViewController.h; sourceTree = "<group>"; };
 		949658121BCE7F03006DACA7 /* RandomListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomListViewController.m; sourceTree = "<group>"; };
 		94A3592D1BC0C461008910EB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -261,6 +264,8 @@
 				945F64CA1BCD2BE5000AB38C /* RandomCheckViewController.m */,
 				949658111BCE7F03006DACA7 /* RandomListViewController.h */,
 				949658121BCE7F03006DACA7 /* RandomListViewController.m */,
+				9478AC231BD216BF007FDA17 /* RandomCheckSynchronizeViewController.h */,
+				9478AC241BD216BF007FDA17 /* RandomCheckSynchronizeViewController.m */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -460,6 +465,7 @@
 				94A359371BC0EF28008910EB /* DashboardViewController.m in Sources */,
 				945F64CB1BCD2BE5000AB38C /* RandomCheckViewController.m in Sources */,
 				94A3594C1BC121EE008910EB /* MBProgressHUD.m in Sources */,
+				9478AC251BD216BF007FDA17 /* RandomCheckSynchronizeViewController.m in Sources */,
 				942E94361BC01A4A00FB5CD0 /* main.m in Sources */,
 				94A3592F1BC0C461008910EB /* LoginViewController.m in Sources */,
 				9463F0371BC244BE00280D38 /* CheckViewController.m in Sources */,

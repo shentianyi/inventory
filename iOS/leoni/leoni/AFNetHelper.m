@@ -118,6 +118,13 @@
     return [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
+- (NSString *)uploadRandomCheckData {
+    NSString *server_url = [self ServerURL];
+    NSString *url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"upload_random_check_data"]];
+    return [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+ 
+}
+
 - (NSString *)getTotal {
     NSString *server_url = [self ServerURL];
     NSString *url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"get_total"]];

@@ -23,5 +23,5 @@
 - (NSString *)downloadCheckData;
 - (NSString *)randomCheckData;
 - (NSString *)getRandomCheckData;
-
+- (NSString *)uploadRandomCheckData;
 @end

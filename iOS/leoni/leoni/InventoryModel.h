@@ -28,13 +28,21 @@
 
 - (void)localDeleteData: (NSString *)strPosition;
 - (void)localCreateCheckData: (InventoryEntity *)entity;
+//- (void)localCreateRandomCheckData: (InventoryEntity *)entity;
+
 
 - (NSMutableArray *)getListWithPosition: (NSString *)position;
 
 - (BOOL)uploadCheckData: (InventoryEntity *)entity;
+/*
+ 上传更新random check data
+ */
+- (BOOL)webUploadRandomCheckData: (InventoryEntity *)entity;
 
 - (void)getTotalBlock:(void(^)(NSInteger intCount, NSError *error))block;
 
 - (NSMutableArray *)webGetListWithPage: (NSInteger )page block:(void (^)(NSMutableArray * tableArray, NSError *error))block;
+
+- (NSMutableArray *)localGetRandomCheckData: (NSString *)position;
 
 @end
