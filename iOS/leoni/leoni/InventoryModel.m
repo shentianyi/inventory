@@ -382,17 +382,17 @@
 
 
 
-- (void)getTotalBlock:(void (^)(NSInteger, NSError *))block {
-    
+- (void)getTotal: (NSString *)pageSize block:(void (^)(NSInteger, NSError *))block {
+//    NSString *pageSizeString = @"2";
     AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
     [manager GET:[self.afnet getTotal]
-       parameters:nil
+      parameters:@{@"per_page" : pageSize}
           success:^(AFHTTPRequestOperation * operation, id responseObject) {
               NSLog(@"log =========  getTotal =======%@", responseObject);
               if([responseObject[@"result"] integerValue]== 1 ){
                   
                   NSInteger intTotal = 0;
-                  intTotal = [responseObject[@"content"] integerValue];
+                  intTotal = [responseObject[@"total_pages"] integerValue];
                   if (block) {
                       block(intTotal, nil);
                   }
@@ -429,14 +429,14 @@
 //}
 
 
-- (void)webGetListWithPage:(NSInteger )page block:(void (^)(NSMutableArray *, NSError *))block {
+- (void)webGetListWithPage:(NSInteger )page withPageSize: (NSString *)pageSize block:(void (^)(NSMutableArray *, NSError *))block {
     NSString *strPage = [NSString stringWithFormat:@"%ld", (long)page];
 //    __block NSMutableArray *tableData = [[NSMutableArray alloc] init];
     AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
-    [manager POST:[self.afnet downloadCheckData]
-       parameters:@{@"page": strPage }
+    [manager GET:[self.afnet downloadCheckData]
+       parameters:@{@"page": strPage, @"per_page": pageSize }
           success:^(AFHTTPRequestOperation * operation, id responseObject) {
-              NSLog(@"log =========  downloadCheckData =======%@", responseObject);
+//              NSLog(@"log =========  downloadCheckData =======%@", responseObject);
               
               if([responseObject[@"result"] integerValue]== 1 ){
                   NSArray *arrayResult = responseObject[@"content"];
@@ -478,12 +478,16 @@
         query = [NSString stringWithFormat:@"delete from inventories"];
     }
     else {
-        query = [NSString stringWithFormat:@"select from inventories where position like '%%%@%%' ", strPosition];
+        query = [NSString stringWithFormat:@"delete from inventories where position like '%%%@%%' ", strPosition];
     }
     
 //    NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: query]];
     [self.db executeQuery:query];
     NSLog(@"=== test query %@", query);
+    query = @"select * from inventories";
+    
+    NSArray *array = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: query]];
+    NSLog(@"current count is %d", [array count]);
 }
 
 /*

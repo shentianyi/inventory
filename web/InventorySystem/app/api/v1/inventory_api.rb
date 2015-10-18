@@ -77,10 +77,17 @@ module V1
       end
       
       desc "get checkdata page size"
+      params do
+        requires :per_page, type: String
+      end
       get :get_total do
-        inventories = Inventory.check.paginate(page: '1')
+        inventories = Inventory.check.paginate(page: '1', per_page: params[:per_page])
         if inventories.present?
-          {result:1, content: inventories.total_pages}
+          # {result:1, content: inventories.total_pages}
+          present :result, 1
+          present :total_pages, inventories.total_pages
+          present :total, inventories.count
+          # present :content, inventories
         else
           {result:0, content: '当前无数据'}
         end
@@ -89,9 +96,10 @@ module V1
       desc "downlaod check_data"
       params do
         requires :page, type: String
+        requires :per_page, type: String
       end
       get :download_check_data do
-        inventories = Inventory.check.paginate(page: params[:page])
+        inventories = Inventory.check.paginate(page: params[:page], per_page: params[:per_page])
         if inventories.present?
           # {result:1, content: inventories}
           present :result, 1

@@ -120,7 +120,7 @@
                         if (self.arrColumnNames.count != totalColumns) {
                             dbDataAsChars = (char *)sqlite3_column_name(compiledStatement, i);
                             NSString *name = [[NSString alloc] initWithUTF8String:dbDataAsChars];
-                            NSLog(@"id is %d, name: is %@", i, name);
+//                            NSLog(@"id is %d, name: is %@", i, name);
                             [self.arrColumnNames addObject:[NSString stringWithUTF8String:dbDataAsChars]];
                         }
                     }

@@ -39,9 +39,10 @@
  */
 - (BOOL)webUploadRandomCheckData: (InventoryEntity *)entity;
 
-- (void)getTotalBlock:(void(^)(NSInteger intCount, NSError *error))block;
+- (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block;
 
-- (NSMutableArray *)webGetListWithPage: (NSInteger )page block:(void (^)(NSMutableArray * tableArray, NSError *error))block;
+- (void)webGetListWithPage: (NSInteger )page withPageSize: (NSString *)pageSize block:(void (^)(NSMutableArray * tableArray, NSError *error))block;
+
 
 - (NSMutableArray *)localGetRandomCheckData: (NSString *)position;
 

@@ -14,7 +14,11 @@
 @interface CheckSynchronizeViewController ()
 @property (nonatomic, strong) UIAlertView *downloadAlert;
 @property (nonatomic, strong) UIAlertView *uploadAlert;
+@property (nonatomic, strong) NSString *page_size;
+@property (nonatomic, retain) InventoryModel *model;
 @property NSInteger integerCount;
+@property NSInteger totalInventories;
+@property NSInteger countInventories;
 @end
 
 @implementation CheckSynchronizeViewController
@@ -40,7 +44,10 @@
     [self.view addSubview:self.progressView];
     [self.progressView setHidden:YES];
     self.integerCount = 0;
-
+    self.totalInventories = 0;
+    self.countInventories = 0;
+    self.page_size = [NSString stringWithFormat:@"2"];
+    self.model = [[InventoryModel alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,9 +84,13 @@
     } else {
         if(buttonIndex == 0){
             
-            self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(downloadUpdateUI:) userInfo:nil repeats:YES];
-            [self.progressView setHidden: NO];
-
+//            self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(downloadUpdateUI:) userInfo:nil repeats:YES];
+            [self downloadCheckData];
+//            for (int i=0; i<100000; i++) {
+//                [self.progressView setHidden: NO];
+//                self.progressView.progress = (float)i/10;
+//                NSLog(@"current is %d", i);
+//            }
         }
     }
     
@@ -89,9 +100,8 @@
 
 - (void)uploadUpdateUI:(NSTimer *)timer
 {
-    InventoryModel *model = [[InventoryModel alloc] init];
     NSMutableArray *tableArray = [[NSMutableArray alloc] init];
-    tableArray = [model getListWithPosition:@""];
+    tableArray = [self.model getListWithPosition:@""];
 
 //    static int count =0; count++;
     
@@ -105,7 +115,7 @@
         
         for (int i=0; i< [tableArray count]; i++) {
             InventoryEntity *entity =tableArray[i];
-            [model uploadCheckData: entity];
+            [self.model uploadCheckData: entity];
             self.progressView.progress = (float)i/countInt;
         }
         [self.myTimer invalidate];
@@ -138,82 +148,46 @@
 }
 
 - (void)downloadCheckData {
-//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    hud.labelText = @"加载中...";
-    InventoryModel *model = [[InventoryModel alloc] init];
-//    [model webGetListWithPage: 1 block:^(NSMutableArray *tableArray, NSInteger intCount, NSError *error) {
-//        if (intCount >0) {
-//            [hud hide:YES];
-//            // 清空本地数据
-//            [model localDeleteData:@""];
-//            for (int i = 0; i < intCount; i++){
-//                self.progressView.progress = (float)i/checkDataCount;
-//                // 翻页获取web数据
-//                [model webGetListWithPage:i block:^(NSMutableArray *tableArray, NSError *error) {
-//                    NSMutableArray *tableArrayData = tableArray;
-//                    if ([tableArrayData count] > 0) {
-//                        for (int j =0; j< [tableArrayData count]; j++) {
-//                            InventoryEntity *entity = [[InventoryEntity alloc] init];
-//                            entity = tableArrayData[j];
-//                            // 插入本地数据
-//                            [model localCreateCheckData:entity];
-//                        }
-//                    }
-//                }];
-//                
-//            }
-//        }else{
-//            hud.mode = MBProgressHUDModeText;
-//            hud.labelText = @"服务端暂无数据";
-//            [hud hide:YES afterDelay:1.5f];
-//            
-//        }
-//
-//    }];
-      [model getTotalBlock:^(NSInteger intCount, NSError *error) {
+    
+    [self.model getTotal: self.page_size block:^(NSInteger intCount, NSError *error) {
           if (intCount > 0) {
-              
               self.integerCount = intCount;
-              NSLog(@"testing ===   self.integerCount %d", self.integerCount);
-//        }else{
-//            hud.mode = MBProgressHUDModeText;
-//            hud.labelText = @"服务端暂无数据";
-//            [hud hide:YES afterDelay:1.5f];
-//            
-//        }
-//
-//    }];
+              self.totalInventories = intCount * [self.page_size intValue];
+              [self.model localDeleteData:@""];
+              NSLog(@"log === total is %d  self.integerCount %d", self.totalInventories, self.integerCount);
+              if (self.integerCount >0) {
+                  [self.progressView setHidden: NO];
+                  for (int i=1; i<= self.integerCount; i++) {
+                      [self updateCheckDataPage:i withPageSize:self.page_size];
+                      NSLog(@"current is %d", i);
+                      
+                  }
+              } else {
+                  NSLog(@"当前无下载数据更新");
+              }
+
           }
           else {
               NSLog(@"testing ===   count < 0");
           }
       }];
-    if (self.integerCount >0) {
-//                [hud hide:YES];
-                // 清空本地数据
-        [model localDeleteData:@""];
-        for (int i = 1; i < self.integerCount + 1; i++){
-            self.progressView.progress = (float)i/self.integerCount;
-                        // 翻页获取web数据
-                        [model webGetListWithPage:i block:^(NSMutableArray *tableArray, NSError *error) {
-                            NSMutableArray *tableArrayData = tableArray;
-                            if ([tableArrayData count] > 0) {
-                                for (int j =0; j< [tableArrayData count]; j++) {
-                                    InventoryEntity *entity = [[InventoryEntity alloc] init];
-                                    entity = tableArrayData[j];
-                                    // 插入本地数据
-                                    [model localCreateCheckData:entity];
-                                }
-                            }
-                        }];
-                        
-        }
-        [self.myTimer invalidate];
-        self.myTimer = nil;
-
-    }
-
     
+}
+
+- (void)updateCheckDataPage: (NSInteger)page withPageSize: (NSString *)pageSize {
+    [self.model webGetListWithPage:page withPageSize:pageSize block:^(NSMutableArray *tableArray, NSError *error) {
+        if ([tableArray count] > 0) {
+            for (int i=0; i< [tableArray count]; i++) {
+                InventoryEntity *entity = [[InventoryEntity alloc] init];
+                entity = tableArray[0];
+                [self.model localCreateCheckData:entity];
+                self.countInventories++;
+                self.progressView.progress = (float)self.countInventories/self.totalInventories;
+                
+                NSLog(@"log=============current count%d insert data%d and page %d", self.countInventories, i, page );
+            }
+        }
+    }];
 }
 
 @end
