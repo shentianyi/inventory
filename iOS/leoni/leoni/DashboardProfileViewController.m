@@ -9,7 +9,7 @@
 #import "DashboardProfileViewController.h"
 #import "KeychainItemWrapper.h"
 
-@interface DashboardProfileViewController ()
+@interface DashboardProfileViewController ()<UIAlertViewDelegate>
 
 @end
 
@@ -34,6 +34,8 @@
 }
 
 
+
+
 /*
 #pragma mark - Navigation
 
@@ -45,8 +47,19 @@
 */
 
 - (IBAction)quitAction:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"leoni"
+                                                    message:@"确定退出系统吗？"
+                                                   delegate:self
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:@"取消",nil];
+    [alert show];
+    }
 
-    
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    // the user clicked OK
+    if (buttonIndex == 0) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+
+    }
 }
 @end

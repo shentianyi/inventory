@@ -384,8 +384,8 @@
                         <segue destination="fHg-Wc-AMn" kind="relationship" relationship="viewControllers" id="mXZ-yR-YkB"/>
                         <segue destination="uzC-7m-RKh" kind="relationship" relationship="viewControllers" id="Fb6-eA-iYC"/>
                         <segue destination="Rg1-g4-pmd" kind="relationship" relationship="viewControllers" id="vIE-r3-VM0"/>
-                        <segue destination="1TF-lb-wOF" kind="relationship" relationship="viewControllers" id="BCT-ss-IRJ"/>
                         <segue destination="RfL-73-Gsu" kind="relationship" relationship="viewControllers" id="76L-c9-hDt"/>
+                        <segue destination="1TF-lb-wOF" kind="relationship" relationship="viewControllers" id="BCT-ss-IRJ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i1S-x5-znX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -822,10 +822,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tpm-qX-zUT">
-                                <rect key="frame" x="132" y="320" width="46" height="30"/>
-                                <state key="normal" title="Quit">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tpm-qX-zUT">
+                                <rect key="frame" x="150" y="419" width="300" height="30"/>
+                                <color key="backgroundColor" red="0.96470588239999999" green="0.12723655759999999" blue="0.069008881820000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="7gT-DX-Bqk"/>
+                                    <constraint firstAttribute="height" constant="30" id="vvE-z5-Trc"/>
+                                </constraints>
+                                <state key="normal" title="返回主菜单">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="quitAction:" destination="oC0-6k-h93" eventType="touchUpInside" id="aBu-1a-crz"/>
@@ -833,6 +839,10 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="Tpm-qX-zUT" secondAttribute="centerX" id="TF4-pl-FM7"/>
+                            <constraint firstItem="Tpm-qX-zUT" firstAttribute="top" secondItem="NcX-1A-sDO" secondAttribute="top" constant="419" id="tgG-lp-TlJ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2py-TQ-1nb"/>
                 </viewController>
@@ -1274,10 +1284,10 @@
             </objects>
             <point key="canvasLocation" x="2399" y="3699"/>
         </scene>
-        <!--View Controller-->
+        <!--抽盘-->
         <scene sceneID="4Z5-RU-Xsm">
             <objects>
-                <viewController id="kGy-DZ-cjh" sceneMemberID="viewController">
+                <viewController id="kGy-DZ-cjh" customClass="RandomProfileViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fUE-zf-3u7"/>
                         <viewControllerLayoutGuide type="bottom" id="9r4-gP-LZT"/>
@@ -1285,9 +1295,30 @@
                     <view key="view" contentMode="scaleToFill" id="Apy-GZ-42D">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gn4-wJ-q7I">
+                                <rect key="frame" x="150" y="397" width="300" height="30"/>
+                                <color key="backgroundColor" red="0.96470588239999999" green="0.062813388730000003" blue="0.17953580450000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="5yW-cl-Llh"/>
+                                    <constraint firstAttribute="height" constant="30" id="Wv8-Ue-Lr4"/>
+                                </constraints>
+                                <state key="normal" title="返回主菜单">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backAction:" destination="kGy-DZ-cjh" eventType="touchUpInside" id="sRl-CN-Zqa"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Gn4-wJ-q7I" firstAttribute="top" secondItem="Apy-GZ-42D" secondAttribute="top" constant="397" id="FGO-yV-jsm"/>
+                            <constraint firstAttribute="centerX" secondItem="Gn4-wJ-q7I" secondAttribute="centerX" id="jOw-0A-04t"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="EWw-yM-qh6"/>
+                    <navigationItem key="navigationItem" title="抽盘" id="EWw-yM-qh6"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z9Y-Uf-5cE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

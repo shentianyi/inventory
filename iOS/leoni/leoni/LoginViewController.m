@@ -91,7 +91,7 @@
                 hud.labelText = @"登陆成功";
                 [hud hide:YES afterDelay:1.5f];
                 [keychain setObject:nr forKey:(__bridge id)kSecAttrAccount];
-                
+                self.nameTextField.text =@"";
                 [self performSegueWithIdentifier:@"toDashboard" sender:self];
             }
             else {
