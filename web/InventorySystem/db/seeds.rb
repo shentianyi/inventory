@@ -5,3 +5,24 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+(1200..1500).each do |n|
+  User.create(nr: n, name:"张三#{n}")
+end
+
+
+(1..99).each do |i|
+  
+  if i<10
+    key = "000#{i}"
+  else
+    key = "00#{i}"
+  end
+  Inventory.create(department: "后勤1", position: key, part:key, part_type:"type1" )
+end
+
+(100..200).each do |j|
+  
+  key2= "0#{j}" 
+  Inventory.create(department: "后勤2", position: key2 , part: key2, part_type:"type2" )
+end

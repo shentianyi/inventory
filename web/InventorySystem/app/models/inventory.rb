@@ -55,7 +55,7 @@ class Inventory < ActiveRecord::Base
     if ios_created_id == '1'
       inventories = inventories.where("ios_created_id  != ''") 
     else 
-      inventories = inventories.where("ios_created_id = ''")
+      inventories = inventories.where("ios_created_id is null ")
     end 
     
     inventories
