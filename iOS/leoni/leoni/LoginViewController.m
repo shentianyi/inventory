@@ -81,26 +81,35 @@
     
     NSString *nr = self.nameTextField.text;
     if (nr.length > 0){
-        __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.labelText = @"加载中...";
+//        __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        hud.labelText = @"加载中...";
     
-        [self.user loginWithNr:nr block:^(UserEntity *user_entity, NSError *error) {
+        /*******
+//        取消web 验证，直接登录
+        ********/
+//        [self.user loginWithNr:nr block:^(UserEntity *user_entity, NSError *error) {
+//        
+//            if (user_entity) {
+//                hud.mode = MBProgressHUDModeText;
+//                hud.labelText = @"登陆成功";
+//                [hud hide:YES afterDelay:1.5f];
+//                [keychain setObject:nr forKey:(__bridge id)kSecAttrAccount];
+//                self.nameTextField.text =@"";
+//                [self performSegueWithIdentifier:@"toDashboard" sender:self];
+//            }
+//            else {
+//                hud.mode = MBProgressHUDModeText;
+//                
+//                hud.labelText = [NSString stringWithFormat:@"%@", error.userInfo];
+//                [hud hide:YES afterDelay:1.5f];
+//            }
+//        }];
         
-            if (user_entity) {
-                hud.mode = MBProgressHUDModeText;
-                hud.labelText = @"登陆成功";
-                [hud hide:YES afterDelay:1.5f];
-                [keychain setObject:nr forKey:(__bridge id)kSecAttrAccount];
-                self.nameTextField.text =@"";
-                [self performSegueWithIdentifier:@"toDashboard" sender:self];
-            }
-            else {
-                hud.mode = MBProgressHUDModeText;
-                
-                hud.labelText = [NSString stringWithFormat:@"%@", error.userInfo];
-                [hud hide:YES afterDelay:1.5f];
-            }
-        }];
+        [keychain setObject:nr forKey:(__bridge id)kSecAttrAccount];
+        self.nameTextField.text =@"";
+        [self performSegueWithIdentifier:@"toDashboard" sender:self];
+
+        
     }
     else{
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""

@@ -22,7 +22,7 @@
     self = [super init];
     if (self) {
         _afnet = [[AFNetHelper alloc] init];
-        _db = [[DBManager alloc] init];
+        _db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
     }
     return self;
 }
@@ -272,6 +272,41 @@
     return tableArray;
 }
 
+/*
+本地根据库位查询记录
+ */
+- (NSMutableArray *)localGetDataByPosition: (NSString *)position {
+    NSString *queryString = [NSString stringWithFormat:@"select * from inventories where position= '%@'", position];
+    NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: queryString]];
+    NSLog(@"log==== select %@%d", queryString, [arrayData count] );
+    NSMutableArray *tableArray = [[NSMutableArray alloc] init];
+    for (int i=0; i< [arrayData count]; i++) {
+        NSString *position = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"position"]];
+        NSString *department = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"department"]];
+        
+        NSString *part = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"part"]];
+        
+        NSString *part_type = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"part_type"]];
+        NSString *check_qty = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"check_qty"]];
+        InventoryEntity *entity = [[InventoryEntity alloc] initWithPosition:position withDepartment:department withPart:part withPartType:part_type];
+        NSLog(@"========= %@,%@, qty is %@",position, part, check_qty);
+        [tableArray addObject:entity];
+        NSLog(@" amount %d", [tableArray count]);
+    }
+    return tableArray;
+
+}
+
+/*
+ 本地根据库位 update 记录
+ */
+- (NSString *)localUpdateDataByPosition: (InventoryEntity *)entity {
+    NSString *queryString = [NSString stringWithFormat:@"update inventories set check_qty='%@', check_user='%@', check_time='%@' where position= '%@'", entity.check_qty, entity.check_user, entity.check_time, entity.position];
+    [self.db executeQuery: queryString];
+    return @"操作成功";
+    
+}
+
 
 - (NSMutableArray *)getListWithPosition: (NSString *)position {
     self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
@@ -305,7 +340,7 @@
 //         NSString *ios_created_id = @"";
         NSString *idString = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"id"]];
         InventoryEntity *entity = [[InventoryEntity alloc] initWithPosition:position withDepartment:department withPart:part withPartType:part_type WithCheckQty:check_qty WithCheckUser:check_user WithCheckTime:check_time WithiOSCreatedID:ios_created_id WithID:idString];
-         NSLog(@"========= %@,%@,%@,%@,time:%@",position, department, check_qty, check_user, check_time);
+//         NSLog(@"========= %@,%@,%@,%@,time:%@",position, department, check_qty, check_user, check_time);
         [tableArray addObject:entity];
        NSLog(@" numutable %d", [tableArray count]);
     }
