@@ -19,7 +19,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+    
+    
 }
+
+-(void)dismissKeyboard {
+    NSArray *subviews = [self.view subviews];
+    for (id objInput in subviews) {
+        if ([objInput isKindOfClass:[UITextField class]]) {
+            UITextField *theTextField = objInput;
+            if ([objInput isFirstResponder]) {
+                [theTextField resignFirstResponder];
+            }
+        }
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -148,6 +165,7 @@
 
         [self validatePosition];
     }
+    [textField resignFirstResponder];
     return NO;
 }
 /*
@@ -168,6 +186,8 @@
             if([self.partTypeTextField.text length] >0){
                 if([self.departmentTextField.text length] >0){
                     if([self.qtyTextField.text length] >0){
+                        [hud hide:YES afterDelay:1.5f];
+
                         if([self validatePosition]){
                             [self updateCheckData];
                         }
