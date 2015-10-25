@@ -149,7 +149,7 @@
 
 - (void)downloadCheckData {
     
-    [self.model getTotal: self.page_size block:^(NSInteger intCount, NSError *error) {
+    [self.model getTotal: self.page_size block:^(NSInteger intCount, NSError *error)  {
           if (intCount > 0) {
               self.integerCount = intCount;
               
@@ -164,7 +164,7 @@
 //                      NSLog(@"current is %d", i);
                       
                   }
-                  [self.model localGetData];
+                  
               } else {
                   NSLog(@"当前无下载数据更新");
               }
@@ -172,9 +172,20 @@
           }
           else {
               NSLog(@"testing ===   count < 0");
-          }
+          } 
       }];
-    
+    NSLog(@"is it end?");
+}
+
+- (void)MessageShow {
+    NSInteger counInteger = [[self.model localGetData] count];
+    NSString *messageString = [NSString stringWithFormat:@"已下载数据量为：%d", counInteger];
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"下载成功提示"
+                                                    message:messageString
+                                                   delegate:self
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:@"取消", nil];
+    [message show];
 }
 
 - (void)updateCheckDataPage: (NSInteger)page withPageSize: (NSString *)pageSize {

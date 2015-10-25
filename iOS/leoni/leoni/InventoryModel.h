@@ -42,7 +42,6 @@
 - (BOOL)webUploadRandomCheckData: (InventoryEntity *)entity;
 
 - (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block;
-
 - (void)webGetListWithPage: (NSInteger )page withPageSize: (NSString *)pageSize block:(void (^)(NSMutableArray * tableArray, NSError *error))block;
 
 
@@ -62,6 +61,6 @@
 /*
  本地查询 记录
  */
-- (void)localGetData;
+- (NSArray *)localGetData;
 
 @end

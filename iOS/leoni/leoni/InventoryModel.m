@@ -445,6 +445,7 @@
               }
           NSLog(@"log =========  getTotal =======%@", error.description);
           }];
+    
 }
 
 //- (NSInteger)getTotal {
@@ -588,10 +589,11 @@
 /*
  本地查询 记录
  */
-- (void)localGetData {
+- (NSArray *)localGetData {
     NSString *queryAll = [NSString stringWithFormat:@"select * from inventories"];
     NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: queryAll]];
     NSLog(@"current count is %d", [arrayData count]);
+    return  arrayData;
 }
 
 @end
