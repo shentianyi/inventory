@@ -58,4 +58,10 @@
  本地根据库位 update 记录
  */
 - (NSString *)localUpdateDataByPosition: (InventoryEntity *)entity;
+
+/*
+ 本地查询 记录
+ */
+- (void)localGetData;
+
 @end

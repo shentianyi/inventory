@@ -81,6 +81,106 @@
     _inventory = [[InventoryModel alloc] init];
 }
 
+- (BOOL)validatePosition
+{
+    BOOL msgBool = false;
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"加载中...";
+    
+    
+    /*
+     
+     取消服务器查询，进行本地查询
+     
+     [self.inventory queryWithPosition:textField.text block:^(InventoryEntity *inventory_entity, NSError *error) {
+     if (inventory_entity) {
+     self.departmentTextField.text = inventory_entity.department;
+     [self.departmentTextField setEnabled: NO];
+     [self.departmentTextField resignFirstResponder];
+     
+     self.partTextField.text = inventory_entity.part;
+     [self.partTextField setEnabled: NO];
+     [self.partTextField resignFirstResponder];
+     
+     self.partTypeTextField.text = inventory_entity.part_type;
+     [self.partTypeTextField setEnabled: NO];
+     [self.partTypeTextField resignFirstResponder];
+     
+     [hud hide:YES];
+     
+     }
+     else {
+     hud.mode = MBProgressHUDModeText;
+     hud.labelText = [NSString stringWithFormat:@"%@", error.userInfo];
+     [hud hide:YES afterDelay:1.5f];
+     }
+     
+     }];
+     */
+    
+    NSMutableArray *getData = [[NSMutableArray alloc] init];
+    getData = [self.inventory localGetDataByPosition:self.positionTextField.text];
+    NSUInteger countGetData =[ getData count];
+    if ( countGetData >0 ) {
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = [NSString stringWithFormat:@"库位已存在，不可以手动录入"];
+        [hud hide:YES afterDelay:1.5f];
+        NSArray *subviews = [self.view subviews];
+        for (id objInput in subviews) {
+            if ([objInput isKindOfClass:[UITextField class]]) {
+                UITextField *theTextField = objInput;
+                theTextField.text = @"";
+            }
+        }
+    } else  {
+        [hud hide:YES];
+        msgBool = true;
+    }
+    
+    return msgBool;
+}
+
+
+- (void)validateText {
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    if ([self.positionTextField.text length] >0) {
+        if ([self.partTextField.text length] >0) {
+            if([self.partTypeTextField.text length] >0){
+                if([self.departmentTextField.text length] >0){
+                    if([self.checkQtyTextField.text length] >0){
+//                        [self saveCheckData];
+                        [hud hide:YES];
+                        if ([self validatePosition]) {
+                            [self saveCheckData];
+                        }
+                    }else{
+                        hud.labelText = @"请输入全盘数量";
+                        [hud hide:YES afterDelay:1.5f];
+
+                    }
+                }else{
+                    hud.labelText = @"请输入部门";
+                    [hud hide:YES afterDelay:1.5f];
+                }
+            }else{
+                hud.labelText = @"请输入类型";
+                [hud hide:YES afterDelay:1.5f];
+            }
+                
+        }else{
+            hud.labelText = @"请输入零件号";
+            [hud hide:YES afterDelay:1.5f];
+        }
+    } else{
+        hud.labelText = @"请输入库位";
+        [hud hide:YES afterDelay:1.5f];
+
+    }
+    
+}
+
 - (BOOL)validPosition:(UITextField *)textField
 {
     __block BOOL validateStatus = FALSE;
@@ -116,7 +216,8 @@
 {
     
     if (textField == self.positionTextField) {
-        [self validPosition:textField];
+//        [self validPosition:textField];
+        [self validatePosition];
     }
     [textField resignFirstResponder];
     return NO;
@@ -134,44 +235,85 @@
 */
 
 - (IBAction)saveAction:(id)sender {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"加载中...";
-    
-    if ([self isPureFloat:self.checkQtyTextField.text] || [self isPureInt:self.checkQtyTextField.text]){
-//        if ([self validPosition:self.positionTextField]) {
-            InventoryModel *inventory = [[InventoryModel alloc] init];
-            KeychainItemWrapper *keyChain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
-            [inventory createWithPosition:self.positionTextField.text WithPart:self.partTextField.text WithDepartment:self.departmentTextField.text WithPartType:self.partTypeTextField.text WithChcekQty:self.checkQtyTextField.text WithCheckUser: [keyChain objectForKey:(__bridge  id)kSecAttrAccount] block:^(NSString *msgString, NSError *error){
-                
-                hud.mode = MBProgressHUDModeText;
-                hud.labelText = [NSString stringWithFormat:@"%@", msgString];
-                [hud hide:YES afterDelay:1.5f];
-                if (error) {
-                    
-                }
-                else {
-                    NSArray *subviews = [self.view subviews];
-                    for (id objInput in subviews) {
-                        if ([objInput isKindOfClass:[UITextField class]]) {
-                            UITextField *theTextField = objInput;
-                            theTextField.text = @"";
-                        }
-                    }
-                    [self.positionTextField isFirstResponder];
-                }
-            }];
+    [self validateText];
+//    
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    hud.labelText = @"加载中...";
+//    
+//    if ([self isPureFloat:self.checkQtyTextField.text] || [self isPureInt:self.checkQtyTextField.text]){
+////        if ([self validPosition:self.positionTextField]) {
+//            InventoryModel *inventory = [[InventoryModel alloc] init];
+//            KeychainItemWrapper *keyChain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
+//            [inventory createWithPosition:self.positionTextField.text WithPart:self.partTextField.text WithDepartment:self.departmentTextField.text WithPartType:self.partTypeTextField.text WithChcekQty:self.checkQtyTextField.text WithCheckUser: [keyChain objectForKey:(__bridge  id)kSecAttrAccount] block:^(NSString *msgString, NSError *error){
+//                
+//                hud.mode = MBProgressHUDModeText;
+//                hud.labelText = [NSString stringWithFormat:@"%@", msgString];
+//                [hud hide:YES afterDelay:1.5f];
+//                if (error) {
+//                    
+//                }
+//                else {
+//                    NSArray *subviews = [self.view subviews];
+//                    for (id objInput in subviews) {
+//                        if ([objInput isKindOfClass:[UITextField class]]) {
+//                            UITextField *theTextField = objInput;
+//                            theTextField.text = @"";
+//                        }
+//                    }
+//                    [self.positionTextField isFirstResponder];
+//                }
+//            }];
 
 //        }
 //        else
 //        {
 //        
 //        }
+//    }
+//    else {
+//        hud.mode = MBProgressHUDModeText;
+//        hud.labelText = [NSString stringWithFormat:@"请输入全盘数量"];
+//        [hud hide:YES afterDelay:1.5f];
+//        
+//    }
+
+}
+
+- (void)saveCheckData{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"加载中...";
+    
+    if ([self isPureFloat:self.checkQtyTextField.text] || [self isPureInt:self.checkQtyTextField.text]){
+        InventoryModel *inventory = [[InventoryModel alloc] init];
+        KeychainItemWrapper *keyChain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
+        
+       
+        [inventory createWithPosition: self.positionTextField.text WithPart:self.partTextField.text WithDepartment:self.departmentTextField.text WithPartType:self.partTypeTextField.text WithChcekQty:self.checkQtyTextField.text WithCheckUser:[keyChain objectForKey:(__bridge  id)kSecAttrAccount] block:^(NSString *msgString, NSError *error) {
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = [NSString stringWithFormat:@"%@", msgString];
+            [hud hide:YES afterDelay:1.5f];
+            if (error == nil) {
+                NSArray *subviews = [self.view subviews];
+                for (id objInput in subviews) {
+                    if ([objInput isKindOfClass:[UITextField class]]) {
+                        UITextField *theTextField = objInput;
+                        theTextField.text = @"";
+                    }
+                }
+                [self.checkQtyTextField resignFirstResponder];
+                [self.positionTextField becomeFirstResponder];
+                
+
+            }
+        }];
+        
+        
+        
     }
     else {
         hud.mode = MBProgressHUDModeText;
         hud.labelText = [NSString stringWithFormat:@"请输入全盘数量"];
         [hud hide:YES afterDelay:1.5f];
-        
     }
 
 }

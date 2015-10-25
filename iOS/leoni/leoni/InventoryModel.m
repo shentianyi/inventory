@@ -242,7 +242,7 @@
     else {
         query = [NSString stringWithFormat:@"select * from inventories where position like '%%%@%%' and random_check_qty != '' order by random_check_time desc", position];
     }
-    NSLog(@"=== test query %@", query);
+//    NSLog(@"=== test query %@", query);
     NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: query]];
     
     NSMutableArray *tableArray = [[NSMutableArray alloc] init];
@@ -267,7 +267,7 @@
         
         InventoryEntity *entity = [[InventoryEntity alloc] initRandomCheckDataWithPosition: position withDepartment:department withPart:part withPartType:part_type WithRandomCheckQty:random_check_qty WithRandomCheckUser:random_check_user WithRandomCheckTime:random_check_time WithiOSCreatedID:ios_created_id WithID:idString];
         [tableArray addObject:entity];
-        NSLog(@" numutable %d", [tableArray count]);
+//        NSLog(@" numutable %d", [tableArray count]);
     }
     return tableArray;
 }
@@ -289,9 +289,9 @@
         NSString *part_type = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"part_type"]];
         NSString *check_qty = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"check_qty"]];
         InventoryEntity *entity = [[InventoryEntity alloc] initWithPosition:position withDepartment:department withPart:part withPartType:part_type];
-        NSLog(@"========= %@,%@, qty is %@",position, part, check_qty);
+//        NSLog(@"========= %@,%@, qty is %@",position, part, check_qty);
         [tableArray addObject:entity];
-        NSLog(@" amount %d", [tableArray count]);
+//        NSLog(@" amount %d", [tableArray count]);
     }
     return tableArray;
 
@@ -519,7 +519,7 @@
     
 //    NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: query]];
     [self.db executeQuery:query];
-    NSLog(@"=== test query %@", query);
+//    NSLog(@"=== test query %@", query);
     query = @"select * from inventories";
     
     NSArray *array = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: query]];
@@ -583,5 +583,15 @@
 //    }
 //}
 
+
+
+/*
+ 本地查询 记录
+ */
+- (void)localGetData {
+    NSString *queryAll = [NSString stringWithFormat:@"select * from inventories"];
+    NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: queryAll]];
+    NSLog(@"current count is %d", [arrayData count]);
+}
 
 @end

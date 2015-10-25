@@ -152,7 +152,9 @@
     [self.model getTotal: self.page_size block:^(NSInteger intCount, NSError *error) {
           if (intCount > 0) {
               self.integerCount = intCount;
+              
               self.totalInventories = intCount * [self.page_size intValue];
+              NSLog(@"total data is %d", self.totalInventories);
               [self.model localDeleteData:@""];
 //              NSLog(@"log === total is %d  self.integerCount %d", self.totalInventories, self.integerCount);
               if (self.integerCount >0) {
@@ -162,6 +164,7 @@
 //                      NSLog(@"current is %d", i);
                       
                   }
+                  [self.model localGetData];
               } else {
                   NSLog(@"当前无下载数据更新");
               }

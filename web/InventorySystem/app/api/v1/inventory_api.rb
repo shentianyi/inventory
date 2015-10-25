@@ -81,7 +81,8 @@ module V1
         requires :per_page, type: String
       end
       get :get_total do
-        inventories = Inventory.check.paginate(page: '1', per_page: params[:per_page])
+        # inventories = Inventory.check.paginate(page: '1', per_page: params[:per_page
+        inventories = Inventory.all.paginate(page: '1', per_page: params[:per_page])
         if inventories.present?
           # {result:1, content: inventories.total_pages}
           present :result, 1
@@ -99,7 +100,8 @@ module V1
         requires :per_page, type: String
       end
       get :download_check_data do
-        inventories = Inventory.check.paginate(page: params[:page], per_page: params[:per_page])
+        # inventories = Inventory.check.paginate(page: params[:page], per_page: params[:per_page])
+        inventories = Inventory.all.paginate(page: params[:page], per_page: params[:per_page])
         if inventories.present?
           # {result:1, content: inventories}
           present :result, 1

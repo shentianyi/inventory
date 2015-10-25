@@ -42,6 +42,37 @@
  
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+    [self initController];
+    
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+}
+
+
+-(void)decoderDataReceived:(NSString *)data
+{
+    NSArray *subviews = [self.view subviews];
+    for (id objInput in subviews) {
+        if ([objInput isKindOfClass:[UITextField class]]) {
+            UITextField *tmpTextFile = objInput;
+            if ([objInput isFirstResponder]) {
+                tmpTextFile.text = data;
+                [tmpTextFile resignFirstResponder];
+                //                [tmpTextFile.nextTextField becomeFirstResponder];
+                break;
+            }
+        }
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
