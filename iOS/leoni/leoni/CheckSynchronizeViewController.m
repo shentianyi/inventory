@@ -192,9 +192,10 @@
     [self.model webGetListWithPage:page withPageSize:pageSize block:^(NSMutableArray *tableArray, NSError *error) {
         if ([tableArray count] > 0) {
             for (int i=0; i< [tableArray count]; i++) {
+//                InventoryEntity *entity = [[InventoryEntity alloc] initWithObject:tableArray[i]];
                 InventoryEntity *entity = [[InventoryEntity alloc] init];
                 entity = tableArray[i];
-                NSLog(@"log === updateCheckDataPage entity.id %@", entity.inventory_id);
+//                NSLog(@"log === updateCheckDataPage entity.id %@", entity.inventory_id);
                 [self.model localCreateCheckData:entity];
                 self.countInventories++;
                 self.progressView.progress = (float)self.countInventories/self.totalInventories;

@@ -51,16 +51,18 @@
     //Do some search
     NSLog(@"=== testing search %@", searchBar.text);
     InventoryModel *inventory = [[InventoryModel alloc] init];
-    [inventory webGetRandomCheckData:searchBar.text block:^(NSMutableArray *tableArray, NSError *error) {
-        if ([tableArray count] > 0) {
-            self.arrayInventories = tableArray;
-            [self.randomTableView reloadData];
-        }
-        else {
-            [self.arrayInventories removeAllObjects];
-            [self.randomTableView reloadData];
-        }
-    }];
+//    [inventory webGetRandomCheckData:searchBar.text block:^(NSMutableArray *tableArray, NSError *error) {
+//        if ([tableArray count] > 0) {
+//            self.arrayInventories = tableArray;
+//            [self.randomTableView reloadData];
+//        }
+//        else {
+//            [self.arrayInventories removeAllObjects];
+//            [self.randomTableView reloadData];
+//        }
+//    }];
+    self.arrayInventories = [inventory localGetRandomCheckData:searchBar.text];
+    [self.randomTableView reloadData];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
@@ -70,18 +72,27 @@
     [self loadData];
 }
 
+//- (void)loadData {
+//    self.arrayInventories = [[NSMutableArray alloc]init];
+//    InventoryModel *inventory = [[InventoryModel alloc] init];
+//    [inventory webGetRandomCheckData:nil block:^(NSMutableArray *tableArray, NSError *error) {
+//        if ([tableArray count] > 0) {
+//            self.arrayInventories = tableArray;
+//            [self.randomTableView reloadData];
+//        }
+//    }];
+//    
+//    
+//}
+
 - (void)loadData {
     self.arrayInventories = [[NSMutableArray alloc]init];
     InventoryModel *inventory = [[InventoryModel alloc] init];
-    [inventory webGetRandomCheckData:nil block:^(NSMutableArray *tableArray, NSError *error) {
-        if ([tableArray count] > 0) {
-            self.arrayInventories = tableArray;
-            [self.randomTableView reloadData];
-        }
-    }];
+    self.arrayInventories = [inventory localGetRandomCheckData:@""];
     
-    
+    [self.randomTableView reloadData];
 }
+
 
 //- (UITableView *)randomTableView {
 //    if (!_randomTableView) {

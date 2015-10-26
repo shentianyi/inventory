@@ -39,7 +39,22 @@
     [self.navigationController.navigationBar addSubview:self.searchBar];
     
     self.searchResult = [NSMutableArray arrayWithCapacity:[self.arrayInventories count]];
- 
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+    
+    
+}
+
+-(void)dismissKeyboard {
+    NSArray *subviews = [self.view subviews];
+    for (id objInput in subviews) {
+        if ([objInput isKindOfClass:[UITextField class]]) {
+            UITextField *theTextField = objInput;
+            if ([objInput isFirstResponder]) {
+                [theTextField resignFirstResponder];
+            }
+        }
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -166,13 +181,16 @@
     self.arrayInventories = [inventory getListWithPosition:self.searchBar.text];
     
     [self.table reloadData];
+    
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
-//    [searchBar resignFirstResponder];
+    [searchBar resignFirstResponder];
+    searchBar.text = @"";
 //    [searchBar setShowsCancelButton:NO animated:YES];
 //    NSLog(@"=== testing cancel ");
     [self loadData];
+    
 }
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope

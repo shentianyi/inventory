@@ -305,7 +305,7 @@
         [self.partTypeTextField setEnabled: NO];
         [self.partTypeTextField resignFirstResponder];
         
-        self.checkQtyTextField.text = inventory_entity.check_qty;
+        self.checkQtyTextField.text = inventory_entity.check_qty?inventory_entity.check_qty:@"";
         [self.checkQtyTextField setEnabled: NO];
 
         

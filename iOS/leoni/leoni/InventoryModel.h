@@ -32,8 +32,15 @@
 - (void)localCreateCheckData: (InventoryEntity *)entity;
 //- (void)localCreateRandomCheckData: (InventoryEntity *)entity;
 
-
+/*
+ 获取本地全盘数据
+ */
 - (NSMutableArray *)getListWithPosition: (NSString *)position;
+
+/*
+ 获取本地抽盘数据
+ */
+- (NSMutableArray *)getRandomCheckDataWithPosition: (NSString *)position;
 
 - (BOOL)uploadCheckData: (InventoryEntity *)entity;
 /*
