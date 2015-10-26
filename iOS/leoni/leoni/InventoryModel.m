@@ -278,7 +278,6 @@
 - (NSMutableArray *)localGetDataByPosition: (NSString *)position {
     NSString *queryString = [NSString stringWithFormat:@"select * from inventories where position= '%@'", position];
     NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: queryString]];
-    NSLog(@"log==== select %@%d", queryString, [arrayData count] );
     NSMutableArray *tableArray = [[NSMutableArray alloc] init];
     for (int i=0; i< [arrayData count]; i++) {
         NSString *position = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"position"]];
@@ -288,8 +287,13 @@
         
         NSString *part_type = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"part_type"]];
         NSString *check_qty = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"check_qty"]];
-        InventoryEntity *entity = [[InventoryEntity alloc] initWithPosition:position withDepartment:department withPart:part withPartType:part_type];
-//        NSLog(@"========= %@,%@, qty is %@",position, part, check_qty);
+        NSString *random_check_qty = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"random_check_qty"]];
+        
+//        InventoryEntity *entity = [[InventoryEntity alloc] initWithPosition:position withDepartment:department withPart:part withPartType:part_type];
+        
+        InventoryEntity *entity = [[InventoryEntity alloc] initWithPosition:position withDepartment:department withPart:part withPartType:part_type WithCheckQty:check_qty WithCheckUser:@"" WithCheckTime:@"" WithiOSCreatedID:@"" WithID:@""];
+        
+//        NSLog(@"========= %@,%@, qty is %@, random_check_qty is %@",position, part, check_qty, random_check_qty);
         [tableArray addObject:entity];
 //        NSLog(@" amount %d", [tableArray count]);
     }
@@ -298,10 +302,20 @@
 }
 
 /*
- 本地根据库位 update 记录
+ 本地根据库位 update  check data记录
  */
 - (NSString *)localUpdateDataByPosition: (InventoryEntity *)entity {
     NSString *queryString = [NSString stringWithFormat:@"update inventories set check_qty='%@', check_user='%@', check_time='%@' where position= '%@'", entity.check_qty, entity.check_user, entity.check_time, entity.position];
+    [self.db executeQuery: queryString];
+    return @"操作成功";
+    
+}
+
+/*
+ 本地根据库位 update random check data记录
+ */
+- (NSString *)localUpdateRandomCheckDataByPosition: (InventoryEntity *)entity {
+    NSString *queryString = [NSString stringWithFormat:@"update inventories set random_check_qty='%@', random_check_user='%@', random_check_time='%@' where position= '%@'", entity.random_check_qty, entity.random_check_user, entity.random_check_time, entity.position];
     [self.db executeQuery: queryString];
     return @"操作成功";
     

@@ -59,6 +59,11 @@
 - (NSString *)localUpdateDataByPosition: (InventoryEntity *)entity;
 
 /*
+ 本地根据库位 update random check data记录
+ */
+- (NSString *)localUpdateRandomCheckDataByPosition: (InventoryEntity *)entity;
+
+/*
  本地查询 记录
  */
 - (NSArray *)localGetData;
