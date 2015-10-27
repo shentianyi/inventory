@@ -3,6 +3,12 @@ module V1
     namespace :inventory do
       format :json
       
+      desc "testing sample"
+      get :sample do
+        Inventory.create_random_data
+        {result: 1}
+      end
+      
       desc "List all Inventories"
       get do
         inventories = Inventory.all

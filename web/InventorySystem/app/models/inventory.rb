@@ -60,4 +60,25 @@ class Inventory < ActiveRecord::Base
     
     inventories
   end
+  
+  def self.create_random_data
+    
+    counter = 1
+    samples = []
+    areas = []
+    inventories = Inventory.all
+    inventories.each do |inventory|
+      inventory.update!(random_check_qty: '', random_check_user: '', random_check_time: '', is_random_check: false)
+      areas << inventory
+      if counter == 10
+        counter = 1
+        areas.each { |x| puts "the position is #{x.position}"}
+        samples = areas.shuffle.sample(3)
+        samples.each {|x| x.update!(is_random_check: true)}
+        samples.clear
+        areas.clear
+      end
+      counter += 1
+    end
+  end
 end

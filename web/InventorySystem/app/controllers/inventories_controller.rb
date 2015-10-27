@@ -1,6 +1,14 @@
 class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :edit, :update, :destroy]
 
+  def random
+    Inventory.create_random_data
+    respond_to do |format|
+      format.js
+    end
+    
+  end
+
   def import
     if request.post?
       msg = Message.new
