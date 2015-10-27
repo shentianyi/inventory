@@ -20,6 +20,7 @@
 - (NSString *)check;
 - (NSString *)uploadCheckData;
 - (NSString *)getTotal;
+- (NSString *)getRandomTotal;
 - (NSString *)downloadCheckData;
 - (NSString *)randomCheckData;
 - (NSString *)getRandomCheckData;

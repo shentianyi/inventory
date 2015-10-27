@@ -153,18 +153,31 @@ module V1
       
       
       
-    
-      desc "get random check data"
+      desc "get random_check_data page size"
       params do
-        # requires :page, type: String
-        optional :position, type: String
+        requires :per_page, type: String
+      end
+      get :get_random_total do
+        inventories = Inventory.random_check.paginate(page: '1', per_page: params[:per_page])
+        if inventories.present?
+          # {result:1, content: inventories.total_pages}
+          present :result, 1
+          present :total_pages, inventories.total_pages
+          present :total, inventories.count
+          # present :content, inventories
+        else
+          {result:0, content: '当前无数据'}
+        end
+      end
+    
+      desc "download random check data"
+      params do
+        requires :page, type: String
+        requires :per_page, type: String
       end
       get :get_random_check_data do
-        if params[:position].blank?
-          inventories = Inventory.random_check.order(created_at: :desc)
-        else
-          inventories = Inventory.random_check.where("position LIKE ?", "%#{params[:position]}%").order(created_at: :desc)
-        end
+       
+       inventories = Inventory.random_check.paginate(page: params[:page], per_page: params[:per_page])
         
         if inventories.present?
           present :result, 1
@@ -191,7 +204,7 @@ module V1
         else
           inventory = Inventory.find(params[:id])
           if inventory.present?
-            if inventory.update!(random_check_qty: params[:random_check_qty], random_check_user: params[:random_check_user], random_check_time: params[:random_check_time], is_random_check: true)
+            if inventory.update!(random_check_qty: params[:random_check_qty], random_check_user: params[:random_check_user], random_check_time: params[:random_check_time])
               {result:1, content: inventory}
             else
               {result:0, content: '更新数据失败'}

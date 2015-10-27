@@ -17,7 +17,7 @@
 
 - (instancetype)init;
 
-- (void)webGetRandomCheckData: (NSString *)strPage block:(void(^)(NSMutableArray *tableArray, NSError *error))block;
+- (void)webGetRandomCheckData: (NSInteger )page withPageSize: (NSString *)pageSize block:(void(^)(NSMutableArray *tableArray, NSError *error))block;
 
 - (void)queryWithPosition: (NSString *)positionString block:(void(^)(InventoryEntity *inventory_entity, NSError *error))block;
 
@@ -47,6 +47,12 @@
  上传更新random check data
  */
 - (BOOL)webUploadRandomCheckData: (InventoryEntity *)entity;
+
+/*
+ 获取抽盘数据 总页数，总条数
+ */
+- (void)getRandomTotal: (NSString *)pageSize block:(void (^)(NSInteger intCount, NSError *error))block;
+    
 
 - (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block;
 - (void)webGetListWithPage: (NSInteger )page withPageSize: (NSString *)pageSize block:(void (^)(NSMutableArray * tableArray, NSError *error))block;

@@ -24,7 +24,7 @@ class Inventory < ActiveRecord::Base
   validates :position, :part, uniqueness: true
   
   scope :check, -> { where("check_qty != '' or check_qty is not null")}
-  scope :random_check, -> {where("random_check_qty !='' or random_check_qty is not null")}
+  scope :random_check, -> {where("is_random_check is true")}
   self.per_page = 50
   # default.scope
   default_scope { order('id DESC') }

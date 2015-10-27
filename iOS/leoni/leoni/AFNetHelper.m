@@ -131,6 +131,13 @@
     return [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
 }
+
+- (NSString *)getRandomTotal {
+    NSString *server_url = [self ServerURL];
+    NSString *url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"get_random_total"]];
+    return [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+}
 - (NSString *)downloadCheckData {
     NSString *server_url = [self ServerURL];
     NSString *url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"download_check_data"]];
