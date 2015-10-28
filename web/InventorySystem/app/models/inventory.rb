@@ -25,6 +25,10 @@ class Inventory < ActiveRecord::Base
   
   scope :check, -> { where("check_qty != '' or check_qty is not null")}
   scope :random_check, -> {where("is_random_check is true")}
+  
+  scope :random_check_completed, -> { where("is_random_check is true and random_check_qty != ''")}
+  scope :position_client, -> { where("ios_created_id != ''")}
+  scope :position_unclient, -> { where("ios_created_id = '' or ios_created_id is null")}
   self.per_page = 50
   # default.scope
   default_scope { order('id DESC') }
