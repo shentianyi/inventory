@@ -14,8 +14,8 @@
 			部门：<%= text_field_tag :department, params[:department]%>
 			库位号：从<%= text_field_tag :position_begin, params[:position_begin]%>到<%= text_field_tag :position_end, params[:position_end]%>
 			零件号：<%= text_field_tag :part, params[:part]%>
-			是否是iOS新建：<%= select_tag :ios_created_id, options_for_select([["否", 0],["是", 1]]) %>
-			是否是抽盘：<%= select_tag :is_random_check,  options_for_select([["否", 0],["是", 1]]) %>
+			是否是iOS新建：<%= select_tag :ios_created_id, options_for_select([["否", 0],["是", 1]]), {prompt: '选择'} %>
+			是否是抽盘：<%= select_tag :is_random_check,  options_for_select([["否", 0],["是", 1]]), {prompt: '选择'} %>
 			显示方式:
 			  <%= select_tag :format, options_for_select([["Web", "html"],["Excel File(MS 07 or later)", "xlsx"]], "html") %>
 			<%= submit_tag "查询", :name => nil, class: 'btn btn-primary' %>

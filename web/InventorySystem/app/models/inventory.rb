@@ -51,15 +51,17 @@ class Inventory < ActiveRecord::Base
     condition["department"] = department if department.present?
     condition["position"] = position_begin...position_end if position_begin.present? && position_end.present?
     # condition["ios_created_id"] = ios_created_id if ios_created_id.present?
-    condition["is_random_check"] = is_random_check
+    condition["is_random_check"] = is_random_check if is_random_check.present?
     
     # condition["part"] =~ /part/ if part.present?
     inventories = inventories.where(condition)
     inventories = inventories.where("part like '%#{part}%' ") if part.present?
-    if ios_created_id == '1'
-      inventories = inventories.where("ios_created_id  != ''") 
-    else 
-      inventories = inventories.where("ios_created_id is null ")
+    if is_random_check.present?
+      if ios_created_id == '1'
+        inventories = inventories.where("ios_created_id  != ''") 
+      else 
+        inventories = inventories.where("ios_created_id is null ")
+      end
     end 
     
     inventories
