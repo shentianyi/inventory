@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'file/download'
+  
+  
   get 'dashboard/index'
   root to: 'dashboard#index'
   resources :inventories do
@@ -10,6 +11,11 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :files do
+    collection do
+      get :download
+    end
+  end
   
   resources :users
   

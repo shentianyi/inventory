@@ -40,5 +40,10 @@
 		<string>com.honeywell.scansled.protocol.msr</string>
 		<string>com.honeywell.scansled.protocol.pm</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

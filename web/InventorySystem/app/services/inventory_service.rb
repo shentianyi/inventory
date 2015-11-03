@@ -8,20 +8,20 @@ class InventoryService
     part_type = params[:part_type];
     return false if operator.nil? || department.nil? || position.nil? || part.nil? || part_type.nil?
     
-    prt = operator.to_s
-    case prt
-    when 'new'
-      puts "---------------testing #{position}"
-      raise 'uniqueId already exists!' if position.present? and Inventory.find_by_position(position)
-      raise 'uniqueId already exists!' if part.present? and Inventory.find_by_part(part)
-    when 'update'
-      inventory = Inventory.where(part: part, position: position).first 
-    when 'delete'
-      inventory = Inventory.where(part: part, position: position).first
-    else
-      return false
-    end
-    return true
+    # prt = operator.to_s
+#     case prt
+#     when 'new'
+#       puts "---------------testing #{position}"
+#       raise 'uniqueId already exists!' if position.present? and Inventory.find_by_position(position)
+#       raise 'uniqueId already exists!' if part.present? and Inventory.find_by_part(part)
+#     when 'update'
+#       inventory = Inventory.where(part: part, position: position).first
+#     when 'delete'
+#       inventory = Inventory.where(part: part, position: position).first
+#     else
+#       return false
+#     end
+#     return true
   end
   
   def enter_stock(params)
@@ -43,7 +43,7 @@ class InventoryService
         inventory.destroy if inventory
       end
     else
-      raise 'data is unvalidate'
+      raise '数据异常'
     end
   end  
   

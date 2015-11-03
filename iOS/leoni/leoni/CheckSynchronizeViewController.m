@@ -149,32 +149,38 @@
 
 - (void)downloadCheckData {
     
-    [self.model getTotal: self.page_size block:^(NSInteger intCount, NSError *error)  {
-          if (intCount > 0) {
-              self.integerCount = intCount;
-              
-              self.totalInventories = intCount * [self.page_size intValue];
-              NSLog(@"total data is %d", self.totalInventories);
-              [self.model localDeleteData:@""];
-//              NSLog(@"log === total is %d  self.integerCount %d", self.totalInventories, self.integerCount);
-              if (self.integerCount >0) {
-                  [self.progressView setHidden: NO];
-                  for (int i=1; i<= self.integerCount; i++) {
-                      [self updateCheckDataPage:i withPageSize:self.page_size];
-//                      NSLog(@"current is %d", i);
-                      
-                  }
-                  
-              } else {
-                  NSLog(@"当前无下载数据更新");
-              }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),  ^{
+        [self.model getTotal: self.page_size block:^(NSInteger intCount, NSError *error)  {
+            if (intCount > 0) {
+                self.integerCount = intCount;
+                
+                self.totalInventories = intCount * [self.page_size intValue];
+                NSLog(@"total data is %d", self.totalInventories);
+                [self.model localDeleteData:@""];
+                //              NSLog(@"log === total is %d  self.integerCount %d", self.totalInventories, self.integerCount);
+                if (self.integerCount >0) {
+                    [self.progressView setHidden: NO];
+                    for (int i=1; i<= self.integerCount; i++) {
+                        [self updateCheckDataPage:i withPageSize:self.page_size];
+                        //                      NSLog(@"current is %d", i);
+                        
+                    }
+                    
+                } else {
+                    NSLog(@"当前无下载数据更新");
+                }
+                
+            }
+            else {
+                NSLog(@"testing ===   count < 0");
+            } 
+        }];
+        dispatch_async(dispatch_get_main_queue(),^{
+            [self MessageShow];
+        });
 
-          }
-          else {
-              NSLog(@"testing ===   count < 0");
-          } 
-      }];
-    NSLog(@"is it end?");
+    });
+    
 }
 
 - (void)MessageShow {

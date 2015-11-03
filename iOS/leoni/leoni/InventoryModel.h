@@ -54,7 +54,10 @@
 - (void)getRandomTotal: (NSString *)pageSize block:(void (^)(NSInteger intCount, NSError *error))block;
     
 
-- (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block;
+- (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block ;
+
+//- (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block completion:(void(^)(BOOL finished))completion;
+
 - (void)webGetListWithPage: (NSInteger )page withPageSize: (NSString *)pageSize block:(void (^)(NSMutableArray * tableArray, NSError *error))block;
 
 

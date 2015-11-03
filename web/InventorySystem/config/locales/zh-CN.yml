@@ -1,0 +1,34 @@
+zh-CN:
+  hello: "您好!"
+  activerecord:
+    models:
+      inventory: "库存"
+      user: "员工"
+    attributes:
+      inventory:
+        department: "部门"
+        position: "库位"
+        part: "零件号"
+        part_type: "零件类型"
+        check_qty: "全盘数量"
+        check_user: "全盘人员"
+        check_time: "全盘时间"
+        random_check_qty: "抽盘数量"
+        random_check_user: "抽盘人员"
+        random_check_time: "抽盘时间"
+        is_random_check: "是否抽盘"
+        ios_created_id: "是否客户端创建"
+      user:
+        nr: "员工号"
+        name: "姓名"   
+    errors:
+      models:
+        inventory: "库存"
+      messages:
+        blank: "不能为空"
+        taken: "已经被占用"
+  date:
+    order:
+    - :year
+    - :month
+    - :day

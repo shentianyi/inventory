@@ -32,6 +32,6 @@ module InventorySystem
     config.active_record.raise_in_transactional_callbacks = true
     config.time_zone = 'Beijing' 
     config.active_record.default_timezone = :local
-    
+    config.i18n.default_locale = :'zh-CN'
   end
 end

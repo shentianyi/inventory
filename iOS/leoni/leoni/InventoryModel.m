@@ -525,7 +525,10 @@
     
 }
 
-- (void)getTotal: (NSString *)pageSize block:(void (^)(NSInteger, NSError *))block {
+
+
+- (void)getTotal: (NSString *)pageSize block:(void (^)(NSInteger, NSError *))block  {
+//- (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block completion:(void(^)(BOOL finished))completion {
 //    NSString *pageSizeString = @"2";
     AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
     [manager GET:[self.afnet getTotal]

@@ -73,7 +73,7 @@
         <td><%= inventory.ios_created_id %></td>
         <td><%= link_to '详情', inventory %></td>
         <td><%= link_to '编辑', edit_inventory_path(inventory) %></td>
-        <td><%= link_to '删除', inventory, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to '删除', inventory, method: :delete, data: { confirm: '是否删除该条记录?' } %></td>
       </tr>
     <% end %>
   </tbody>

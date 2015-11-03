@@ -129,7 +129,7 @@ class InventoriesController < ApplicationController
   # POST /inventories.json
   def create
     @inventory = Inventory.new(inventory_params)
-
+    
     respond_to do |format|
       if @inventory.save
         format.html { redirect_to @inventory, notice: 'Inventory was successfully created.' }
@@ -173,6 +173,6 @@ class InventoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_params
-      params.require(:inventory).permit(:department, :position, :part, :part_type, :check_qty, :check_user, :check_time, :random_check_qty, :random_check_user, :random_check_time, :is_random_check, :ios_created_id, :position_begin, :position_end)
+      params.require(:inventory).permit(:department, :position, :part, :part_type, :check_qty, :check_user, :random_check_qty, :random_check_user,  :is_random_check, :ios_created_id, :position_begin, :position_end)
     end
 end
