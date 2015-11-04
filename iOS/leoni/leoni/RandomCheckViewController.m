@@ -60,15 +60,20 @@
 -(void)decoderDataReceived:(NSString *)data
 {
     self.positionTextField.text = data;
+    [self.positionTextField resignFirstResponder];
+    [self.randomCheckQtyTextField becomeFirstResponder];
 }
 
 - (void)initController {
     self.positionTextField.delegate =self;
     self.partTextField.delegate = self;
+    self.partTextField.enabled = NO;
     self.departmentTextField.delegate = self;
+    self.departmentTextField.enabled = NO;
     self.checkQtyTextField.delegate = self;
     self.randomCheckQtyTextField.delegate = self;
-    
+    self.partTypeTextField.enabled = NO;
+    self.checkQtyTextField.enabled = NO;
     _inventory = [[InventoryModel alloc] init];
 }
 

@@ -110,7 +110,7 @@
         self.ios_created_id = dictionary[@"ios_created_id"]?dictionary[@"ios_created_id"]:@"";
         self.is_random_check = dictionary[@"is_random_check"]?dictionary[@"is_random_check"]:@"";
         
-        NSLog(@"the check qty %@", self.check_qty);
+//        NSLog(@"the check qty %@", self.check_qty);
 
     }
     return self;

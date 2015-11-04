@@ -102,17 +102,23 @@ module V1
       
       desc "downlaod check_data"
       params do
-        requires :page, type: String
-        requires :per_page, type: String
+        optional :page, type: String
+        optional :per_page, type: String
       end
       get :download_check_data do
         # inventories = Inventory.check.paginate(page: params[:page], per_page: params[:per_page])
-        inventories = Inventory.all.paginate(page: params[:page], per_page: params[:per_page])
+        if params[:page].present? && params[:per_page].present?
+          inventories = Inventory.all.paginate(page: params[:page], per_page: params[:per_page])
+        else
+          inventories = Inventory.all
+        end
         if inventories.present?
           # {result:1, content: inventories}
           present :result, 1
-          present :total_pages, inventories.total_pages
-          present :current_page, inventories.current_page
+          if params[:page].present? && params[:per_page].present?
+            present :total_pages, inventories.total_pages
+            present :current_page, inventories.current_page
+          end
           present :content, inventories
         else
           {result:0, content: '当前无数据'}
@@ -172,17 +178,21 @@ module V1
     
       desc "download random check data"
       params do
-        requires :page, type: String
-        requires :per_page, type: String
+        optional :page, type: String
+        optional :per_page, type: String
       end
       get :get_random_check_data do
-       
-       inventories = Inventory.random_check.paginate(page: params[:page], per_page: params[:per_page])
-        
+       if params[:page].present? && params[:per_page].present?
+         inventories = Inventory.random_check.paginate(page: params[:page], per_page: params[:per_page])
+       else
+          inventories = Inventory.random_check
+        end
         if inventories.present?
           present :result, 1
-          # present :total_pages, inventories.total_pages
-          # present :current_page, inventories.current_page
+          if params[:page].present? && params[:per_page].present?
+            present :total_pages, inventories.total_pages
+            present :current_page, inventories.current_page
+          end
           present :content, inventories 
         else
           present :result, 0
