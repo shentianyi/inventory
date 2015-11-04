@@ -74,7 +74,7 @@ class Inventory < ActiveRecord::Base
     areas = []
     inventories = Inventory.all
     inventories.each do |inventory|
-      inventory.update!(random_check_qty: '', random_check_user: '', random_check_time: '', is_random_check: false)
+      inventory.update(random_check_qty: '', random_check_user: '', random_check_time: '', is_random_check: false)
       areas << inventory
       if counter == 10
         counter = 1
