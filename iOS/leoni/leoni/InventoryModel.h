@@ -83,6 +83,12 @@
  */
 - (NSMutableArray *)localGetDataByPosition: (NSString *)position;
 
+/*
+ 本地根据库位, 零件查询记录
+ */
+- (NSMutableArray *)localGetDataByPosition: (NSString *)position ByPart: (NSString *)part;
+
+
 
 /*
  本地根据库位 update 记录
