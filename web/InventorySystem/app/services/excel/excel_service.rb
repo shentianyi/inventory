@@ -90,28 +90,29 @@ class ExcelService
     msg = Message.new(contents: [])
     
     if row[:department].blank?
-      msg.contents << "部门:#{row[:department]} 不为空!"
+      msg.contents << "部门:#{row[:department]} 不能为空!"
     end
     
     if row[:position].blank?
-      msg.contents << "库位:#{row[:position]} 不为空!"
+      msg.contents << "库位:#{row[:position]} 不能为空!"
     end
     
     if row[:part].blank?
-      msg.contents << "零件号: #{row[:part]} 不为空!"
+      msg.contents << "零件号: #{row[:part]} 不能为空!"
     end
     
     if row[:part_type].blank?
-      msg.contents << "零件类型: #{row[:part_type]} 不为空!"
+      msg.contents << "零件类型: #{row[:part_type]} 不能为空!"
     end
 
     if row[:Operator].blank?
-      msg.contents << "操作: #{row[:Operator]} 不为空!"
+      msg.contents << "操作: #{row[:Operator]} 不能为空!"
     end
     
     operator = row[:Operator].to_s
     puts "#{row[:part].to_i}, #{row[:position].to_s}"
-    i = Inventory.where(part: row[:part].to_s).where(position: row[:position].to_s)
+    # i = Inventory.where(part: row[:part].to_s).where(position: row[:position].to_s)
+    i = Inventory.where(position: row[:position].to_s)
     case operator
     when 'new'
       if i.present?

@@ -21,7 +21,7 @@
 
 class Inventory < ActiveRecord::Base
   validates :department, :position, :part, :part_type, presence: true
-  validates :position, uniqueness: { scope: :part}
+  validates :position, uniqueness: true
   
   scope :check, -> { where("check_qty != '' or check_qty is not null")}
   scope :random_check, -> {where("is_random_check is true")}
