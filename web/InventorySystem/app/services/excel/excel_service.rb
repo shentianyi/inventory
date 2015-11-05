@@ -110,9 +110,9 @@ class ExcelService
     end
     
     operator = row[:Operator].to_s
-    puts "#{row[:part].to_i}, #{row[:position].to_s}"
-    # i = Inventory.where(part: row[:part].to_s).where(position: row[:position].to_s)
-    i = Inventory.where(position: row[:position].to_s)
+    # puts "#{row[:part].to_i}, #{row[:position].to_s}"
+    i = Inventory.where(part: row[:part].to_s).where(position: row[:position].to_s)
+    # i = Inventory.where(position: row[:position].to_s)
     case operator
     when 'new'
       if i.present?
