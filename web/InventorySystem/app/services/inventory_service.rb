@@ -1,7 +1,7 @@
 class InventoryService
   
   def validate_data(params)
-    operator = params[:operator];
+    operator = params[:Operator];
     department = params[:department];
     position = params[:position].to_s;
     part = params[:part].to_s;
@@ -25,12 +25,13 @@ class InventoryService
   end
   
   def enter_stock(params)
-    puts '----------------------ss'
-    if validate_data(params)
-      operator = params[:operator].to_s;
+     puts '----------------------testing step'
+    # if validate_data(params)
+      operator = params[:Operator].to_s;
+      
       case operator
       when 'new'
-        data = { department: params[:department], position: params[:position], part: params[:part], part_type: params[:part_type], ios_created_id: '', check_time: DateTime.now, random_check_time: DateTime.now}
+        data = { department: params[:department], position: params[:position], part: params[:part], part_type: params[:part_type], ios_created_id: '', check_time: '', random_check_time: ''}
         Inventory.create!(data)
       when 'update'
         # puts "---------------testing update"
@@ -42,9 +43,9 @@ class InventoryService
         inventory = Inventory.where(part: params[:part], position: params[:position]).first
         inventory.destroy if inventory
       end
-    else
-      raise '数据异常'
-    end
+    # else
+#       raise '数据异常'
+#     end
   end  
   
 end

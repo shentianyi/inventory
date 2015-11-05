@@ -1,7 +1,7 @@
 module Excel
 class ExcelService
   HEADERS=[
-    :department, :position, :part, :part_type, :operator
+    :department, :position, :part, :part_type, :Operator
   ]
   
   def self.full_tmp_path(file_name)
@@ -105,13 +105,13 @@ class ExcelService
       msg.contents << "零件类型: #{row[:part_type]} 不为空!"
     end
 
-    if row[:operator].nil?
+    if row[:Operator].nil?
       msg.contents << "操作: #{row[:operator]} 不为空!"
     end
     
-    operator = row[:operator].to_s
+    operator = row[:Operator].to_s
     puts "#{row[:part].to_i}, #{row[:position].to_s}"
-    i = Inventory.where(part: row[:part].to_i).where(position: row[:position].to_s)
+    i = Inventory.where(part: row[:part].to_s).where(position: row[:position].to_s)
     case operator
     when 'new'
       if i.present?
