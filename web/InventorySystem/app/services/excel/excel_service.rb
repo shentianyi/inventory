@@ -89,24 +89,24 @@ class ExcelService
   def self.validate_import_row(row, line)
     msg = Message.new(contents: [])
     
-    if row[:department].nil?
+    if row[:department].blank?
       msg.contents << "部门:#{row[:department]} 不为空!"
     end
-
-    if row[:position].nil?
+    
+    if row[:position].blank?
       msg.contents << "库位:#{row[:position]} 不为空!"
     end
-
-    if row[:part].nil?
+    
+    if row[:part].blank?
       msg.contents << "零件号: #{row[:part]} 不为空!"
     end
-
-    if row[:part_type].nil?
+    
+    if row[:part_type].blank?
       msg.contents << "零件类型: #{row[:part_type]} 不为空!"
     end
 
-    if row[:Operator].nil?
-      msg.contents << "操作: #{row[:operator]} 不为空!"
+    if row[:Operator].blank?
+      msg.contents << "操作: #{row[:Operator]} 不为空!"
     end
     
     operator = row[:Operator].to_s
