@@ -56,7 +56,7 @@ class Inventory < ActiveRecord::Base
     # condition["part"] =~ /part/ if part.present?
     inventories = inventories.where(condition)
     inventories = inventories.where("part like '%#{part}%' ") if part.present?
-    if is_random_check.present?
+    if ios_created_id.present?
       if ios_created_id == '1'
         inventories = inventories.where("ios_created_id  != ''") 
       else 

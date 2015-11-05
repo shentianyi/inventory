@@ -17,7 +17,14 @@ class InventoryService
       
       case operator
       when 'new'
-        data = { department: params[:department], position: params[:position], part: params[:part], part_type: params[:part_type], ios_created_id: '', check_time: '', random_check_time: ''}
+        partValue = params[:part]
+        if params[:part].include? ".0"
+          # puts "testing number is #{partValue.to_i}"
+          partValue = params[:part].to_i
+        # else
+          # puts "testing is #{partValue}"
+        end
+        data = { department: params[:department], position: params[:position], part: partValue, part_type: params[:part_type], ios_created_id: '', check_time: '', random_check_time: ''}
         Inventory.create!(data)
       when 'update'
         # puts "---------------testing update"

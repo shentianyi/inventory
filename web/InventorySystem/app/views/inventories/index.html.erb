@@ -30,7 +30,7 @@
     <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>-->
 	<%= link_to '上传数据', import_inventories_path, class: 'btn btn-primary'  %>
 	<%= link_to '盘点统计', root_path, class: 'btn btn-primary'  %>
-	<%= link_to '生存抽盘数据', random_inventories_path, remote: true, :data => { :"disable-with" => "请稍等..." }, class: 'btn btn-primary'  %>
+	<%= link_to '生成抽盘数据', random_inventories_path, remote: true, :data => { :"disable-with" => "请稍等..." }, class: 'btn btn-primary'  %>
 </div>
 <div class="btn-group pull-right">
 	<%= will_paginate @inventories, renderer: BootstrapPagination::Rails %>
