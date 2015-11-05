@@ -27,6 +27,7 @@ zh-CN:
       messages:
         blank: "不能为空"
         taken: "已经被占用"
+        record_invalid: "数据不合法，数据为空或重复"
   date:
     order:
     - :year
