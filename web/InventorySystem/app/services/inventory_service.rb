@@ -13,7 +13,7 @@ class InventoryService
   def enter_stock(params)
     
     # if validate_data(params)
-      operator = params[:Operator].to_s;
+      operator = params[:Operator].to_s.downcase;
       
       case operator
       when 'new'
@@ -25,9 +25,11 @@ class InventoryService
         if inventory
           inventory.update!(department: params[:department],  part_type: params[:part_type]) 
         end
-      else
+      when 'delete'
         inventory = Inventory.where(part: params[:part], position: params[:position]).first
         inventory.destroy if inventory
+      else
+        
       end
     # else
 #       raise '数据异常'
