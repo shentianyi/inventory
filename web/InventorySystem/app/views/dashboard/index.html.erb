@@ -4,11 +4,11 @@
   <div class="col-xs-6">
 	<h3>全盘进度</h3>
 	<!--<%= pie_chart Inventory.group(:check_qty).count%>-->
-	<%= pie_chart({"全盘数据" => Inventory.where("check_qty != ''").count, "总数据" => Inventory.where("check_qty = '' or check_qty is null").count}) %>
+	<%= pie_chart({"全盘数据" => Inventory.where("check_qty != ''").count, "未全盘数据" => Inventory.where("check_qty = '' or check_qty is null").count}) %>
   </div>
   <div class="col-xs-6">
 	<h3>抽盘进度</h3>
-	<%= pie_chart ({"已抽盘数据" => Inventory.random_check_completed.count, "总抽盘数据" => Inventory.random_check.count}) %>
+	<%= pie_chart ({"已抽盘数据" => Inventory.random_check_completed.count, "未抽盘数据" => Inventory.random_check.count}) %>
   </div>
 </div>
 <div class="row">
@@ -28,6 +28,6 @@
 <div class="row">
     <div class="col-xs-6">
   	<h3>库位统计</h3>
-  	<%= pie_chart({"新建库位" => Inventory.position_client.count, "总库位" => Inventory.position_unclient.count}) %>
+  	<%= pie_chart({"新建库位" => Inventory.position_client.count, "原有库位" => Inventory.position_unclient.count}) %>
     </div>
 </div>
