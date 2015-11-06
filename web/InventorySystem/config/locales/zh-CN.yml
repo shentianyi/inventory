@@ -29,6 +29,20 @@ zh-CN:
         taken: "已经被占用"
         record_invalid: "数据不合法，数据为空或重复"
   date:
+    month_names:
+    - 
+    - 一月
+    - 二月
+    - 三月
+    - 四月
+    - 五月
+    - 六月
+    - 七月
+    - 八月
+    - 九月
+    - 十月
+    - 十一月
+    - 十二月
     order:
     - :year
     - :month
