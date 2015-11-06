@@ -74,14 +74,19 @@
 //        }
 //    }
     self.positionTextField.text = data;
+    [self.positionTextField resignFirstResponder];
+    [self.qtyTextField becomeFirstResponder];
 }
 
 - (void)initController {
     self.positionTextField.delegate =self;
     self.partTextField.delegate = self;
+    self.partTextField.enabled = NO;
     self.departmentTextField.delegate = self;
+    self.departmentTextField.enabled = NO;
     self.qtyTextField.delegate = self;
-    
+    self.partTypeTextField.enabled = NO;
+    self.partTypeTextField.delegate =self;
     _inventory = [[InventoryModel alloc] init];
     [self.inventory getListWithPosition:@""];
 }

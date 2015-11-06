@@ -11,5 +11,6 @@
 @interface DashboardViewController : UIViewController
 - (IBAction)quanpanAction:(id)sender;
 - (IBAction)randomCheckAction:(id)sender;
+- (IBAction)profileAction:(id)sender;
 
 @end

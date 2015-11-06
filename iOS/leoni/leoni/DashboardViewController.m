@@ -7,6 +7,7 @@
 //
 
 #import "DashboardViewController.h"
+#import "DashboardProfileViewController.h"
 
 @interface DashboardViewController ()
 
@@ -50,5 +51,11 @@
 
 - (IBAction)randomCheckAction:(id)sender {
     [self loginSameAction:@"RandomCheckTab"];
+}
+
+- (IBAction)profileAction:(id)sender {
+    [self performSegueWithIdentifier:@"toProfile" sender:self];
+//    DashboardProfileViewController *profileVC = [[DashboardProfileViewController alloc]init];
+//    [self presentedViewController: profileVC];
 }
 @end

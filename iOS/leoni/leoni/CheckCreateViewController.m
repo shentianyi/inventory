@@ -119,7 +119,7 @@
      */
     
     NSMutableArray *getData = [[NSMutableArray alloc] init];
-    getData = [self.inventory localGetDataByPosition:self.positionTextField.text];
+    getData = [self.inventory localGetDataByPosition:self.positionTextField.text ByPart:self.partTextField.text];
     NSUInteger countGetData =[ getData count];
     if ( countGetData >0 ) {
         hud.mode = MBProgressHUDModeText;

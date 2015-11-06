@@ -21,7 +21,7 @@
 
 class Inventory < ActiveRecord::Base
   validates :department, :position, :part, :part_type, presence: true
-  validates :position, :part, uniqueness: true
+  validates :part, uniqueness: { scope: :position}
   
   scope :check, -> { where("check_qty != '' or check_qty is not null")}
   scope :random_check, -> {where("is_random_check is true")}
@@ -51,15 +51,17 @@ class Inventory < ActiveRecord::Base
     condition["department"] = department if department.present?
     condition["position"] = position_begin...position_end if position_begin.present? && position_end.present?
     # condition["ios_created_id"] = ios_created_id if ios_created_id.present?
-    condition["is_random_check"] = is_random_check
+    condition["is_random_check"] = is_random_check if is_random_check.present?
     
     # condition["part"] =~ /part/ if part.present?
     inventories = inventories.where(condition)
     inventories = inventories.where("part like '%#{part}%' ") if part.present?
-    if ios_created_id == '1'
-      inventories = inventories.where("ios_created_id  != ''") 
-    else 
-      inventories = inventories.where("ios_created_id is null ")
+    if ios_created_id.present?
+      if ios_created_id == '1'
+        inventories = inventories.where("ios_created_id  != ''") 
+      else 
+        inventories = inventories.where("ios_created_id is null ")
+      end
     end 
     
     inventories
@@ -72,7 +74,7 @@ class Inventory < ActiveRecord::Base
     areas = []
     inventories = Inventory.all
     inventories.each do |inventory|
-      inventory.update!(random_check_qty: '', random_check_user: '', random_check_time: '', is_random_check: false)
+      inventory.update(random_check_qty: '', random_check_user: '', random_check_time: '', is_random_check: false)
       areas << inventory
       if counter == 10
         counter = 1

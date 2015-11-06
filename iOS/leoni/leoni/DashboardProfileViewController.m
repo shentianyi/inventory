@@ -58,8 +58,11 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     // the user clicked OK
     if (buttonIndex == 0) {
+//        [self dismissViewControllerAnimated:YES completion:^{
+//            [self performSegueWithIdentifier:@"loginVC" sender:self];
+//            
+//        }];
         [self dismissViewControllerAnimated:YES completion:nil];
-
     }
 }
 @end

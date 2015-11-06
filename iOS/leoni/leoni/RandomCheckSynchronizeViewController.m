@@ -17,6 +17,8 @@
 @property (nonatomic, retain) InventoryModel *model;
 @property NSInteger totalInventories;
 @property NSInteger countInventories;
+@property (nonatomic, strong) NSMutableArray *downloadDataArray;
+@property (nonatomic, strong) NSMutableArray *uploadDataArray;
 @end
 
 @implementation RandomCheckSynchronizeViewController
@@ -71,54 +73,55 @@
     if (alertView == self.uploadAlert) {
         if(buttonIndex == 0){
             NSLog(@"0");
-            self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(uploadUpdateUI: ) userInfo:nil repeats:YES];
-            [self.progressView setHidden: NO];
+//            self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(uploadUpdateUI: ) userInfo:nil repeats:YES];
+//            [self.progressView setHidden: NO];
+            [self uploadRandomCheckData];
         }
         else if(buttonIndex == 1){
             NSLog(@"1");
         }
-    } else {
+    } else if(alertView == self.downloadAlert){
         if(buttonIndex == 0){
-            [self downloadRandomCheckData];
-//            self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(downloadUpdateUI:) userInfo:nil repeats:YES];
-//            [self.progressView setHidden: NO];
-            
+//            [self downloadRandomCheckData];
+            [self downloadAllRandomCheckData];
         }
+    }else{
+        
     }
     
 }
 
 
 
-- (void)uploadUpdateUI:(NSTimer *)timer
-{
-    InventoryModel *model = [[InventoryModel alloc] init];
-    NSMutableArray *tableArray = [[NSMutableArray alloc] init];
-    tableArray = [model localGetRandomCheckData: @""];
-    
-    //    static int count =0; count++;
-    
-    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"加载中...";
-    NSInteger countInt = 0;
-    countInt = [tableArray count];
-    
-    if (countInt > 0) {
-       [hud hide:YES];
-        for (int i=0; i< [tableArray count]; i++) {
-            InventoryEntity *entity = tableArray[i];
-            [model webUploadRandomCheckData: entity];
-            self.progressView.progress = (float)i/countInt;
-        }
-    } else {
-        hud.labelText = @"当前无合适数据上传";
-
-        [hud hide:YES afterDelay:1.5f];
-    }
-    [self.myTimer invalidate];
-    self.myTimer = nil;
-    [self.progressView setHidden:YES];
-}
+//- (void)uploadUpdateUI:(NSTimer *)timer
+//{
+//    InventoryModel *model = [[InventoryModel alloc] init];
+//    NSMutableArray *tableArray = [[NSMutableArray alloc] init];
+//    tableArray = [model localGetRandomCheckData: @""];
+//    
+//    //    static int count =0; count++;
+//    
+//    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    hud.labelText = @"加载中...";
+//    NSInteger countInt = 0;
+//    countInt = [tableArray count];
+//    
+//    if (countInt > 0) {
+//       [hud hide:YES];
+//        for (int i=0; i< [tableArray count]; i++) {
+//            InventoryEntity *entity = tableArray[i];
+//            [model webUploadRandomCheckData: entity];
+//            self.progressView.progress = (float)i/countInt;
+//        }
+//    } else {
+//        hud.labelText = @"当前无合适数据上传";
+//
+//        [hud hide:YES afterDelay:1.5f];
+//    }
+//    [self.myTimer invalidate];
+//    self.myTimer = nil;
+//    [self.progressView setHidden:YES];
+//}
 
 /*
  下载抽盘数据页数，以及总量
@@ -185,4 +188,112 @@
     [self.uploadAlert show];
 
 }
+
+/*
+ 上传抽盘数据
+ */
+- (void)uploadRandomCheckData {
+    self.uploadDataArray = [[NSMutableArray alloc] init];
+    self.uploadDataArray = [self.model localGetRandomCheckData:@""];
+//    NSLog(@"upload data %d", [self.uploadDataArray count]);
+    [self.progressView setHidden: NO];
+    self.progressView.progress = 0;
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(uploadUpdateUI:) userInfo:nil repeats:YES];
+}
+
+/*
+ 上传更新进度条
+ */
+- (void)uploadUpdateUI:(NSTimer *)timer
+{
+    static int count = 0;
+    InventoryEntity *entity = [[InventoryEntity alloc] init];
+    entity = self.uploadDataArray[count];
+    [self.model webUploadRandomCheckData:entity];
+    count++;
+    NSLog(@"the count is %d, the amout is %d", count, [self.uploadDataArray count]);
+    
+    self.progressView.progress = (float)count /[self.uploadDataArray count];
+    if (count == [self.uploadDataArray count]) {
+        NSString *messageString = [NSString stringWithFormat:@"已上传数据量为：%d", [self.uploadDataArray count]];
+        [self.progressView setHidden:YES];
+        count = 0;
+        [self MessageShowTitle: @"系统提示" Content: messageString];
+        [timer invalidate];
+        
+    }
+}
+
+
+
+/*
+ 下载抽盘数据
+ */
+- (void)downloadAllRandomCheckData {
+    [self.model webDownloadRandomCheckDatablock:^(NSMutableArray *tableArray, NSError *error) {
+        if (tableArray) {
+            if ([tableArray count] > 0) {
+                self.downloadDataArray = [[NSMutableArray alloc]init];
+                [self.model localDeleteData:@""];
+                [self.progressView setHidden: NO];
+                for (int i = 0; i < [tableArray count]; i++) {
+                    [self.downloadDataArray addObject:tableArray[i]];
+                }
+                [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(downloadUpdateUI:) userInfo:nil repeats:YES];
+                
+            }else{
+                [self MessageShowTitle: @"系统提示" Content: @"当前无下载数据更新"];
+                NSLog(@"当前无下载数据更新");
+                
+            }
+        }else{
+            [self MessageShowTitle: @"系统提示" Content: @"网络异常，请联系管理员"];
+            NSLog(@"网络异常");
+        }
+        
+    }];
+}
+
+
+/*
+ 下载更新进度条
+ 
+ */
+-(void)downloadUpdateUI:(NSTimer *) aTimer  {
+    
+    static int count = 0;
+    InventoryEntity *entity = [[InventoryEntity alloc] init];
+    entity = self.downloadDataArray[count];
+    [self.model localCreateCheckData:entity];
+    count++;
+    NSLog(@"the count is %d, the amout is %d", count, [self.downloadDataArray count]);
+    
+    self.progressView.progress = (float)count /[self.downloadDataArray count];
+    if (count == [self.downloadDataArray count]) {
+        
+        NSInteger counInteger = [[self.model localGetData] count];
+        NSString *messageString = [NSString stringWithFormat:@"已下载数据量为：%d", counInteger];
+        
+        [self.progressView setHidden:YES];
+        
+        count = 0;
+        [self MessageShowTitle: @"系统提示" Content: messageString];
+        [aTimer invalidate];
+        
+    }
+}
+
+/*
+ alert 提示方法
+ */
+- (void)MessageShowTitle: (NSString *)title Content: (NSString *)content {
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:title
+                                                      message:content
+                                                     delegate:self
+                                            cancelButtonTitle:@"确定"
+                                            otherButtonTitles:@"取消", nil];
+    [message show];
+}
+
+
 @end

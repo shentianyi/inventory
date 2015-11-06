@@ -17,6 +17,14 @@
 
 - (instancetype)init;
 
+/*
+ 下载所有抽盘数据
+ */
+- (void)webDownloadRandomCheckDatablock:(void(^)(NSMutableArray *dataArray, NSError *error))block;
+    
+/*
+ 下载翻页抽盘数据
+*/
 - (void)webGetRandomCheckData: (NSInteger )page withPageSize: (NSString *)pageSize block:(void(^)(NSMutableArray *tableArray, NSError *error))block;
 
 - (void)queryWithPosition: (NSString *)positionString block:(void(^)(InventoryEntity *inventory_entity, NSError *error))block;
@@ -54,8 +62,18 @@
 - (void)getRandomTotal: (NSString *)pageSize block:(void (^)(NSInteger intCount, NSError *error))block;
     
 
-- (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block;
+- (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block ;
+
+//- (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block completion:(void(^)(BOOL finished))completion;
+
 - (void)webGetListWithPage: (NSInteger )page withPageSize: (NSString *)pageSize block:(void (^)(NSMutableArray * tableArray, NSError *error))block;
+
+/*
+ 下载全盘数据
+ ryan 2015.11.4
+ */
+- (void)webDownloadAllCheckDatablock:(void (^)(NSMutableArray * tableArray, NSError *error))block;
+
 
 
 - (NSMutableArray *)localGetRandomCheckData: (NSString *)position;
@@ -64,6 +82,12 @@
  本地根据库位查询记录
  */
 - (NSMutableArray *)localGetDataByPosition: (NSString *)position;
+
+/*
+ 本地根据库位, 零件查询记录
+ */
+- (NSMutableArray *)localGetDataByPosition: (NSString *)position ByPart: (NSString *)part;
+
 
 
 /*
