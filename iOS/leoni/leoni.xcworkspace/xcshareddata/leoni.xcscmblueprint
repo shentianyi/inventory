@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "6431D6D2CA784506D6707C8C08BC37EFE3CE8D0D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "6431D6D2CA784506D6707C8C08BC37EFE3CE8D0D" : 0,
+    "FA0738D122065BCACA2B5BB12E98F1B62CCC578E" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B74E5FFD-72E0-4172-BE70-34239CF0FC3B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "6431D6D2CA784506D6707C8C08BC37EFE3CE8D0D" : "inventory",
+    "FA0738D122065BCACA2B5BB12E98F1B62CCC578E" : "ObjectiveC\/fc_ios"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "leoni",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "iOS\/leoni\/leoni.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/shentianyi\/inventory.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6431D6D2CA784506D6707C8C08BC37EFE3CE8D0D"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Charlot\/fc_ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FA0738D122065BCACA2B5BB12E98F1B62CCC578E"
+    }
+  ]
+}
