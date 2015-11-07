@@ -8,6 +8,7 @@
 
 #import "RandomListViewController.h"
 #import "InventoryModel.h"
+#import "MJRefresh.h"
 
 @interface RandomListViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property (nonatomic, strong) UITableView *randomTableView;
@@ -21,16 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.randomTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    self.randomTableView.delegate = self;
-    self.randomTableView.dataSource = self;
+    
+    
 
-    [self.view addSubview:self.randomTableView];
-//    CGRect rect = self.navigationController.navigationBar.frame;
-//    
-//    float y = rect.size.height + rect.origin.y;
-//    self.randomTableView.contentInset = UIEdgeInsetsMake(y, 0, 0, 0);
-//
     self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,10,self.navigationController.navigationBar.bounds.size.width,self.navigationController.navigationBar.bounds.size.height/2)];
     self.searchBar.showsCancelButton = YES;
     self.searchBar.delegate = self;
@@ -39,6 +33,30 @@
     
     self.searchResult = [NSMutableArray arrayWithCapacity:[self.arrayInventories count]];
     [self loadData];
+}
+
+
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self initTableView];
+}
+
+- (void)initTableView {
+    self.randomTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.randomTableView.delegate = self;
+    self.randomTableView.dataSource = self;
+    [self.view addSubview:self.randomTableView];
+    CGRect rect = self.navigationController.navigationBar.frame;
+    
+    float y = rect.size.height + rect.origin.y;
+    self.randomTableView.contentInset = UIEdgeInsetsMake(y, 0, 0, 0);
+
+    self.randomTableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self loadData];
+        [self.randomTableView.header endRefreshing];
+    }];
+    [self.randomTableView.header beginRefreshing];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,18 +90,7 @@
     [self loadData];
 }
 
-//- (void)loadData {
-//    self.arrayInventories = [[NSMutableArray alloc]init];
-//    InventoryModel *inventory = [[InventoryModel alloc] init];
-//    [inventory webGetRandomCheckData:nil block:^(NSMutableArray *tableArray, NSError *error) {
-//        if ([tableArray count] > 0) {
-//            self.arrayInventories = tableArray;
-//            [self.randomTableView reloadData];
-//        }
-//    }];
-//    
-//    
-//}
+
 
 - (void)loadData {
     self.arrayInventories = [[NSMutableArray alloc]init];
@@ -92,16 +99,6 @@
     
     [self.randomTableView reloadData];
 }
-
-
-//- (UITableView *)randomTableView {
-//    if (!_randomTableView) {
-//        _randomTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-//        _randomTableView.delegate = self;
-//        _randomTableView.dataSource = self;
-//    }
-//    return _randomTableView;
-//}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
