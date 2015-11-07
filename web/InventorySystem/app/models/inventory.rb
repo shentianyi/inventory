@@ -41,7 +41,7 @@ class Inventory < ActiveRecord::Base
   end
   
   def self.check_for_search(search)
-    puts "======testing"
+    # puts "======testing"
     where("position=?", search)
   end
   
@@ -60,7 +60,7 @@ class Inventory < ActiveRecord::Base
       if ios_created_id == '1'
         inventories = inventories.where("ios_created_id  != ''") 
       else 
-        inventories = inventories.where("ios_created_id is null ")
+        inventories = inventories.where("ios_created_id = '' ")
       end
     end 
     

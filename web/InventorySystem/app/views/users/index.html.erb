@@ -14,6 +14,10 @@
 	<%= link_to '创建员工', new_user_path, class: 'btn btn-default' %>
 </div>
 <div class="pull-right">
+
+  <div class="page_info">
+    <%= page_entries_info @users %>
+  </div>
 <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
 </div>
 <table class="table table-striped table-hover table-bordered" id="editable-sample">

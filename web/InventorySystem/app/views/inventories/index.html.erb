@@ -7,7 +7,7 @@
 </script>
 <h1>零件库位基础信息</h1>
 <hr />
-<p>
+<div>
 	<%= form_tag inventories_path, :method => 'get' do %>
 		<p>
 			<%= hidden_field_tag :search, value=true %>
@@ -21,7 +21,7 @@
 			<%= submit_tag "查询", :name => nil, class: 'btn btn-primary' %>
 		</p>
 	<% end%>
-</p>
+</div>
 <div class="btn-group">
 	<%= link_to '创建零件库存信息', new_inventory_path, class: 'btn btn-default' %>
 	<a name="down_template" href="/files/download?folder=inventory&file=inventory_template.xlsx" class='btn btn-default' >下载模版</a>
@@ -32,7 +32,12 @@
 	<%= link_to '盘点统计', root_path, class: 'btn btn-primary'  %>
 	<%= link_to '生成抽盘数据', random_inventories_path, remote: true, :data => { :"disable-with" => "请稍等..." }, class: 'btn btn-primary'  %>
 </div>
+
 <div class="btn-group pull-right">
+
+  <div class="page_info">
+    <%= page_entries_info @inventories %>
+  </div>
 	<%= will_paginate @inventories, renderer: BootstrapPagination::Rails %>
 </div>
 <table class="table table-striped table-hover table-bordered" id="editable-sample">
