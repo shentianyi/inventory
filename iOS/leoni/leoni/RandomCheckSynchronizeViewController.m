@@ -198,7 +198,15 @@
 //    NSLog(@"upload data %d", [self.uploadDataArray count]);
     [self.progressView setHidden: NO];
     self.progressView.progress = 0;
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(uploadUpdateUI:) userInfo:nil repeats:YES];
+    if ([self.uploadDataArray count] >0) {
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(uploadUpdateUI:) userInfo:nil repeats:YES];
+    } else {
+        [self MessageShowTitle: @"系统提示" Content: @"当前无上载数据"];
+        NSLog(@"当前无上载数据");
+        [self.progressView setHidden: YES];
+        
+    }
+
 }
 
 /*

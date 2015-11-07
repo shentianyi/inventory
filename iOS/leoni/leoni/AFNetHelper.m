@@ -33,13 +33,10 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if (![fileManager fileExistsAtPath:path])
     {
-//        NSLog(@"===== testing YES");
-        
         NSString *bundle = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"plist"];
         [fileManager copyItemAtPath:bundle toPath: path error: nil];
     }
 
-//    NSLog(@"===== go testing YES");
     NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:path];
     NSString *ip = [dict objectForKey:@"ip"];
     NSString *port = [dict objectForKey:@"port"];
@@ -90,6 +87,12 @@
     
     NSMutableDictionary *plistdict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
     return plistdict;
+}
+
+- (NSString *)getRequestQuantity {
+    NSString *requestQuantity = [[self URLDictionary] objectForKey: @"request_quantity"];
+    return  [requestQuantity stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
 }
 
 - (NSString *)login{

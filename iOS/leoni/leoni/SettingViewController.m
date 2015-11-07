@@ -65,6 +65,7 @@
     NSArray *serverArray = [serverString componentsSeparatedByString:@":"];
     self.ipTextField.text = [NSString stringWithFormat:@"%@:%@", serverArray[0], serverArray[1]];
     self.portTextField.text = [NSString stringWithFormat:@":%@", serverArray[2]];
+    self.requestTextField.text = [self.afnet_helper getRequestQuantity];
 }
 
 /*
