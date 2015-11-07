@@ -80,12 +80,11 @@
 
 - (IBAction)backAction:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-
 }
 
 - (IBAction)saveAction:(id)sender {
     if (self.ipTextField.text.length > 0 && self.portTextField.text.length > 0) {
-        [self.afnet_helper UpdateServerURLwithIP:self.ipTextField.text withProt:self.portTextField.text];
+        [self.afnet_helper UpdateServerURLwithIP:self.ipTextField.text withProt:self.portTextField.text withRequest:self.requestTextField.text];
         
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
                                                       message:@"设置成功"
@@ -94,12 +93,10 @@
                                             otherButtonTitles:nil];
         [alert show];
 
-        
     }
     else {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeText;
-        
         hud.labelText = [NSString stringWithFormat:@"设置失败"];
         [hud hide:YES afterDelay:1.5f];
     }
