@@ -8,6 +8,7 @@
 
 #import "CheckListViewController.h"
 #import "InventoryModel.h"
+#import "MJRefresh.h"
 
 @interface CheckListViewController ()
 
@@ -107,6 +108,11 @@
     
     float y = rect.size.height + rect.origin.y;
     self.table.contentInset = UIEdgeInsetsMake(y, 0, 0, 0);
+    self.table.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self loadData];
+        [self.table.header endRefreshing];
+    }];
+    [self.table.header beginRefreshing];
     }
 
 - (void)loadData {

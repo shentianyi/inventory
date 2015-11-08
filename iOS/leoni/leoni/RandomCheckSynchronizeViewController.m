@@ -137,19 +137,15 @@
             self.totalInventories = intCount * [self.page_size intValue];
             NSLog(@"total data is %d", self.totalInventories);
             [self.model localDeleteData:@""];
-            //              NSLog(@"log === total is %d  self.integerCount %d", self.totalInventories, self.integerCount);
             if (self.integerCount >0) {
                 [self.progressView setHidden: NO];
                 for (int i=1; i<= self.integerCount; i++) {
                     [self updateRandomCheckDataPage:i withPageSize:self.page_size];
-                    //                      NSLog(@"current is %d", i);
-                    
                 }
                 
             } else {
                 NSLog(@"当前无下载数据更新");
             }
-            
         }
         else {
             NSLog(@"testing ===   count < 0");
@@ -198,7 +194,13 @@
 //    NSLog(@"upload data %d", [self.uploadDataArray count]);
     [self.progressView setHidden: NO];
     self.progressView.progress = 0;
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(uploadUpdateUI:) userInfo:nil repeats:YES];
+    if ([self.uploadDataArray count] >0) {
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(uploadUpdateUI:) userInfo:nil repeats:YES];
+    } else {
+        [self MessageShowTitle: @"系统提示" Content: @"当前无上载数据"];
+        NSLog(@"当前无上载数据");
+        [self.progressView setHidden: YES];
+    }
 }
 
 /*

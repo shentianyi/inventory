@@ -1,7 +1,7 @@
 class InventoryService
   
   def validate_data(params)
-    operator = params[:Operator];
+    operator = params[:operation];
     department = params[:department];
     position = params[:position].to_s;
     part = params[:part].to_s;
@@ -13,7 +13,7 @@ class InventoryService
   def enter_stock(params)
     
     # if validate_data(params)
-      operator = params[:Operator].to_s.downcase;
+      operator = params[:operation].to_s.downcase;
       
       case operator
       when 'new'

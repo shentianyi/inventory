@@ -6,6 +6,8 @@
 	<string>http://localhost</string>
 	<key>port</key>
 	<string>:3000</string>
+	<key>request_quantity</key>
+	<string>200</string>
 	<key>login</key>
 	<string>/api/v1/user/login</string>
 	<key>query</key>

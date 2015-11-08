@@ -15,3 +15,8 @@
  *= require_self
  
  */
+
+.page_info{
+    font-size: 18px;
+    border-left:2px solid  blue;
+}
