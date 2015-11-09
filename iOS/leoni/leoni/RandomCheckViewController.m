@@ -60,6 +60,7 @@
 -(void)decoderDataReceived:(NSString *)data
 {
     self.positionTextField.text = data;
+    [self validatePosition];
     [self.positionTextField resignFirstResponder];
     [self.randomCheckQtyTextField becomeFirstResponder];
 }
