@@ -1,6 +1,6 @@
 module V1
   class UserApi < Grape::API
-    namespace :user do
+    namespace :users do
       format :json
       
       desc 'login'
@@ -15,6 +15,16 @@ module V1
           {result: 0, content: "验证失败，请重试"}
         end
       end
+
+	  desc 'download user data'
+	  params do
+	   optional :page,type: Integer,default:1
+	   optional :per_page,type: Integer,default:200
+	  end
+	  get do
+		  users=User.paginate(page:params[:page],per_page:params[:per_page])
+		  {result:1,content:users}
+	  end
     end
   end
 end
