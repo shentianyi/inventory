@@ -39,13 +39,13 @@
 
     NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:path];
     NSString *ip = [dict objectForKey:@"ip"];
-    NSString *port = [dict objectForKey:@"port"];
+   //NSString *port = [dict objectForKey:@"port"];
   
-    return [ip stringByAppendingString:port];;
+    return  ip;
     
 }
 
-- (void)UpdateServerURLwithIP: (NSString *)ipString withProt: (NSString *)portString withRequest: (NSString *)requestString {
+- (void)UpdateServerURLwithIP: (NSString *)ipString withRequest: (NSString *)requestString withDeparment:(NSString *)department {
     NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSString *path = [documentsPath stringByAppendingPathComponent:@"server.plist"];
@@ -60,8 +60,8 @@
     NSMutableDictionary *plistdict = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
     [plistdict removeObjectForKey: @"ip"];
     [plistdict setObject:ipString forKey:@"ip"];
-    [plistdict removeObjectForKey: @"port"];
-    [plistdict setObject:portString forKey:@"port"];
+    [plistdict removeObjectForKey: @"department"];
+    [plistdict setObject:department forKey:@"department"];
     [plistdict removeObjectForKey: @"request_quantity"];
     [plistdict setObject:requestString forKey:@"request_quantity"];
     [plistdict writeToFile:path atomically:YES];
@@ -92,10 +92,22 @@
     
 }
 
+-(NSString *) defaultDepartment{
+    NSString *requestQuantity = [[self URLDictionary] objectForKey: @"department"];
+    return  [requestQuantity stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
 - (NSString *)login{
     NSString *server_url = [self ServerURL];
     NSString *login_url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"login"]];
     return [login_url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSString *)downloadUserData{
+    NSString *downloadUserDataUrl=[[self ServerURL] stringByAppendingString:[[self URLDictionary] objectForKey:@"download_user_data"]];
+    
+     
+    return [downloadUserDataUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (NSString *)query {

@@ -10,6 +10,34 @@
 
 @implementation InventoryEntity
 
+
+
+-(id) initWithId:(NSString *)inventory_id WithPosition:(NSString *)position WithDepartment:(NSString *)department WithPart:(NSString *)part WithPartType:(NSString *)part_type WithIsLocalCheck:(NSString *)isLocalCheck WithCheckQty:(NSString *)checkQty WithCheckUser:(NSString *)checkUser WithCheckTime:(NSString *)checkTime WithIsLocalRandomCheck:(NSString *)isLocalRandomCheck WithRandomCheckQty:(NSString *)randomCheckQty WithRandomCheckUser:(NSString *)randomCheckUser WithRandomCheckTime:(NSString *)randomCheckTime WithIsRandomCheck:(NSString *)isRandomCheck WithiOSCreatedID:(NSString *)iOSCreatedId{
+    self=[super init];
+    
+    if(self){
+        self.inventory_id=inventory_id;
+        self.position=position;
+        self.department=department;
+        self.part=part;
+        self.part_type=part_type;
+        self.is_local_check=isLocalCheck;
+        self.check_qty=checkQty;
+        self.check_user=checkUser;
+        self.check_time=checkTime;
+        self.is_local_random_check=isLocalRandomCheck;
+        self.random_check_qty=randomCheckQty;
+        self.random_check_user=randomCheckUser;
+        self.random_check_time=randomCheckTime;
+        self.is_random_check=isRandomCheck;
+        
+        self.ios_created_id=iOSCreatedId;
+    }
+    return self;
+  
+}
+
+
 - (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type {
     self = [super init];
     if (self) {
@@ -116,4 +144,13 @@
     return self;
 }
 
+-(NSString *) is_local_check{
+    if (!_is_local_check) _is_local_check=@"0";
+        return _is_local_check;
+}
+
+-(NSString *) is_local_random_check{
+    if (!_is_local_random_check) _is_local_random_check=@"0";
+        return _is_local_random_check;
+}
 @end

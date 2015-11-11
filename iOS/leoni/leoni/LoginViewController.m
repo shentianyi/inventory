@@ -10,6 +10,7 @@
 #import "SettingViewController.h"
 #import "MBProgressHUD.h"
 #import "KeychainItemWrapper.h"
+#import "UserModel.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
@@ -17,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *settingButton;
 - (IBAction)SettingAction:(id)sender;
 - (IBAction)loginAction:(id)sender;
+
 @end
 
 @implementation LoginViewController
@@ -25,7 +27,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.nameTextField.delegate = self;
-    _user = [[UserMoel alloc] init];
+    _user = [[UserModel alloc] init];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     
@@ -105,11 +107,21 @@
 //            }
 //        }];
         
+        if([self.user findUserByNr:nr]){
         [keychain setObject:nr forKey:(__bridge id)kSecAttrAccount];
         self.nameTextField.text =@"";
         [self performSegueWithIdentifier:@"toDashboard" sender:self];
 
+        }else{
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                          message:@"请填写正确员工号"
+                                                         delegate:self
+                                                cancelButtonTitle:@"ok"
+                                                otherButtonTitles:nil];
+            [alert show];
+
         
+        }
     }
     else{
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
