@@ -104,11 +104,14 @@ module V1
       params do
         optional :page, type: String
         optional :per_page, type: String
+        optional :user, type: Integer
       end
       get :download_check_data do
         # inventories = Inventory.check.paginate(page: params[:page], per_page: params[:per_page])
         if params[:page].present? && params[:per_page].present?
           inventories = Inventory.all.paginate(page: params[:page], per_page: params[:per_page])
+        elsif params[:user].present?
+          inventories = Inventory.where("check_user = #{params[:user]}")
         else
           inventories = Inventory.all
         end
