@@ -3,24 +3,25 @@
 <div class="row">
   <div class="col-xs-6">
 	<h3>全盘进度</h3>
-	<!--<%= pie_chart Inventory.group(:check_qty).count%>-->
-	<%= pie_chart({"全盘数据" => Inventory.where("check_qty != ''").count, "未全盘数据" => Inventory.where("check_qty = '' or check_qty is null").count}) %>
+	<%= pie_chart @check_qty_progress %>
   </div>
   <div class="col-xs-6">
 	<h3>抽盘进度</h3>
-	<%= pie_chart ({"已抽盘数据" => Inventory.random_check_completed.count, "未抽盘数据" => Inventory.random_check.count}) %>
+	<!--<%= pie_chart ({"已抽盘数据" => Inventory.random_check_completed.count, "未抽盘数据" => Inventory.random_check.count}) %>-->
+
+	<%= pie_chart @random_check_qty_progress %>
   </div>
 </div>
 <div class="row">
     <div class="col-xs-6">
   	<h3>每小时全盘数据量统计</h3>
-  	<%= column_chart ({"1点"=>Inventory.check.where(check_time: Time.parse("12pm")..Time.parse("1am")).count, "2点"=>Inventory.where(check_time: Time.parse("1am")..Time.parse("2am")).count})%>
+  	<%= column_chart @check_qty_hour_progress%>
 	
 	<!--  	<%= column_chart Inventory.group(:check_time).count %>-->
     </div>
     <div class="col-xs-6">
   	<h3>每小时抽盘盘数据量统计</h3>
-  	<%= column_chart ({"1点"=>Inventory.random_check_completed.where(check_time: Time.parse("12pm")..Time.parse("1am")), "2点"=>Inventory.random_check_completed.where(check_time: Time.parse("1am")..Time.parse("2am"))})%>
+  	<%= column_chart @random_check_qty_hour_progress %>
   	
   	<!--<%= column_chart Inventory.random_check_completed.group(:random_check_time).count %>-->
     </div>
