@@ -10,8 +10,8 @@
 config/database.yml
 
 # Ignore all logfiles and tempfiles.
-/log/*
+log/*
 !/log/.keep
-/tmp
-/.idea/*
+tmp
+.idea/*
 uploadfiles/*

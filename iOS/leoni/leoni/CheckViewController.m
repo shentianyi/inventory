@@ -305,4 +305,38 @@
     float val;
     return [scan scanFloat:&val] && [scan isAtEnd];
 }
+
+#pragma UITextField
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField == self.qtyTextField) {
+        [self animateTextField: textField up: YES];
+    }
+}
+
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField == self.qtyTextField) {
+        [self animateTextField: textField up: NO];
+    }
+}
+
+- (void) animateTextField: (UITextField*) textField up: (BOOL) up
+{
+    int movementDistance = 80 *2; // tweak as needed
+    const float movementDuration = 0.3f; // tweak as needed
+    
+    
+    int movement = (up ? -movementDistance : movementDistance);
+    
+    [UIView beginAnimations: @"anim" context: nil];
+    [UIView setAnimationBeginsFromCurrentState: YES];
+    [UIView setAnimationDuration: movementDuration];
+    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
+    [UIView commitAnimations];
+}
+
+
 @end
