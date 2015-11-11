@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		021B86091BF057C200774CFB /* userdb.sql in Resources */ = {isa = PBXBuildFile; fileRef = 021B86081BF057C200774CFB /* userdb.sql */; settings = {ASSET_TAGS = (); }; };
 		9429571E1BC3B7D000C35462 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429571D1BC3B7D000C35462 /* DBManager.m */; };
 		942957201BC3B7E200C35462 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9429571F1BC3B7E200C35462 /* libsqlite3.dylib */; };
 		942957251BC3F43C00C35462 /* CheckListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 942957241BC3F43C00C35462 /* CheckListViewController.m */; };
@@ -55,6 +56,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		021B86081BF057C200774CFB /* userdb.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = userdb.sql; sourceTree = "<group>"; };
 		444761C8CCFDCCE9DECDA580 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		65DD0E03D04E30B34C3CA012 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9429571C1BC3B7D000C35462 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				942E94351BC01A4A00FB5CD0 /* main.m */,
 				94A359411BC10914008910EB /* server.plist */,
 				945F64C81BCD11FD000AB38C /* leoni-Prefix.pch */,
+				021B86081BF057C200774CFB /* userdb.sql */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -359,7 +362,7 @@
 		942E94281BC01A4A00FB5CD0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = ryan;
 				TargetAttributes = {
 					942E942F1BC01A4A00FB5CD0 = {
@@ -399,6 +402,7 @@
 				942E94421BC01A4A00FB5CD0 /* Main.storyboard in Resources */,
 				94A359421BC10914008910EB /* server.plist in Resources */,
 				942E94471BC01A4A00FB5CD0 /* LaunchScreen.xib in Resources */,
+				021B86091BF057C200774CFB /* userdb.sql in Resources */,
 				942E94441BC01A4A00FB5CD0 /* Images.xcassets in Resources */,
 				9480CFAC1BDCCF2A009674D8 /* inventorydb.sql in Resources */,
 			);
@@ -539,6 +543,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -653,6 +658,7 @@
 				);
 				INFOPLIST_FILE = leoniTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ryan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/leoni.app/leoni";
 			};
@@ -668,6 +674,7 @@
 				);
 				INFOPLIST_FILE = leoniTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ryan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/leoni.app/leoni";
 			};

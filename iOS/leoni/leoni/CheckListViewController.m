@@ -118,7 +118,7 @@
 - (void)loadData {
     self.arrayInventories = [[NSMutableArray alloc]init];
     InventoryModel *inventory = [[InventoryModel alloc] init];
-    self.arrayInventories = [inventory getListWithPosition:@""];
+    self.arrayInventories = [inventory getLocalCheckDataListWithPosition:@""];
     
     [self.table reloadData];
 }
@@ -184,7 +184,7 @@
     //Do some search
     NSLog(@"=== testing search %@", searchBar.text);
     InventoryModel *inventory = [[InventoryModel alloc] init];
-    self.arrayInventories = [inventory getListWithPosition:self.searchBar.text];
+    self.arrayInventories = [inventory getLocalCheckDataListWithPosition:self.searchBar.text];
     
     [self.table reloadData];
     

@@ -10,8 +10,12 @@
 
 @interface UserEntity : NSObject
 
-@property (nonatomic, copy) NSString *nr_string;
-
+@property (nonatomic) NSString *userId;
+@property (nonatomic, copy) NSString *nr;
+@property (nonatomic, copy) NSString *name;
 
 - (id)initWithNr: (NSString *)nr;
+
+- (id) initWithId:(NSString *)userId andNr:(NSString *)nr andName:(NSString *)name;
+
 @end

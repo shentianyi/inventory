@@ -3,13 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>ip</key>
-	<string>http://localhost</string>
-	<key>port</key>
-	<string>:3000</string>
+	<string>http://192.168.1.11:3000</string>
 	<key>request_quantity</key>
 	<string>200</string>
+	<key>department</key>
+	<string></string>
 	<key>login</key>
-	<string>/api/v1/user/login</string>
+	<string>/api/v1/users/login</string>
+	<key>download_user_data</key>
+	<string>/api/v1/users</string>
 	<key>query</key>
 	<string>/api/v1/inventory/query</string>
 	<key>check</key>

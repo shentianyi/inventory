@@ -11,5 +11,5 @@
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 
-@property (nonatomic, readwrite, retain) UserMoel* user;
+@property (nonatomic, readwrite, retain) UserModel* user;
 @end
