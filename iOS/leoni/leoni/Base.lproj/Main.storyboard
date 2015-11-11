@@ -14,7 +14,7 @@
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -97,6 +97,9 @@
                             <constraint firstItem="qjx-5g-onx" firstAttribute="centerX" secondItem="ALe-W8-Q0O" secondAttribute="centerX" id="t68-mp-jip"/>
                             <constraint firstItem="ALe-W8-Q0O" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="80" id="zFO-Vz-eKW"/>
                         </constraints>
+                        <connections>
+                            <action selector="touchScreen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uI8-te-rdR"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="loginButton" destination="4Qe-18-PIu" id="JaW-rw-7ht"/>
@@ -118,7 +121,7 @@
                         <viewControllerLayoutGuide type="top" id="cQs-mY-kCi"/>
                         <viewControllerLayoutGuide type="bottom" id="3yh-GH-uW4"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="iSC-hB-zR1">
+                    <view key="view" contentMode="scaleToFill" id="iSC-hB-zR1" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -170,7 +173,7 @@
                                 <color key="backgroundColor" red="1" green="0.14328596457735709" blue="0.12800334419737558" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="下载用户数据">
-                                    <color key="titleColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="SaveDataToLocal:" destination="e5d-xL-eGX" eventType="touchUpInside" id="jPD-Uk-jHF"/>
@@ -184,7 +187,7 @@
                                 <rect key="frame" x="55" y="262" width="68" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0m9-JB-hBg">
@@ -201,7 +204,6 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="0m9-JB-hBg" firstAttribute="top" secondItem="kwJ-8M-Ye3" secondAttribute="bottom" id="8yc-dE-PqE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="BfF-g7-uIS" secondAttribute="trailing" id="FMT-31-1tA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0m9-JB-hBg" secondAttribute="trailing" id="FSL-4X-pDT"/>
                             <constraint firstItem="ezo-m3-ns7" firstAttribute="leading" secondItem="iSC-hB-zR1" secondAttribute="leadingMargin" constant="30" id="Fuw-Ck-Qf9"/>
@@ -213,6 +215,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="0m9-JB-hBg" secondAttribute="trailing" id="hWK-1n-lf9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ezo-m3-ns7" secondAttribute="trailing" id="tE2-6g-QWd"/>
                         </constraints>
+                        <connections>
+                            <action selector="touchScreen:" destination="e5d-xL-eGX" eventType="touchUpInside" id="S61-mc-CIc"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="数据设置" id="2xn-8H-Nff">
                         <barButtonItem key="leftBarButtonItem" title="返回" id="2hZ-Pb-BJp">

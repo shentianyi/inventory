@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *settingButton;
 - (IBAction)SettingAction:(id)sender;
 - (IBAction)loginAction:(id)sender;
+- (IBAction)touchScreen:(id)sender;
 
 @end
 
@@ -28,48 +29,40 @@
     // Do any additional setup after loading the view.
     self.nameTextField.delegate = self;
     _user = [[UserModel alloc] init];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
-    [self.view addGestureRecognizer:tap];
-    
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
+//    [self.view addGestureRecognizer:tap];
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+
     
 }
 
--(void)dismissKeyboard {
-    NSArray *subviews = [self.view subviews];
-    for (id objInput in subviews) {
-        if ([objInput isKindOfClass:[UITextField class]]) {
-            UITextField *theTextField = objInput;
-            if ([objInput isFirstResponder]) {
-                [theTextField resignFirstResponder];
-            }
-        }
-    }
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    
-    [textField resignFirstResponder];
-    return NO;
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"toSetting"]) {
-        SettingViewController *set = segue.destinationViewController;
-    }
+//textField delegate
+//-(void)textFieldDidBeginEditing:(UITextField *)textField
+//{
+//    CGRect frame=textField.frame;
+//    int offset=frame.origin.y-100;
+//    
+//    
+//    NSTimeInterval animationDuration=0.30f;
+//    [UIView animateWithDuration:animationDuration
+//                     animations:^{
+//                         self.view.frame=CGRectMake(0, -offset, self.view.bounds.size.width, self.view.bounds.size.height);
+//                     }];
+//}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    [self.loginButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    return YES;
 }
-*/
 
 - (IBAction)SettingAction:(id)sender
 {
@@ -83,30 +76,6 @@
     
     NSString *nr = self.nameTextField.text;
     if (nr.length > 0){
-//        __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//        hud.labelText = @"加载中...";
-    
-        /*******
-//        取消web 验证，直接登录
-        ********/
-//        [self.user loginWithNr:nr block:^(UserEntity *user_entity, NSError *error) {
-//        
-//            if (user_entity) {
-//                hud.mode = MBProgressHUDModeText;
-//                hud.labelText = @"登陆成功";
-//                [hud hide:YES afterDelay:1.5f];
-//                [keychain setObject:nr forKey:(__bridge id)kSecAttrAccount];
-//                self.nameTextField.text =@"";
-//                [self performSegueWithIdentifier:@"toDashboard" sender:self];
-//            }
-//            else {
-//                hud.mode = MBProgressHUDModeText;
-//                
-//                hud.labelText = [NSString stringWithFormat:@"%@", error.userInfo];
-//                [hud hide:YES afterDelay:1.5f];
-//            }
-//        }];
-        
         if([self.user findUserByNr:nr]){
         [keychain setObject:nr forKey:(__bridge id)kSecAttrAccount];
         self.nameTextField.text =@"";
@@ -134,32 +103,17 @@
         
 }
 
-#pragma UITextField 
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-//    [self animateTextField: textField up: YES];
-}
-
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-//    [self animateTextField: textField up: NO];
-}
-
-- (void) animateTextField: (UITextField*) textField up: (BOOL) up
-{
-    const int movementDistance = 80; // tweak as needed
-    const float movementDuration = 0.3f; // tweak as needed
+// 消失输入框
+- (IBAction)touchScreen:(id)sender {
+    [self.nameTextField resignFirstResponder];
     
-    int movement = (up ? -movementDistance : movementDistance);
-    
-    [UIView beginAnimations: @"anim" context: nil];
-    [UIView setAnimationBeginsFromCurrentState: YES];
-    [UIView setAnimationDuration: movementDuration];
-    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
-    [UIView commitAnimations];
+    if(self.view.frame.origin.y!=0){
+        NSTimeInterval animationDuration=0.30f;
+        [UIView animateWithDuration:animationDuration
+                         animations:^{
+                             self.view.frame=CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+                         }];
+    }
 }
-
 
 @end

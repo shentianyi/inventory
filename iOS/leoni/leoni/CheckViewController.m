@@ -75,10 +75,32 @@
     UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     textField.inputView = dummyView;
         
+    }else{
+    
+        CGRect frame = textField.frame;
+        int offset = frame.origin.y + 32 - (self.view.frame.size.height - 216.0);//键盘高度216
+        
+        NSTimeInterval animationDuration = 0.30f;
+        [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+        [UIView setAnimationDuration:animationDuration];
+        
+        //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
+        if(offset > 0)
+            self.view.frame = CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
+        
+        [UIView commitAnimations];
+        
     }
     
     self.firstResponder=textField;
 }
+
+//输入框编辑完成以后，将视图恢复到原始状态
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    self.view.frame =CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+}
+
 
 - (IBAction)clickScreen:(id)sender {
     [self.positionTextField becomeFirstResponder];
@@ -94,7 +116,7 @@
 
    hud.labelText = [NSString stringWithFormat:@"加载中..."];
     [hud hide:YES afterDelay:0.5f];
-
+    
     if(self.firstResponder.text.length>0){
         [self textFieldShouldReturn:self.firstResponder];
     }
@@ -180,6 +202,8 @@
     }else if(textField==self.qtyTextField){
         [self validateText];
     }
+    
+    [textField resignFirstResponder];
     
     return YES;
 }

@@ -25,22 +25,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "leoni/main.m"
-            timestampString = "468735078.378568"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "14"
-            endingLineNumber = "14"
-            landmarkName = "main()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "leoni/UserModel.m"
             timestampString = "468818676.933235"
             startingColumnNumber = "9223372036854775807"
@@ -58,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/SettingViewController.m"
-            timestampString = "468815548.041244"
+            timestampString = "468920026.227002"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "-downloadUserData"
             landmarkType = "5">
          </BreakpointContent>
@@ -154,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/SettingViewController.m"
-            timestampString = "468815548.041244"
+            timestampString = "468920026.227002"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "-downloadUserData"
             landmarkType = "5">
          </BreakpointContent>
@@ -170,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/SettingViewController.m"
-            timestampString = "468815548.041244"
+            timestampString = "468920026.227002"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
             landmarkName = "-downloadUserData"
             landmarkType = "5">
          </BreakpointContent>
@@ -186,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/SettingViewController.m"
-            timestampString = "468815548.041244"
+            timestampString = "468920026.227002"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
             landmarkName = "-downloadUserData"
             landmarkType = "5">
          </BreakpointContent>
@@ -202,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/LoginViewController.m"
-            timestampString = "468817720.566845"
+            timestampString = "468917357.416977"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
             landmarkName = "-loginAction:"
             landmarkType = "5">
          </BreakpointContent>
@@ -218,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/LoginViewController.m"
-            timestampString = "468817735.306439"
+            timestampString = "468917357.416977"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "-loginAction:"
             landmarkType = "5">
          </BreakpointContent>
@@ -281,22 +265,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "leoni/main.m"
-            timestampString = "468826896.087704"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "13"
-            endingLineNumber = "13"
-            landmarkName = "main()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "leoni/CheckViewController.m"
             timestampString = "468834459.100115"
             startingColumnNumber = "9223372036854775807"
@@ -346,11 +314,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckViewController.m"
-            timestampString = "468905374.549128"
+            timestampString = "468908755.82642"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "362"
-            endingLineNumber = "362"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
             landmarkName = "-updateCheckData"
             landmarkType = "5">
          </BreakpointContent>
@@ -362,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckViewController.m"
-            timestampString = "468904798.829765"
+            timestampString = "468908755.82642"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
             landmarkName = "-initTextFieldsWithInventoryEntity:"
             landmarkType = "5">
          </BreakpointContent>
@@ -378,11 +346,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckViewController.m"
-            timestampString = "468905374.549128"
+            timestampString = "468908755.82642"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
             landmarkName = "-validateText"
             landmarkType = "5">
          </BreakpointContent>
@@ -394,11 +362,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckViewController.m"
-            timestampString = "468905272.727811"
+            timestampString = "468908755.82642"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "321"
-            endingLineNumber = "321"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
             landmarkName = "-validateText"
             landmarkType = "5">
          </BreakpointContent>
@@ -448,6 +416,22 @@
             startingLineNumber = "123"
             endingLineNumber = "123"
             landmarkName = "-loadData"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "leoni/SettingViewController.m"
+            timestampString = "468921115.890278"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
+            landmarkName = "-touchScreen:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

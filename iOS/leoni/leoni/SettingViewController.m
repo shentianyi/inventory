@@ -18,6 +18,9 @@
 @property (nonatomic,retain) UserModel *userModel;
 @property (nonatomic,strong) NSMutableArray *users;
 @property (weak, nonatomic) IBOutlet UITextField *deparmentTextField;
+
+- (IBAction)touchScreen:(id)sender;
+
 @end
 
 @implementation SettingViewController
@@ -40,12 +43,18 @@
     self.ipTextField.delegate = self;
     //self.portTextField.delegate = self;
     self.requestTextField.delegate = self;
+    self.deparmentTextField.delegate=self;
+    
     _afnet_helper  = [[AFNetHelper alloc] init];
 
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
-    [self.view addGestureRecognizer:tap];
     
+//    
+//        [[self navigationController] setNavigationBarHidden:YES animated:YES];
+//    
     
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
+//    [self.view addGestureRecognizer:tap];
+
 //    self.processView=[[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
 //    
 //    [self.view addSubview: self.processView];
@@ -54,26 +63,15 @@
   //  self.processView.frame=self.view.bounds;
     [self.processView setHidden: YES];
     
-    NSLog(@"start donloading");
+   // NSLog(@"start donloading");
 }
 
--(void)dismissKeyboard {
-    NSArray *subviews = [self.view subviews];
-    for (id objInput in subviews) {
-        if ([objInput isKindOfClass:[UITextField class]]) {
-            UITextField *theTextField = objInput;
-            if ([objInput isFirstResponder]) {
-                [theTextField resignFirstResponder];
-            }
-        }
-    }
-}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     
     [textField resignFirstResponder];
-    return NO;
+    return YES;
 }
 
 
@@ -210,41 +208,47 @@
 
 
 #pragma UITextField
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField
+-(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if (textField != self.ipTextField) {
-        [self animateTextField: textField up: YES];
+   // [textField becomeFirstResponder];
+    if(self.deparmentTextField==textField){
+    CGRect frame=textField.frame;
+     int offset=frame.origin.y-10;
+     
+    NSTimeInterval animationDuration=0.30f;
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.view.frame=CGRectMake(0, -    offset, self.view.bounds.size.width, self.view.bounds.size.height);
+                     }];}
+}
+
+
+- (IBAction)touchScreen:(id)sender {
+    
+     [self dismissKeyboard];
+    if(self.view.frame.origin.y!=0){
+        NSTimeInterval animationDuration=0.30f;
+        [UIView animateWithDuration:animationDuration
+                         animations:^{
+                             self.view.frame=CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+                         }];
     }
 }
 
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    if (textField != self.ipTextField) {
-        [self animateTextField: textField up: NO];
+
+
+
+-(void)dismissKeyboard {
+    NSArray *subviews = [self.view subviews];
+    for (id objInput in subviews) {
+        if ([objInput isKindOfClass:[UITextField class]]) {
+            UITextField *theTextField = objInput;
+            if ([objInput isFirstResponder]) {
+                [theTextField resignFirstResponder];
+            }
+        }
     }
 }
-
-- (void) animateTextField: (UITextField*) textField up: (BOOL) up
-{
-    int movementDistance = 80; // tweak as needed
-    const float movementDuration = 0.3f; // tweak as needed
-    if (textField == self.requestTextField) {
-//        NSog(@"request");
-        movementDistance = movementDistance *2;
-    }
-    
-    
-    int movement = (up ? -movementDistance : movementDistance);
-    
-    [UIView beginAnimations: @"anim" context: nil];
-    [UIView setAnimationBeginsFromCurrentState: YES];
-    [UIView setAnimationDuration: movementDuration];
-    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
-    [UIView commitAnimations];
-}
-
-
 
 @end
