@@ -412,12 +412,7 @@
 
 #pragma UITextField
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    if (textField == self.qtyTextField) {
-        [self animateTextField: textField up: YES];
-    }
-}
+
 
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
