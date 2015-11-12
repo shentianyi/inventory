@@ -36,7 +36,6 @@
     
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -44,18 +43,18 @@
 
 
 //textField delegate
-//-(void)textFieldDidBeginEditing:(UITextField *)textField
-//{
-//    CGRect frame=textField.frame;
-//    int offset=frame.origin.y-100;
-//    
-//    
-//    NSTimeInterval animationDuration=0.30f;
-//    [UIView animateWithDuration:animationDuration
-//                     animations:^{
-//                         self.view.frame=CGRectMake(0, -offset, self.view.bounds.size.width, self.view.bounds.size.height);
-//                     }];
-//}
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    CGRect frame=textField.frame;
+    int offset=frame.origin.y-180;
+    
+    
+    NSTimeInterval animationDuration=0.30f;
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.view.frame=CGRectMake(0, -offset, self.view.bounds.size.width, self.view.bounds.size.height);
+                     }];
+}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {

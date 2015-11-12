@@ -56,6 +56,7 @@
 // update check fields
 -(BOOL)updateCheckFields:(InventoryEntity *)entity;
 
+-(BOOL)updateRandomCheckFields:(InventoryEntity *)entity;
 /*
  获取本地抽盘数据
  */

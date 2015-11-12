@@ -6,8 +6,8 @@
 //  Copyright © 2015年 ryan. All rights reserved.
 //
 
-#ifndef ViewUIHelper_h
-#define ViewUIHelper_h
+#import <Foundation/Foundation.h>
 
-
-#endif /* ViewUIHelper_h */
+@interface ViewUIHelper : NSObject
+-(void) dismissKeyboard;
+@end

@@ -7,3 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ViewUIHelper.h"
+@interface ViewUIHelper()
+
+@end
+
+
+@implementation ViewUIHelper
+//-(void) dismissKeyboard{
+//    NSArray *subviews = [self.view subviews];
+//    for (id objInput in subviews) {
+//        if ([objInput isKindOfClass:[UITextField class]]) {
+//            UITextField *theTextField = objInput;
+//            if ([objInput isFirstResponder]) {
+//                [theTextField resignFirstResponder];
+//            }
+//        }
+//    }
+//}
+@end

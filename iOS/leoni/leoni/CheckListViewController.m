@@ -174,6 +174,9 @@
         UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 18.0 ];
         cell.textLabel.font  = myFont;
         cell.detailTextLabel.font = myFont;
+//        if(indexPath.row%2==1){
+//            cell.backgroundColor = [UIColor colorWithRed:224.0f/255.0f green:155.0f/255.0f blue:90.0f/255.0f alpha:0.3f];
+//        }
     }
     return cell;
     

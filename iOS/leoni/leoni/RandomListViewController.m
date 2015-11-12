@@ -145,10 +145,15 @@
     {
         InventoryEntity *entity = self.arrayInventories[indexPath.row];
         NSLog(@"entity %@%@", entity.position, entity.part);
-        cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@ 零件: %@", indexPath.row+1, entity.position, entity.part];
+        cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@  零件: %@", indexPath.row+1, entity.position ,entity.part];
         
         cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘数量: %@ 抽盘数量: %@", entity.check_qty, entity.random_check_qty];
         UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 18.0 ];
+        
+//        if(indexPath.row%2==1){
+//        cell.backgroundColor = [UIColor colorWithRed:224.0f/255.0f green:155.0f/255.0f blue:90.0f/255.0f alpha:0.3f];
+//        }
+//        
         cell.textLabel.font  = myFont;
         cell.detailTextLabel.font = myFont;
     }

@@ -23,7 +23,7 @@
     [[Captuvo sharedCaptuvoDevice] setDecoderGoodReadBeeperVolume:BeeperVolumeLow persistSetting:YES];
 //    [UIDevice currentDevice].batteryMonitoringEnabled = YES;
     
-
+// [NSThread sleepForTimeInterval:31.0];
     return YES;
 }
 

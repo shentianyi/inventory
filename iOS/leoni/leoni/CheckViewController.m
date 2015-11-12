@@ -9,39 +9,27 @@
 #import "CheckViewController.h"
 #import "MBProgressHUD.h"
 #import "KeychainItemWrapper.h"
+#import "AFNetHelper.h"
 
 @interface CheckViewController ()
 @property (strong, nonatomic) UITextField *firstResponder;
 -(void)clearAllTextFields;
 -(void)clearTextFields:(NSArray *)textFields;
 -(void) initTextFieldsWithInventoryEntity:(InventoryEntity *)inventoryEntity;
-//@property (strong,nonatomic) NSString *inventory_id;
+@property (strong,nonatomic) InventoryModel *inventory;
+
 @property (strong,nonatomic) InventoryEntity *currentInventoryEntity;
+@property (strong,nonatomic) AFNetHelper *afnet;
+
+- (IBAction)touchScreen:(id)sender;
+
 @end
 
 @implementation CheckViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-   // UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
-    //[self.view addGestureRecognizer:tap];
-    
-    
 }
-
-
-//-(void)dismissKeyboard {
-//    NSArray *subviews = [self.view subviews];
-//    for (id objInput in subviews) {
-//        if ([objInput isKindOfClass:[UITextField class]]) {
-//            UITextField *theTextField = objInput;
-//            if ([objInput isFirstResponder]) {
-//                [theTextField resignFirstResponder];
-//            }
-//        }
-//    }
-//}
 
 
 - (void)didReceiveMemoryWarning {
@@ -55,7 +43,7 @@
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [self clearAllTextFields];
     [self initController];
-    
+    self.afnet=[[AFNetHelper alloc] init];
     
 }
 
@@ -67,83 +55,30 @@
     self.firstResponder=nil;
 }
 
-#pragma textField delegate
-//disable keyboard
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    if(textField!=self.qtyTextField){
-    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    textField.inputView = dummyView;
-        
-    }else{
-    
-        CGRect frame = textField.frame;
-        int offset = frame.origin.y + 32 - (self.view.frame.size.height - 216.0);//键盘高度216
-        
-        NSTimeInterval animationDuration = 0.30f;
-        [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-        [UIView setAnimationDuration:animationDuration];
-        
-        //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
-        if(offset > 0)
-            self.view.frame = CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
-        
-        [UIView commitAnimations];
-        
-    }
-    
-    self.firstResponder=textField;
-}
-
-//输入框编辑完成以后，将视图恢复到原始状态
--(void)textFieldDidEndEditing:(UITextField *)textField
-{
-    self.view.frame =CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-}
 
 
-- (IBAction)clickScreen:(id)sender {
-    [self.positionTextField becomeFirstResponder];
-}
 
 
 -(void)decoderDataReceived:(NSString *)data
 {
     self.firstResponder.text=[data copy];
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-   
-    hud.mode = MBProgressHUDModeText;
-
-   hud.labelText = [NSString stringWithFormat:@"加载中..."];
-    [hud hide:YES afterDelay:0.5f];
+    
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//   
+//    hud.mode = MBProgressHUDModeText;
+//
+//   hud.labelText = [NSString stringWithFormat:@"加载中...%@",[data copy]];
+//    [hud hide:YES afterDelay:0.5f];
     
     if(self.firstResponder.text.length>0){
         [self textFieldShouldReturn:self.firstResponder];
     }
-//if(self.firstResponder.tag)
-//    NSArray *subviews = [self.view subviews];
-//    for (id objInput in subviews) {
-//        if ([objInput isKindOfClass:[UITextField class]]) {
-//            UITextField *tmpTextFile = objInput;
-//            if ([objInput isFirstResponder]) {
-//                tmpTextFile.text = data;
-//                [tmpTextFile resignFirstResponder];
-////                [tmpTextFile.nextTextField becomeFirstResponder];
-//                break;
-//            }
-//        }
-//    }
-  //  self.positionTextField.text = data;
-    //[self validatePosition];
-   // [self.positionTextField resignFirstResponder];
-   // [self.qtyTextField becomeFirstResponder];
 }
 
 -(void)clearAllTextFields{
     NSMutableArray *textFields=[[NSMutableArray alloc] init];
     for(id input in self.view.subviews){
         if([input isKindOfClass:[UITextField class]]){
-        
             [textFields addObject:input];
         }
     }
@@ -160,7 +95,7 @@
 
 - (void)initController {
     self.positionTextField.delegate =self;
-    [self.positionTextField becomeFirstResponder];
+    //[self.positionTextField becomeFirstResponder];
     
     self.partTextField.delegate = self;
     self.departmentTextField.delegate = self;
@@ -169,13 +104,11 @@
     self.partTypeTextField.enabled = NO;
     self.partTypeTextField.delegate =self;
     
-    _inventory = [[InventoryModel alloc] init];
-   // [self.inventory getListWithPosition:@""];
+    self.inventory = [[InventoryModel alloc] init];
 }
 
 
 -(void) initTextFieldsWithInventoryEntity:(InventoryEntity *)inventoryEntity{
-   // self.inventory_id=inventoryEntity.inventory_id;
     self.currentInventoryEntity=inventoryEntity;
     
     self.positionTextField.text=inventoryEntity.position;
@@ -183,7 +116,9 @@
     self.partTextField.text = inventoryEntity.part;
     self.partTypeTextField.text = inventoryEntity.part_type;
     self.qtyTextField.text = inventoryEntity.check_qty;
-     [self.qtyTextField becomeFirstResponder];
+    if(self.qtyTextField.text.length==0){
+       [self.qtyTextField becomeFirstResponder];
+    }
 }
 
 
@@ -202,8 +137,6 @@
     }else if(textField==self.qtyTextField){
         [self validateText];
     }
-    
-    [textField resignFirstResponder];
     
     return YES;
 }
@@ -234,17 +167,25 @@
     getData = [self.inventory localGetDataByPosition:self.positionTextField.text];
     NSUInteger countGetData =[ getData count];
     if ( countGetData >1) {
+        if([self.afnet defaultDepartment].length==0){
         hud.labelText = [NSString stringWithFormat:@"库位包含多零件，输入部门"];
         [hud hide:YES afterDelay:1.5];
         
-        [self.departmentTextField becomeFirstResponder];
+            [self.departmentTextField becomeFirstResponder];
+            }else{
+                self.departmentTextField.text=[self.afnet defaultDepartment];
+                
+                 [self textFieldShouldReturn:self.departmentTextField];
+                
+                [hud hide:YES];
+
+            }
         
     } else if (countGetData == 0) {
         hud.labelText = [NSString stringWithFormat:@"不存在库位，手动录入"];
         [hud hide:YES afterDelay:1.5f];
         
-        [self clearAllTextFields];
-        [self.positionTextField becomeFirstResponder];
+       [self clearAllTextFields];
         
     } else if(countGetData == 1) {
         [self initTextFieldsWithInventoryEntity:getData.firstObject];
@@ -275,11 +216,12 @@
         if(inventories.count==0){
             
             hud.labelText = [NSString stringWithFormat:@"不存在库位和部门，手动录入"];
-            [self clearAllTextFields];
-            
-            [self.positionTextField becomeFirstResponder];
             
             [hud hide:YES afterDelay:1.5f];
+            
+            [self clearAllTextFields];
+            
+            
         }else if(inventories.count>1){
             hud.labelText = [NSString stringWithFormat:@"库位和部门多个零件，输入零件"];
             [hud hide:YES afterDelay:1.5];
@@ -316,7 +258,7 @@
             
             hud.labelText = [NSString stringWithFormat:@"不存在数据，手动录入"];
             [self clearAllTextFields];
-            [self.positionTextField becomeFirstResponder];
+
             [hud hide:YES afterDelay:1.5f];
         }else if(inventories.count>1){
             hud.labelText = [NSString stringWithFormat:@"系统数据问题，请联系管理员！"];
@@ -340,24 +282,31 @@
         if ([self.partTextField.text length] >0) {
            // if([self.partTypeTextField.text length] >0){
                 if([self.departmentTextField.text length] >0){
-                    if([self.qtyTextField.text length] >0){
-                        [hud hide:YES afterDelay:1.5f];
+                    if([self.qtyTextField.text length] >0 && ([self isPureFloat:self.qtyTextField.text] || [self isPureInt:self.qtyTextField.text])){
+                        [hud hide:YES];
 
                         if(self.currentInventoryEntity){
                            [self updateCheckData];
                             self.currentInventoryEntity=nil;
                         }else{
-                            hud.labelText = @"不可提交，请输入数据";
-                            [hud hide:YES afterDelay:1.5f];
+                            if(self.firstResponder==self.qtyTextField){
+                                hud.yOffset=100;
+                            }
+                            
+                            hud.labelText = @"不可提交，请输入正确数据";
+                            [hud hide:YES afterDelay:1.0f];
                         }
                     }else{
-                        hud.labelText = @"请输入全盘数量";
-                        [hud hide:YES afterDelay:1.5f];
+                        if(self.firstResponder==self.qtyTextField){
+                            hud.yOffset=100;
+                        }
+                        hud.labelText = @"请输入正确数量";
+                        [hud hide:YES afterDelay:1.0f];
                         
                     }
                 }else{
                     hud.labelText = @"请输入部门";
-                    [hud hide:YES afterDelay:1.5f];
+                    [hud hide:YES afterDelay:1.0f];
                 }
 //            }else{
 //                hud.labelText = @"请输入类型";
@@ -366,11 +315,11 @@
             
         }else{
             hud.labelText = @"请输入零件号";
-            [hud hide:YES afterDelay:1.5f];
+            [hud hide:YES afterDelay:1.0f];
         }
     } else{
         hud.labelText = @"请输入库位";
-        [hud hide:YES afterDelay:1.5f];
+        [hud hide:YES afterDelay:1.0f];
         
     }
 }
@@ -378,9 +327,8 @@
 
 - (void)updateCheckData {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"加载中...";
+    //hud.labelText = @"加载中...";
     
-    hud.mode = MBProgressHUDModeText;
     NSLog(@"qty.........%@",self.qtyTextField.text);
     
     if ([self isPureFloat:self.qtyTextField.text] || [self isPureInt:self.qtyTextField.text]){
@@ -401,19 +349,25 @@
         
         if([inventory updateCheckFields:self.currentInventoryEntity]){
             
+            hud.mode = MBProgressHUDModeText;
             hud.labelText = [NSString stringWithFormat:@"盘点成功"];
-            [hud hide:YES afterDelay:1.5f];
+            [hud hide:YES afterDelay:0.5f];
             
+            
+           // [self.qtyTextField resignFirstResponder];
+
             [self clearAllTextFields];
-            
-            [self.qtyTextField resignFirstResponder];
-            [self.positionTextField becomeFirstResponder];
         }
         
     }
     else {
-        hud.labelText = [NSString stringWithFormat:@"请输入全盘数量"];
-        [hud hide:YES afterDelay:1.5f];
+        if(self.firstResponder==self.qtyTextField){
+            hud.yOffset=100;
+        }
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = [NSString stringWithFormat:@"请输入正确数量"];
+        [hud hide:YES afterDelay:1.0f];
+        [self.qtyTextField becomeFirstResponder];
     }
 }
 
@@ -434,37 +388,57 @@
     return [scan scanFloat:&val] && [scan isAtEnd];
 }
 
-#pragma UITextField
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField
+#pragma textField delegate
+//disable keyboard
+-(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if (textField == self.qtyTextField) {
-        [self animateTextField: textField up: YES];
+    if(textField!=self.qtyTextField){
+        UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+        textField.inputView = dummyView;
+       [self hideKeyboard];
+    }else{
+        
+        CGRect frame=textField.frame;
+        int offset=frame.origin.y-210;
+        NSTimeInterval animationDuration=0.30f;
+        [UIView animateWithDuration:animationDuration
+                         animations:^{
+                             self.view.frame=CGRectMake(0, -offset, self.view.bounds.size.width, self.view.bounds.size.height);
+                         }];
+    
+    }
+     self.firstResponder=textField;
+}
+
+
+
+- (IBAction)touchScreen:(id)sender {
+   // [self  dismissKeyboard];
+    
+    [self hideKeyboard];
+    [self.positionTextField becomeFirstResponder];
+}
+
+-(void)hideKeyboard{
+      if(self.view.frame.origin.y!=0){
+        NSTimeInterval animationDuration=0.30f;
+        [UIView animateWithDuration:animationDuration
+                         animations:^{
+                             self.view.frame=CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+                         }];
     }
 }
 
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    if (textField == self.qtyTextField) {
-        [self animateTextField: textField up: NO];
+-(void)dismissKeyboard {
+    NSArray *subviews = [self.view subviews];
+    for (id objInput in subviews) {
+        if ([objInput isKindOfClass:[UITextField class]]) {
+            UITextField *theTextField = objInput;
+            if ([objInput isFirstResponder]) {
+                [theTextField resignFirstResponder];
+            }
+        }
     }
 }
-
-- (void) animateTextField: (UITextField*) textField up: (BOOL) up
-{
-    int movementDistance = 80 *2; // tweak as needed
-    const float movementDuration = 0.3f; // tweak as needed
-    
-    
-    int movement = (up ? -movementDistance : movementDistance);
-    
-    [UIView beginAnimations: @"anim" context: nil];
-    [UIView setAnimationBeginsFromCurrentState: YES];
-    [UIView setAnimationDuration: movementDuration];
-    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
-    [UIView commitAnimations];
-}
-
 
 @end

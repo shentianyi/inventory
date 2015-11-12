@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *partTextField;
 @property (weak, nonatomic) IBOutlet UITextField *partTypeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *qtyTextField;
-@property (nonatomic, retain) InventoryModel *inventory;
+ 
 - (IBAction)checkAction:(id)sender;
 
 @end
