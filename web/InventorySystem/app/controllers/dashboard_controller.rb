@@ -8,7 +8,8 @@ class DashboardController < ApplicationController
     @check_qty_progress['未全盘'] = Inventory.where("check_qty is null").count(:id)
     
     @random_check_qty_progress = Inventory.random_check_completed.group('date(random_check_time)').count(:random_check_qty)
-    @random_check_qty_progress['未抽盘'] = Inventory.random_check.count(:id)
+    # @random_check_qty_progress['未抽盘'] = Inventory.random_check.count(:id)
+    @random_check_qty_progress['未抽盘'] = Inventory.random_check_not.count(:id)
     
     @check_qty_hour_progress = Inventory.where("check_qty != ''").group("date_format(check_time, '%Y-%m-%d %H点')").count(:id)
     @random_check_qty_hour_progress = Inventory.random_check_completed.group("date_format(random_check_time, '%Y-%m-%d %H点')").count(:id)
