@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>MJRefresh.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -17,12 +22,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>1F75EBF548E12BE42A0C3F37F5EDAC8B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3EC1097AC772DCC51E7D3E205A4D3694</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>C900741DA3C5044501753EB997C641B2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>E0A0843C35E4406010926441E5E9C150</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>ED9519FAF86145BCC503C8904BA95FDA</key>
 		<dict>
 			<key>primary</key>
 			<true/>

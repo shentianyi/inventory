@@ -43,7 +43,18 @@
 /*
  获取本地全盘数据
  */
-- (NSMutableArray *)getListWithPosition: (NSString *)position;
+// Charot
+// by position
+- (NSMutableArray *)getLocalCheckDataListWithPosition: (NSString *)position;
+
+// by position and department
+-(NSMutableArray *)getListWithPosition:(NSString *)position andDepartment:(NSString *)deparment;
+
+// by position and department and part
+-(NSMutableArray *)getListWithPosition:(NSString *)position andDepartment:(NSString *)deparment andPart:(NSString *)part;
+
+// update check fields
+-(BOOL)updateCheckFields:(InventoryEntity *)entity;
 
 /*
  获取本地抽盘数据

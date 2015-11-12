@@ -13,7 +13,17 @@
 - (id)initWithNr:(NSString *)nr{
     self = [super init];
     if (self) {
-        self.nr_string = nr;
+        self.nr = nr;
+    }
+    return self;
+}
+
+- (id) initWithId:(NSString *)userId andNr:(NSString *)nr andName:(NSString *)name{
+    self = [super init];
+    if (self) {
+        self.userId=userId;
+        self.nr= nr;
+        self.name=name;
     }
     return self;
 }

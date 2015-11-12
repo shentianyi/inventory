@@ -111,7 +111,7 @@ module Excel
 
       operator = row[:operation].downcase.to_s
       # puts "#{row[:part].to_i}, #{row[:position].to_s}"
-      i = Inventory.where(part: row[:part].to_s, position: row[:position].to_s, department: row[:department].to_s)
+      i = Inventory.where(part: row[:part].to_s, position: row[:position].to_s, department: row[:department].to_s).first
       # i = Inventory.where(position: row[:position].to_s)
       case operator
         when 'new'

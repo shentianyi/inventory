@@ -14,9 +14,11 @@
 
 - (AFHTTPRequestOperationManager *)basicManager;
 - (NSString *)ServerURL;
-- (void)UpdateServerURLwithIP: (NSString *)ipString withProt: (NSString *)portString withRequest: (NSString *)requestString;
+- (void)UpdateServerURLwithIP: (NSString *)ipString withRequest: (NSString *)requestString withDeparment:(NSString *)deparment;
 - (NSString *)getRequestQuantity;
+- (NSString *)defaultDepartment;
 - (NSString *)login;
+- (NSString *) downloadUserData;
 - (NSString *)query;
 - (NSString *)check;
 - (NSString *)uploadCheckData;
