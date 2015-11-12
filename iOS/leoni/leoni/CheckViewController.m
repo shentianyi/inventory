@@ -388,6 +388,7 @@
     return [scan scanFloat:&val] && [scan isAtEnd];
 }
 
+
 #pragma textField delegate
 //disable keyboard
 -(void)textFieldDidBeginEditing:(UITextField *)textField
@@ -409,8 +410,6 @@
     }
      self.firstResponder=textField;
 }
-
-
 
 - (IBAction)touchScreen:(id)sender {
    // [self  dismissKeyboard];

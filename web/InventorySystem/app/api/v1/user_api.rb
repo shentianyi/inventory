@@ -19,7 +19,7 @@ module V1
 	  desc 'download user data'
 	  params do
 	   optional :page,type: Integer,default:1
-	   optional :per_page,type: Integer,default:200
+	   optional :per_page,type: Integer,default:1000
 	  end
 	  get do
 		  users=User.paginate(page:params[:page],per_page:params[:per_page])
