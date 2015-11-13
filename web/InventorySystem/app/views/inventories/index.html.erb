@@ -76,7 +76,7 @@
         <td><%= inventory.random_check_qty %></td>
         <td><%= inventory.random_check_user %></td>
         <td><%= inventory.random_check_time.strftime("%Y-%m-%d %H:%M:%S") if !inventory.random_check_time.nil? %></td>
-        <td><%= inventory.is_random_check %></td>
+        <td><%= inventory.is_random_check_display %></td>
         <td><%= inventory.ios_created_id %></td>
         <td><%= link_to '详情', inventory %></td>
         <td><%= link_to '编辑', edit_inventory_path(inventory) %></td>

@@ -105,7 +105,7 @@ class InventoriesController < ApplicationController
           inventory.random_check_qty,
           inventory.random_check_user,
           inventory.random_check_time,
-          inventory.is_random_check,
+          inventory.is_random_check_display,
           inventory.ios_created_id        
           ], :types => [:string]
       }

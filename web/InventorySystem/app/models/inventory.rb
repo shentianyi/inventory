@@ -89,4 +89,8 @@ class Inventory < ActiveRecord::Base
       counter += 1
     end
   end
+
+  def is_random_check_display
+   self.is_random_check ? '是' : '否'
+  end
 end
