@@ -202,7 +202,7 @@
     hud.labelText = @"加载中...";
     
     NSMutableArray *getData = [[NSMutableArray alloc] init];
-    getData = [self.inventory localGetDataByPosition:self.positionTextField.text];
+    getData = [self.inventory getRandomListWithPosition:self.positionTextField.text];
     NSUInteger countGetData =[ getData count];
     if ( countGetData >1) {
         if([self.afnet defaultDepartment].length==0){
@@ -218,7 +218,7 @@
         }
         
     } else if (countGetData == 0) {
-        hud.labelText = [NSString stringWithFormat:@"不存在库位，不可抽盘"];
+        hud.labelText = [NSString stringWithFormat:@"非抽盘数据，不可抽盘"];
         [hud hide:YES afterDelay:1.0f];
         
         [self clearAllTextFields];
@@ -246,11 +246,11 @@
         hud.labelText=@"请输入库位号！";
         [hud hide:YES afterDelay:1.0f];
     }else{
-        NSMutableArray *inventories=[self.inventory getListWithPosition:self.positionTextField.text andDepartment:self.departmentTextField.text];
+        NSMutableArray *inventories=[self.inventory getRandomListWithPosition:self.positionTextField.text andDepartment:self.departmentTextField.text];
         
         if(inventories.count==0){
             
-            hud.labelText = [NSString stringWithFormat:@"不存在库位和部门，不可抽盘"];
+            hud.labelText = [NSString stringWithFormat:@"非抽盘数据，不可抽盘"];
             [self clearAllTextFields];
             [hud hide:YES afterDelay:1.0f];
         }else if(inventories.count>1){
@@ -285,11 +285,11 @@
         hud.labelText=@"请输入库位号和部门！";
         [hud hide:YES afterDelay:1.0f];
     }else{
-        NSMutableArray *inventories=[self.inventory getListWithPosition:self.positionTextField.text andDepartment:self.departmentTextField.text andPart:self.partTextField.text];
+        NSMutableArray *inventories=[self.inventory getRandomListWithPosition:self.positionTextField.text andDepartment:self.departmentTextField.text andPart:self.partTextField.text];
         
         if(inventories.count==0){
             
-            hud.labelText = [NSString stringWithFormat:@"不存在数据，不可抽盘"];
+            hud.labelText = [NSString stringWithFormat:@"非抽盘数据，不可抽盘"];
             [self clearAllTextFields];
             
             [hud hide:YES afterDelay:1.0f];

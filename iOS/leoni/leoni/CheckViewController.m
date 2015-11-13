@@ -164,7 +164,7 @@
     hud.labelText = @"加载中...";
     
     NSMutableArray *getData = [[NSMutableArray alloc] init];
-    getData = [self.inventory localGetDataByPosition:self.positionTextField.text];
+    getData = [self.inventory getListWithPosition:self.positionTextField.text];
     NSUInteger countGetData =[ getData count];
     if ( countGetData >1) {
         if([self.afnet defaultDepartment].length==0){

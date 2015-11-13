@@ -83,22 +83,6 @@
      ];
 }
 
-//-(void) downloadUserData:(void (^)(NSMutableArray *, NSError *))block{
-//    NSMutableArray *users=[[NSMutableArray alloc] init];
-//    NSInteger page=1;
-//    
-//    NSInteger perPage=[self.afnet getRequestQuantity];
-//    while (true) {
-//        NSMutableArray *perUsers=[self getUserInPage:page PerPage:perPage];
-//        if(perUsers.count>0){
-//            [users addObjectsFromArray:perUsers];
-//        }else{
-//            break;
-//        }
-//        page+=1;
-//    }
-//}
-
 -(NSMutableArray *) getUserInPage:(NSInteger)page PerPage:(NSInteger)perPage:(void(^)(NSMutableArray *users,NSError *error))block{
       NSMutableArray *userEntities=[[NSMutableArray alloc] init];
     //NSMutableArray *users=[[NSMutableArray alloc] init];
