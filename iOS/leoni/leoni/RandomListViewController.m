@@ -79,7 +79,7 @@
 //            [self.randomTableView reloadData];
 //        }
 //    }];
-    self.arrayInventories = [inventory localGetRandomCheckData:searchBar.text];
+    self.arrayInventories = [inventory getLocalRandomCheckDataListWithPosition:searchBar.text];
     [self.randomTableView reloadData];
 }
 
@@ -95,7 +95,7 @@
 - (void)loadData {
     self.arrayInventories = [[NSMutableArray alloc]init];
     InventoryModel *inventory = [[InventoryModel alloc] init];
-    self.arrayInventories = [inventory localGetRandomCheckData:@""];
+    self.arrayInventories = [inventory getLocalRandomCheckDataListWithPosition:@""];
     
     [self.randomTableView reloadData];
 }

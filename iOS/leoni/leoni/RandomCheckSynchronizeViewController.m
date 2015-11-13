@@ -190,7 +190,7 @@
  */
 - (void)uploadRandomCheckData {
     self.uploadDataArray = [[NSMutableArray alloc] init];
-    self.uploadDataArray = [self.model localGetRandomCheckData:@""];
+    self.uploadDataArray = [self.model getLocalRandomCheckDataListWithPosition:@""];
 //    NSLog(@"upload data %d", [self.uploadDataArray count]);
     [self.progressView setHidden: NO];
     self.progressView.progress = 0;

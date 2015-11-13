@@ -41,11 +41,20 @@
 //- (void)localCreateRandomCheckData: (InventoryEntity *)entity;
 
 /*
- 获取本地全盘数据
+ 获取本地数据
  */
 // Charot
 // by position
 - (NSMutableArray *)getLocalCheckDataListWithPosition: (NSString *)position;
+// 获取本地抽盘数据
+- (NSMutableArray *)getLocalRandomCheckDataListWithPosition: (NSString *)position;
+
+/*
+ 本地数据查询
+ */
+
+// by position
+- (NSMutableArray *)getListWithPosition: (NSString *)position;
 
 // by position and department
 -(NSMutableArray *)getListWithPosition:(NSString *)position andDepartment:(NSString *)deparment;
@@ -53,14 +62,28 @@
 // by position and department and part
 -(NSMutableArray *)getListWithPosition:(NSString *)position andDepartment:(NSString *)deparment andPart:(NSString *)part;
 
+// random by position
+- (NSMutableArray *)getRandomListWithPosition: (NSString *)position;
+
+// random by position and department
+-(NSMutableArray *)getRandomListWithPosition:(NSString *)position andDepartment:(NSString *)deparment;
+
+// random by position and department and part
+-(NSMutableArray *)getRandomListWithPosition:(NSString *)position andDepartment:(NSString *)deparment andPart:(NSString *)part;
+
+
+
+/*
+ 本地数据更新
+*/
 // update check fields
 -(BOOL)updateCheckFields:(InventoryEntity *)entity;
-
+// update random check fields
 -(BOOL)updateRandomCheckFields:(InventoryEntity *)entity;
-/*
- 获取本地抽盘数据
- */
-- (NSMutableArray *)getRandomCheckDataWithPosition: (NSString *)position;
+
+
+
+
 
 - (BOOL)uploadCheckData: (InventoryEntity *)entity;
 /*
@@ -85,22 +108,6 @@
  ryan 2015.11.4
  */
 - (void)webDownloadAllCheckDatablock:(void (^)(NSMutableArray * tableArray, NSError *error))block;
-
-
-
-- (NSMutableArray *)localGetRandomCheckData: (NSString *)position;
-
-/*
- 本地根据库位查询记录
- */
-- (NSMutableArray *)localGetDataByPosition: (NSString *)position;
-
-/*
- 本地根据库位, 零件查询记录
- */
-- (NSMutableArray *)localGetDataByPosition: (NSString *)position ByPart: (NSString *)part;
-
-
 
 /*
  本地根据库位 update 记录
