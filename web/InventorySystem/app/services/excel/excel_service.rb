@@ -110,8 +110,23 @@ module Excel
       end
 
       operator = row[:operation].downcase.to_s
-      # puts "#{row[:part].to_i}, #{row[:position].to_s}"
-      i = Inventory.where(part: row[:part].to_s, position: row[:position].to_s, department: row[:department].to_s).first
+      puts "######################"
+      puts "#{row[:part].to_i}, #{row[:position].to_s}"
+      departmentValue = row[:department]
+      if row[:department].include? ".0"
+        departmentValue = row[:department].to_i
+      end
+      
+      positionValue = row[:position]
+      if row[:position].include? ".0"
+        positionValue = row[:position].to_i
+      end
+      
+      partValue = row[:part]
+      if row[:part].include? ".0"
+        partValue = row[:part].to_i
+      end
+      i = Inventory.where(part: partValue, position: positionValue, department: departmentValue).first
       # i = Inventory.where(position: row[:position].to_s)
       case operator
         when 'new'
