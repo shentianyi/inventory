@@ -14,7 +14,6 @@
  @property (nonatomic,retain)DBManager *db;
 @end
 
-// create table users(user_id string,nr string,name string);
 @implementation UserModel
 
 -(instancetype) init{
