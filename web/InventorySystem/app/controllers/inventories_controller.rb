@@ -35,12 +35,14 @@ class InventoriesController < ApplicationController
       puts "-----testing "
       # @inventories = @inventories.search(params[:search])
       @department = params[:department]
+      @check_user=params[:check_user]
       @position_begin = params[:position_begin]
       @position_end = params[:position_end]
       @part = params[:part]
       @ios_created_id = params[:ios_created_id] 
       @is_random_check = params[:is_random_check] 
-      @inventories = Inventory.search_by_condition(@department, @position_begin, @position_end, @part, @ios_created_id, @is_random_check)
+      @inventories = Inventory.search_by_condition(@department, @position_begin, @position_end, @part, @ios_created_id, @is_random_check,{check_user: @check_user,
+                                                                                                                                          random_check_user:params[:random_check_user]})
    
       respond_to do |format|
         format.xlsx do

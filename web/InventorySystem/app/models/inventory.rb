@@ -45,10 +45,12 @@ class Inventory < ActiveRecord::Base
     where("position=?", search)
   end
   
-  def self.search_by_condition(department, position_begin, position_end, part, ios_created_id, is_random_check)
+  def self.search_by_condition(department, position_begin, position_end, part, ios_created_id, is_random_check,params={})
     inventories = Inventory
     condition = {}
     condition["department"] = department if department.present?
+    condition[:check_user]=params[:check_user] if params[:check_user].present?
+    condition[:random_check_user]=params[:random_check_user] if params[:random_check_user].present?
     # condition["position"] = position_begin...position_end if position_begin.present? && position_end.present?    
     # condition["ios_created_id"] = ios_created_id if ios_created_id.present?
     condition["is_random_check"] = is_random_check if is_random_check.present?
