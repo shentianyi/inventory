@@ -9,6 +9,7 @@
 #import "CheckSynchronizeViewController.h"
 #import "InventoryModel.h"
 #import "MBProgressHUD.h"
+#import "UserModel.h"
 
 
 @interface CheckSynchronizeViewController ()
@@ -80,7 +81,8 @@
 //            NSLog(@"0");
 //            self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(uploadUpdateUI: ) userInfo:nil repeats:YES];
 //            [self.progressView setHidden: NO];
-            [self uploadCheckData];
+            [self validateUser];
+            
         }
         else if(buttonIndex == 1){
             NSLog(@"1");
@@ -95,6 +97,7 @@
     
 }
 - (void)uploadCheckData {
+    NSLog(@"testing uploadcheck data");
     self.uploadDataArray = [[NSMutableArray alloc] init];
     self.uploadDataArray = [self.model getLocalCheckDataListWithPosition:@""];
     [self.progressView setHidden: NO];
@@ -264,6 +267,23 @@
             }
         }
     }];
+}
+
+/*
+ 简单验证服务器连接
+ */
+- (void)validateUser {
+    UserModel *user = [[UserModel alloc] init];
+    KeychainItemWrapper *keyChain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
+        [user loginWithNr:[keyChain objectForKey:(__bridge  id)kSecAttrAccount] block:^(UserEntity *user_entity, NSError *error) {
+            
+            if (user_entity) {
+               [self uploadCheckData];
+            }else {
+                [self MessageShowTitle: @"系统提示" Content: @"网络异常，请联系管理员"];
+            }
+        }];
+    
 }
 
 @end
