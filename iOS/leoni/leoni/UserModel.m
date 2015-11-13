@@ -47,14 +47,12 @@
 }
 
 - (void)loginWithNr:(NSString *)nrString block:(void (^)(UserEntity *, NSError *))block{
-//    NSString *NrString = nrString;
     AFNetHelper *afnet_helper = [[AFNetHelper alloc] init];
-//    NSLog(@"======= testing");
     AFHTTPRequestOperationManager *manager = [afnet_helper basicManager];
     [manager POST:[afnet_helper login]
        parameters:@{@"name" : nrString}
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                  NSLog(@"======= testing%@", responseObject[@"result"]);
+            
               if([responseObject[@"result"] integerValue]== 1 ){
                   UserEntity *user = [[UserEntity alloc] initWithNr:nrString];
                   if (block) {

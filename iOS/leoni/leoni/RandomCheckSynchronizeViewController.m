@@ -8,6 +8,7 @@
 
 #import "RandomCheckSynchronizeViewController.h"
 #import "InventoryModel.h"
+#import "UserModel.h"
 
 @interface RandomCheckSynchronizeViewController ()
 @property (nonatomic, strong) UIAlertView *downloadAlert;
@@ -75,7 +76,7 @@
             NSLog(@"0");
 //            self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(uploadUpdateUI: ) userInfo:nil repeats:YES];
 //            [self.progressView setHidden: NO];
-            [self uploadRandomCheckData];
+            [self validateUser];
         }
         else if(buttonIndex == 1){
             NSLog(@"1");
@@ -294,6 +295,24 @@
                                             cancelButtonTitle:@"确定"
                                             otherButtonTitles:@"取消", nil];
     [message show];
+}
+
+
+/*
+ 简单验证服务器连接
+ */
+- (void)validateUser {
+    UserModel *user = [[UserModel alloc] init];
+    KeychainItemWrapper *keyChain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
+    [user loginWithNr:[keyChain objectForKey:(__bridge  id)kSecAttrAccount] block:^(UserEntity *user_entity, NSError *error) {
+        
+        if (user_entity) {
+            [self uploadRandomCheckData];
+        }else {
+            [self MessageShowTitle: @"系统提示" Content: @"网络异常，请联系管理员"];
+        }
+    }];
+    
 }
 
 
