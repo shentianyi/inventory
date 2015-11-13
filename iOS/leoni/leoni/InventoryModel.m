@@ -322,7 +322,7 @@
     BOOL result=YES;
     NSString *queryString=[NSString stringWithFormat:@"update inventories set is_local_check='%@' ,check_qty='%@', check_user='%@', check_time='%@' where inventory_id= '%@'",entity.is_local_check,entity.check_qty,entity.check_user,entity.check_time,entity.inventory_id];
     // 如果是手动录入，可以更新
-    if([entity.is_local_check isEqualToString:@"1"] && entity.ios_created_id!=nil){
+    if([entity.inventory_id isEqualToString:@""] && [entity.is_local_check isEqualToString:@"1"] && ![entity.ios_created_id isEqualToString:@""] && entity.ios_created_id!=nil){
       queryString=[NSString stringWithFormat:@"update inventories set is_local_check='%@' ,check_qty='%@', check_user='%@', check_time='%@' where ios_created_id= '%@'",entity.is_local_check,entity.check_qty,entity.check_user,entity.check_time,entity.ios_created_id];
     }
     [self.db executeQuery:queryString];

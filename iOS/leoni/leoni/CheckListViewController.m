@@ -40,23 +40,23 @@
     [self.navigationController.navigationBar addSubview:self.searchBar];
     
     self.searchResult = [NSMutableArray arrayWithCapacity:[self.arrayInventories count]];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
-    [self.view addGestureRecognizer:tap];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
+//    [self.view addGestureRecognizer:tap];
     
     
 }
 
--(void)dismissKeyboard {
-    NSArray *subviews = [self.view subviews];
-    for (id objInput in subviews) {
-        if ([objInput isKindOfClass:[UITextField class]]) {
-            UITextField *theTextField = objInput;
-            if ([objInput isFirstResponder]) {
-                [theTextField resignFirstResponder];
-            }
-        }
-    }
-}
+//-(void)dismissKeyboard {
+//    NSArray *subviews = [self.view subviews];
+//    for (id objInput in subviews) {
+//        if ([objInput isKindOfClass:[UITextField class]]) {
+//            UITextField *theTextField = objInput;
+//            if ([objInput isFirstResponder]) {
+//                [theTextField resignFirstResponder];
+//            }
+//        }
+//    }
+//}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -75,18 +75,8 @@
 
 -(void)decoderDataReceived:(NSString *)data
 {
-    NSArray *subviews = [self.view subviews];
-    for (id objInput in subviews) {
-        if ([objInput isKindOfClass:[UITextField class]]) {
-            UITextField *tmpTextFile = objInput;
-            if ([objInput isFirstResponder]) {
-                tmpTextFile.text = data;
-                [tmpTextFile resignFirstResponder];
-                //                [tmpTextFile.nextTextField becomeFirstResponder];
-                break;
-            }
-        }
-    }
+    self.searchBar.text=[data copy];
+    [self searchBarSearchButtonClicked:self.searchBar];
 }
 
 - (void)didReceiveMemoryWarning {
