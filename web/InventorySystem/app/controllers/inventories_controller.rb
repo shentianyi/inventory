@@ -101,10 +101,10 @@ class InventoriesController < ApplicationController
           "\t#{inventory.part}",
           "\t#{inventory.part_type}",
           inventory.check_qty,
-          inventory.check_user,
+          "\t#{inventory.check_user}",
           inventory.check_time,
           inventory.random_check_qty,
-          inventory.random_check_user,
+          "\t#{inventory.random_check_user}",
           inventory.random_check_time,
           inventory.is_random_check_display,
           inventory.ios_created_id        
