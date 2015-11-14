@@ -110,8 +110,8 @@ module Excel
       end
 
       operator = row[:operation].downcase.to_s
-      puts "######################"
-      puts "#{row[:part].to_i}, #{row[:position].to_s}"
+      # puts "######################"
+      # puts "#{row[:part].to_i}, #{row[:position].to_s}"
       departmentValue = row[:department]
       if row[:department].include? ".0"
         departmentValue = row[:department].to_i

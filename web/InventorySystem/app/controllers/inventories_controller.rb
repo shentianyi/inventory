@@ -88,6 +88,7 @@ class InventoriesController < ApplicationController
   
   def entry_with_xlsx inventories
     p = Axlsx::Package.new
+    p.use_shared_strings = true
     wb = p.workbook
     wb.add_worksheet(:name => "sheet1") do |sheet|
       sheet.add_row ["序号", "部门", "库位", "零件号", "零件类型", "全盘数量", "全盘员工", "全盘时间", "抽盘数量", "抽盘员工", "抽盘时间", "是否抽盘", "iOS新建id"]
@@ -95,10 +96,10 @@ class InventoriesController < ApplicationController
       inventories.each_with_index { |inventory, index|
         sheet.add_row [
           index+1,
-          inventory.department,
-          inventory.position,
-          inventory.part,
-          inventory.part_type,
+          "\t#{inventory.department}",
+          "\t#{inventory.position}",
+          "\t#{inventory.part}",
+          "\t#{inventory.part_type}",
           inventory.check_qty,
           inventory.check_user,
           inventory.check_time,
@@ -108,6 +109,7 @@ class InventoriesController < ApplicationController
           inventory.is_random_check_display,
           inventory.ios_created_id        
           ], :types => [:string]
+          # puts "'#{inventory.part.to_s} && #{inventory.part}"
       }
     end
     p.to_stream.read
