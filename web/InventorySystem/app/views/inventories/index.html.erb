@@ -12,7 +12,9 @@
 		<p>
 			<%= hidden_field_tag :search, value=true %>
 			部门：<%= text_field_tag :department, params[:department]%>
-			库位号：从<%= text_field_tag :position_begin, params[:position_begin]%>到<%= text_field_tag :position_end, params[:position_end]%>
+          全盘员工号：<%= text_field_tag :check_user, params[:check_user]%>
+          抽盘员工号：<%= text_field_tag :random_check_user, params[:random_check_user]%>
+          库位号：从<%= text_field_tag :position_begin, params[:position_begin]%>到<%= text_field_tag :position_end, params[:position_end]%>
 			零件号：<%= text_field_tag :part, params[:part]%>
 			是否是iOS新建：<%= select_tag :ios_created_id, options_for_select([["否", 0],["是", 1]]), {prompt: '选择'} %>
 			是否是抽盘：<%= select_tag :is_random_check,  options_for_select([["否", 0],["是", 1]]), {prompt: '选择'} %>
@@ -74,7 +76,7 @@
         <td><%= inventory.random_check_qty %></td>
         <td><%= inventory.random_check_user %></td>
         <td><%= inventory.random_check_time.strftime("%Y-%m-%d %H:%M:%S") if !inventory.random_check_time.nil? %></td>
-        <td><%= inventory.is_random_check %></td>
+        <td><%= inventory.is_random_check_display %></td>
         <td><%= inventory.ios_created_id %></td>
         <td><%= link_to '详情', inventory %></td>
         <td><%= link_to '编辑', edit_inventory_path(inventory) %></td>
