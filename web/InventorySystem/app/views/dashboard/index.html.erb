@@ -1,35 +1,99 @@
+
 <h1>盘点统计</h1>
 <hr />
 <div class="row">
-  <div class="col-xs-6">
-	<h3>全盘进度</h3>
-	<%= pie_chart @check_qty_progress %>
-	
-  </div>
-  <div class="col-xs-6">
-	<h3>抽盘进度</h3>
-	<!--<%= pie_chart ({"已抽盘数据" => Inventory.random_check_completed.count, "未抽盘数据" => Inventory.random_check.count}) %>-->
-
-	<%= pie_chart @random_check_qty_progress %>
-  </div>
+	<div class="col-xs-6">
+		<h3>全盘进度</h3>
+		<div id="container" style="height: 400px"></div>
+		<script>
+		$(function () {
+			$('#container').highcharts({
+				chart: {
+					plotBackgroundColor: null,
+					plotBorderWidth: null,
+					plotShadow: false,
+					type: 'pie'
+				},
+				title: {
+				            text: ' '
+				        },
+				tooltip: {
+					pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+				},
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+							enabled: true,
+							format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+							style: {
+								color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+							}
+						}
+					}
+				},
+				series: [{
+					name: "Brands",
+					colorByPoint: true,
+					data: <%= @check_qty_tmp.to_json.html_safe; %>
+				}]
+			});
+		});</script>
+	</div>
+	<div class="col-xs-6">
+		<h3>抽盘进度</h3>
+		<div id="random_container" style="height: 400px"></div>
+		<script>
+		$(function () {
+			$('#random_container').highcharts({
+				chart: {
+					plotBackgroundColor: null,
+					plotBorderWidth: null,
+					plotShadow: false,
+					type: 'pie'
+				},
+				title: {
+				            text: ' '
+				        },
+				tooltip: {
+					pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+				},
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+							enabled: true,
+							format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+							style: {
+								color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+							}
+						}
+					}
+				},
+				series: [{
+					name: "Brands",
+					colorByPoint: true,
+					data: <%= @random_check_qty_tmp.to_json.html_safe; %>
+				}]
+			});
+		});</script>
+	</div>
 </div>
 <div class="row">
-    <div class="col-xs-6">
-  	<h3>每小时全盘数据量统计</h3>
-  	<%= column_chart @check_qty_hour_progress%>
-	
-	<!--  	<%= column_chart Inventory.group(:check_time).count %>-->
-    </div>
-    <div class="col-xs-6">
-  	<h3>每小时抽盘盘数据量统计</h3>
-  	<%= column_chart @random_check_qty_hour_progress %>
-  	
-  	<!--<%= column_chart Inventory.random_check_completed.group(:random_check_time).count %>-->
-    </div>
+	<div class="col-xs-6">
+		<h3>每小时全盘数据量统计</h3>
+  		<%= column_chart @check_qty_hour_progress%>
+	</div>
+	<div class="col-xs-6">
+		<h3>每小时抽盘盘数据量统计</h3>
+  	  	<%= column_chart @random_check_qty_hour_progress %>
+	</div>
 </div>
 <div class="row">
-    <div class="col-xs-6">
-  	<h3>库位统计</h3>
-  	<%= pie_chart({"新建库位" => Inventory.position_client.count, "原有库位" => Inventory.position_unclient.count}) %>
-    </div>
+	<div class="col-xs-6">
+		<h3>库位统计</h3>
+  		<%= pie_chart({"新建库位" => Inventory.position_client.count, "原有库位" => Inventory.position_unclient.count}) %>
+	</div>
 </div>

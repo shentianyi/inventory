@@ -30,7 +30,7 @@
     self.searchBar.delegate = self;
     [self.searchBar setPlaceholder:@"搜索库位"];
     [self.navigationController.navigationBar addSubview:self.searchBar];
-    
+    [self initTableView];
     self.searchResult = [NSMutableArray arrayWithCapacity:[self.arrayInventories count]];
     [self loadData];
 }
@@ -67,7 +67,7 @@
     CGRect rect = self.navigationController.navigationBar.frame;
     
     float y = rect.size.height + rect.origin.y;
-    self.randomTableView.contentInset = UIEdgeInsetsMake(y, 0, 0, 0);
+//    self.randomTableView.contentInset = UIEdgeInsetsMake(y, 0, 0, 0);
 
     self.randomTableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self loadData];
@@ -103,7 +103,7 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
     [searchBar resignFirstResponder];
-    [searchBar setShowsCancelButton:NO animated:YES];
+//    [searchBar setShowsCancelButton:NO animated:YES];
 //    NSLog(@"=== testing cancel ");
     [self loadData];
 }
@@ -114,7 +114,6 @@
     self.arrayInventories = [[NSMutableArray alloc]init];
     InventoryModel *inventory = [[InventoryModel alloc] init];
     self.arrayInventories = [inventory getLocalRandomCheckDataListWithPosition:@""];
-    
     [self.randomTableView reloadData];
 }
 
@@ -178,6 +177,7 @@
     return cell;
     
 }
+
 
 
 

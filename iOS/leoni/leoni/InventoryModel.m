@@ -174,10 +174,11 @@
  */
 - (void)webDownloadAllCheckDatablock:(void (^)(NSMutableArray *, NSError *))block {
     AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
+    NSLog(@"GETTING %@", [self.afnet downloadCheckData]);
     [manager GET:[self.afnet downloadCheckData]
        parameters:nil
           success:^(AFHTTPRequestOperation * operation, id responseObject) {
-             
+              NSLog(@"TESTING webDownloadAllCheckDatablock %@", responseObject);
             if([responseObject[@"result"] integerValue]== 1 ){
                 NSArray *arrayResult = responseObject[@"content"];
                 NSMutableArray *tableData = [[NSMutableArray alloc] init];
@@ -197,6 +198,7 @@
               }
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"TESTING webDownloadAllCheckDatablock %@", error.description);
               if (block) {
                   NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:[NSString stringWithFormat:@"网络故障请联系管理员" ]];
                   block(nil, error);
@@ -259,12 +261,17 @@
 // list and upload
 - (NSMutableArray *)getLocalRandomCheckDataListWithPosition: (NSString *)position {
     self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
+    NSString* docsdir = [NSSearchPathForDirectoriesInDomains( NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *dbpath = [docsdir stringByAppendingPathComponent:@"inventorydb.sql"];
+    NSLog(@"--databasePath: %@", dbpath); //输出的地址就是dyobv.sqlite的路径
     NSString *query;
     if ([position isEqualToString:@""]) {
         query = [NSString stringWithFormat:@"select * from inventories where random_check_qty != '' and is_local_random_check='1' order by random_check_time desc"];
+//        query = [NSString stringWithFormat:@"select * from inventories where random_check_qty != '' and is_random_check='1' order by random_check_time desc"];
     }
     else {
         query = [NSString stringWithFormat:@"select * from inventories where position like '%%%@%%' and random_check_qty != ''  and is_local_random_check='1' order by random_check_time desc", position];
+//        query = [NSString stringWithFormat:@"select * from inventories where position like '%%%@%%' and random_check_qty != ''  and is_random_check='1' order by random_check_time desc", position];
     }
     
     return [self getInventoryEnityListByQuery:query];
@@ -349,7 +356,6 @@
 // query base
 -(NSMutableArray *)getInventoryEnityListByQuery:(NSString *)queryString{
     NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: queryString]];
-    
     NSMutableArray *inventoryEntities = [[NSMutableArray alloc] init];
     for (int i=0; i< [arrayData count]; i++) {
         
@@ -365,15 +371,11 @@
         
         NSString *is_local_check = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"is_local_check"]];
 
-        
-        
         NSString *check_qty = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"check_qty"]];
         if ([check_qty isEqualToString: @"<null>"]) {
             check_qty = @"";
         }
         check_qty = [NSString stringWithFormat:@"%@", check_qty];
-        
-        
         
         NSString *check_user = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"check_user"]];
         
@@ -405,8 +407,9 @@
         
         NSLog(@"========= %@,%@, qty is %@, random_check_qty is %@, %@",position, part, check_qty, random_check_qty,[random_check_qty isEqualToString:@"<null>"]);
         [inventoryEntities addObject:entity];
-        //        NSLog(@" amount %d", [tableArray count]);
+        
     }
+    
     return inventoryEntities;
     
 }
