@@ -11,6 +11,8 @@
 @interface CheckSynchronizeViewController : UIViewController<UIAlertViewDelegate>
 - (IBAction)downloadAction:(id)sender;
 - (IBAction)uploadAction:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *downloadButton;
+@property (strong, nonatomic) IBOutlet UIButton *uploadButton;
 @property (nonatomic, strong ) UIProgressView *progressView;
 @property (nonatomic, strong) NSTimer *myTimer;
 @end

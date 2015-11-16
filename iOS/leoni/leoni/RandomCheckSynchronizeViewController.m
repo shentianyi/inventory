@@ -73,8 +73,7 @@
     
     if (alertView == self.uploadAlert) {
         if(buttonIndex == 0){
-            NSLog(@"0");
-//            self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(uploadUpdateUI: ) userInfo:nil repeats:YES];
+ //            self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(uploadUpdateUI: ) userInfo:nil repeats:YES];
 //            [self.progressView setHidden: NO];
             [self validateUser];
         }
@@ -135,7 +134,7 @@
             self.integerCount = intCount;
             
             self.totalInventories = intCount * [self.page_size intValue];
-            NSLog(@"total data is %d", self.totalInventories);
+            NSLog(@"total data is %ld", self.totalInventories);
             [self.model localDeleteData:@""];
             if (self.integerCount >0) {
                 [self.progressView setHidden: NO];
@@ -170,7 +169,7 @@
                 self.countInventories++;
                 self.progressView.progress = (float)self.countInventories/self.totalInventories;
                 
-                NSLog(@"log=============current count%d insert data%@ and page %d", self.countInventories, entity.inventory_id, page );
+                NSLog(@"log=============current count%ld insert data%@ and page %ld", self.countInventories, entity.inventory_id, page );
             }
         }
     }];
@@ -195,6 +194,7 @@
     [self.progressView setHidden: NO];
     self.progressView.progress = 0;
     if ([self.uploadDataArray count] >0) {
+        [self toggleButton:FALSE];
         [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(uploadUpdateUI:) userInfo:nil repeats:YES];
     } else {
         [self MessageShowTitle: @"系统提示" Content: @"当前无上载数据"];
@@ -202,6 +202,18 @@
         [self.progressView setHidden: YES];
     }
 }
+
+/**
+ *  控制按钮的enable 2015.11.16
+ *
+ *  @param statusBool <#statusBool description#>
+ */
+- (void)toggleButton: (BOOL)statusBool {
+    [self.randomDownloadButton setEnabled:statusBool];
+    [self.randomuploadButton setEnabled:statusBool];
+    
+}
+
 
 /*
  上传更新进度条
@@ -213,11 +225,12 @@
     entity = self.uploadDataArray[count];
     [self.model webUploadRandomCheckData:entity];
     count++;
-    NSLog(@"the count is %d, the amout is %d", count, [self.uploadDataArray count]);
-    
+   
     self.progressView.progress = (float)count /[self.uploadDataArray count];
     if (count == [self.uploadDataArray count]) {
-        NSString *messageString = [NSString stringWithFormat:@"已上传数据量为：%d", [self.uploadDataArray count]];
+        
+        NSString *messageString = [NSString stringWithFormat:@"已上传数据量为：%ld", [self.uploadDataArray count]];
+        [self toggleButton:TRUE];
         [self.progressView setHidden:YES];
         count = 0;
         [self MessageShowTitle: @"系统提示" Content: messageString];
@@ -235,6 +248,7 @@
     [self.model webDownloadRandomCheckDatablock:^(NSMutableArray *tableArray, NSError *error) {
         if (tableArray) {
             if ([tableArray count] > 0) {
+                [self toggleButton:FALSE];
                 self.downloadDataArray = [[NSMutableArray alloc]init];
                 [self.model localDeleteData:@""];
                 [self.progressView setHidden: NO];
@@ -268,14 +282,14 @@
     entity = self.downloadDataArray[count];
     [self.model localCreateCheckData:entity];
     count++;
-    NSLog(@"the count is %d, the amout is %d", count, [self.downloadDataArray count]);
+    NSLog(@"the count is %d, the amout is %ld", count, [self.downloadDataArray count]);
     
     self.progressView.progress = (float)count /[self.downloadDataArray count];
     if (count == [self.downloadDataArray count]) {
         
         NSInteger counInteger = [[self.model localGetData] count];
-        NSString *messageString = [NSString stringWithFormat:@"已下载数据量为：%d", counInteger];
-        
+        NSString *messageString = [NSString stringWithFormat:@"已下载数据量为：%ld", counInteger];
+        [self toggleButton:TRUE];
         [self.progressView setHidden:YES];
         
         count = 0;

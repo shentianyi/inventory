@@ -187,12 +187,13 @@
     NSLog(@"-----total: %d--count: %d", self.users.count,count);
     self.processView.progress=(float)count/self.users.count;
     if(count==self.users.count){
+        
         [self.processView setHidden:YES];
         NSString *message=[NSString stringWithFormat:@"已下载数据量: %d",count];
         [self MessageShowTitle:@"系统提示" Content:message];
         
         count=0;
-          [timer invalidate];
+        [timer invalidate];
     }
 }
 

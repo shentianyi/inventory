@@ -11,6 +11,8 @@
 @interface RandomCheckSynchronizeViewController : UIViewController
 - (IBAction)downloadAction:(id)sender;
 - (IBAction)uploadAction:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *randomDownloadButton;
+@property (strong, nonatomic) IBOutlet UIButton *randomuploadButton;
 @property (nonatomic, strong ) UIProgressView *progressView;
 @property (nonatomic, strong) NSTimer *myTimer;
 

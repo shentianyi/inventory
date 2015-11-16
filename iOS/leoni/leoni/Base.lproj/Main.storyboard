@@ -890,6 +890,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="全盘" id="lfR-Hm-C5f"/>
+                    <connections>
+                        <outlet property="downloadButton" destination="iqV-yb-4Mq" id="cL9-Td-Buc"/>
+                        <outlet property="uploadButton" destination="rPQ-Es-YtL" id="sov-XC-7To"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3zV-uP-Dq1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1352,6 +1356,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="抽盘" id="gtF-Qp-W6N"/>
+                    <connections>
+                        <outlet property="randomDownloadButton" destination="nf7-9n-Ih4" id="XEL-9d-uGa"/>
+                        <outlet property="randomuploadButton" destination="JxW-iH-TQx" id="K88-yx-LzL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Ea-W3-JPO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
