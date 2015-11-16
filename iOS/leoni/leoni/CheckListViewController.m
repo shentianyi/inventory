@@ -43,7 +43,7 @@
 //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
 //    [self.view addGestureRecognizer:tap];
     
-    
+    [self initController];
 }
 
 //-(void)dismissKeyboard {
@@ -85,7 +85,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self initController];
+    
 }
 
 - (void)initController
@@ -93,16 +93,20 @@
     self.table = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.table.delegate=self;
     self.table.dataSource=self;
-    [self.view addSubview:self.table];
-    CGRect rect = self.navigationController.navigationBar.frame;
     
-    float y = rect.size.height + rect.origin.y;
-    self.table.contentInset = UIEdgeInsetsMake(y, 0, 0, 0);
+    CGRect rect = self.navigationController.navigationBar.frame;
+    float head_height = rect.size.height + rect.origin.y;
+    UIEdgeInsets adjustForTabbarInsets = UIEdgeInsetsMake(head_height, 0, CGRectGetHeight(self.tabBarController.tabBar.frame), 0);
+    self.table.contentInset = adjustForTabbarInsets;
+    self.table.scrollIndicatorInsets = adjustForTabbarInsets;
     self.table.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self loadData];
         [self.table.header endRefreshing];
     }];
     [self.table.header beginRefreshing];
+    [self.view addSubview:self.table];
+    
+
     }
 
 - (void)loadData {
@@ -126,7 +130,7 @@
     }
     else
     {
-        NSLog(@"===  %d",self.arrayInventories.count);
+        NSLog(@"===  %ld",self.arrayInventories.count);
         return self.arrayInventories.count;
     }
 }

@@ -65,10 +65,10 @@
     self.randomTableView.dataSource = self;
     [self.view addSubview:self.randomTableView];
     CGRect rect = self.navigationController.navigationBar.frame;
-    
-    float y = rect.size.height + rect.origin.y;
-//    self.randomTableView.contentInset = UIEdgeInsetsMake(y, 0, 0, 0);
-
+    float head_height = rect.size.height + rect.origin.y;
+    UIEdgeInsets adjustForTabbarInsets = UIEdgeInsetsMake(head_height, 0, CGRectGetHeight(self.tabBarController.tabBar.frame), 0);
+    self.randomTableView.contentInset = adjustForTabbarInsets;
+    self.randomTableView.scrollIndicatorInsets = adjustForTabbarInsets;
     self.randomTableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self loadData];
         [self.randomTableView.header endRefreshing];
