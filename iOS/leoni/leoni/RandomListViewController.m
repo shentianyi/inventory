@@ -35,12 +35,11 @@
     [self loadData];
 }
 
-
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -50,13 +49,15 @@
 }
 
 
-
 -(void)decoderDataReceived:(NSString *)data
 {
     self.searchBar.text=[data copy];
     [self searchBarSearchButtonClicked:self.searchBar];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [self initTableView];
+}
 
 - (void)initTableView {
     self.randomTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
