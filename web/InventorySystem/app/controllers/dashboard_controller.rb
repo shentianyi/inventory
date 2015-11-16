@@ -5,9 +5,11 @@ class DashboardController < ApplicationController
     @check_qty_progress = Inventory.where("check_qty != ''").group('date(check_time)').count(:id)
     # @check_qty_progress = Inventory.where("check_qty != ''").group("date_format(check_time, '%Y-%m-%d')").count(:id).map {|check_time, count_id| [check_time, (count_id/Inventory.where("check_qty != ''").count.to_f * 100).round(0)] }
     
+
     @check_qty_tmp = @check_qty_progress.collect { |item| {:name => item[0].strftime('%m-%d'), :y => item[1]} }
     @check_qty_tmp << {:name => "未全盘", :y => Inventory.where("check_qty is null").count(:id)}
     @check_qty_tmp_size=@check_qty_tmp.size
+
     puts "the hash array json #{@check_qty_tmp}"
     
     # puts @check_qty_progress
