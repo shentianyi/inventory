@@ -26,7 +26,7 @@ class DashboardController < ApplicationController
    # @random_check_qty_hour_progress = Inventory.random_check_completed.group("date_format(random_check_time, '%Y-%m-%d %H点')").count(:id)
 
 
-    @check_qty_hour_progress = Inventory.where("check_qty != ''").group("date_format(check_time, '%m-%d %H点') as check_time").count(:id)
+    @check_qty_hour_progress = Inventory.where("check_qty != ''").group("date_format(check_time, '%m-%d %H点')").count(:id)
     @random_check_qty_hour_progress = Inventory.random_check_completed.group("date_format(random_check_time, '%m-%d %H点')").count(:id)
 
   end
