@@ -2,6 +2,7 @@
 	<ul class="nav nav-sidebar">
 		<li class=<%= 'active' if current_controller?({controller: 'dashboard'})%>><%= link_to '控制台', root_path%></li>
 		<li class=<%= 'active' if current_controller?({controller: 'users'})%>><%= link_to '用户管理', users_path %></li>
+		<li class=<%= 'active' if current_controller?({controller: 'parts'})%>><%= link_to '零件管理', parts_path %></li>
 		<li class=<%= 'active' if current_controller?({controller: 'inventories'})%>><%= link_to '库存管理', inventories_path %></li>
 	</ul>
 </div>

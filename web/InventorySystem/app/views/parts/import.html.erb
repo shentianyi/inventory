@@ -11,13 +11,13 @@
         data_upload("#item-data-uploader", 'xlsx');
     });
 </script>
-<h1>上传零件库位</h1>
+<h1>上传零件</h1>
 <hr />
 <p>
-	<a name="down_template" href="/files/download?folder=inventory&file=inventory_template.xlsx" class='btn btn-default' >下载模版</a>
-	<%= link_to '返回', inventories_path, class: 'btn btn-default' %>
+	<a name="down_template" href="/files/download?folder=inventory&file=part_template.xlsx" class='btn btn-default' >下载模版</a>
+	<%= link_to '返回', parts_path, class: 'btn btn-default' %>
 	
-	<input id="item-data-uploader" type="file" name="files[]" data-url="/inventories/import"/>
+	<input id="item-data-uploader" type="file" name="files[]" data-url="/parts/import"/>
 
     <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
 	

@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>零件基础信息</h1>
+<div class="btn-group">
+  <%= link_to '创建零件库', new_part_path, class: 'btn btn-default' %>
+ <a name="down_template" href="/files/download?folder=inventory&file=part_template.xlsx" class='btn btn-default' >下载模版</a>
+ <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
+      <%= link_to '上传数据', import_parts_path, class: 'btn btn-primary'  %>
+
+          </div>
+      <div class="btn-group pull-right">
+
+        <div class="page_info">
+          <%= page_entries_info @parts %>
+        </div>
+        <%= will_paginate @parts, renderer: BootstrapPagination::Rails %>
+      </div>
+<table class="table table-striped table-hover table-bordered" id="editable-sample">
+  <thead>
+    <tr>
+      <th>零件号</th>
+      <th>类型</th>
+      <th>单位</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @parts.each do |part| %>
+      <tr>
+        <td><%= part.nr %></td>
+        <td><%= part.type %></td>
+        <td><%= part.unit %></td>
+        <td><%= link_to '编辑', edit_part_path(part) %></td>
+        <td><%= link_to '删除', part, method: :delete, data: { confirm: '确定?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+      <div class="pull-right">
+        <%= will_paginate @parts, renderer: BootstrapPagination::Rails %>
+      </div>
+
+          <script type="text/javascript">
+              $(function () {
+                  data_upload("#item-data-uploader", 'xlsx');
+              });
+          </script>
