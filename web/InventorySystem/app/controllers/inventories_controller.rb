@@ -43,7 +43,6 @@ class InventoriesController < ApplicationController
       @is_random_check = params[:is_random_check]
       @inventories = Inventory.search_by_condition(@department, @position_begin, @position_end, @part_nr, @ios_created_id, @is_random_check, {check_user: @check_user,
                                                                                                                                               random_check_user: params[:random_check_user]})
-      @inventories=@inventories.full_query.joins(:part).select('parts.unit as part_unit,parts.type as part_type,inventories.*')
 
       respond_to do |format|
         format.xlsx do
@@ -56,7 +55,7 @@ class InventoriesController < ApplicationController
         end
       end
     else
-      @inventories = @inventories.full_query.paginate(page: params[:page])
+      @inventories = @inventories.paginate(page: params[:page])
     end
   end
 

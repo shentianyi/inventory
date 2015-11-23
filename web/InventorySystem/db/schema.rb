@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123075539) do
+ActiveRecord::Schema.define(version: 20151123083415) do
 
   create_table "inventories", force: :cascade do |t|
     t.string   "department",        limit: 255,                 null: false
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 20151123075539) do
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
     t.integer  "sn",                limit: 4
+    t.string   "part_unit",         limit: 255
+    t.string   "part_type",         limit: 255
   end
 
   add_index "inventories", ["part_nr"], name: "index_inventories_on_part_nr", using: :btree

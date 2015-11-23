@@ -1,10 +1,10 @@
 module Excel
   class InventoryService
     HEADERS=[
-        :sn, :department, :position, :part_nr, :operation
+        :sn, :department, :position, :part_nr, :part_unit, :part_type, :operation
     ]
 
-    INVALID_HEADERS=%w(序号 部门 库位号 零件号 operation)
+    INVALID_HEADERS=%w(序号 部门 库位号 零件号 零件单位 零件类型 operation)
 
     def self.full_tmp_path(file_name)
       File.join('uploadfiles', Time.now.strftime('%Y%m%d%H%M%S%L')+'-'+file_name)
@@ -33,13 +33,13 @@ module Excel
                 case operator
                   when 'new'
                     # data = {sn: row[:sn], department: row[:department], position: row[:position], part_nr: row[:part_nr], ios_created_id: '', check_time: '', random_check_time: ''}
-                    data = {sn: row[:sn], department: row[:department], position: row[:position], part_nr: row[:part_nr]}
+                    data = {sn: row[:sn], department: row[:department], position: row[:position], part_nr: row[:part_nr], part_unit: row[:part_unit], part_type: row[:part_type]}
                     Inventory.create!(data)
                   when 'update'
                     # puts "---------------testing update"
                     inventory = Inventory.where(sn: row[:sn]).first
                     if inventory
-                      inventory.update!(department: row[:department], position: row[:position], part_nr: row[:part_nr])
+                      inventory.update!(department: row[:department], position: row[:position], part_nr: row[:part_nr], part_unit: row[:part_unit], part_type: row[:part_type])
                     end
                   when 'delete'
                     # puts "---------------testing delte"
@@ -126,6 +126,14 @@ module Excel
 
       if row[:part_nr].blank?
         msg.contents << "零件号不能为空!"
+      end
+
+      if row[:part_unit].blank?
+        msg.contents << "零件单位不能为空!"
+      end
+
+      if row[:part_type].blank?
+        msg.contents << "零件类型不能为空!"
       end
 
       if row[:operation].blank?

@@ -23,7 +23,7 @@ class Inventory < ActiveRecord::Base
   validates :part_nr, uniqueness: {scope: [:position, :department], message: '库位+部门+零件 必须唯一'}
   validates :sn, uniqueness: {message: '序列号 必须唯一'}
 
-  belongs_to :part, foreign_key: :part_nr, primary_key: :nr
+  # belongs_to :part, foreign_key: :part_nr, primary_key: :nr
 
   # scope :check, -> { where("check_qty != '' or check_qty is not null") }
   # scope :random_check, -> { where("is_random_check is true") }
@@ -39,9 +39,9 @@ class Inventory < ActiveRecord::Base
   scope :position_client, -> { where("ios_created_id is not null") }
   scope :position_unclient, -> { where("ios_created_id = '' or ios_created_id is null") }
 
-  def self.full_query
-    joins(:part).select('parts.unit as part_unit,parts.type as part_type,inventories.*')
-  end
+  # def self.full_query
+  #   joins(:part).select('parts.unit as part_unit,parts.type as part_type,inventories.*')
+  # end
 
   self.per_page = 50
   default_scope { order('sn asc') }
