@@ -1,10 +1,10 @@
 module Excel
   class UserService
     HEADERS=[
-        :nr, :name, :role, :operation
+        :nr, :name, :role,:id_span, :operation
     ]
 
-    INVALID_HEADERS=%w(员工号 姓名 权限 operation)
+    INVALID_HEADERS=%w(员工号 姓名 权限 任务ID operation)
 
 
     def self.full_tmp_path(file_name)
@@ -33,10 +33,10 @@ module Excel
 
                 case operator
                   when 'new'
-                    User.create!(nr: row[:nr], name: row[:name], role: row[:role])
+                    User.create!(nr: row[:nr], name: row[:name], role: row[:role],id_span:row[:id_span])
                   when 'update'
                     if user= User.where(nr: row[:nr]).first
-                      user.update!(name: row[:name], role: row[:role])
+                      user.update!(name: row[:name], role: row[:role],id_span:row[:id_span])
                     end
                   when 'delete'
                     user = User.where(nr: row[:nr]).first

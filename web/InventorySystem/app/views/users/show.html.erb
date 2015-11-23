@@ -13,6 +13,9 @@
   <strong>Role:</strong>
   <%= @user.role %>
 </p>
-
-<%= link_to '编辑', edit_user_path(@user) %> |
-<%= link_to '返回', users_path %>
+<p>
+  <strong>任务ID:</strong>
+  <%= @user.id_span %>
+</p>
+<%= link_to '', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

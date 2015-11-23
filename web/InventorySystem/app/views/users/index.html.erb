@@ -3,7 +3,8 @@
 <h1>员工基础信息</h1>
 <hr/>
 <div>
-  <p><strong>权限说明</strong>：盘点员、组长、其他</p>
+  <p><strong>权限说明</strong>：盘点员、组长、其他，'其他'代表非重点控制的权限</p>
+  <p><strong>任务ID说明</strong>：任务ID是一个范围多范围使用英文逗号隔开，如2-2,3-100,则其任务量为1+98=99个 </p>
 </div>
 <div>
   <%= form_tag users_path, :method => 'get' do %>
@@ -33,6 +34,7 @@
     <th>员工号</th>
     <th>姓名</th>
     <th>权限</th>
+    <th>任务ID</th>
     <th>管理</th>
   </tr>
   </thead>
@@ -43,6 +45,7 @@
         <td><%= user.nr %></td>
         <td><%= user.name %></td>
         <td><%= user.role %></td>
+        <td><%= user.id_span %></td>
         <td>
           <%= link_to '编辑', edit_user_path(user)%>
 

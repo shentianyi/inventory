@@ -24,6 +24,7 @@ zh-CN:
         nr: "员工号"
         name: "姓名"
         role: '权限'
+        id_span: '任务ID'
       part:
         nr: "零件号"
         type: '类型'
