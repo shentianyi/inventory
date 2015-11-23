@@ -150,6 +150,6 @@ class InventoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def inventory_params
-    params.require(:inventory).permit(:department, :position, :part_nr, :check_qty, :check_user, :random_check_qty, :random_check_user, :is_random_check, :ios_created_id, :position_begin, :position_end)
+    params.require(:inventory).permit(:department, :position, :part_nr,:part_unit,:part_type, :check_qty, :check_user, :random_check_qty, :random_check_user, :is_random_check, :ios_created_id, :position_begin, :position_end)
   end
 end

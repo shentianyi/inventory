@@ -47,10 +47,10 @@ class Inventory < ActiveRecord::Base
   default_scope { order('sn asc') }
 
   # 配置
-  has_settings do |s|
-    s.key :random, defaults: {percent: 30}
-    s.key :prefix, defaults: {part: 'P'}
-  end
+  # has_settings do |s|
+  #   s.key :random, defaults: {percent: 30}
+  #   s.key :prefix, defaults: {part: 'P'}
+  # end
 
   # alias :part_id :part_nr
 
