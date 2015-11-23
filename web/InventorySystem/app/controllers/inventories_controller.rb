@@ -6,14 +6,14 @@ class InventoriesController < ApplicationController
     respond_to do |format|
       format.js
     end
-    
+
   end
 
   def import
     if request.post?
       msg = Message.new
       tmp_file_path = 'uploadfiles'
-      
+
       begin
         file = params[:files][0]
         fd = FileData.new(data: file, oriName: file.original_filename, path: tmp_file_path, pathName: "#{Time.now.strftime('%Y%m%d%H%M%S%L')}~#{file.original_filename}")
@@ -30,7 +30,7 @@ class InventoriesController < ApplicationController
   # GET /inventories.json
   def index
     @inventories = Inventory
-    
+
     if params[:search]
       puts "-----testing "
       # @inventories = @inventories.search(params[:search])
@@ -38,78 +38,52 @@ class InventoriesController < ApplicationController
       @check_user=params[:check_user]
       @position_begin = params[:position_begin]
       @position_end = params[:position_end]
-      @part = params[:part]
-      @ios_created_id = params[:ios_created_id] 
-      @is_random_check = params[:is_random_check] 
-      @inventories = Inventory.search_by_condition(@department, @position_begin, @position_end, @part, @ios_created_id, @is_random_check,{check_user: @check_user,
-                                                                                                                                          random_check_user:params[:random_check_user]})
-   
+      @part_nr = params[:part_nr]
+      @ios_created_id = params[:ios_created_id]
+      @is_random_check = params[:is_random_check]
+      @inventories = Inventory.search_by_condition(@department, @position_begin, @position_end, @part_nr, @ios_created_id, @is_random_check, {check_user: @check_user,
+                                                                                                                                              random_check_user: params[:random_check_user]})
+      @inventories=@inventories.full_query.joins(:part).select('parts.unit as part_unit,parts.type as part_type,inventories.*')
+
       respond_to do |format|
         format.xlsx do
-          send_data(entry_with_xlsx(@inventories), :type=> "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet",
-              :filename => "Inventory_#{DateTime.now.strftime("%Y%m%d%H%M%S")}.xlsx")
+          send_data(entry_with_xlsx(@inventories), :type => "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet",
+                    :filename => "Inventory_#{DateTime.now.strftime("%Y%m%d%H%M%S")}.xlsx")
         end
         format.html do
           @inventories = @inventories.paginate(page: params[:page])
-            # redirect_to inventories_url
+          # redirect_to inventories_url
         end
       end
     else
-      @inventories = @inventories.paginate(page: params[:page])
+      @inventories = @inventories.full_query.paginate(page: params[:page])
     end
   end
-  
-  # def search
-#     @inventories = Inventory
-#
-#     # @inventories = @inventories.where("department=? ", params[:department]) if params[:department].present?
-# #     if params[:position_begin].present? && params[:position_end].present?
-# #       @inventories = @inventories.where(" position between ? and ?", params[:position_begin], params[:position_end])
-# #     end
-#
-#     @department = params[:department]
-#     @position_begin = params[:position_begin]
-#     @position_end = params[:position_end]
-#     @part = params[:part]
-#     @ios_created_id = params[:ios_created_id]
-#     @is_random_check = params[:is_random_check]
-#
-#
-#     @inventories = Inventory.search_by_condition(@department, @position_begin, @position_end, @part, @ios_created_id, @is_random_check)
-#     # @inventories = @inventories.
-#     respond_to do |format|
-#       format.xlxl do
-#         send_data(entry_with_xlsx(@inventories), :type=> "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet",
-#             :filename => "Inventory_#{DateTime.now.strftime("%Y%m%d%H%M%S")}.xlsx")
-#       end
-#       format.html
-#     end
-#   end
-  
+
   def entry_with_xlsx inventories
     p = Axlsx::Package.new
     p.use_shared_strings = true
     wb = p.workbook
     wb.add_worksheet(:name => "sheet1") do |sheet|
-      sheet.add_row ["序号", "部门", "库位", "零件号", "零件类型", "全盘数量", "全盘员工", "全盘时间", "抽盘数量", "抽盘员工", "抽盘时间", "是否抽盘", "iOS新建id"]
-      puts "--testing #{inventories.count}"
+      sheet.add_row ["序号", "部门", "库位", "零件号", "零件类型", "零件单位", "全盘数量", "全盘员工", "全盘时间", "抽盘数量", "抽盘员工", "抽盘时间", "是否抽盘", "iOS新建id"]
+      #puts "--testing #{inventories.count}"
       inventories.each_with_index { |inventory, index|
         sheet.add_row [
-          index+1,
-          "\t#{inventory.department}",
-          "\t#{inventory.position}",
-          "\t#{inventory.part}",
-          "\t#{inventory.part_type}",
-          inventory.check_qty,
-          "\t#{inventory.check_user}",
-          inventory.check_time,
-          inventory.random_check_qty,
-          "\t#{inventory.random_check_user}",
-          inventory.random_check_time,
-          inventory.is_random_check_display,
-          inventory.ios_created_id        
-          ], :types => [:string]
-          # puts "'#{inventory.part.to_s} && #{inventory.part}"
+                          inventory.sn,
+                          "\t#{inventory.department}",
+                          "\t#{inventory.position}",
+                          "\t#{inventory.part_nr}",
+                          "\t#{inventory.part_type}",
+                          "\t#{inventory.part_unit}",
+                          inventory.check_qty,
+                          "\t#{inventory.check_user}",
+                          inventory.check_time_display,
+                          inventory.random_check_qty,
+                          "\t#{inventory.random_check_user}",
+                          inventory.random_check_time_display,
+                          inventory.is_random_check_display,
+                          inventory.ios_created_id
+                      ], :types => [:string]
       }
     end
     p.to_stream.read
@@ -133,7 +107,7 @@ class InventoriesController < ApplicationController
   # POST /inventories.json
   def create
     @inventory = Inventory.new(inventory_params)
-    
+
     respond_to do |format|
       if @inventory.save
         format.html { redirect_to @inventory, notice: 'Inventory was successfully created.' }
@@ -170,13 +144,13 @@ class InventoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_inventory
-      @inventory = Inventory.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_inventory
+    @inventory = Inventory.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def inventory_params
-      params.require(:inventory).permit(:department, :position, :part, :part_type, :check_qty, :check_user, :random_check_qty, :random_check_user,  :is_random_check, :ios_created_id, :position_begin, :position_end)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def inventory_params
+    params.require(:inventory).permit(:department, :position, :part_nr, :check_qty, :check_user, :random_check_qty, :random_check_user, :is_random_check, :ios_created_id, :position_begin, :position_end)
+  end
 end

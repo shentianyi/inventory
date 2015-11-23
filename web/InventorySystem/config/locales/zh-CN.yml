@@ -4,8 +4,10 @@ zh-CN:
     models:
       inventory: "库存"
       user: "员工"
+      part: '零件'
     attributes:
       inventory:
+        sn: '序列号'
         department: "部门"
         position: "库位"
         part: "零件号"
@@ -20,7 +22,12 @@ zh-CN:
         ios_created_id: "是否客户端创建"
       user:
         nr: "员工号"
-        name: "姓名"   
+        name: "姓名"
+        role: '权限'
+      part:
+        nr: "零件号"
+        type: '类型'
+        unit: "单位"
     errors:
       models:
         inventory: "库存"

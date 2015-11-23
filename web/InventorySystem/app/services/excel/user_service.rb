@@ -1,10 +1,10 @@
 module Excel
-  class PartService
+  class UserService
     HEADERS=[
-        :nr, :type, :unit, :operation
+        :nr, :name, :role, :operation
     ]
 
-    INVALID_HEADERS=%w(零件号 类型 单位 operation)
+    INVALID_HEADERS=%w(员工号 姓名 权限 operation)
 
 
     def self.full_tmp_path(file_name)
@@ -19,7 +19,7 @@ module Excel
       validate_msg = validate_import(file)
       if validate_msg.result
         begin
-          Part.transaction do
+          User.transaction do
             puts "====== test here #{book.last_row}========"
             if book.last_row >= 2
               2.upto(book.last_row) do |line|
@@ -33,14 +33,14 @@ module Excel
 
                 case operator
                   when 'new'
-                    Part.create!(nr: row[:nr], type: row[:type], unit: row[:unit])
+                    User.create!(nr: row[:nr], name: row[:name], role: row[:role])
                   when 'update'
-                    if part= Part.where(nr: row[:nr]).first
-                      part.update!(type: row[:type], unit: row[:unit])
+                    if user= User.where(nr: row[:nr]).first
+                      user.update!(name: row[:name], role: row[:role])
                     end
                   when 'delete'
-                    part = Part.where(nr: row[:nr]).first
-                    part.destroy if part
+                    user = User.where(nr: row[:nr]).first
+                    user.destroy if user
                   else
 
                 end
@@ -109,32 +109,37 @@ module Excel
       msg = Message.new(contents: [])
 
       if row[:nr].blank?
-        msg.contents << "零件号不能为空!"
+        msg.contents << "员工号不能为空!"
       end
 
-      if row[:type].blank?
-        msg.contents << "类型不能为空!"
+      if row[:name].blank?
+        msg.contents << "姓名不能为空!"
       end
 
-      if row[:unit].blank?
-        msg.contents << "单位不能为空!"
+      if row[:role].blank?
+        msg.contents << "权限不能为空!"
       end
+
+      if row[:role].present?
+        msg.contents << "权限: #{row[:role]} 不存在!" unless User.validate_role(row[:role])
+      end
+
 
       operator = row[:operation].downcase.to_s
 
-      i = Part.where(nr: row[:nr]).first
+      i = User.where(nr: row[:nr]).first
       case operator
         when 'new'
           if i.present?
-            msg.contents << "零件号已存在!"
+            msg.contents << "员工号已存在!"
           end
         when 'update'
           if !i.present?
-            msg.contents << "零件号不存在，不可以更新!"
+            msg.contents << "员工号不存在，不可以更新!"
           end
         when 'delete'
           if !i.present?
-            msg.contents << "零件号不存在，不可以删除!"
+            msg.contents << "员工号不存在，不可以删除!"
           end
       end
 

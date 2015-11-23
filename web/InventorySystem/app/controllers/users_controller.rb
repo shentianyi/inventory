@@ -63,6 +63,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def import
+    if request.post?
+      msg = Message.new
+      tmp_file_path = 'uploadfiles'
+
+      begin
+        file = params[:files][0]
+        fd = FileData.new(data: file, oriName: file.original_filename, path: tmp_file_path, pathName: "#{Time.now.strftime('%Y%m%d%H%M%S%L')}~#{file.original_filename}")
+        fd.save
+        msg = Excel::UserService.import(fd)
+      rescue => e
+        msg.content = e.message
+      end
+      render json: msg
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

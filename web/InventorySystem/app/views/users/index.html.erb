@@ -1,52 +1,59 @@
 <p id="notice"><%= notice %></p>
 
 <h1>员工基础信息</h1>
-<hr />
+<hr/>
 <div>
-	<%= form_tag users_path, :method => 'get' do %>
-		<p>
-			<%= text_field_tag :search, params[:search] %>
-			<%= submit_tag "查询", :name => nil %>
-		</p>
-	<% end%>
+  <p><strong>权限说明</strong>：盘点员、组长、其他</p>
+</div>
+<div>
+  <%= form_tag users_path, :method => 'get' do %>
+      <p>
+        <%= text_field_tag :search, params[:search] %>
+        <%= submit_tag "查询", :name => nil %>
+      </p>
+  <% end %>
 </div>
 <div class="btn-group">
-	<%= link_to '创建员工', new_user_path, class: 'btn btn-default' %>
+  <%= link_to '创建员工', new_user_path, class: 'btn btn-default' %>
+  <a name="down_template" href="/files/download?folder=inventory&file=user_template.xlsx" class='btn btn-default'>下载模版</a>
+  <%= link_to '上传数据', import_users_path, class: 'btn btn-primary' %>
 </div>
+
 <div class="pull-right">
 
   <div class="page_info">
     <%= page_entries_info @users %>
   </div>
-<%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+  <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
 </div>
 <table class="table table-striped table-hover table-bordered" id="editable-sample">
-	<thead>
-		<tr>
-			<th width="150px;">序号</th>
-			<th>员工号</th>
-			<th>员工姓名</th>
-			<th width="150px">创建时间</th>
-			<th>管理</th>
-		</tr>
-	</thead>
-	<tbody>
-		<% @users.each_with_index do |user, index| %>
-		<tr class="">
-			<td><%= index+1 %></td>
-			<td><%= user.nr %></td>
-			<td><%= user.name %></td>
-			<td><%= user.created_at.to_date %></td>
-			<td>
-				<%= link_to '查看', user_path(user) %>
-				<%= link_to '删除', user_path(user), method: 'delete', data: { confirm: '确定删除吗?'} %>
-			</td>
-		</tr>
-		<% end %>
-	</tbody>
+  <thead>
+  <tr>
+    <th width="150px;">序号</th>
+    <th>员工号</th>
+    <th>姓名</th>
+    <th>权限</th>
+    <th>管理</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @users.each_with_index do |user, index| %>
+      <tr class="">
+        <td><%= index+1 %></td>
+        <td><%= user.nr %></td>
+        <td><%= user.name %></td>
+        <td><%= user.role %></td>
+        <td>
+          <%= link_to '编辑', edit_user_path(user)%>
+
+          <%= link_to '删除', user_path(user), method: 'delete', data: {confirm: '确定删除吗?'} %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
 </table>
 <div class="pull-right">
-<%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+  <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
 </div>
 <br>
 

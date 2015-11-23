@@ -1,0 +1,23 @@
+<div>
+  <h1>系统配置</h1>
+  <table class="table table-striped table-hover table-bordered" id="editable-sample">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Value</th>
+      <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @settings.each do |setting| %>
+        <tr>
+          <th><%= setting.name %></th>
+          <th><%= setting.code %></th>
+          <th><%= setting.value %></th>
+          <th><%= link_to '编辑',edit_setting_path(setting) %></th>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

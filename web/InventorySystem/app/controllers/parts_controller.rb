@@ -4,7 +4,21 @@ class PartsController < ApplicationController
   # GET /parts
   # GET /parts.json
   def index
-    @parts = Part.all.paginate(page: params[:page])
+    if params[:search]
+      @parts= params[:q].blank? ? Part.all : Part.search_for(params[:q])
+
+      respond_to do |format|
+        format.xlsx do
+          send_data(entry_with_xlsx(@parts), :type => "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet",
+                    :filename => "Part_#{DateTime.now.strftime("%Y%m%d%H%M%S")}.xlsx")
+        end
+        format.html do
+          @parts = @parts.paginate(page: params[:page])
+        end
+      end
+    else
+      @parts = Part.paginate(page: params[:page])
+    end
   end
 
   # GET /parts/1
@@ -79,15 +93,32 @@ class PartsController < ApplicationController
     end
   end
 
+  def entry_with_xlsx parts
+    p = Axlsx::Package.new
+    p.use_shared_strings = true
+    wb = p.workbook
+    wb.add_worksheet(:name => "sheet1") do |sheet|
+      sheet.add_row ["零件号", "类型", "单位"]
+      #puts "--testing #{inventories.count}"
+      parts.each { |part|
+        sheet.add_row [
+                          part.nr,
+                          part.type,
+                          part.unit
+                      ], :types => [:string]
+      }
+    end
+    p.to_stream.read
+  end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_part
-      @part = Part.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_part
+    @part = Part.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def part_params
-      params.require(:part).permit(:nr, :type, :unit)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def part_params
+    params.require(:part).permit(:nr, :type, :unit)
+  end
 end

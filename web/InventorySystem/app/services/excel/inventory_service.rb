@@ -1,8 +1,10 @@
 module Excel
   class InventoryService
     HEADERS=[
-        :department, :position, :part, :part_type, :operation
+        :sn, :department, :position, :part_nr, :operation
     ]
+
+    INVALID_HEADERS=%w(序号 部门 库位号 零件号 operation)
 
     def self.full_tmp_path(file_name)
       File.join('uploadfiles', Time.now.strftime('%Y%m%d%H%M%S%L')+'-'+file_name)
@@ -26,21 +28,22 @@ module Excel
                   row[k] = row[k].sub(/\.0/, '')
                 end
 
-                operator = row[:operation].to_s.downcase;
+                operator = row[:operation].to_s.downcase
 
                 case operator
                   when 'new'
-                    data = {department: row['department'], position: row['position'], part: row['part'], ios_created_id: '', check_time: '', random_check_time: ''}
+                    # data = {sn: row[:sn], department: row[:department], position: row[:position], part_nr: row[:part_nr], ios_created_id: '', check_time: '', random_check_time: ''}
+                    data = {sn: row[:sn], department: row[:department], position: row[:position], part_nr: row[:part_nr]}
                     Inventory.create!(data)
                   when 'update'
                     # puts "---------------testing update"
-                    inventory = Inventory.where(part: row['part'], position: row['position']).first
+                    inventory = Inventory.where(sn: row[:sn]).first
                     if inventory
-                      inventory.update!(department: row['department'])
+                      inventory.update!(department: row[:department], position: row[:position], part_nr: row[:part_nr])
                     end
                   when 'delete'
                     # puts "---------------testing delte"
-                    inventory = Inventory.where(part: row['part'], position: row['position']).first
+                    inventory = Inventory.where(sn: row[:sn]).first
                     inventory.destroy if inventory
                   else
 
@@ -79,7 +82,7 @@ module Excel
 
       p = Axlsx::Package.new
       p.workbook.add_worksheet(:name => "Basic Worksheet") do |sheet|
-        sheet.add_row HEADERS+['Error Msg']
+        sheet.add_row INVALID_HEADERS+['Error Msg']
         #validate file
         2.upto(book.last_row) do |line|
 
@@ -109,41 +112,45 @@ module Excel
     def self.validate_import_row(row, line)
       msg = Message.new(contents: [])
 
+      if row[:sn].blank?
+        msg.contents << "序号不能为空!"
+      end
+
       if row[:department].blank?
-        msg.contents << "部门:#{row[:department]} 不能为空!"
+        msg.contents << "部门不能为空!"
       end
 
       if row[:position].blank?
-        msg.contents << "库位:#{row[:position]} 不能为空!"
+        msg.contents << "库位不能为空!"
       end
 
-      if row[:part].blank?
-        msg.contents << "零件号: #{row[:part]} 不能为空!"
-      end
-
-      if row[:part_type].blank?
-        msg.contents << "零件类型: #{row[:part_type]} 不能为空!"
+      if row[:part_nr].blank?
+        msg.contents << "零件号不能为空!"
       end
 
       if row[:operation].blank?
-        msg.contents << "操作: #{row[:operation]} 不能为空!"
+        msg.contents << "操作不能为空!"
       end
 
       operator = row[:operation].downcase.to_s
 
-      i = Inventory.where(part: row['part'], position: row['position'], department: row['department']).first
+      i = Inventory.where(sn: row[:sn]).first
       case operator
         when 'new'
           if i.present?
-            msg.contents << "此部门库位零件 已经被占用!"
+            msg.contents << "此序号 已经被占用!"
+          elsif ii=Inventory.where(part_nr: row[:part_nr], position: row[:position], department: row[:department]).first
+            if ii.present?
+              msg.contents << "此部门库位已存在"
+            end
           end
         when 'update'
           if !i.present?
-            msg.contents << "无此部门库位零件!"
+            msg.contents << "无此序号!"
           end
         when 'delete'
           if !i.present?
-            msg.contents << "无此部门库位零件!"
+            msg.contents << "无此序号!"
           end
       end
 

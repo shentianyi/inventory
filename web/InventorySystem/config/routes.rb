@@ -1,14 +1,22 @@
 Rails.application.routes.draw do
 
 
+  resources :settings
   resources :parts do
     collection do
       match :import, action: :import, via: [:get, :post]
       get :search
     end
   end
+
   get 'dashboard/index'
+
+  get 'dashboard/setting'
+
+  post 'dashboard/setting'
+
   root to: 'dashboard#index'
+
   resources :inventories do
     collection do
       match :import, action: :import, via: [:get, :post]
@@ -23,7 +31,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users
+  resources :users do
+    collection do
+      match :import, action: :import, via: [:get, :post]
+      get :search
+    end
+  end
 
   mount ApplicationAPI => '/api'
 end

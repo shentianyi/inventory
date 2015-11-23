@@ -1,0 +1,13 @@
+<%= simple_form_for(@setting) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs">
+      <%= f.input :name,  disabled: true %>
+      <%= f.input :code,  disabled: true %>
+      <%= f.input :value %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit, value: '保 存' %>
+    </div>
+<% end %>
