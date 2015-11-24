@@ -32,4 +32,15 @@ class User < ActiveRecord::Base
   def self.validate_role(role)
     ROLES.include? role
   end
+
+  def id_span_count
+   spans=self.id_span.split(',')
+   count=0
+   spans.each do |span|
+    sspans=span.split('-')
+	count+=(sspans[1].to_i-sspans[0].to_i+1)
+   end
+
+   count
+  end
 end

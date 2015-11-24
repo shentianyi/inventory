@@ -35,7 +35,8 @@
     <th>姓名</th>
     <th>权限</th>
     <th>任务ID</th>
-    <th>管理</th>
+	<th>任务量</th>
+	<th>管理</th>
   </tr>
   </thead>
   <tbody>
@@ -45,7 +46,8 @@
         <td><%= user.nr %></td>
         <td><%= user.name %></td>
         <td><%= user.role %></td>
-        <td><%= user.id_span %></td>
+		<td><%= user.id_span %></td>
+		<td><%= user.id_span_count%></td>
         <td>
           <%= link_to '编辑', edit_user_path(user)%>
 
