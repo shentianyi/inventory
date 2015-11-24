@@ -45,7 +45,7 @@
     
 }
 
-- (void)UpdateServerURLwithIP: (NSString *)ipString withRequest: (NSString *)requestString withDeparment:(NSString *)department {
+- (void)UpdateServerURLwithIP: (NSString *)ipString withRequest: (NSString *)requestString withDeparment:(NSString *)department withPartPrefix:(NSString *)partPrefix{
     NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSString *path = [documentsPath stringByAppendingPathComponent:@"server.plist"];
@@ -64,6 +64,8 @@
     [plistdict setObject:department forKey:@"department"];
     [plistdict removeObjectForKey: @"request_quantity"];
     [plistdict setObject:requestString forKey:@"request_quantity"];
+    [plistdict removeObjectForKey:@"part_prefix"];
+    [plistdict setObject:partPrefix forKey:@"part_prefix"];
     [plistdict writeToFile:path atomically:YES];
         
 }
@@ -93,10 +95,14 @@
 }
 
 -(NSString *) defaultDepartment{
-    NSString *requestQuantity = [[self URLDictionary] objectForKey: @"department"];
-    return  [requestQuantity stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *defaultDepartment = [[self URLDictionary] objectForKey: @"department"];
+    return  [defaultDepartment stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
+-(NSString *) partNrPrefix{
+    NSString *partNrPrefix=[[self URLDictionary] objectForKey:@"part_prefix"];
+    return [partNrPrefix stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
 - (NSString *)login{
     NSString *server_url = [self ServerURL];
     NSString *login_url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"login"]];

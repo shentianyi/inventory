@@ -8,6 +8,8 @@
 	<string>200</string>
 	<key>department</key>
 	<string></string>
+	<key>part_prefix</key>
+	<string>P</string>
 	<key>login</key>
 	<string>/api/v1/users/login</string>
 	<key>download_user_data</key>

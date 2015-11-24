@@ -98,6 +98,9 @@
     }
     
     [self clearTextFields: textFields];
+    
+    self.departmentTextField.text=[self.afnet defaultDepartment];
+    
    // [self.positionTextField becomeFirstResponder];
 }
 

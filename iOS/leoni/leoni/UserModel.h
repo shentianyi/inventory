@@ -30,4 +30,6 @@
 
 -(UserEntity *)findUserByNr:(NSString *)userNr;
 
+-(void)save:(UserEntity *)userEntity;
+
 @end

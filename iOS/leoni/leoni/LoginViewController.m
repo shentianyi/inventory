@@ -12,6 +12,8 @@
 #import "KeychainItemWrapper.h"
 #import "UserModel.h"
 
+
+
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
@@ -99,7 +101,7 @@
                                             otherButtonTitles:nil];
         [alert show];
     }
-        
+    
 }
 
 // 消失输入框
