@@ -4,7 +4,7 @@ class Part < ActiveRecord::Base
   validates :unit, presence: {message: '单位不可空'}
   validates :type, presence: {message: '类型不可空'}
 
-  has_many :inventories, foreign_key: :part_nr, primary_key: :nr
+  # has_many :inventories, foreign_key: :part_nr, primary_key: :nr
 
   self.per_page = 50
 

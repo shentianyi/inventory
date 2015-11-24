@@ -90,13 +90,13 @@ module Excel
 
           mssg = validate_import_row(row, line)
           if mssg.result
-            sheet.add_row row.values
+            sheet.add_row row.values,types:[:string]
           else
             if msg.result
               msg.result = false
               msg.content = "下载错误文件<a href='/files/#{Base64.urlsafe_encode64(tmp_file)}'>#{::File.basename(tmp_file)}</a>"
             end
-            sheet.add_row row.values<<mssg.content
+            sheet.add_row row.values<<mssg.content,types:[:string]
           end
         end
       end
