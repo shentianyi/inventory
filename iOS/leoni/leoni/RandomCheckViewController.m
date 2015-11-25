@@ -351,7 +351,7 @@
     
     self.positionTextField.text=inventoryEntity.position;
     self.departmentTextField.text = inventoryEntity.department;
-    self.partTextField.text = inventoryEntity.part;
+    self.partTextField.text = inventoryEntity.part_nr;
     self.partTypeTextField.text = inventoryEntity.part_type;
     self.checkQtyTextField.text = inventoryEntity.check_qty;
     self.randomCheckQtyTextField.text=inventoryEntity.random_check_qty;

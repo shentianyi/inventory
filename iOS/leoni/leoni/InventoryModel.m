@@ -240,7 +240,7 @@
 
 /*
  获取本地全盘数据
- list & upload
+ list & upload & count
  */
 - (NSMutableArray *)getLocalCheckDataListWithPosition: (NSString *)position {
     self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
@@ -255,12 +255,45 @@
     
 }
 
+- (NSMutableArray *)getLocalCheckDataListWithPosition: (NSString *)position WithUserNr:(NSString *)userNr {
+    NSString *query;
+    if ([position isEqualToString:@""]) {
+        query = [NSString stringWithFormat:@"select * from inventories where check_qty != '' and is_local_check='1' and check_user='%@' order by check_time desc",userNr];
+    }
+    else {
+        query = [NSString stringWithFormat:@"select * from inventories where position like '%%%@%%' and check_qty != '' and is_local_check='1'  and check_user='%@'  order by check_time desc", position,userNr];
+    }
+    return  [self getInventoryEnityListByQuery:query];
+}
+
+-(NSMutableArray *)getLocalCreateCheckDataListWithPoistion:(NSString *)position{
+    self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
+    NSString *query;
+    if ([position isEqualToString:@""]) {
+        query = [NSString stringWithFormat:@"select * from inventories where check_qty != '' and is_local_check='1' and (ios_created_id!='' and ios_created_id!='<null>') order by check_time desc"];
+    }
+    else {
+        query = [NSString stringWithFormat:@"select * from inventories where position like '%%%@%%' and check_qty != '' and is_local_check='1' and (ios_created_id!='' and ios_created_id!='<null>') order by check_time desc", position];
+    }
+    return  [self getInventoryEnityListByQuery:query];
+}
+
+-(NSMutableArray *)getLocalCreateCheckDataListWithPoistion:(NSString *)position WithUserNr:(NSString *)userNr{
+    NSString *query;
+    if ([position isEqualToString:@""]) {
+        query = [NSString stringWithFormat:@"select * from inventories where check_qty != '' and is_local_check='1' and check_user='%@' and (ios_created_id!='' and ios_created_id!='<null>')  order by check_time desc",userNr];
+    }
+    else {
+        query = [NSString stringWithFormat:@"select * from inventories where position like '%%%@%%' and check_qty != '' and is_local_check='1'  and check_user='%@' and (ios_created_id!='' and ios_created_id!='<null>')  order by check_time desc", position,userNr];
+    }
+    return  [self getInventoryEnityListByQuery:query];
+}
+
 /*
  本地根据库位 查询 抽盘数据
  */
 // list and upload
 - (NSMutableArray *)getLocalRandomCheckDataListWithPosition: (NSString *)position {
-    self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
     NSString* docsdir = [NSSearchPathForDirectoriesInDomains( NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *dbpath = [docsdir stringByAppendingPathComponent:@"inventorydb.sql"];
     NSLog(@"--databasePath: %@", dbpath); //输出的地址就是dyobv.sqlite的路径
@@ -283,6 +316,12 @@
 /*
  本地根据库位查询记录
  */
+// by sn
+- (NSMutableArray *)getListWithSn:(NSInteger)sn{
+    NSString *queryString = [NSString stringWithFormat:@"select * from inventories where sn=%i",sn];
+    return [self getInventoryEnityListByQuery:queryString];
+}
+
 // by position
 - (NSMutableArray *)getListWithPosition: (NSString *)position{
     NSString *queryString = [NSString stringWithFormat:@"select * from inventories where position= '%@'", position];
@@ -361,13 +400,18 @@
         
         NSString *inventory_id=[[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"inventory_id"]];
         
+        NSInteger sn=[[[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"sn"]] integerValue];
+        
         NSString *position = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"position"]];
         
         NSString *department = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"department"]];
         
-        NSString *part = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"part"]];
+        NSString *part_nr = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"part_nr"]];
         
         NSString *part_type = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"part_type"]];
+        
+        
+        NSString *part_unit= [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"part_unit"]];
         
         NSString *is_local_check = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"is_local_check"]];
 
@@ -403,9 +447,9 @@
         
         NSString *ios_created_id = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"ios_created_id"]];
         
-        InventoryEntity *entity = [[InventoryEntity alloc] initWithId:inventory_id WithPosition:position WithDepartment:department WithPart:part WithPartType:part_type WithIsLocalCheck:is_local_check WithCheckQty:check_qty WithCheckUser:check_user WithCheckTime:check_time WithIsLocalRandomCheck:is_local_random_check WithRandomCheckQty:random_check_qty WithRandomCheckUser:random_check_user WithRandomCheckTime:random_check_time WithIsRandomCheck:is_random_check WithiOSCreatedID:ios_created_id];
+        InventoryEntity *entity = [[InventoryEntity alloc] initWithId:inventory_id WithSn:sn WithPosition:position WithDepartment:department WithPartNr:part_nr WithPartUnit:part_unit WithPartType:part_type WithIsLocalCheck:is_local_check WithCheckQty:check_qty WithCheckUser:check_user WithCheckTime:check_time WithIsLocalRandomCheck:is_local_random_check WithRandomCheckQty:random_check_qty WithRandomCheckUser:random_check_user WithRandomCheckTime:random_check_time WithIsRandomCheck:is_random_check WithiOSCreatedID:ios_created_id];
         
-        NSLog(@"========= %@,%@, qty is %@, random_check_qty is %@, %@",position, part, check_qty, random_check_qty,[random_check_qty isEqualToString:@"<null>"]);
+        NSLog(@"%i========= %@,%@, qty is %@, random_check_qty is %@, %@",sn,position, part_nr, check_qty, random_check_qty,[random_check_qty isEqualToString:@"<null>"]);
         [inventoryEntities addObject:entity];
         
     }
@@ -443,7 +487,7 @@
     InventoryEntity *inventory = [[InventoryEntity alloc] init];
     inventory = entity;
     [manager POST:[self.afnet uploadCheckData]
-           parameters:@{@"id" : inventory.inventory_id, @"department" : inventory.department, @"position" : inventory.position, @"part" : inventory.part, @"part_type" : inventory.part_type, @"check_qty" : inventory.check_qty, @"check_user" : inventory.check_user, @"check_time" :inventory.check_time, @"ios_created_id" : inventory.ios_created_id}
+           parameters:@{@"id" : inventory.inventory_id, @"department" : inventory.department, @"position" : inventory.position, @"part_nr" : inventory.part_nr, @"part_type" : inventory.part_type, @"check_qty" : inventory.check_qty, @"check_user" : inventory.check_user, @"check_time" :inventory.check_time, @"ios_created_id" : inventory.ios_created_id}
               success:^(AFHTTPRequestOperation * operation, id responseObject) {
                   NSLog(@"testing ========= checkWithPosition =======%@", responseObject);
                   if([responseObject[@"result"] integerValue]== 1 ){
@@ -640,21 +684,21 @@
     
     self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
     NSString *query;
-    query = [NSString stringWithFormat:@"insert into inventories (inventory_id, department, position, part, part_type,is_local_check, check_qty, check_user, check_time, is_local_random_check,random_check_qty, random_check_user, random_check_time, is_random_check, ios_created_id) values('%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@')", entity.inventory_id, entity.department, entity.position, entity.part, entity.part_type,entity.is_local_check, entity.check_qty, entity.check_user, entity.check_time,entity.is_local_random_check, entity.random_check_qty, entity.random_check_user, entity.random_check_time, entity.is_random_check, entity.ios_created_id];
+    query = [NSString stringWithFormat:@"insert into inventories (inventory_id,sn, department, position, part_nr, part_type,part_unit,is_local_check, check_qty, check_user, check_time, is_local_random_check,random_check_qty, random_check_user, random_check_time, is_random_check, ios_created_id) values('%@','%i' ,'%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@','%@', '%@', '%@', '%@', '%@', '%@', '%@')", entity.inventory_id,entity.sn, entity.department, entity.position, entity.part_nr, entity.part_type,entity.part_unit,entity.is_local_check, entity.check_qty, entity.check_user, entity.check_time,entity.is_local_random_check, entity.random_check_qty, entity.random_check_user, entity.random_check_time, entity.is_random_check, entity.ios_created_id];
     
     [self.db executeQuery:query];
     if (self.db.affectedRows != 0) {
-//        NSLog(@"======== success position %@=========", entity.position);
+        NSLog(@"======== success sn %i=========", entity.sn);
         
     }
     else {
-//        NSLog(@"======== fail position %@=========", entity.position);
+        NSLog(@"======== fail sn %i=========", entity.sn);
     }
     NSString *queryAll = [NSString stringWithFormat:@"select * from inventories"];
     NSString *queryRandom = [NSString stringWithFormat:@"select * from inventories where random_check_qty != '' order by random_check_time desc"];
     NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: queryAll]];
     NSArray *arrayRandom = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: queryRandom]];
-//    NSLog(@"current count is %d, the random count is %d", [arrayData count], [arrayRandom count]);
+    NSLog(@"current count is %d, the random count is %d", [arrayData count], [arrayRandom count]);
 
 }
 

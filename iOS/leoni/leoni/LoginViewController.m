@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *settingButton;
+
+
 - (IBAction)SettingAction:(id)sender;
 - (IBAction)loginAction:(id)sender;
 - (IBAction)touchScreen:(id)sender;

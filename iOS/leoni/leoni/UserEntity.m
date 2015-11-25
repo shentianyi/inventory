@@ -40,7 +40,7 @@
     return self;
 }
 
--(NSString*) idSpanCount{
+-(NSInteger) idSpanCount{
     if (!_idSpanCount) {
         NSInteger count=0;
         if(self.idSpan && self.idSpan.length>0){
@@ -52,7 +52,7 @@
             count+=([sspans[1] integerValue]-[sspans[0] integerValue]+1);
         }
         }
-        _idSpanCount=[NSString stringWithFormat:@"%i",count];
+        _idSpanCount=count;//[NSString stringWithFormat:@"%i",count];
     }
     return _idSpanCount;
 }

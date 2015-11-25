@@ -8,7 +8,10 @@
 
 #import "CheckListViewController.h"
 #import "InventoryModel.h"
+#import "UserModel.h"
+#import "UserEntity.h"
 #import "MJRefresh.h"
+#import "AFNetHelper.h"
 
 @interface CheckListViewController ()
 
@@ -16,6 +19,7 @@
 @property (nonatomic, strong) NSMutableArray* arrayInventories;
 @property (nonatomic, strong) NSMutableArray *searchResult;
 @property (nonatomic,strong) UISearchBar *searchBar;
+@property(nonatomic,strong) AFNetHelper *afnetHelper;
 @end
 
 @implementation CheckListViewController
@@ -84,12 +88,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    
-}
+//- (void)viewDidAppear:(BOOL)animated {
+//    
+//}
 
 - (void)initController
 {
+    self.afnetHelper=[[AFNetHelper alloc]init];
     self.table = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.table.delegate=self;
     self.table.dataSource=self;
@@ -112,8 +117,11 @@
 - (void)loadData {
     self.arrayInventories = [[NSMutableArray alloc]init];
     InventoryModel *inventory = [[InventoryModel alloc] init];
-    self.arrayInventories = [inventory getLocalCheckDataListWithPosition:@""];
-    
+    if(self.afnetHelper.listLimitUser){
+         self.arrayInventories = [inventory getLocalCheckDataListWithPosition:@"" WithUserNr:[UserModel accountNr]];
+    }else{
+        self.arrayInventories=[inventory getLocalCheckDataListWithPosition:@""];
+    }
     [self.table reloadData];
 }
 
@@ -137,8 +145,21 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSString *sectionName = [NSString stringWithFormat: @"已盘点%ld", (long)self.arrayInventories.count];
     
+    NSMutableArray *localCreated=[[NSMutableArray alloc]init];
+    NSString *sectionName = @"";
+    if(self.afnetHelper.listLimitUser){
+       int total=0;
+       UserEntity *user=[[[UserModel alloc]init] findUserByNr:[UserModel accountNr]];
+       if(user!=nil){
+           total=user.idSpanCount;
+        }
+        localCreated=[[[InventoryModel alloc]init] getLocalCreateCheckDataListWithPoistion:@"" WithUserNr:[UserModel accountNr]];
+        sectionName=[NSString stringWithFormat:@"已盘点:%i/%i 新增:%i",self.arrayInventories.count,total,[localCreated count]];
+    }else{
+        localCreated=[[[InventoryModel alloc]init] getLocalCreateCheckDataListWithPoistion:@""];
+        sectionName=[NSString stringWithFormat:@"已盘点:%i 新增:%i",self.arrayInventories.count,[localCreated count]];
+    }
     return sectionName;
 }
 
@@ -161,12 +182,16 @@
     else
     {
         InventoryEntity *entity = self.arrayInventories[indexPath.row];
-        NSLog(@"entity %@%@", entity.position, entity.part);
-        cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@ 零件: %@", indexPath.row+1, entity.position, entity.part];
+        NSLog(@"entity %@%@", entity.position, entity.part_nr);
+        cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@ 零件:%@", entity.sn, entity.position, entity.part_nr];
     
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘数量: %@ 抽盘数量: %@", entity.check_qty, @""];
-        UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 18.0 ];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘: %@ 抽盘: %@  单位:%@ #盘点员:%@", entity.check_qty, entity.random_check_qty,entity.part_unit,entity.check_user];
+        UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 15.0 ];
+        
         cell.textLabel.font  = myFont;
+      
+       // cell.textLabel.textColor=[UIColor colorWithRed:0.1f green:0.3f blue:0.8f alpha:1.0f];
+        
         cell.detailTextLabel.font = myFont;
 //        if(indexPath.row%2==1){
 //            cell.backgroundColor = [UIColor colorWithRed:224.0f/255.0f green:155.0f/255.0f blue:90.0f/255.0f alpha:0.3f];

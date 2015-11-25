@@ -32,4 +32,6 @@
 
 -(void)save:(UserEntity *)userEntity;
 
++(NSString *)accountNr;
+
 @end

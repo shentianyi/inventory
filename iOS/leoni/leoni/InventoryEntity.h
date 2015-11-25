@@ -11,10 +11,12 @@
 @interface InventoryEntity : NSObject
 
 @property (nonatomic, copy) NSString *inventory_id;
+@property (nonatomic,assign) NSInteger sn;
 @property (nonatomic, copy) NSString *position;
 @property (nonatomic, copy) NSString *department;
-@property (nonatomic, copy) NSString *part;
+@property (nonatomic, copy) NSString *part_nr;
 @property (nonatomic, copy) NSString *part_type;
+@property (nonatomic, copy) NSString *part_unit;
 // default 0-false, 1 true
 @property (nonatomic,copy) NSString *is_local_check;
 @property (nonatomic, copy) NSString *check_qty;
@@ -29,7 +31,7 @@
 @property (nonatomic, copy) NSString *ios_created_id;
 @property (nonatomic,copy) NSString *ios_created_at;
 
-- (id)initWithId:(NSString *)inventory_id WithPosition: (NSString *)position WithDepartment: (NSString *)department WithPart: (NSString *)part WithPartType: (NSString *)part_type WithIsLocalCheck:(NSString *)isLocalCheck WithCheckQty:(NSString *)checkQty WithCheckUser:(NSString *)checkUser WithCheckTime:(NSString *)checkTime WithIsLocalRandomCheck:(NSString *)isLocalRandomCheck WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithIsRandomCheck:(NSString*)isRandomCheck WithiOSCreatedID: (NSString *)iOSCreatedId;
+- (id)initWithId:(NSString *)inventory_id WithSn:(NSInteger)sn WithPosition: (NSString *)position WithDepartment: (NSString *)department WithPartNr: (NSString *)part_nr WithPartUnit:(NSString *) part_unit WithPartType: (NSString *)part_type WithIsLocalCheck:(NSString *)isLocalCheck WithCheckQty:(NSString *)checkQty WithCheckUser:(NSString *)checkUser WithCheckTime:(NSString *)checkTime WithIsLocalRandomCheck:(NSString *)isLocalRandomCheck WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithIsRandomCheck:(NSString*)isRandomCheck WithiOSCreatedID: (NSString *)iOSCreatedId;
 
 
 - (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type;

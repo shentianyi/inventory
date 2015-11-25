@@ -15,6 +15,10 @@
 @property (nonatomic,strong) UIAlertView *downloadAlert;
 @property (nonatomic,strong) UIAlertView *settingAlert;
 @property (strong, nonatomic) IBOutlet UIProgressView *processView;
+
+@property (weak, nonatomic) IBOutlet UISwitch *listLimitUserSwitch;
+
+
 @property (nonatomic,retain) UserModel *userModel;
 @property (nonatomic,strong) NSMutableArray *users;
 @property (weak, nonatomic) IBOutlet UITextField *deparmentTextField;
@@ -99,6 +103,8 @@
     self.deparmentTextField.text=[self.afnet_helper defaultDepartment];
     
     self.partPrefixTextField.text=[self.afnet_helper partNrPrefix];
+    
+    self.listLimitUserSwitch.on=[self.afnet_helper listLimitUser];
 }
 
 /*
@@ -117,7 +123,7 @@
 
 - (IBAction)saveAction:(id)sender {
     if (self.ipTextField.text.length > 0 && self.requestTextField.text.length>0) {
-        [self.afnet_helper UpdateServerURLwithIP:self.ipTextField.text withRequest:self.requestTextField.text withDeparment:self.deparmentTextField.text withPartPrefix:@"P"];
+        [self.afnet_helper UpdateServerURLwithIP:self.ipTextField.text withRequest:self.requestTextField.text withDeparment:self.deparmentTextField.text withPartPrefix:@"P" WithListLimitUser:self.listLimitUserSwitch.on];
         
         [self.settingAlert show];
     }
@@ -238,7 +244,6 @@
                          }];
     }
 }
-
 
 
 
