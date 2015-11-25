@@ -18,6 +18,7 @@
 @property (nonatomic,retain) UserModel *userModel;
 @property (nonatomic,strong) NSMutableArray *users;
 @property (weak, nonatomic) IBOutlet UITextField *deparmentTextField;
+@property (weak, nonatomic) IBOutlet UITextField *partPrefixTextField;
 
 - (IBAction)touchScreen:(id)sender;
 
@@ -41,9 +42,9 @@
     
     // Do any additional setup after loading the view.
     self.ipTextField.delegate = self;
-    //self.portTextField.delegate = self;
     self.requestTextField.delegate = self;
     self.deparmentTextField.delegate=self;
+    self.partPrefixTextField.delegate=self;
     
     _afnet_helper  = [[AFNetHelper alloc] init];
 
@@ -96,6 +97,8 @@
     self.requestTextField.text = [self.afnet_helper getRequestQuantity];
     
     self.deparmentTextField.text=[self.afnet_helper defaultDepartment];
+    
+    self.partPrefixTextField.text=[self.afnet_helper partNrPrefix];
 }
 
 /*
@@ -113,8 +116,8 @@
 }
 
 - (IBAction)saveAction:(id)sender {
-    if (self.ipTextField.text.length > 0 && self.requestTextField.text.length) {
-        [self.afnet_helper UpdateServerURLwithIP:self.ipTextField.text withRequest:self.requestTextField.text withDeparment:self.deparmentTextField.text];
+    if (self.ipTextField.text.length > 0 && self.requestTextField.text.length>0) {
+        [self.afnet_helper UpdateServerURLwithIP:self.ipTextField.text withRequest:self.requestTextField.text withDeparment:self.deparmentTextField.text withPartPrefix:@"P"];
         
         [self.settingAlert show];
     }
@@ -214,7 +217,7 @@
    // [textField becomeFirstResponder];
     if(self.deparmentTextField==textField){
     CGRect frame=textField.frame;
-     int offset=frame.origin.y-10;
+     int offset=frame.origin.y-180;
      
     NSTimeInterval animationDuration=0.30f;
     [UIView animateWithDuration:animationDuration

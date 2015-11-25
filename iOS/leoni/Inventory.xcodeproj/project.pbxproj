@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0213B4171C0302A100E15ABB /* partdb.sql in Resources */ = {isa = PBXBuildFile; fileRef = 0213B4161C0302A100E15ABB /* partdb.sql */; };
 		021B86091BF057C200774CFB /* userdb.sql in Resources */ = {isa = PBXBuildFile; fileRef = 021B86081BF057C200774CFB /* userdb.sql */; };
 		0238C65D1BF5188B00840036 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0238C65C1BF5188B00840036 /* Media.xcassets */; };
 		0238C6621BF5218B00840036 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0238C6601BF5218B00840036 /* LaunchScreen.xib */; };
+		0248C6171C044D1C001C483E /* CheckUserRoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0248C6161C044D1C001C483E /* CheckUserRoleViewController.m */; };
+		0248C61A1C045F22001C483E /* SetUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0248C6191C045F22001C483E /* SetUserViewController.m */; };
 		02B466511BF33F4A002BC2AB /* ViewUIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B466501BF33F4A002BC2AB /* ViewUIHelper.m */; };
 		9429571E1BC3B7D000C35462 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429571D1BC3B7D000C35462 /* DBManager.m */; };
 		942957201BC3B7E200C35462 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9429571F1BC3B7E200C35462 /* libsqlite3.dylib */; };
@@ -58,9 +61,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0213B4161C0302A100E15ABB /* partdb.sql */ = {isa = PBXFileReference; lastKnownFileType = file; path = partdb.sql; sourceTree = "<group>"; };
 		021B86081BF057C200774CFB /* userdb.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = userdb.sql; sourceTree = "<group>"; };
 		0238C65C1BF5188B00840036 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		0238C6611BF5218B00840036 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		0248C6151C044D1C001C483E /* CheckUserRoleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckUserRoleViewController.h; sourceTree = "<group>"; };
+		0248C6161C044D1C001C483E /* CheckUserRoleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckUserRoleViewController.m; sourceTree = "<group>"; };
+		0248C6181C045F22001C483E /* SetUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetUserViewController.h; sourceTree = "<group>"; };
+		0248C6191C045F22001C483E /* SetUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetUserViewController.m; sourceTree = "<group>"; };
 		02B4664F1BF33E70002BC2AB /* ViewUIHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewUIHelper.h; sourceTree = "<group>"; };
 		02B466501BF33F4A002BC2AB /* ViewUIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewUIHelper.m; sourceTree = "<group>"; };
 		444761C8CCFDCCE9DECDA580 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -206,6 +214,7 @@
 		942E94331BC01A4A00FB5CD0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0213B4161C0302A100E15ABB /* partdb.sql */,
 				9480CFAB1BDCCF2A009674D8 /* inventorydb.sql */,
 				942E94341BC01A4A00FB5CD0 /* Info.plist */,
 				942E94351BC01A4A00FB5CD0 /* main.m */,
@@ -280,6 +289,10 @@
 				9478AC241BD216BF007FDA17 /* RandomCheckSynchronizeViewController.m */,
 				949B0FA81BD68BCD0011E185 /* RandomProfileViewController.h */,
 				949B0FA91BD68BCD0011E185 /* RandomProfileViewController.m */,
+				0248C6151C044D1C001C483E /* CheckUserRoleViewController.h */,
+				0248C6161C044D1C001C483E /* CheckUserRoleViewController.m */,
+				0248C6181C045F22001C483E /* SetUserViewController.h */,
+				0248C6191C045F22001C483E /* SetUserViewController.m */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -375,7 +388,7 @@
 				TargetAttributes = {
 					942E942F1BC01A4A00FB5CD0 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = ALEL54CX66;
+						DevelopmentTeam = 58FSFGRL4P;
 					};
 					942E944B1BC01A4A00FB5CD0 = {
 						CreatedOnToolsVersion = 6.4;
@@ -412,6 +425,7 @@
 				0238C65D1BF5188B00840036 /* Media.xcassets in Resources */,
 				0238C6621BF5218B00840036 /* LaunchScreen.xib in Resources */,
 				021B86091BF057C200774CFB /* userdb.sql in Resources */,
+				0213B4171C0302A100E15ABB /* partdb.sql in Resources */,
 				942E94441BC01A4A00FB5CD0 /* Images.xcassets in Resources */,
 				9480CFAC1BDCCF2A009674D8 /* inventorydb.sql in Resources */,
 			);
@@ -472,6 +486,7 @@
 				949658131BCE7F03006DACA7 /* RandomListViewController.m in Sources */,
 				942957251BC3F43C00C35462 /* CheckListViewController.m in Sources */,
 				94A359401BC10701008910EB /* AFNetHelper.m in Sources */,
+				0248C61A1C045F22001C483E /* SetUserViewController.m in Sources */,
 				02B466511BF33F4A002BC2AB /* ViewUIHelper.m in Sources */,
 				9463F0341BC20DD600280D38 /* KeychainItemWrapper.m in Sources */,
 				9463F03A1BC2450600280D38 /* CheckCreateViewController.m in Sources */,
@@ -481,6 +496,7 @@
 				9463F0461BC297A900280D38 /* InventoryEntity.m in Sources */,
 				94A359451BC109B7008910EB /* UserModel.m in Sources */,
 				9463F03D1BC27B0400280D38 /* InventoryModel.m in Sources */,
+				0248C6171C044D1C001C483E /* CheckUserRoleViewController.m in Sources */,
 				94A359371BC0EF28008910EB /* DashboardViewController.m in Sources */,
 				945F64CB1BCD2BE5000AB38C /* RandomCheckViewController.m in Sources */,
 				94A3594C1BC121EE008910EB /* MBProgressHUD.m in Sources */,

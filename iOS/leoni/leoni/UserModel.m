@@ -40,7 +40,14 @@
         
         NSString *name=   [userData[0] objectAtIndex: [self.db.arrColumnNames indexOfObject:@"name"]];
         
-        user=[[UserEntity alloc] initWithId:user_id andNr:nr andName:name];
+        
+        NSString *role=   [userData[0] objectAtIndex: [self.db.arrColumnNames indexOfObject:@"role"]];
+        
+        
+        NSString *idSpan=   [userData[0] objectAtIndex: [self.db.arrColumnNames indexOfObject:@"id_span"]];
+        
+        
+        user=[[UserEntity alloc] initWithId:user_id andNr:nr andName:name andRole:role andIdSpan:idSpan];
     }
     return  user;
 }
@@ -89,10 +96,20 @@
     [manager GET:[self.afnet downloadUserData]
       parameters:@{@"page":  [NSString stringWithFormat: @"%d", page]}
          success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+             
              NSArray *users=responseObject[@"content"];
-           
+             
+            
+             
              for(int i=0;i<users.count;i++){
-                 [userEntities addObject: [[UserEntity alloc] initWithId:users[i][@"user_id"] andNr:users[i][@"nr"] andName:users[i][@"name"]]];
+                 NSLog([NSString stringWithFormat:@"nr:%@",users[i][@"nr"] ]);
+
+                 NSLog([NSString stringWithFormat:@"role:%@",users[i][@"role"] ]);
+                 
+                 NSLog([NSString stringWithFormat:@"name:%@",users[i][@"name"] ]);
+                 
+                 NSLog([NSString stringWithFormat:@"id_span:%@",users[i][@"id_span"] ]);
+                 [userEntities addObject: [[UserEntity alloc] initWithId:users[i][@"id"] andNr:users[i][@"nr"] andName:users[i][@"name"] andRole:users[i][@"role"] andIdSpan:users[i][@"id_span"]]];
              }
              
              if(block){
@@ -111,12 +128,20 @@
 -(void) createLocalData:(UserEntity *)userEntity{
     
     self.db=[[DBManager alloc] initWithDatabaseFilename:@"userdb.sql"];
-    NSString *query=[NSString stringWithFormat:@"insert into users(user_id,nr,name) values('%@','%@','%@')",
-                     userEntity.userId,userEntity.nr,userEntity.name];
+    NSString *query=[NSString stringWithFormat:@"insert into users(user_id,nr,name,role,id_span) values('%@','%@','%@','%@','%@')",
+                     userEntity.userId,userEntity.nr,userEntity.name,userEntity.role,userEntity.idSpan];
     
     [self.db executeQuery:query];
 }
 
+-(void)save:(UserEntity *)userEntity{
+    self.db=[[DBManager alloc] initWithDatabaseFilename:@"userdb.sql"];
+    NSString *query=[NSString stringWithFormat:@"update users set id_span='%@' where nr='%@'",
+                    userEntity.idSpan, userEntity.nr];
+    
+    [self.db executeQuery:query];
+  
+}
 
 -(void) cleanLocalData{
    self.db=[[DBManager alloc] initWithDatabaseFilename:@"userdb.sql"];

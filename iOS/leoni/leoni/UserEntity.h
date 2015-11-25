@@ -13,8 +13,12 @@
 @property (nonatomic) NSString *userId;
 @property (nonatomic, copy) NSString *nr;
 @property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *role;
+@property (nonatomic, copy) NSString *idSpan;
+@property (nonatomic,copy) NSString *idSpanCount;
 
 - (id)initWithNr: (NSString *)nr;
+- (id) initWithId:(NSString *)userId andNr:(NSString *)nr andName:(NSString *)name andRole:(NSString *)role andIdSpan:(NSString *)idSpan;
 
 - (id) initWithId:(NSString *)userId andNr:(NSString *)nr andName:(NSString *)name;
 
