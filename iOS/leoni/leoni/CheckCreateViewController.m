@@ -12,6 +12,14 @@
 #import "AFNetHelper.h"
 
 @interface CheckCreateViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *positionTextField;
+@property (weak, nonatomic) IBOutlet UITextField *partTextField;
+@property (weak, nonatomic) IBOutlet UITextField *departmentTextField;
+@property (weak, nonatomic) IBOutlet UITextField *partUnitTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *partTypeTextField;
+@property (weak, nonatomic) IBOutlet UITextField *checkQtyTextField;
+- (IBAction)saveAction:(id)sender;
 - (IBAction)clearInputAction:(id)sender;
 
 @property (strong,nonatomic) AFNetHelper *afnet;

@@ -55,7 +55,7 @@
     if(user){
         self.nrLabel.text=[NSString stringWithFormat:@"%@ # %@",user.nr,user.name];
         self.idSpanLable.text=user.idSpan;
-        self.idSpanCountLabel.text=user.idSpanCount;
+        self.idSpanCountLabel.text=[NSString stringWithFormat:@"%i", user.idSpanCount];
     }
 }
 

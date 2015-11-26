@@ -10,8 +10,21 @@
 #import "MBProgressHUD.h"
 #import "KeychainItemWrapper.h"
 #import "AFNetHelper.h"
+#import "UserModel.h"
 
 @interface CheckViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *snTextField;
+@property (weak, nonatomic) IBOutlet UITextField *positionTextField;
+@property (weak, nonatomic) IBOutlet UITextField *departmentTextField;
+@property (weak, nonatomic) IBOutlet UITextField *partTextField;
+@property (weak, nonatomic) IBOutlet UITextField *partUnitTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *partTypeTextField;
+@property (weak, nonatomic) IBOutlet UITextField *qtyTextField;
+
+- (IBAction)checkAction:(id)sender;
+
+
 @property (strong, nonatomic) UITextField *firstResponder;
 -(void)clearAllTextFields;
 -(void)clearTextFields:(NSArray *)textFields;
@@ -84,7 +97,7 @@
     }
     
     [self clearTextFields: textFields];
-    [self.positionTextField becomeFirstResponder];
+    [self.snTextField becomeFirstResponder];
 }
 
 -(void)clearTextFields:(NSArray *)textFields{
@@ -94,6 +107,7 @@
 }
 
 - (void)initController {
+    self.snTextField.delegate=self;
     self.positionTextField.delegate =self;
     //[self.positionTextField becomeFirstResponder];
     
@@ -101,6 +115,8 @@
     self.departmentTextField.delegate = self;
     self.qtyTextField.delegate = self;
     
+    self.partUnitTextField.enabled=NO;
+    self.partUnitTextField.delegate=self;
     self.partTypeTextField.enabled = NO;
     self.partTypeTextField.delegate =self;
     
@@ -110,10 +126,11 @@
 
 -(void) initTextFieldsWithInventoryEntity:(InventoryEntity *)inventoryEntity{
     self.currentInventoryEntity=inventoryEntity;
-    
+    self.snTextField.text=[NSString stringWithFormat:@"%i", inventoryEntity.sn];
     self.positionTextField.text=inventoryEntity.position;
     self.departmentTextField.text = inventoryEntity.department;
-    self.partTextField.text = inventoryEntity.part;
+    self.partTextField.text = inventoryEntity.part_nr;
+    self.partUnitTextField.text=inventoryEntity.part_unit;
     self.partTypeTextField.text = inventoryEntity.part_type;
     self.qtyTextField.text = inventoryEntity.check_qty;
     if(self.qtyTextField.text.length==0){
@@ -127,8 +144,9 @@
     if(textField!=self.qtyTextField){
         self.currentInventoryEntity=nil;
     }
-    
-    if (textField == self.positionTextField) {
+    if(textField==self.snTextField){
+        [self validateSn];
+    }else if (textField == self.positionTextField) {
         [self validatePosition];
     }else if(textField==self.departmentTextField){
         [self validateDepartment];
@@ -149,11 +167,45 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+- (BOOL)validateSn
+{
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.positionTextField,self.departmentTextField,self.partTextField,self.partTypeTextField,self.partUnitTextField,self.qtyTextField,nil];
+    
+    [self clearTextFields:clearTextFields];
+    
+    BOOL msgBool = false;
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"加载中...";
+    
+    NSMutableArray *getData = [[NSMutableArray alloc] init];
+   // NSInteger sn=[self.snTextField.text integerValue];
+    getData = [self.inventory getListWithSn:[self.snTextField.text integerValue]];
+    NSUInteger countGetData =[ getData count];
+    if ( countGetData >1) {
+        hud.labelText = [NSString stringWithFormat:@"唯一码重复，请联系管理员"];
+        [hud hide:YES afterDelay:1.5f];
+        
+        [self clearAllTextFields];
+        
+    } else if (countGetData == 0) {
+        hud.labelText = [NSString stringWithFormat:@"不存在唯一码，请联系管理员"];
+        [hud hide:YES afterDelay:1.5f];
+        
+        [self clearAllTextFields];
+    } else if(countGetData == 1) {
+        [self initTextFieldsWithInventoryEntity:getData.firstObject];
+        [hud hide:YES];
+        msgBool = true;
+    }
+    
+    return msgBool;
+}
 
 - (BOOL)validatePosition
 {
-    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.departmentTextField,self.partTextField,self.partTypeTextField,self.qtyTextField,nil];
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.snTextField,self.departmentTextField,self.partTextField,self.partTypeTextField,self.partUnitTextField,self.qtyTextField,nil];
     
     [self clearTextFields:clearTextFields];
     
@@ -200,7 +252,7 @@
 -(BOOL)validateDepartment{
     BOOL msgBool=false;
     
-    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.partTextField,self.partTypeTextField,self.qtyTextField,nil];
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.snTextField,self.partTextField,self.partTypeTextField,self.partUnitTextField,self.qtyTextField,nil];
     
     [self clearTextFields:clearTextFields];
     
@@ -241,7 +293,7 @@
 -(BOOL)validatePart{
     BOOL msgBool=false;
     
-    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.partTypeTextField,self.qtyTextField,nil];
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.snTextField,self.partTypeTextField,self.qtyTextField,nil];
     
     [self clearTextFields:clearTextFields];
     
@@ -343,7 +395,7 @@
 //
         self.currentInventoryEntity.is_local_check=@"1";
         self.currentInventoryEntity.check_qty=self.qtyTextField.text;
-        self.currentInventoryEntity.check_user=[keyChain objectForKey:(__bridge  id)kSecAttrAccount];
+        self.currentInventoryEntity.check_user=[UserModel accountNr];
         self.currentInventoryEntity.check_time=checkTime;
         
         
@@ -415,7 +467,7 @@
    // [self  dismissKeyboard];
     
     [self hideKeyboard];
-    [self.positionTextField becomeFirstResponder];
+    [self.snTextField becomeFirstResponder];
 }
 
 -(void)hideKeyboard{

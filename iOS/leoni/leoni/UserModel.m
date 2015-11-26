@@ -149,4 +149,9 @@
     [self.db executeQuery:query];
 }
 
++(NSString *)accountNr{
+    KeychainItemWrapper *keyChain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
+    return [keyChain objectForKey:(__bridge  id)kSecAttrAccount];
+}
+
 @end

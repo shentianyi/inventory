@@ -45,7 +45,7 @@
     
 }
 
-- (void)UpdateServerURLwithIP: (NSString *)ipString withRequest: (NSString *)requestString withDeparment:(NSString *)department withPartPrefix:(NSString *)partPrefix{
+- (void)UpdateServerURLwithIP: (NSString *)ipString withRequest: (NSString *)requestString withDeparment:(NSString *)department withPartPrefix:(NSString *)partPrefix WithListLimitUser:(BOOL) listLimitUser{
     NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSString *path = [documentsPath stringByAppendingPathComponent:@"server.plist"];
@@ -58,14 +58,18 @@
     }
     
     NSMutableDictionary *plistdict = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
-    [plistdict removeObjectForKey: @"ip"];
+    //[plistdict removeObjectForKey: @"ip"];
     [plistdict setObject:ipString forKey:@"ip"];
-    [plistdict removeObjectForKey: @"department"];
+    //[plistdict removeObjectForKey: @"department"];
     [plistdict setObject:department forKey:@"department"];
-    [plistdict removeObjectForKey: @"request_quantity"];
+    //[plistdict removeObjectForKey: @"request_quantity"];
     [plistdict setObject:requestString forKey:@"request_quantity"];
-    [plistdict removeObjectForKey:@"part_prefix"];
+    //[plistdict removeObjectForKey:@"part_prefix"];
     [plistdict setObject:partPrefix forKey:@"part_prefix"];
+    
+   // [plistdict removeObjectForKey:@"list_limit_user"];
+    [plistdict setValue: [NSNumber numberWithBool:listLimitUser] forKey:@"list_limit_user"];
+    
     [plistdict writeToFile:path atomically:YES];
         
 }
@@ -102,6 +106,11 @@
 -(NSString *) partNrPrefix{
     NSString *partNrPrefix=[[self URLDictionary] objectForKey:@"part_prefix"];
     return [partNrPrefix stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
+-(BOOL)listLimitUser{
+NSString *listLimitUser=[[self URLDictionary] objectForKey:@"list_limit_user"];
+  return  [listLimitUser boolValue];
 }
 - (NSString *)login{
     NSString *server_url = [self ServerURL];

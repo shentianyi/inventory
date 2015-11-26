@@ -161,8 +161,8 @@
     else
     {
         InventoryEntity *entity = self.arrayInventories[indexPath.row];
-        NSLog(@"entity %@%@", entity.position, entity.part);
-        cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@  零件: %@", indexPath.row+1, entity.position ,entity.part];
+        NSLog(@"entity %@%@", entity.position, entity.part_nr);
+        cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@  零件: %@", indexPath.row+1, entity.position ,entity.part_nr];
         
         cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘数量: %@ 抽盘数量: %@", entity.check_qty, entity.random_check_qty];
         UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 18.0 ];

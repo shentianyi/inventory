@@ -44,8 +44,14 @@
  获取本地数据
  */
 // Charot
+// by sn
+- (NSMutableArray *)getListWithSn:(NSInteger)sn;
 // by position
 - (NSMutableArray *)getLocalCheckDataListWithPosition: (NSString *)position;
+- (NSMutableArray *)getLocalCheckDataListWithPosition: (NSString *)position WithUserNr:(NSString *)userNr;
+- (NSMutableArray *)getLocalCreateCheckDataListWithPoistion:(NSString *)position;
+- (NSMutableArray *)getLocalCreateCheckDataListWithPoistion:(NSString *)position WithUserNr:(NSString *) userNr;
+
 // 获取本地抽盘数据
 - (NSMutableArray *)getLocalRandomCheckDataListWithPosition: (NSString *)position;
 
