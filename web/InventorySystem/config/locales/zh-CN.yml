@@ -7,10 +7,10 @@ zh-CN:
       part: '零件'
     attributes:
       inventory:
-        sn: '序列号'
+        sn: '唯一码'
         department: "部门"
         position: "库位"
-        part: "零件号"
+        part_nr: "零件号"
         part_type: "零件类型"
         check_qty: "全盘数量"
         check_user: "全盘人员"

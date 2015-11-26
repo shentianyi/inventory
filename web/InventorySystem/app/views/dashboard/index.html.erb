@@ -1,1 +1,124 @@
-<h1>盘点统计</h1>
+<h3>盘点统计</h3>
+<div>
+  <table class="table table-hover table-striped  table-bordered">
+    <thead style="background-color:#1a8bc8;font-size:16px;">
+    <tr>
+      <th>
+        部门\统计项
+      </th>
+      <th>
+        共计盘点项
+      </th>
+      <th colspan='2'>
+        原有盘点项
+      </th>
+      <th colspan='2'>
+        新建盘点项
+      </th>
+      <th colspan='2'>
+        已全盘
+      </th>
+      <th colspan='2'>
+        未全盘
+      </th>
+      <th colspan='2'>
+        抽盘量
+      </th>
+      <th colspan='2'>
+        已抽盘
+      </th>
+      <th colspan='2'>
+        未抽盘
+      </th>
+      <th colspan='2'>
+        抽盘修正
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @data.each do |data| %>
+        <tr>
+          <td class="department  percent size <%='bold' if data[:department]=='总计'%>">
+            <%= data[:department] %>
+          </td>
+          <td class='department'>
+            <%= data[:total_inven] %>
+          </td>
+          <td class='inven  percent'>
+            <%= data[:origin_inven] %>
+          </td>
+          <td class=inven'>
+            <%= data[:origin_inven_percent] %>
+          </td>
+          <td class='inven  percent'>
+            <%= data[:new_inven] %>
+          </td>
+          <td class=inven'>
+            <%= data[:new_inven_percent] %>
+          </td>
+          <td class='inven  percent'>
+            <%= data[:check_inven] %>
+          </td>
+          <td class=inven'>
+            <%= data[:check_inven_percent] %>
+          </td>
+          <td class='inven  percent'>
+            <%= data[:not_check_inven] %>
+          </td>
+          <td class=inven'>
+            <%= data[:not_check_inven_percent] %>
+          </td>
+          <td class='inven  percent'>
+            <%= data[:random_total_inven] %>
+          </td>
+          <td class=inven'>
+            <%= data[:random_total_inven_percent] %>
+          </td>
+          <td class='inven  percent'>
+            <%= data[:random_check_inven] %>
+          </td>
+          <td class=inven'>
+            <%= data[:random_check_inven_percent] %>
+          </td>
+          <td class='inven  percent'>
+            <%= data[:random_not_check_inven] %>
+          </td>
+          <td class=inven'>
+            <%= data[:random_not_check_inven_percent] %>
+          </td>
+          <td class='inven  percent'>
+            <%= data[:changed_check_inven] %>
+          </td>
+          <td class=inven'>
+            <%= data[:changed_check_inven_percent] %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<style>
+    th, td {
+        text-align: center;
+    }
+
+    .inven {
+        width: 50px;
+    }
+
+    .percent{
+        background-color: lightblue;
+    }
+
+    .size{
+        font-size: 16px;
+    }
+
+    .bold{
+        font-weight: bold;
+    }
+
+    .department {
+         width: 140px;
+    }
+</style>

@@ -12,7 +12,7 @@
 class User < ActiveRecord::Base
   validates :name, :nr, :role, presence: true
   validates_uniqueness_of :nr
-  self.per_page = 50
+  self.per_page = 100
 
   ROLES=%w(盘点员 组长 其他)
 

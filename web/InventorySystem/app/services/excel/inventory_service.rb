@@ -4,7 +4,7 @@ module Excel
         :sn, :department, :position, :part_nr, :part_unit, :part_type, :operation
     ]
 
-    INVALID_HEADERS=%w(序号 部门 库位号 零件号 零件单位 零件类型 operation)
+    INVALID_HEADERS=%w(唯一码 部门 库位号 零件号 零件单位 零件类型 operation)
 
     def self.full_tmp_path(file_name)
       File.join('uploadfiles', Time.now.strftime('%Y%m%d%H%M%S%L')+'-'+file_name)
@@ -113,7 +113,7 @@ module Excel
       msg = Message.new(contents: [])
 
       if row[:sn].blank?
-        msg.contents << "序号不能为空!"
+        msg.contents << "唯一码不能为空!"
       end
 
       if row[:department].blank?
@@ -146,7 +146,7 @@ module Excel
       case operator
         when 'new'
           if i.present?
-            msg.contents << "此序号 已经被占用!"
+            msg.contents << "此唯一码 已经被占用!"
           elsif ii=Inventory.where(part_nr: row[:part_nr], position: row[:position], department: row[:department]).first
             if ii.present?
               msg.contents << "此部门库位已存在"
@@ -154,11 +154,11 @@ module Excel
           end
         when 'update'
           if !i.present?
-            msg.contents << "无此序号!"
+            msg.contents << "无此唯一码!"
           end
         when 'delete'
           if !i.present?
-            msg.contents << "无此序号!"
+            msg.contents << "无此唯一码!"
           end
       end
 
