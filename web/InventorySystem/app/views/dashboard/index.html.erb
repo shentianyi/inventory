@@ -47,7 +47,7 @@
           <td class='inven  number'>
             <%= data[:origin_inven] %>
           </td>
-          <td class=inven percent'>
+          <td class='inven percent'>
             <%= data[:origin_inven_percent] %>
           </td>
           <td class='inven  number'>
@@ -125,10 +125,12 @@
 <script type="text/javascript">
   $(function(){
       $.each($('.percent'),function(){
-          if($.trim($(this).text())=='100.0%' || $.trim($(this).text())=='100%'){
-              $(this).text('100%');
-              $(this).css('color','green');
-          }
+		  if($.trim($(this).text())=='100.0%' || $.trim($(this).text())=='100%'){
+		  $(this).text('100%');
+		  $(this).css('color','green');
+		  }else if($.trim($(this).text())=='0.0%' || $.trim($(this).text())=='0%'){
+		  $(this).text('0');
+		  }
       });
   });
 </script>

@@ -95,12 +95,20 @@ class Inventory < ActiveRecord::Base
   def self.create_random_data
     Inventory.update_all(random_check_qty: nil, random_check_user: nil, random_check_time: nil, is_random_check: false)
 
+	page_size=200
+	
     self.uniq.pluck(:department).each do |deparment|
-      ids= self.where(department: deparment).all.pluck(:id)
+	  ids=[]
+	  page_index=0
+	  while true
+        ids= self.where(department: deparment).offset(page_size*page_index).limit(page_size).pluck(:id)
       # puts "#{ids}---------"
-      sample_count= (ids.count* Setting.random_percent_value).round
+         sample_count= (ids.count* Setting.random_percent_value).round
       # puts "###############{ids.count}#####{Setting.random_percent_value}#######{sample_count}"
-      self.where(id: ids.sample(sample_count)).update_all(is_random_check: true)
+         self.where(id: ids.sample(sample_count)).update_all(is_random_check: true)
+		 page_index+=1
+	     break if ids.count==0
+	  end
     end
     # counter = 1
     # samples = []
