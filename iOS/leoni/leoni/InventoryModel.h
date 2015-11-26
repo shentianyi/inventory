@@ -34,7 +34,7 @@
 - (void)webRandomCheckWithPosition: (NSString *)position WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser block:(void(^)(NSString *msgString, NSError *error))block;
 
 
-- (void)createWithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType WithChcekQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser block:(void(^)(NSString *msgString, NSError *error))block;
+- (void)createLocalDataWithSn:(NSInteger)sn WithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType  WithPartUnit:(NSString *) partUnit WithChcekQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser block:(void(^)(NSString *msgString, NSError *error))block;
 
 - (void)localDeleteData: (NSString *)strPosition;
 - (void)localCreateCheckData: (InventoryEntity *)entity;
@@ -67,6 +67,10 @@
 
 // by position and department and part
 -(NSMutableArray *)getListWithPosition:(NSString *)position andDepartment:(NSString *)deparment andPart:(NSString *)part;
+
+//random by sn
+- (NSMutableArray *)getRandomListWithSn:(NSInteger)sn;
+
 
 // random by position
 - (NSMutableArray *)getRandomListWithPosition: (NSString *)position;

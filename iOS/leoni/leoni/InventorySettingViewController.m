@@ -7,8 +7,13 @@
 //
 
 #import "InventorySettingViewController.h"
+#import "AFNetHelper.h"
 
 @interface InventorySettingViewController ()
+@property (weak, nonatomic) IBOutlet UISwitch *listLimitUserSwitch;
+@property (nonatomic, retain) AFNetHelper *afnet_helper;
+
+@property (nonatomic,strong) UIAlertView *settingAlert;
 
 @end
 
@@ -17,11 +22,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.settingAlert=[[UIAlertView alloc] initWithTitle:@""
+                                                 message:@"设置成功"
+                                                delegate:self
+                                       cancelButtonTitle:@"ok"
+                                       otherButtonTitles:nil];
+
+    self.afnet_helper  = [[AFNetHelper alloc] init];
+    [self loadData];
+    
+}
+
+
+- (void)loadData {
+    self.listLimitUserSwitch.on=[self.afnet_helper listLimitUser];
 }
 
 /*
@@ -33,5 +56,17 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)saveAction:(id)sender {
+   
+        [self.afnet_helper updateInventorySettingWithListLimitUser:self.listLimitUserSwitch.on];
+        
+        [self.settingAlert show];
+   }
+
+- (IBAction)backAction:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end

@@ -94,16 +94,23 @@ preparation before navigation
 }
 - (void)uploadCheckData {
   self.uploadDataArray = [[NSMutableArray alloc] init];
-  self.uploadDataArray = [self.model getLocalCheckDataListWithPosition:@""];
+  self.uploadDataArray = [self.model getLocalCheckDataListWithPosition:@"" WithUserNr:[UserModel accountNr]];
   [self.progressView setHidden:NO];
   self.progressView.progress = 0;
   if ([self.uploadDataArray count] > 0) {
-      [self toggleButton:FALSE];
-      [NSTimer scheduledTimerWithTimeInterval:0.01
+      UserEntity *current_user=[[[UserModel alloc]init] findUserByNr:[UserModel accountNr]];
+      if(self.uploadDataArray.count>=current_user.idSpanCount){
+        [self toggleButton:FALSE];
+        [NSTimer scheduledTimerWithTimeInterval:0.01
                                      target:self
                                    selector:@selector(uploadUpdateUI:)
                                    userInfo:nil
                                     repeats:YES];
+      }else{
+          [self MessageShowTitle:@"系统提示" Content:@"未完成指定任务量，不可上传！"];
+          NSLog(@"当前无上载数据");
+          [self.progressView setHidden:YES];
+      }
   } else {
     [self MessageShowTitle:@"系统提示" Content:@"当前无上载数据"];
     NSLog(@"当前无上载数据");

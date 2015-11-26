@@ -12,6 +12,13 @@
 #import "UserModel.h"
 
 @interface SettingViewController ()
+- (IBAction)backAction:(id)sender;
+- (IBAction)saveAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextField *ipTextField;
+//@property (weak, nonatomic) IBOutlet UITextField *portTextField;
+@property (weak, nonatomic) IBOutlet UITextField *requestTextField;
+@property (nonatomic, retain) AFNetHelper *afnet_helper;
+
 @property (nonatomic,strong) UIAlertView *downloadAlert;
 @property (nonatomic,strong) UIAlertView *settingAlert;
 @property (strong, nonatomic) IBOutlet UIProgressView *processView;
@@ -104,7 +111,7 @@
     
     self.partPrefixTextField.text=[self.afnet_helper partNrPrefix];
     
-    self.listLimitUserSwitch.on=[self.afnet_helper listLimitUser];
+   
 }
 
 /*
@@ -123,7 +130,7 @@
 
 - (IBAction)saveAction:(id)sender {
     if (self.ipTextField.text.length > 0 && self.requestTextField.text.length>0) {
-        [self.afnet_helper UpdateServerURLwithIP:self.ipTextField.text withRequest:self.requestTextField.text withDeparment:self.deparmentTextField.text withPartPrefix:@"P" WithListLimitUser:self.listLimitUserSwitch.on];
+        [self.afnet_helper UpdateServerURLwithIP:self.ipTextField.text withRequest:self.requestTextField.text withDeparment:self.deparmentTextField.text withPartPrefix:@"P"];
         
         [self.settingAlert show];
     }
@@ -145,6 +152,9 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     }else if(alertView==self.downloadAlert && buttonIndex==0){
+        
+        self.userModel=[[UserModel alloc] init];
+        [self.userModel cleanLocalData];
         [self downloadUserData];
     }
 }
@@ -155,11 +165,10 @@
 -(void)downloadUserData
 {
     NSLog(@"start donloading");
-    if(!self.users){
+   // if(!self.users){
         self.users=[[NSMutableArray alloc] init];
-    }
+    //}
     [self.users removeAllObjects];
-    [self.userModel cleanLocalData];
     
     self.userModel=[[UserModel alloc] init];
     NSInteger page=1;

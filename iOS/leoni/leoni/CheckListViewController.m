@@ -16,7 +16,8 @@
 @interface CheckListViewController ()
 
 @property(nonatomic, strong) UITableView *table;
-@property (nonatomic, strong) NSMutableArray* arrayInventories;
+@property (nonatomic, strong) NSMutableArray* localCheckInventories;
+@property (nonatomic,strong) NSMutableArray* localCreateInventories;
 @property (nonatomic, strong) NSMutableArray *searchResult;
 @property (nonatomic,strong) UISearchBar *searchBar;
 @property(nonatomic,strong) AFNetHelper *afnetHelper;
@@ -43,7 +44,7 @@
     [self.searchBar setPlaceholder:@"搜索库位"];
     [self.navigationController.navigationBar addSubview:self.searchBar];
     
-    self.searchResult = [NSMutableArray arrayWithCapacity:[self.arrayInventories count]];
+    self.searchResult = [NSMutableArray arrayWithCapacity:[self.localCheckInventories count]];
 //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
 //    [self.view addGestureRecognizer:tap];
     
@@ -115,13 +116,10 @@
     }
 
 - (void)loadData {
-    self.arrayInventories = [[NSMutableArray alloc]init];
-    InventoryModel *inventory = [[InventoryModel alloc] init];
-    if(self.afnetHelper.listLimitUser){
-         self.arrayInventories = [inventory getLocalCheckDataListWithPosition:@"" WithUserNr:[UserModel accountNr]];
-    }else{
-        self.arrayInventories=[inventory getLocalCheckDataListWithPosition:@""];
-    }
+    self.localCheckInventories = [[NSMutableArray alloc]init];
+    self.localCreateInventories=[[NSMutableArray alloc]init];
+    
+    [self getLocalCheckData:@""];
     [self.table reloadData];
 }
 
@@ -138,15 +136,14 @@
     }
     else
     {
-        NSLog(@"===  %ld",self.arrayInventories.count);
-        return self.arrayInventories.count;
+        NSLog(@"===  %ld",self.localCheckInventories.count);
+        return self.localCheckInventories.count;
     }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    
-    NSMutableArray *localCreated=[[NSMutableArray alloc]init];
+    NSInteger localCreatedCount=[[self localCreateInventories] count];;
     NSString *sectionName = @"";
     if(self.afnetHelper.listLimitUser){
        int total=0;
@@ -154,11 +151,9 @@
        if(user!=nil){
            total=user.idSpanCount;
         }
-        localCreated=[[[InventoryModel alloc]init] getLocalCreateCheckDataListWithPoistion:@"" WithUserNr:[UserModel accountNr]];
-        sectionName=[NSString stringWithFormat:@"已盘点:%i/%i 新增:%i",self.arrayInventories.count,total,[localCreated count]];
+        sectionName=[NSString stringWithFormat:@"已盘点:%i/%i 录入:%i",self.localCheckInventories.count-localCreatedCount,total,localCreatedCount];
     }else{
-        localCreated=[[[InventoryModel alloc]init] getLocalCreateCheckDataListWithPoistion:@""];
-        sectionName=[NSString stringWithFormat:@"已盘点:%i 新增:%i",self.arrayInventories.count,[localCreated count]];
+        sectionName=[NSString stringWithFormat:@"已盘点:%i 录入:%i",self.localCheckInventories.count-localCreatedCount,localCreatedCount];
     }
     return sectionName;
 }
@@ -181,11 +176,13 @@
     }
     else
     {
-        InventoryEntity *entity = self.arrayInventories[indexPath.row];
+        InventoryEntity *entity = self.localCheckInventories[indexPath.row];
         NSLog(@"entity %@%@", entity.position, entity.part_nr);
+       
         cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@ 零件:%@", entity.sn, entity.position, entity.part_nr];
     
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘: %@ 抽盘: %@  单位:%@ #盘点员:%@", entity.check_qty, entity.random_check_qty,entity.part_unit,entity.check_user];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘: %@ 抽盘: %@  单位:%@ #%@", entity.check_qty, entity.random_check_qty,entity.part_unit,entity.check_user];
+        
         UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 15.0 ];
         
         cell.textLabel.font  = myFont;
@@ -205,11 +202,20 @@
     [searchBar resignFirstResponder];
     //Do some search
     NSLog(@"=== testing search %@", searchBar.text);
-    InventoryModel *inventory = [[InventoryModel alloc] init];
-    self.arrayInventories = [inventory getLocalCheckDataListWithPosition:self.searchBar.text];
-    
+    [self getLocalCheckData:self.searchBar.text];
     [self.table reloadData];
-    
+}
+
+-(void) getLocalCheckData:(NSString *) position{
+    InventoryModel *inventory = [[InventoryModel alloc] init];
+
+    if(self.afnetHelper.listLimitUser){
+        self.localCheckInventories=[inventory getLocalCheckDataListWithPosition:position WithUserNr:[UserModel accountNr]];
+        self.localCreateInventories=[inventory getLocalCreateCheckDataListWithPoistion:position WithUserNr:[UserModel accountNr]];
+    }else{
+        self.localCheckInventories=[inventory getLocalCheckDataListWithPosition:position];
+        self.localCreateInventories=[inventory getLocalCreateCheckDataListWithPoistion:position];
+    }
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
@@ -218,7 +224,6 @@
 //    [searchBar setShowsCancelButton:NO animated:YES];
 //    NSLog(@"=== testing cancel ");
     [self loadData];
-    
 }
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
@@ -228,7 +233,7 @@
     [self.searchResult removeAllObjects];
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF contains[c] %@", searchText];
     
-    self.searchResult = [NSMutableArray arrayWithArray: [self.arrayInventories filteredArrayUsingPredicate:resultPredicate]];
+    self.searchResult = [NSMutableArray arrayWithArray: [self.localCheckInventories filteredArrayUsingPredicate:resultPredicate]];
 }
 
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString

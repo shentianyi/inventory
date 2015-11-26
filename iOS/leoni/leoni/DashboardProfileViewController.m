@@ -13,8 +13,13 @@
 #import "CheckUserRoleViewController.h"
 
 @interface DashboardProfileViewController ()<UIAlertViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UILabel *nrLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *roleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *idSpanLable;
 @property (weak, nonatomic) IBOutlet UILabel *idSpanCountLabel;
+@property (weak, nonatomic) IBOutlet UIButton *inventoryBtn;
 @property (nonatomic) BOOL pass;
 @end
 
@@ -49,13 +54,20 @@
 
 -(void) initController{
     KeychainItemWrapper *keyChain=[[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
+    
+    self.inventoryBtn.hidden=YES;
+    
     NSString *nr=[keyChain objectForKey:(__bridge id)kSecAttrAccount];
     UserModel *userModel=[[UserModel alloc]init];
     UserEntity *user=[userModel findUserByNr:nr];
+    
     if(user){
-        self.nrLabel.text=[NSString stringWithFormat:@"%@ # %@",user.nr,user.name];
+        self.nrLabel.text=user.nr;//[NSString stringWithFormat:@"%@ # %@",user.nr,user.name];
+        self.nameLabel.text=user.name;
+        self.roleLabel.text=user.role;
         self.idSpanLable.text=user.idSpan;
         self.idSpanCountLabel.text=[NSString stringWithFormat:@"%i", user.idSpanCount];
+        self.inventoryBtn.hidden=!user.isRoleTeamLeader;
     }
 }
 

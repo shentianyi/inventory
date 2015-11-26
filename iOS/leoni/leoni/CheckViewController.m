@@ -11,6 +11,7 @@
 #import "KeychainItemWrapper.h"
 #import "AFNetHelper.h"
 #import "UserModel.h"
+#import "UserEntity.h"
 
 @interface CheckViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *snTextField;
@@ -30,8 +31,9 @@
 -(void)clearTextFields:(NSArray *)textFields;
 -(void) initTextFieldsWithInventoryEntity:(InventoryEntity *)inventoryEntity;
 @property (strong,nonatomic) InventoryModel *inventory;
-
 @property (strong,nonatomic) InventoryEntity *currentInventoryEntity;
+@property (strong,nonatomic) UserEntity *currentUserEntity;
+
 @property (strong,nonatomic) AFNetHelper *afnet;
 
 - (IBAction)touchScreen:(id)sender;
@@ -121,6 +123,7 @@
     self.partTypeTextField.delegate =self;
     
     self.inventory = [[InventoryModel alloc] init];
+    self.currentUserEntity=[[[UserModel alloc]init] findUserByNr:[UserModel accountNr]];
 }
 
 
@@ -178,10 +181,13 @@
     
     hud.mode = MBProgressHUDModeText;
     hud.labelText = @"加载中...";
+    NSInteger sn=[self.snTextField.text integerValue];
+  
     
     NSMutableArray *getData = [[NSMutableArray alloc] init];
    // NSInteger sn=[self.snTextField.text integerValue];
-    getData = [self.inventory getListWithSn:[self.snTextField.text integerValue]];
+    getData = [self.inventory getListWithSn:sn];
+    
     NSUInteger countGetData =[ getData count];
     if ( countGetData >1) {
         hud.labelText = [NSString stringWithFormat:@"唯一码重复，请联系管理员"];
@@ -195,9 +201,16 @@
         
         [self clearAllTextFields];
     } else if(countGetData == 1) {
-        [self initTextFieldsWithInventoryEntity:getData.firstObject];
-        [hud hide:YES];
-        msgBool = true;
+        if(![self.currentUserEntity validateIdSpan:sn]){
+            hud.labelText = [NSString stringWithFormat:@"没有权限操作唯一码"];
+            [hud hide:YES afterDelay:1.5f];
+            
+            [self clearAllTextFields];
+     }else{
+           [self initTextFieldsWithInventoryEntity:getData.firstObject];
+           [hud hide:YES];
+           msgBool = true;
+        }
     }
     
     return msgBool;

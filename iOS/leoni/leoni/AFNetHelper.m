@@ -45,7 +45,7 @@
     
 }
 
-- (void)UpdateServerURLwithIP: (NSString *)ipString withRequest: (NSString *)requestString withDeparment:(NSString *)department withPartPrefix:(NSString *)partPrefix WithListLimitUser:(BOOL) listLimitUser{
+- (void)UpdateServerURLwithIP: (NSString *)ipString withRequest: (NSString *)requestString withDeparment:(NSString *)department withPartPrefix:(NSString *)partPrefix{
     NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSString *path = [documentsPath stringByAppendingPathComponent:@"server.plist"];
@@ -68,10 +68,31 @@
     [plistdict setObject:partPrefix forKey:@"part_prefix"];
     
    // [plistdict removeObjectForKey:@"list_limit_user"];
-    [plistdict setValue: [NSNumber numberWithBool:listLimitUser] forKey:@"list_limit_user"];
+  //  [plistdict setValue: [NSNumber numberWithBool:listLimitUser] forKey:@"list_limit_user"];
     
     [plistdict writeToFile:path atomically:YES];
         
+}
+
+-(void) updateInventorySettingWithListLimitUser:(BOOL)listLimitUser{
+
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *path = [documentsPath stringByAppendingPathComponent:@"server.plist"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:path])
+    {
+        NSString *bundle = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"plist"];
+        [fileManager copyItemAtPath:bundle toPath: path error: nil];
+    }
+    
+    NSMutableDictionary *plistdict = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+    
+     [plistdict setValue: [NSNumber numberWithBool:listLimitUser] forKey:@"list_limit_user"];
+    
+    [plistdict writeToFile:path atomically:YES];
+ 
 }
 
 

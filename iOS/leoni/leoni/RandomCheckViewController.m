@@ -12,6 +12,21 @@
 @interface RandomCheckViewController ()
 
 @property (strong, nonatomic) UITextField *firstResponder;
+@property (weak, nonatomic) IBOutlet UITextField *snTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *positionTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *departmentTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *partTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *partUnitTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *partTypeTextField;
+@property (weak, nonatomic) IBOutlet UITextField *checkQtyTextField;
+@property (weak, nonatomic) IBOutlet UITextField *randomCheckQtyTextField;
+- (IBAction)saveAtion:(id)sender;
+
 
 @property (strong,nonatomic) InventoryEntity *currentInventoryEntity;
 @property (nonatomic,retain) InventoryModel *inventory;
@@ -72,8 +87,11 @@
 }
 
 - (void)initController {
+    self.snTextField.delegate=self;
+    
+    [self.snTextField becomeFirstResponder];
+    
     self.positionTextField.delegate =self;
-    [self.positionTextField becomeFirstResponder];
 
     
     self.partTextField.delegate = self;
@@ -83,6 +101,8 @@
     self.checkQtyTextField.delegate = self;
     self.randomCheckQtyTextField.delegate = self;
     
+    
+    self.partUnitTextField.enabled = NO;
     self.partTypeTextField.enabled = NO;
     self.checkQtyTextField.enabled = NO;
 
@@ -100,7 +120,7 @@
     }
     
     [self clearTextFields: textFields];
-    [self.positionTextField becomeFirstResponder];
+    [self.snTextField becomeFirstResponder];
 }
 
 -(void)clearTextFields:(NSArray *)textFields{
@@ -115,7 +135,9 @@
     if(textField!=self.randomCheckQtyTextField){
         self.currentInventoryEntity=nil;
     }
-    
+    if(textField==self.snTextField){
+        [self validateSn];
+    }
     if (textField == self.positionTextField) {
         [self validatePosition];
     }else if(textField==self.departmentTextField){
@@ -148,6 +170,7 @@
 - (void)validateText {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeText;
+    if(self.snTextField.text.length>0){
     if ([self.positionTextField.text length] >0) {
         if ([self.partTextField.text length] >0) {
 // if([self.partTypeTextField.text length] >0){
@@ -185,13 +208,53 @@
         hud.labelText = @"请输入库位";
         [hud hide:YES afterDelay:1.0f];
         
+    }}else{
+        hud.labelText = @"请输入唯一码";
+        [hud hide:YES afterDelay:1.0f];
     }
     
 }
 
+- (BOOL)validateSn
+{
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.positionTextField,self.departmentTextField,self.partTextField,self.partTypeTextField,self.partUnitTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
+    
+    [self clearTextFields:clearTextFields];
+    
+    BOOL msgBool = false;
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"加载中...";
+    
+    NSMutableArray *getData = [[NSMutableArray alloc] init];
+    // NSInteger sn=[self.snTextField.text integerValue];
+    getData = [self.inventory getRandomListWithSn:[self.snTextField.text integerValue]];
+    NSUInteger countGetData =[ getData count];
+    if ( countGetData >1) {
+        hud.labelText = [NSString stringWithFormat:@"唯一码重复，请联系管理员"];
+        [hud hide:YES afterDelay:1.5f];
+        
+        [self clearAllTextFields];
+        
+    } else if (countGetData == 0) {
+        hud.labelText = [NSString stringWithFormat:@"非抽盘数据，不可抽盘"];
+        [hud hide:YES afterDelay:1.0f];
+        
+        [self clearAllTextFields];
+    } else if(countGetData == 1) {
+        [self initTextFieldsWithInventoryEntity:getData.firstObject];
+        [hud hide:YES];
+        msgBool = true;
+    }
+    
+    return msgBool;
+}
+
+
 - (BOOL)validatePosition
 {
-    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.departmentTextField,self.partTextField,self.partTypeTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.snTextField,self.departmentTextField,self.partTextField,self.partTypeTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
     
     [self clearTextFields:clearTextFields];
     
@@ -235,7 +298,7 @@
 -(BOOL)validateDepartment{
     BOOL msgBool=false;
     
-    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.partTextField,self.partTypeTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.snTextField,self.partTextField,self.partTypeTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
     
     [self clearTextFields:clearTextFields];
     
@@ -274,7 +337,7 @@
 -(BOOL)validatePart{
     BOOL msgBool=false;
     
-    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.partTypeTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.snTextField,self.partTypeTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
     
     [self clearTextFields:clearTextFields];
     
@@ -288,7 +351,6 @@
         NSMutableArray *inventories=[self.inventory getRandomListWithPosition:self.positionTextField.text andDepartment:self.departmentTextField.text andPart:self.partTextField.text];
         
         if(inventories.count==0){
-            
             hud.labelText = [NSString stringWithFormat:@"非抽盘数据，不可抽盘"];
             [self clearAllTextFields];
             
@@ -348,10 +410,11 @@
 
 -(void) initTextFieldsWithInventoryEntity:(InventoryEntity *)inventoryEntity{
     self.currentInventoryEntity=inventoryEntity;
-    
+    self.snTextField.text=[NSString stringWithFormat:@"%i",inventoryEntity.sn];
     self.positionTextField.text=inventoryEntity.position;
     self.departmentTextField.text = inventoryEntity.department;
     self.partTextField.text = inventoryEntity.part_nr;
+    self.partUnitTextField.text=inventoryEntity.part_unit;
     self.partTypeTextField.text = inventoryEntity.part_type;
     self.checkQtyTextField.text = inventoryEntity.check_qty;
     self.randomCheckQtyTextField.text=inventoryEntity.random_check_qty;
@@ -372,7 +435,6 @@
         textField.inputView = dummyView;
         [self hideKeyboard];
     }else{
-        
         CGRect frame=textField.frame;
         int offset=frame.origin.y-270;
         NSTimeInterval animationDuration=0.30f;
@@ -390,7 +452,7 @@
 - (IBAction)touchScreen:(id)sender {
     [self hideKeyboard];
     //[self  dismissKeyboard];
-    [self.positionTextField becomeFirstResponder];
+    [self.snTextField becomeFirstResponder];
 }
 
 -(void)hideKeyboard{
@@ -400,18 +462,6 @@
                          animations:^{
                              self.view.frame=CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
                          }];
-    }
-}
-
--(void)dismissKeyboard {
-    NSArray *subviews = [self.view subviews];
-    for (id objInput in subviews) {
-        if ([objInput isKindOfClass:[UITextField class]]) {
-            UITextField *theTextField = objInput;
-            if ([objInput isFirstResponder]) {
-                [theTextField resignFirstResponder];
-            }
-        }
     }
 }
 
