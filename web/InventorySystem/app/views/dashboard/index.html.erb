@@ -38,58 +38,58 @@
     <tbody>
     <% @data.each do |data| %>
         <tr>
-          <td class="department  percent size <%='bold' if data[:department]=='总计'%>">
+          <td class="department  number size <%='bold' if data[:department]=='总计'%>">
             <%= data[:department] %>
           </td>
           <td class='department'>
             <%= data[:total_inven] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  number'>
             <%= data[:origin_inven] %>
           </td>
-          <td class=inven'>
+          <td class=inven percent'>
             <%= data[:origin_inven_percent] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  number'>
             <%= data[:new_inven] %>
           </td>
-          <td class=inven'>
+          <td class='inven  percent'>
             <%= data[:new_inven_percent] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  number'>
             <%= data[:check_inven] %>
           </td>
-          <td class=inven'>
+          <td class='inven  percent'>
             <%= data[:check_inven_percent] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  number'>
             <%= data[:not_check_inven] %>
           </td>
-          <td class=inven'>
+          <td class='inven  percent'>
             <%= data[:not_check_inven_percent] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  number'>
             <%= data[:random_total_inven] %>
           </td>
-          <td class=inven'>
+          <td class='inven  percent'>
             <%= data[:random_total_inven_percent] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  number'>
             <%= data[:random_check_inven] %>
           </td>
-          <td class=inven'>
+          <td class='inven  percent'>
             <%= data[:random_check_inven_percent] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  number'>
             <%= data[:random_not_check_inven] %>
           </td>
-          <td class=inven'>
+          <td class='inven  percent'>
             <%= data[:random_not_check_inven_percent] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  number'>
             <%= data[:changed_check_inven] %>
           </td>
-          <td class=inven'>
+          <td class='inven  percent'>
             <%= data[:changed_check_inven_percent] %>
           </td>
         </tr>
@@ -106,7 +106,7 @@
         width: 50px;
     }
 
-    .percent{
+    .number{
         background-color: lightblue;
     }
 
@@ -122,3 +122,13 @@
          width: 140px;
     }
 </style>
+<script type="text/javascript">
+  $(function(){
+      $.each($('.percent'),function(){
+          if($.trim($(this).text())=='100.0%' || $.trim($(this).text())=='100%'){
+              $(this).text('100%');
+              $(this).css('color','green');
+          }
+      });
+  });
+</script>
