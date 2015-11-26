@@ -42,7 +42,9 @@ class InventoriesController < ApplicationController
       @ios_created_id = params[:ios_created_id]
       @is_random_check = params[:is_random_check]
       @inventories = Inventory.search_by_condition(@department, @position_begin, @position_end, @part_nr, @ios_created_id, @is_random_check, {check_user: @check_user,
-                                                                                                                                              random_check_user: params[:random_check_user]})
+                             sn_begin:params[:sn_begin],
+							 sn_end:params[:sn_end],
+							 random_check_user: params[:random_check_user]})
 
       respond_to do |format|
         format.xlsx do

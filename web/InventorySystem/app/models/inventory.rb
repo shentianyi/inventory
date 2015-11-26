@@ -88,7 +88,8 @@ class Inventory < ActiveRecord::Base
     end
     inventories = inventories.where("(position between '#{position_begin}' and '#{position_end}') or position like '%#{position_begin}%' or position like '%#{position_end}%' ") if position_begin.present? & position_end.present?
     # inventories = inventories.where("position like '%#{position_end}%' ") if position_end.present?
-    inventories
+  inventories=inventories.where(sn:params[:sn_begin]..params[:sn_end]) if params[:sn_begin].present? && params[:sn_end].present?
+	inventories
   end
 
   def self.create_random_data

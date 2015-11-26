@@ -13,7 +13,8 @@
         部门：<%= text_field_tag :department, params[:department] %>
         全盘员工号：<%= text_field_tag :check_user, params[:check_user] %>
         抽盘员工号：<%= text_field_tag :random_check_user, params[:random_check_user] %><br/>
-        库位号：从<%= text_field_tag :position_begin, params[:position_begin] %>
+	    唯一码：从<%=text_field_tag :sn_begin,params[:sn_begin]%>到<%=text_field_tag :sn_end,params[:sn_end]%>
+		库位号：从<%= text_field_tag :position_begin, params[:position_begin] %>
         到<%= text_field_tag :position_end, params[:position_end] %>
         零件号：<%= text_field_tag :part_nr, params[:part_nr] %>
         是否是iOS新建：<%= select_tag :ios_created_id, options_for_select([["否", 0], ["是", 1]]), {prompt: '选择'} %>
