@@ -22,4 +22,7 @@
 
 - (id) initWithId:(NSString *)userId andNr:(NSString *)nr andName:(NSString *)name;
 
+-(BOOL) validateIdSpan:(NSInteger) sn;
+
+-(BOOL) isRoleTeamLeader;
 @end

@@ -12,11 +12,11 @@
 #import "AFNetHelper.h"
 
 @interface CheckCreateViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *snTextField;
 @property (weak, nonatomic) IBOutlet UITextField *positionTextField;
 @property (weak, nonatomic) IBOutlet UITextField *partTextField;
 @property (weak, nonatomic) IBOutlet UITextField *departmentTextField;
 @property (weak, nonatomic) IBOutlet UITextField *partUnitTextField;
-
 @property (weak, nonatomic) IBOutlet UITextField *partTypeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *checkQtyTextField;
 - (IBAction)saveAction:(id)sender;
@@ -76,10 +76,12 @@
 }
 
 - (void)initController {
+    self.snTextField.delegate=self;
     self.positionTextField.delegate =self;
     self.partTextField.delegate = self;
     self.departmentTextField.delegate = self;
     self.partTypeTextField.delegate=self;
+    self.partUnitTextField.delegate=self;
     self.checkQtyTextField.delegate = self;
     self.afnet=[[AFNetHelper alloc]init];
    
@@ -107,7 +109,6 @@
     
     [self clearTextFields: textFields];
     
-    self.departmentTextField.text=[self.afnet defaultDepartment];
     
    // [self.positionTextField becomeFirstResponder];
 }
@@ -116,14 +117,49 @@
     for (int i=0; i<textFields.count; i++) {
         ((UITextField *)textFields[i]).text=@"";
     }
+    self.departmentTextField.text=[self.afnet defaultDepartment];
 }
+
+
+- (BOOL)validateSn:(BOOL)clean
+{
+    if(clean){
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.positionTextField,self.departmentTextField,self.partTextField,self.partTypeTextField,self.partUnitTextField,self.checkQtyTextField,nil];
+    
+    [self clearTextFields:clearTextFields];
+  }
+    BOOL msgBool = NO;
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"加载中...";
+    
+    NSMutableArray *getData = [[NSMutableArray alloc] init];
+    // NSInteger sn=[self.snTextField.text integerValue];
+    getData = [self.inventory getListWithSn:[self.snTextField.text integerValue]];
+    NSUInteger countGetData =[ getData count];
+    if ( countGetData >1) {
+        hud.labelText = [NSString stringWithFormat:@"唯一码重复，请联系管理员"];
+        [hud hide:YES afterDelay:1.5f];
+        
+        [self clearAllTextFields];
+    } else if (countGetData == 0) {
+        msgBool = YES;
+        [hud hide:YES];
+        [self.positionTextField becomeFirstResponder];
+    } else if(countGetData == 1) {
+        hud.labelText = [NSString stringWithFormat:@"唯一码已存在，不可录入"];
+        [hud hide:YES afterDelay:1.5f];
+        [self clearAllTextFields];
+    }
+    return msgBool;
+}
+
 
 
 - (BOOL)validatePosition
 {
     BOOL msgBool = NO;
-   
-    
    // hud.labelText = @"加载中...";
         NSMutableArray *getData = [[NSMutableArray alloc] init];
     
@@ -147,20 +183,18 @@
 
 
 - (void)validateText {
-    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeText;
+    if([self.snTextField.text length]>0){
     if ([self.positionTextField.text length] >0) {
         if ([self.partTextField.text length] >0) {
-            if([self.partTypeTextField.text length] >0){
+//            if([self.partTypeTextField.text length] >0){
                 if([self.departmentTextField.text length] >0){
                     if([self.checkQtyTextField.text length] >0 && ([self isPureFloat:self.checkQtyTextField.text] || [self isPureInt:self.checkQtyTextField.text])){
 //
                         [hud hide:YES];
-                        if ([self validatePosition]) {
-                            
+                        if ([self validateSn:NO] && [self validatePosition]) {
                             [self saveCheckData];
-                            
                         }
                     }else{
                         if(self.firstResponder==self.checkQtyTextField){
@@ -175,10 +209,10 @@
                     hud.labelText = @"请输入部门";
                     [hud hide:YES afterDelay:0.5f];
                 }
-            }else{
-                hud.labelText = @"请输入类型";
-                [hud hide:YES afterDelay:0.5f];
-            }
+//            }else{
+//                hud.labelText = @"请输入类型";
+//                [hud hide:YES afterDelay:0.5f];
+//            }
                 
         }else{
             hud.labelText = @"请输入零件号";
@@ -187,7 +221,10 @@
     } else{
         hud.labelText = @"请输入库位";
         [hud hide:YES afterDelay:0.5f];
-
+    }
+    }else{
+        hud.labelText = @"请输入唯一码";
+        [hud hide:YES afterDelay:0.5f];
     }
     
 }
@@ -196,8 +233,9 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if (textField == self.checkQtyTextField) {
-//        [self validPosition:textField];
         [self validateText];
+    }else if(textField==self.snTextField && self.snTextField.text.length>0){
+        [self validateSn:YES];
     }else if(textField==self.positionTextField && self.positionTextField.text.length>0){
         if(self.departmentTextField.text.length>0){
             [self.partTypeTextField becomeFirstResponder];
@@ -205,13 +243,14 @@
             [self.departmentTextField becomeFirstResponder];
         }
     }else if(textField==self.departmentTextField && self.departmentTextField.text.length>0){
+        [self.partUnitTextField becomeFirstResponder];
+    }else if(textField==self.partUnitTextField){
         [self.partTypeTextField becomeFirstResponder];
-    }else if(textField==self.partTypeTextField && self.partTypeTextField.text.length>0){
+    }else if(textField==self.partTypeTextField){
         [self.partTextField becomeFirstResponder];
     }else if(textField==self.partTextField && self.partTextField.text.length>0){
         [self.checkQtyTextField becomeFirstResponder];
     }
-//    [textField resignFirstResponder];
     return YES;
 }
 
@@ -236,16 +275,16 @@
     if ([self isPureFloat:self.checkQtyTextField.text] || [self isPureInt:self.checkQtyTextField.text]){
         InventoryModel *inventory = [[InventoryModel alloc] init];
         KeychainItemWrapper *keyChain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
-        
+        NSInteger sn=[self.snTextField.text integerValue];
        
-        [inventory createWithPosition: self.positionTextField.text WithPart:self.partTextField.text WithDepartment:self.departmentTextField.text WithPartType:self.partTypeTextField.text WithChcekQty:self.checkQtyTextField.text WithCheckUser:[keyChain objectForKey:(__bridge  id)kSecAttrAccount] block:^(NSString *msgString, NSError *error) {
+        [inventory createLocalDataWithSn:sn WithPosition: self.positionTextField.text WithPart:self.partTextField.text WithDepartment:self.departmentTextField.text WithPartType:self.partTypeTextField.text WithPartUnit:self.partUnitTextField.text WithChcekQty:self.checkQtyTextField.text WithCheckUser:[keyChain objectForKey:(__bridge  id)kSecAttrAccount] block:^(NSString *msgString, NSError *error) {
             hud.mode = MBProgressHUDModeText;
             hud.labelText = [NSString stringWithFormat:@"%@", msgString];
             [hud hide:YES afterDelay:0.5f];
             if (error == nil) {
                 [self hideKeyboard];
                 [self clearAllTextFields];
-                [self.positionTextField becomeFirstResponder];
+                [self.snTextField becomeFirstResponder];
             }
         }];
         
@@ -274,25 +313,33 @@
     float val;
     return [scan scanFloat:&val] && [scan isAtEnd];
 }
+
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    CGRect frame=textField.frame;
-    int offset=frame.origin.y;
+    if(textField==self.snTextField){
+        UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+        textField.inputView = dummyView;
+        [self hideKeyboard];
+    }else{
+           CGRect frame=textField.frame;
+           int offset=frame.origin.y;
     
-    if(textField==self.partTypeTextField){
-        offset=frame.origin.y-200;
-    }else if(textField==self.partTextField){
-        offset=frame.origin.y-150;
-    }else if(textField==self.partTextField){
-        offset=frame.origin.y-100;
-    }
-    if(offset!=frame.origin.y){
-    NSTimeInterval animationDuration=0.30f;
-    [UIView animateWithDuration:animationDuration
+               if(textField==self.partTypeTextField || textField==self.partUnitTextField){
+                   offset=frame.origin.y-200;
+               }else if(textField==self.partTextField){
+                   offset=frame.origin.y-150;
+               }else if(textField==self.checkQtyTextField){
+                   offset=frame.origin.y-200;
+               }
+           if(offset!=frame.origin.y){
+           NSTimeInterval animationDuration=0.30f;
+           [UIView animateWithDuration:animationDuration
                      animations:^{
                          self.view.frame=CGRectMake(0, -offset, self.view.bounds.size.width, self.view.bounds.size.height);
                      }];
+            }
     }
+    
     self.firstResponder=textField;
     
     [self setCleanStartBTTitle];
@@ -305,7 +352,7 @@
         self.firstResponder=nil;
     }else{
         [self.view endEditing:NO];
-        [self.positionTextField becomeFirstResponder];
+        [self.snTextField becomeFirstResponder];
     }
     //[self setCleanStartBTTitle];
 }

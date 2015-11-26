@@ -14,6 +14,7 @@
 		0248C6171C044D1C001C483E /* CheckUserRoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0248C6161C044D1C001C483E /* CheckUserRoleViewController.m */; };
 		0248C61A1C045F22001C483E /* SetUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0248C6191C045F22001C483E /* SetUserViewController.m */; };
 		02B466511BF33F4A002BC2AB /* ViewUIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B466501BF33F4A002BC2AB /* ViewUIHelper.m */; };
+		02D2A1D11C06E27E00BC8D98 /* InventorySettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02D2A1D01C06E27E00BC8D98 /* InventorySettingViewController.m */; };
 		9429571E1BC3B7D000C35462 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429571D1BC3B7D000C35462 /* DBManager.m */; };
 		942957201BC3B7E200C35462 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9429571F1BC3B7E200C35462 /* libsqlite3.dylib */; };
 		942957251BC3F43C00C35462 /* CheckListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 942957241BC3F43C00C35462 /* CheckListViewController.m */; };
@@ -71,6 +72,8 @@
 		0248C6191C045F22001C483E /* SetUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetUserViewController.m; sourceTree = "<group>"; };
 		02B4664F1BF33E70002BC2AB /* ViewUIHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewUIHelper.h; sourceTree = "<group>"; };
 		02B466501BF33F4A002BC2AB /* ViewUIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewUIHelper.m; sourceTree = "<group>"; };
+		02D2A1CF1C06E27E00BC8D98 /* InventorySettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventorySettingViewController.h; sourceTree = "<group>"; };
+		02D2A1D01C06E27E00BC8D98 /* InventorySettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventorySettingViewController.m; sourceTree = "<group>"; };
 		444761C8CCFDCCE9DECDA580 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		65DD0E03D04E30B34C3CA012 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9429571C1BC3B7D000C35462 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
@@ -293,6 +296,8 @@
 				0248C6161C044D1C001C483E /* CheckUserRoleViewController.m */,
 				0248C6181C045F22001C483E /* SetUserViewController.h */,
 				0248C6191C045F22001C483E /* SetUserViewController.m */,
+				02D2A1CF1C06E27E00BC8D98 /* InventorySettingViewController.h */,
+				02D2A1D01C06E27E00BC8D98 /* InventorySettingViewController.m */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -488,6 +493,7 @@
 				94A359401BC10701008910EB /* AFNetHelper.m in Sources */,
 				0248C61A1C045F22001C483E /* SetUserViewController.m in Sources */,
 				02B466511BF33F4A002BC2AB /* ViewUIHelper.m in Sources */,
+				02D2A1D11C06E27E00BC8D98 /* InventorySettingViewController.m in Sources */,
 				9463F0341BC20DD600280D38 /* KeychainItemWrapper.m in Sources */,
 				9463F03A1BC2450600280D38 /* CheckCreateViewController.m in Sources */,
 				9429571E1BC3B7D000C35462 /* DBManager.m in Sources */,

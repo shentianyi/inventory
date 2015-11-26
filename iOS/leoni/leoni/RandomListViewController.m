@@ -137,7 +137,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSString *sectionName = [NSString stringWithFormat: @"已盘点%ld", (long)self.arrayInventories.count];
+    NSString *sectionName = [NSString stringWithFormat: @"已抽盘 %ld", (long)self.arrayInventories.count];
     
     return sectionName;
 }
@@ -162,10 +162,16 @@
     {
         InventoryEntity *entity = self.arrayInventories[indexPath.row];
         NSLog(@"entity %@%@", entity.position, entity.part_nr);
-        cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@  零件: %@", indexPath.row+1, entity.position ,entity.part_nr];
+//        cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@  零件: %@", indexPath.row+1, entity.position ,entity.part_nr];
+//        
+//        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘数量: %@ 抽盘数量: %@", entity.check_qty, entity.random_check_qty];
         
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘数量: %@ 抽盘数量: %@", entity.check_qty, entity.random_check_qty];
-        UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 18.0 ];
+        cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@ 零件:%@", entity.sn, entity.position, entity.part_nr];
+        
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘: %@ 抽盘: %@  单位:%@ #%@", entity.check_qty, entity.random_check_qty,entity.part_unit,entity.random_check_user];
+        
+        
+        UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 15.0 ];
         
 //        if(indexPath.row%2==1){
 //        cell.backgroundColor = [UIColor colorWithRed:224.0f/255.0f green:155.0f/255.0f blue:90.0f/255.0f alpha:0.3f];

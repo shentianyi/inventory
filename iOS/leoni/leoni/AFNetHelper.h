@@ -14,7 +14,11 @@
 
 - (AFHTTPRequestOperationManager *)basicManager;
 - (NSString *)ServerURL;
-- (void)UpdateServerURLwithIP: (NSString *)ipString withRequest: (NSString *)requestString withDeparment:(NSString *)deparment withPartPrefix:(NSString *)partPrefix WithListLimitUser:(BOOL)listLimitUser;
+- (void)UpdateServerURLwithIP: (NSString *)ipString withRequest: (NSString *)requestString withDeparment:(NSString *)deparment withPartPrefix:(NSString *)partPrefix;
+
+
+-(void) updateInventorySettingWithListLimitUser:(BOOL)listLimitUser;
+
 - (NSString *)getRequestQuantity;
 - (NSString *)defaultDepartment;
 - (NSString *)partNrPrefix;

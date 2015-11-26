@@ -49,11 +49,39 @@
         for (NSString *span in spans) {
             NSLog(@"span: %@",span);
             NSArray *sspans=[span componentsSeparatedByString:@"-"];
+            if([sspans count]==2){
             count+=([sspans[1] integerValue]-[sspans[0] integerValue]+1);
+            }
         }
         }
         _idSpanCount=count;//[NSString stringWithFormat:@"%i",count];
     }
     return _idSpanCount;
+}
+
+-(BOOL)validateIdSpan:(NSInteger)sn{
+    BOOL result=NO;
+    
+    if(self.idSpan && self.idSpan.length>0){
+        NSArray *spans=[self.idSpan componentsSeparatedByString:@","];
+        
+        for (NSString *span in spans) {
+            NSArray *sspans=[span componentsSeparatedByString:@"-"];
+            if([sspans count]==2){
+
+            NSInteger from=[sspans[0] integerValue];
+            NSInteger to=[sspans[1] integerValue];
+            if (sn>=from && sn<=to) {
+                result=YES;
+                break;
+            }}
+        }
+    }
+    
+    return  result;
+}
+
+-(BOOL)isRoleTeamLeader{
+ return  [self.role isEqualToString: @"组长"];
 }
 @end
