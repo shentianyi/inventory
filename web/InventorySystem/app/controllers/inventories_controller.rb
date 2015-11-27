@@ -66,7 +66,7 @@ class InventoriesController < ApplicationController
     p.use_shared_strings = true
     wb = p.workbook
     wb.add_worksheet(:name => "sheet1") do |sheet|
-      sheet.add_row ["序号", "部门", "库位", "零件号", "零件类型", "零件单位", "全盘数量", "全盘员工", "全盘时间", "抽盘数量", "抽盘员工", "抽盘时间", "是否抽盘", "iOS新建id"]
+      sheet.add_row ["唯一码", "部门", "库位", "零件号", "零件类型", "零件单位", "全盘数量", "全盘员工", "全盘时间", "抽盘数量", "抽盘员工", "抽盘时间", "是否抽盘", "iOS新建id"]
       #puts "--testing #{inventories.count}"
       inventories.each_with_index { |inventory, index|
         sheet.add_row [
@@ -152,6 +152,6 @@ class InventoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def inventory_params
-    params.require(:inventory).permit(:department, :position, :part_nr,:part_unit,:part_type, :check_qty, :check_user, :random_check_qty, :random_check_user, :is_random_check, :ios_created_id, :position_begin, :position_end)
+    params.require(:inventory).permit(:department, :position, :part_nr,:sn,:part_unit,:part_type, :check_qty, :check_user, :random_check_qty, :random_check_user, :is_random_check, :ios_created_id, :position_begin, :position_end)
   end
 end
