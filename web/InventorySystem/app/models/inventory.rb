@@ -157,6 +157,6 @@ class Inventory < ActiveRecord::Base
     if self.random_check_user.blank?
       self.random_check_user=nil
     end
-    
+
   end
 end

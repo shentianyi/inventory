@@ -32,3 +32,9 @@
 .main{
     margin-left: 150px;
 }
+
+.footer{
+    margin-right: 250px;
+    float: right;
+    margin-bottom: 10px;
+}

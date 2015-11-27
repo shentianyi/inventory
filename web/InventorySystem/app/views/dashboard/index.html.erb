@@ -2,35 +2,35 @@
 <div>
   <table class="table table-hover table-striped  table-bordered">
     <thead style="background-color:#1a8bc8;font-size:16px;">
-    <tr>
-      <th>
+    <tr class="border">
+      <th class="border" style="border-right: lightblue solid 2px;">
         部门\统计项
       </th>
-      <th>
+      <th style="border-right:lightblue solid 2px;">
         共计盘点项
       </th>
-      <th colspan='2'>
+      <th colspan='2' style="border-right:lightblue solid 2px;">
         原有盘点项
       </th>
-      <th colspan='2'>
+      <th colspan='2' style="border-right:lightblue solid 2px;">
         新建盘点项
       </th>
-      <th colspan='2'>
+      <th colspan='2' style="border-right:lightblue solid 2px;">
         已全盘
       </th>
-      <th colspan='2'>
+      <th colspan='2' style="border-right:lightblue solid 2px;">
         未全盘
       </th>
-      <th colspan='2'>
+      <th colspan='2' style="border-right:lightblue solid 2px;">
         抽盘量
       </th>
-      <th colspan='2'>
+      <th colspan='2' style="border-right:lightblue solid 2px;">
         已抽盘
       </th>
-      <th colspan='2'>
+      <th colspan='2' style="border-right:lightblue solid 2px;">
         未抽盘
       </th>
-      <th colspan='2'>
+      <th colspan='2' style="border-right:lightblue solid 2px;">
         抽盘修正
       </th>
     </tr>
@@ -38,58 +38,58 @@
     <tbody>
     <% @data.each do |data| %>
         <tr>
-          <td class="department  number size <%='bold' if data[:department]=='总计'%>">
+          <td class="department  number size <%= 'bold' if data[:department]=='总计' %>" style="border-right:lightblue solid 2px;">
             <%= data[:department] %>
           </td>
-          <td class='department'>
+          <td class='department' style="border-right:lightblue solid 2px;">
             <%= data[:total_inven] %>
           </td>
-          <td class='inven  number'>
+          <td class='inven  number' style="border-right:lightblue solid 2px;">
             <%= data[:origin_inven] %>
           </td>
-          <td class='inven percent'>
+          <td class='inven percent' style="border-right:lightblue solid 2px;">
             <%= data[:origin_inven_percent] %>
           </td>
           <td class='inven  number'>
             <%= data[:new_inven] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  percent' style="border-right:lightblue solid 2px;">
             <%= data[:new_inven_percent] %>
           </td>
           <td class='inven  number'>
             <%= data[:check_inven] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  percent' style="border-right:lightblue solid 2px;">
             <%= data[:check_inven_percent] %>
           </td>
           <td class='inven  number'>
             <%= data[:not_check_inven] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  percent' style="border-right:lightblue solid 2px;">
             <%= data[:not_check_inven_percent] %>
           </td>
           <td class='inven  number'>
             <%= data[:random_total_inven] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  percent' style="border-right:lightblue solid 2px;">
             <%= data[:random_total_inven_percent] %>
           </td>
           <td class='inven  number'>
             <%= data[:random_check_inven] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  percent' style="border-right:lightblue solid 2px;">
             <%= data[:random_check_inven_percent] %>
           </td>
           <td class='inven  number'>
             <%= data[:random_not_check_inven] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  percent' style="border-right:lightblue solid 2px;">
             <%= data[:random_not_check_inven_percent] %>
           </td>
           <td class='inven  number'>
             <%= data[:changed_check_inven] %>
           </td>
-          <td class='inven  percent'>
+          <td class='inven  percent'  style="border-right:lightblue solid 2px;">
             <%= data[:changed_check_inven_percent] %>
           </td>
         </tr>
@@ -97,40 +97,16 @@
     </tbody>
   </table>
 </div>
-<style>
-    th, td {
-        text-align: center;
-    }
-
-    .inven {
-        width: 50px;
-    }
-
-    .number{
-        background-color: lightblue;
-    }
-
-    .size{
-        font-size: 16px;
-    }
-
-    .bold{
-        font-weight: bolder;
-    }
-
-    .department {
-         width: 140px;
-    }
-</style>
 <script type="text/javascript">
-  $(function(){
-      $.each($('.percent'),function(){
-		  if($.trim($(this).text())=='100.0%' || $.trim($(this).text())=='100%'){
-		  $(this).text('100%');
-		  $(this).css('color','green');
-		  }else if($.trim($(this).text())=='0.0%' || $.trim($(this).text())=='0%'){
-		  $(this).text('0');
-		  }
-      });
-  });
+    $(function () {
+        $.each($('.percent'), function () {
+            if ($.trim($(this).text()) == '100.0%' || $.trim($(this).text()) == '100%') {
+                $(this).text('100%');
+                $(this).css('color', 'green');
+                $(this).css('font-weight', 'bolder');
+            } else if ($.trim($(this).text()) == '0.0%' || $.trim($(this).text()) == '0%') {
+                $(this).text('0');
+            }
+        });
+    });
 </script>
