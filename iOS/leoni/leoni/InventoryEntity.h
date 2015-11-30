@@ -30,8 +30,12 @@
 @property (nonatomic, copy) NSString *is_random_check;
 @property (nonatomic, copy) NSString *ios_created_id;
 @property (nonatomic,copy) NSString *ios_created_at;
+// default 0-false, 1 true
+@property (nonatomic,copy) NSString *is_check_synced;
+// default 0-false, 1 true
+@property (nonatomic,copy) NSString *is_random_check_synced;
 
-- (id)initWithId:(NSString *)inventory_id WithSn:(NSInteger)sn WithPosition: (NSString *)position WithDepartment: (NSString *)department WithPartNr: (NSString *)part_nr WithPartUnit:(NSString *) part_unit WithPartType: (NSString *)part_type WithIsLocalCheck:(NSString *)isLocalCheck WithCheckQty:(NSString *)checkQty WithCheckUser:(NSString *)checkUser WithCheckTime:(NSString *)checkTime WithIsLocalRandomCheck:(NSString *)isLocalRandomCheck WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithIsRandomCheck:(NSString*)isRandomCheck WithiOSCreatedID: (NSString *)iOSCreatedId;
+- (id)initWithId:(NSString *)inventory_id WithSn:(NSInteger)sn WithPosition: (NSString *)position WithDepartment: (NSString *)department WithPartNr: (NSString *)part_nr WithPartUnit:(NSString *) part_unit WithPartType: (NSString *)part_type WithIsLocalCheck:(NSString *)isLocalCheck WithCheckQty:(NSString *)checkQty WithCheckUser:(NSString *)checkUser WithCheckTime:(NSString *)checkTime WithIsLocalRandomCheck:(NSString *)isLocalRandomCheck WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithIsRandomCheck:(NSString*)isRandomCheck WithiOSCreatedID: (NSString *)iOSCreatedId WithIsCheckSynced:(NSString *)isCheckSynced WithIsRandomCheckSynced:(NSString *) isRandomCheckSynced;
 
 
 - (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type;

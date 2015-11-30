@@ -8,10 +8,12 @@
 
 #import "CheckUserRoleViewController.h"
 #import "UserModel.h"
-
+#import "AFNetHelper.h"
 @interface CheckUserRoleViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *userNrTF;
-
+@property (weak, nonatomic) IBOutlet UITextField *userKeyTF;
+@property (strong,nonatomic) AFNetHelper *afnetHelper;
+@property (strong, nonatomic) UITextField *firstResponder;
 @end
 
 @implementation CheckUserRoleViewController
@@ -28,7 +30,12 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    
+    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+
+    self.afnetHelper=[[AFNetHelper alloc] init];
+    self.userNrTF.delegate=self;
+    self.userKeyTF.delegate=self;
+    self.userKeyTF.secureTextEntry=YES;
     self.pass=NO;
 }
 
@@ -58,11 +65,11 @@
 
     UserModel *userModel=[[UserModel alloc] init];
     UserEntity *userEntity=[userModel findUserByNr:self.userNrTF.text];
-    if(userEntity && [userEntity.role isEqualToString:@"组长"]){
+    if(userEntity && [userEntity.role isEqualToString:@"组长"] && [self.userKeyTF.text isEqualToString:[self.afnetHelper secretKey]]){
         self.pass=YES;
         return  YES;
     }else{
-        UIAlertView *alert= [[UIAlertView alloc] initWithTitle:@"验证消息" message:@"请输入组长工号" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:NULL, nil];
+        UIAlertView *alert= [[UIAlertView alloc] initWithTitle:@"验证消息" message:@"验证错误！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:NULL, nil];
         [alert show];
         return NO;
     }
@@ -74,8 +81,34 @@
 
 // 消失输入框
 - (IBAction)touchScreen:(id)sender {
-    [self.userNrTF resignFirstResponder];
+    [self hideKeyboard];
+    //[self.userNrTF becomeFirstResponder];
+   if(self.firstResponder){
+        [self.firstResponder resignFirstResponder];
+       self.firstResponder=nil;
+   }else{
+       [self.userNrTF becomeFirstResponder];
+   }
+}
+
+-(void)decoderDataReceived:(NSString *)data
+{
+    self.firstResponder.text=[data copy];
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
     
+    if(textField==self.userKeyTF){
+        UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+        textField.inputView = dummyView;
+        [self hideKeyboard];
+    }
+    
+    self.firstResponder=textField;
+}
+
+-(void)hideKeyboard{
     if(self.view.frame.origin.y!=0){
         NSTimeInterval animationDuration=0.30f;
         [UIView animateWithDuration:animationDuration
@@ -84,6 +117,5 @@
                          }];
     }
 }
-
 
 @end

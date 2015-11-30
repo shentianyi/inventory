@@ -17,11 +17,23 @@
 
 - (instancetype)init;
 
+
+/*
+ 下载全盘数据
+ ryan 2015.11.4
+ */
+- (void)webDownloadAllCheckDatablock:(void (^)(NSMutableArray * tableArray, NSError *error))block;
+
+- (void)webDownloadAllCheckDatablockInPage:(NSInteger)page AndPageSize:(NSInteger)pageSize block:(void(^)(NSMutableArray *dataArray, NSError *error))block;
+
+
 /*
  下载所有抽盘数据
  */
 - (void)webDownloadRandomCheckDatablock:(void(^)(NSMutableArray *dataArray, NSError *error))block;
-    
+
+- (void)webDownloadRandomCheckDatablockInPage:(NSInteger)page AndPageSize:(NSInteger)pageSize block:(void(^)(NSMutableArray *dataArray, NSError *error))block;
+
 /*
  下载翻页抽盘数据
 */
@@ -47,12 +59,19 @@
 // by sn
 - (NSMutableArray *)getListWithSn:(NSInteger)sn;
 // by position
+- (NSMutableArray *)searchLocalCheckDataList:(NSString *)q;
+- (NSMutableArray *)searchLocalCheckDataList:(NSString *)q WithUserNr:(NSString *)userNr;
 - (NSMutableArray *)getLocalCheckDataListWithPosition: (NSString *)position;
 - (NSMutableArray *)getLocalCheckDataListWithPosition: (NSString *)position WithUserNr:(NSString *)userNr;
+
+
+- (NSMutableArray *)searchLocalCreateCheckDataList:(NSString *)q;
+- (NSMutableArray *)searchLocalCreateCheckDataList:(NSString *)q WithUserNr:(NSString *)userNr;
 - (NSMutableArray *)getLocalCreateCheckDataListWithPoistion:(NSString *)position;
 - (NSMutableArray *)getLocalCreateCheckDataListWithPoistion:(NSString *)position WithUserNr:(NSString *) userNr;
 
 // 获取本地抽盘数据
+- (NSMutableArray *)searchLocalRandomCheckDataList:(NSString *)q;
 - (NSMutableArray *)getLocalRandomCheckDataListWithPosition: (NSString *)position;
 
 /*
@@ -74,10 +93,8 @@
 
 // random by position
 - (NSMutableArray *)getRandomListWithPosition: (NSString *)position;
-
 // random by position and department
 -(NSMutableArray *)getRandomListWithPosition:(NSString *)position andDepartment:(NSString *)deparment;
-
 // random by position and department and part
 -(NSMutableArray *)getRandomListWithPosition:(NSString *)position andDepartment:(NSString *)deparment andPart:(NSString *)part;
 
@@ -104,20 +121,15 @@
 /*
  获取抽盘数据 总页数，总条数
  */
-- (void)getRandomTotal: (NSString *)pageSize block:(void (^)(NSInteger intCount, NSError *error))block;
+- (void)getRandomTotal: (void (^)(NSInteger intCount, NSError *error))block;
     
 
-- (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block ;
+- (void)getTotal: (void(^)(NSInteger intCount, NSError *error))block ;
 
 //- (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block completion:(void(^)(BOOL finished))completion;
 
 - (void)webGetListWithPage: (NSInteger )page withPageSize: (NSString *)pageSize block:(void (^)(NSMutableArray * tableArray, NSError *error))block;
 
-/*
- 下载全盘数据
- ryan 2015.11.4
- */
-- (void)webDownloadAllCheckDatablock:(void (^)(NSMutableArray * tableArray, NSError *error))block;
 
 /*
  本地根据库位 update 记录

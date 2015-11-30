@@ -261,7 +261,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zH1-cr-Ufz">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zH1-cr-Ufz">
                                 <rect key="frame" x="10" y="267" width="300" height="40"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.34018288000000002" green="0.73630819520000002" blue="0.37557483359999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -277,7 +277,7 @@
                                     <action selector="randomCheckAction:" destination="k8O-PL-ooh" eventType="touchUpInside" id="16T-Je-Un6"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FE-ds-UC9">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FE-ds-UC9">
                                 <rect key="frame" x="10" y="345" width="300" height="40"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.1240359486" green="0.70224702859999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -314,8 +314,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="zH1-cr-Ufz" firstAttribute="centerX" secondItem="3FE-ds-UC9" secondAttribute="centerX" id="Hb5-JS-KP5"/>
-                            <constraint firstItem="3FE-ds-UC9" firstAttribute="top" secondItem="kfP-ZU-kO5" secondAttribute="bottom" constant="127" id="Ooh-7g-e1W"/>
-                            <constraint firstItem="zH1-cr-Ufz" firstAttribute="top" secondItem="kfP-ZU-kO5" secondAttribute="bottom" constant="49" id="dgJ-KS-6St"/>
                             <constraint firstItem="kfP-ZU-kO5" firstAttribute="centerX" secondItem="zH1-cr-Ufz" secondAttribute="centerX" id="hBX-N0-BYt"/>
                             <constraint firstItem="kfP-ZU-kO5" firstAttribute="top" secondItem="aid-x1-hHt" secondAttribute="top" constant="188" id="hMD-6M-gMZ"/>
                             <constraint firstAttribute="centerX" secondItem="kfP-ZU-kO5" secondAttribute="centerX" id="q5q-Lq-Srd"/>
@@ -346,7 +344,7 @@
                                 <rect key="frame" x="20" y="117" width="68" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6hG-Mp-SEV">
@@ -569,22 +567,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="输入组长员工号：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mTF-DZ-Ne2">
-                                <rect key="frame" x="31" y="175" width="136" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="组长工号：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mTF-DZ-Ne2">
+                                <rect key="frame" x="31" y="175" width="85" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1W6-uv-cbC">
-                                <rect key="frame" x="30" y="208" width="250" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="007" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1W6-uv-cbC">
+                                <rect key="frame" x="31" y="208" width="268" height="30"/>
+                                <animations/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="39c8942e1038872a822c0dc75eedbde3" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sCB-03-DD0">
+                                <rect key="frame" x="31" y="279" width="268" height="30"/>
                                 <animations/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nMR-dJ-tVu">
-                                <rect key="frame" x="13" y="285" width="300" height="40"/>
+                                <rect key="frame" x="31" y="343" width="268" height="40"/>
                                 <animations/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="确 定">
@@ -596,7 +601,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BfG-42-h8J">
-                                <rect key="frame" x="13" y="360" width="300" height="40"/>
+                                <rect key="frame" x="31" y="399" width="268" height="40"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.017576685175299644" green="0.7457769513130188" blue="0.96681493520736694" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="取消">
@@ -611,7 +616,14 @@
                                 <rect key="frame" x="102" y="51" width="119" height="106"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="81"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="授权秘钥：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NhY-0r-0qC">
+                                <rect key="frame" x="31" y="248" width="85" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -622,13 +634,14 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="userKeyTF" destination="sCB-03-DD0" id="MMG-XN-hXv"/>
                         <outlet property="userNrTF" destination="1W6-uv-cbC" id="Oj5-2D-ARE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vz8-CP-22N" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="bfL-OB-n0H" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3084" y="1500"/>
+            <point key="canvasLocation" x="2966" y="2706"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hqA-IW-Oi3">
@@ -1110,7 +1123,8 @@
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="downloadAction:" destination="8qB-VB-D9U" eventType="touchUpInside" id="jHp-b7-GPP"/>
+                                    <action selector="clickSetCurrentButton:" destination="8qB-VB-D9U" eventType="touchUpInside" id="MPt-WC-9sa"/>
+                                    <segue destination="flZ-FB-ctD" kind="modal" id="Z6m-A8-zEj"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPQ-Es-YtL">
@@ -1126,7 +1140,8 @@
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="uploadAction:" destination="8qB-VB-D9U" eventType="touchUpInside" id="orT-q0-abF"/>
+                                    <action selector="clickSetCurrentButton:" destination="8qB-VB-D9U" eventType="touchUpInside" id="bgb-Ag-oRr"/>
+                                    <segue destination="flZ-FB-ctD" kind="modal" id="Bgw-2S-nrn"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="* 上传全盘数据， 只上传当前用户的本地数据" lineBreakMode="characterWrap" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f3u-0h-X2Y">
@@ -1489,7 +1504,7 @@
                                 <rect key="frame" x="20" y="99" width="187" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1644,7 +1659,8 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="downloadAction:" destination="Dze-LR-WFv" eventType="touchUpInside" id="ftM-7f-mJE"/>
+                                    <action selector="clickSetCurrentButton:" destination="Dze-LR-WFv" eventType="touchUpInside" id="33q-40-8EN"/>
+                                    <segue destination="flZ-FB-ctD" kind="modal" id="CDK-qM-dVs"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JxW-iH-TQx">
@@ -1659,7 +1675,8 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="uploadAction:" destination="Dze-LR-WFv" eventType="touchUpInside" id="RZh-fR-mxc"/>
+                                    <action selector="clickSetCurrentButton:" destination="Dze-LR-WFv" eventType="touchUpInside" id="aUZ-67-mYM"/>
+                                    <segue destination="flZ-FB-ctD" kind="modal" id="2Uu-vA-nyW"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="* 上传抽盘数据， 会上传全部用户的本地数据" lineBreakMode="characterWrap" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tf6-tj-1qz">
@@ -1685,7 +1702,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Ea-W3-JPO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2145" y="3501"/>
+            <point key="canvasLocation" x="2375" y="3375"/>
         </scene>
         <!--数据-->
         <scene sceneID="bzc-dn-bai">
@@ -1812,4 +1829,7 @@
         <image name="data" width="14" height="9"/>
         <image name="home" width="15" height="15"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="CDK-qM-dVs"/>
+    </inferredMetricsTieBreakers>
 </document>

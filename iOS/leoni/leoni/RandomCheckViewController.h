@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RandomCheckViewController : UIViewController<UITextFieldDelegate, CaptuvoEventsProtocol>
+@interface RandomCheckViewController : UIViewController<UITextFieldDelegate, CaptuvoEventsProtocol,MBProgressHUDDelegate>{
+    MBProgressHUD *hud;
+}
 
 
 @end
