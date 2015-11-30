@@ -124,6 +124,9 @@ module Excel
         msg.contents << "权限: #{row[:role]} 不存在!" unless User.validate_role(row[:role])
       end
 
+      if row[:operation].blank?
+        msg.contents << "操作不能为空!"
+      end
 
       operator = row[:operation].downcase.to_s
 

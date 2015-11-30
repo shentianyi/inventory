@@ -11,6 +11,7 @@ zh-CN:
         department: "部门"
         position: "库位"
         part_nr: "零件号"
+        part_unit: "零件单位"
         part_type: "零件类型"
         check_qty: "全盘数量"
         check_user: "全盘人员"

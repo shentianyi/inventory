@@ -4,7 +4,7 @@
         data_upload("#item-data-uploader", 'xlsx');
     });
 </script>
-<h3>零件库位基础信息</h3>
+<h3>盘点数据管理</h3>
 <hr/>
 <div>
   <%= form_tag inventories_path, :method => 'get' do %>
@@ -17,8 +17,8 @@
 		库位号：从<%= text_field_tag :position_begin, params[:position_begin] %>
         到<%= text_field_tag :position_end, params[:position_end] %>
         零件号：<%= text_field_tag :part_nr, params[:part_nr] %>
-        是否是iOS新建：<%= select_tag :ios_created_id, options_for_select([["否", 0], ["是", 1]]), {prompt: '选择'} %>
-        是否是抽盘：<%= select_tag :is_random_check, options_for_select([["否", 0], ["是", 1]]), {prompt: '选择'} %>
+        是否是iOS新建：<%= select_tag :ios_created_id, options_for_select([["否", 0], ["是", 1]],params[:ios_created_id]), {prompt: '选择'} %>
+        是否是抽盘：<%= select_tag :is_random_check, options_for_select([["否", 0], ["是", 1]],params[:is_random_check]), {prompt: '选择'} %>
         <br/>
         显示方式:
         <%= select_tag :format, options_for_select([["Web", "html"], ["Excel File(MS 07 or later)", "xlsx"]], "html") %>
@@ -27,13 +27,13 @@
   <% end %>
 </div>
 <div class="btn-group">
-  <%= link_to '创建零件库存信息', new_inventory_path, class: 'btn btn-default' %>
+  <%= link_to '创建盘点数据', new_inventory_path, class: 'btn btn-default' %>
   <a name="down_template" href="/files/download?folder=inventory&file=inventory_template.xlsx" class='btn btn-default'>下载模版</a>
   <!--	<input id="item-data-uploader" type="file" name="files[]" data-url="/inventories/import"/>
       <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>-->
-  <%= link_to '上传数据', import_inventories_path, class: 'btn btn-primary' %>
-  <%= link_to '盘点统计', root_path, class: 'btn btn-primary' %>
-  <%= link_to '生成抽盘数据', random_inventories_path, remote: true, :data => {:"disable-with" => "请稍等..."}, class: 'btn btn-primary' %>
+  <%= link_to '上传数据', import_inventories_path, class: 'btn btn-info' %>
+  <%= link_to '盘点统计', root_path, class: 'btn btn-warning' %>
+  <%= link_to '生成抽盘数据', random_inventories_path, remote: true, :data => {confirm:"抽盘数据将被还原到初始化，确定生成？",:"disable-with" => "生成中，请稍等..."}, class: 'btn btn-primary' %>
 </div>
 <br/>
 <div class="btn-group pull-left">

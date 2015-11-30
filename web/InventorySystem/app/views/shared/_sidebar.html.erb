@@ -1,6 +1,6 @@
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar">
-    <li class=<%= 'active' if 'dashboard'==@current_controller && 'index'==@current_action %>><%= link_to '控制台', root_path %></li>
+    <li class=<%= 'active' if 'dashboard'==@current_controller && 'index'==@current_action %>><%= link_to '盘点统计', root_path %></li>
     <li class=<%= 'active' if 'users' ==@current_controller %>><%= link_to '用户管理', users_path %></li>
     <!--<li class=<%= 'active' if 'parts' ==@current_controller %>><%= link_to '零件管理', parts_path %></li>-->
     <li class=<%= 'active' if 'inventories'==@current_controller %>><%= link_to '盘点数据管理', inventories_path %></li>

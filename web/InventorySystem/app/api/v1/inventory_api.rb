@@ -82,34 +82,22 @@ module V1
         end
       end
 
-      desc "get checkdata page size"
-      params do
-        requires :per_page, type: String
-      end
-      get :get_total do
+      desc 'inventory total'
+      get :total do
         # inventories = Inventory.check.paginate(page: '1', per_page: params[:per_page
-        inventories = Inventory.all.paginate(page: '1', per_page: params[:per_page])
-        if inventories.present?
-          # {result:1, content: inventories.total_pages}
-          present :result, 1
-          present :total_pages, inventories.total_pages
-          present :total, inventories.count
-          # present :content, inventories
-        else
-          {result: 0, content: '当前无数据'}
-        end
+        {result: 1, content: Inventory.count}
       end
 
       desc "downlaod check_data"
       params do
-        optional :page, type: String
-        optional :per_page, type: String
+        optional :page, type: Integer
+        optional :per_page, type: Integer
         optional :user, type: Integer
       end
       get :download_check_data do
         # inventories = Inventory.check.paginate(page: params[:page], per_page: params[:per_page])
         if params[:page].present? && params[:per_page].present?
-          inventories = Inventory.all.paginate(page: params[:page], per_page: params[:per_page])
+          inventories = Inventory.offset(params[:page]*params[:per_page]).limit(params[:per_page])
         elsif params[:user].present?
           inventories = Inventory.where("check_user = #{params[:user]}")
         else
@@ -118,10 +106,6 @@ module V1
         if inventories.present?
           # {result:1, content: inventories}
           present :result, 1
-          if params[:page].present? && params[:per_page].present?
-            present :total_pages, inventories.total_pages
-            present :current_page, inventories.current_page
-          end
           present :content, inventories
         else
           {result: 0, content: '当前无数据'}
@@ -148,7 +132,7 @@ module V1
                                     department: params[:department],
                                     position: params[:position],
                                     part_nr: params[:part_nr],
-                                    part_unit:params[:part_unit],
+                                    part_unit: params[:part_unit],
                                     part_type: params[:part_type],
                                     check_qty: params[:check_qty],
                                     check_user: params[:check_user],
@@ -160,7 +144,7 @@ module V1
             {result: 0, content: '新建数据失败'}
           end
         else
-          inventory = params[:id].blank? ? Inventory.find_by_sn(params[:sn]) :  Inventory.find_by_id(params[:id])
+          inventory = params[:id].blank? ? Inventory.find_by_sn(params[:sn]) : Inventory.find_by_id(params[:id])
           if inventory.present?
             if inventory.update!(check_qty: params[:check_qty], check_user: params[:check_user], check_time: params[:check_time])
               {result: 1, content: inventory}
@@ -172,21 +156,9 @@ module V1
       end
 
 
-      desc "get random_check_data page size"
-      params do
-        requires :per_page, type: String
-      end
-      get :get_random_total do
-        inventories = Inventory.random_check.paginate(page: '1', per_page: params[:per_page])
-        if inventories.present?
-          # {result:1, content: inventories.total_pages}
-          present :result, 1
-          present :total_pages, inventories.total_pages
-          present :total, inventories.count
-          # present :content, inventories
-        else
-          {result: 0, content: '当前无数据'}
-        end
+      desc "get random check total"
+      get :random_total do
+        {result: 1, content: Inventory.random_check.count}
       end
 
       desc "download random check data"

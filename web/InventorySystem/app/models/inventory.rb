@@ -23,6 +23,8 @@ class Inventory < ActiveRecord::Base
   validates :part_nr, uniqueness: {scope: [:position, :department], message: '库位+部门+零件 必须唯一'}
   validates :sn, uniqueness: {message: '序列号 必须唯一'}
 
+  before_save :set_default_value
+
   # belongs_to :part, foreign_key: :part_nr, primary_key: :nr
 
   # scope :check, -> { where("check_qty != '' or check_qty is not null") }
@@ -81,9 +83,9 @@ class Inventory < ActiveRecord::Base
     inventories = inventories.where("part_nr like '%#{part_nr}%' ") if part_nr.present?
     if ios_created_id.present?
       if ios_created_id == '1'
-        inventories = inventories.where("ios_created_id  != ''")
+        inventories = inventories.where("(ios_created_id is not null and ios_created_id!='')")
       else
-        inventories = inventories.where("ios_created_id = '' ")
+        inventories = inventories.where("(ios_created_id is null  or ios_created_id='')")
       end
     end
     inventories = inventories.where("(position between '#{position_begin}' and '#{position_end}') or position like '%#{position_begin}%' or position like '%#{position_end}%' ") if position_begin.present? & position_end.present?
@@ -140,5 +142,21 @@ class Inventory < ActiveRecord::Base
 
   def random_check_time_display
     self.random_check_time.nil? ? nil : self.random_check_time.strftime("%Y-%m-%d %H:%M:%S")
+  end
+
+
+  def set_default_value
+    if self.ios_created_id.blank?
+      self.ios_created_id=nil
+    end
+
+    if self.check_user.blank?
+      self.check_user=nil
+    end
+
+    if self.random_check_user.blank?
+      self.random_check_user=nil
+    end
+
   end
 end

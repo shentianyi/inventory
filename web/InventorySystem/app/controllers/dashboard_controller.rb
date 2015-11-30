@@ -38,11 +38,11 @@ class DashboardController < ApplicationController
     total_inven['总计']=query.first.value
 
     # 原有盘点项
-    origin_inven=gen_data(base_query.where('ios_created_id is null'))
-    origin_inven['总计']=query.where('ios_created_id is null').first.value
+    origin_inven=gen_data(base_query.where("ios_created_id is null or ios_created_id=''"))
+    origin_inven['总计']=query.where("ios_created_id is null or ios_created_id=''").first.value
     # 新建盘点项
-    new_inven=gen_data(base_query.where('ios_created_id is not null'))
-    new_inven['总计']=query.where('ios_created_id is not null').first.value
+    new_inven=gen_data(base_query.where("ios_created_id is not null and ios_created_id !=''"))
+    new_inven['总计']=query.where("ios_created_id is not null and ios_created_id !=''").first.value
 
     # 已全盘
     check_inven=gen_data(base_query.where('check_qty is not null'))
@@ -88,7 +88,7 @@ class DashboardController < ApplicationController
           random_not_check_inven: random_not_check_inven[department].to_i,
           random_not_check_inven_percent: nil_or_zero(random_total_inven[department]) ? 0 : "#{((random_not_check_inven[department].to_i/(random_total_inven[department].to_f))*100).round(2)}%",
           changed_check_inven: changed_check_inven[department].to_i,
-          changed_check_inven_percent: nil_or_zero(random_total_inven[department]) ? 0 : "#{((changed_check_inven[department].to_i/(random_total_inven[department].to_f))*100).round(2)}%"
+          changed_check_inven_percent: nil_or_zero(random_check_inven[department]) ? 0 : "#{((changed_check_inven[department].to_i/(random_check_inven[department].to_f))*100).round(2)}%"
       }
     end
   end

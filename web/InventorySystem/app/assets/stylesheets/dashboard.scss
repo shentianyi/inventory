@@ -109,3 +109,32 @@ body {
 	display: inline-block;
 	border-radius: 50%;
 }
+
+
+th, td {
+  text-align: center;
+}
+
+.inven {
+  width: 50px;
+}
+
+.number {
+  background-color: lightblue;
+}
+
+//.percent{
+//   border-right: #1a8bc8 solid 2px;
+//}
+
+.size {
+  font-size: 16px;
+}
+
+.bold {
+  font-weight: bolder;
+}
+
+.department {
+  width: 140px;
+}
