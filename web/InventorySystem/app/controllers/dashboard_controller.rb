@@ -88,7 +88,7 @@ class DashboardController < ApplicationController
           random_not_check_inven: random_not_check_inven[department].to_i,
           random_not_check_inven_percent: nil_or_zero(random_total_inven[department]) ? 0 : "#{((random_not_check_inven[department].to_i/(random_total_inven[department].to_f))*100).round(2)}%",
           changed_check_inven: changed_check_inven[department].to_i,
-          changed_check_inven_percent: nil_or_zero(random_total_inven[department]) ? 0 : "#{((changed_check_inven[department].to_i/(random_total_inven[department].to_f))*100).round(2)}%"
+          changed_check_inven_percent: nil_or_zero(random_check_inven[department]) ? 0 : "#{((changed_check_inven[department].to_i/(random_check_inven[department].to_f))*100).round(2)}%"
       }
     end
   end
