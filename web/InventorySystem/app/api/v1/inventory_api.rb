@@ -163,21 +163,17 @@ module V1
 
       desc "download random check data"
       params do
-        optional :page, type: String
-        optional :per_page, type: String
+        optional :page, type: Integer
+        optional :per_page, type: Integer
       end
-      get :get_random_check_data do
+      get :down_random_check_data do
         if params[:page].present? && params[:per_page].present?
-          inventories = Inventory.random_check.paginate(page: params[:page], per_page: params[:per_page])
+          inventories = Inventory.random_check.offset(params[:page]*params[:per_page]).limit(params[:per_page])
         else
           inventories = Inventory.random_check
         end
         if inventories.present?
-          present :result, 1
-          if params[:page].present? && params[:per_page].present?
-            present :total_pages, inventories.total_pages
-            present :current_page, inventories.current_page
-          end
+          present :result,1
           present :content, inventories
         else
           present :result, 0

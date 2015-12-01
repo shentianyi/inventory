@@ -12,6 +12,8 @@
 class User < ActiveRecord::Base
   validates :name, :nr, :role, presence: true
   validates_uniqueness_of :nr
+  before_save :set_default_value
+
   self.per_page = 100
 
   ROLES=%w(盘点员 组长 其他)
@@ -34,13 +36,21 @@ class User < ActiveRecord::Base
   end
 
   def id_span_count
-   spans=self.id_span.split(',')
-   count=0
-   spans.each do |span|
-    sspans=span.split('-')
-	count+=(sspans[1].to_i-sspans[0].to_i+1)
-   end
+    spans=self.id_span.split(',')
+    count=0
+    spans.each do |span|
+      sspans=span.split('-')
+      count+=(sspans[1].to_i-sspans[0].to_i+1)
+    end
 
-   count
+    count
+  end
+
+  def set_default_value
+
+    if self.id_span.blank?
+      self.id_span=''
+    end
+
   end
 end
