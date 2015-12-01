@@ -255,7 +255,11 @@
                      }
                  });
              } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-                 
+                 if([error.domain isEqualToString:NSURLErrorDomain]){
+                     [self MessageShowTitle:@"系统提示"
+                                    Content:@"未连接服务器，请联系管理员"];
+                 }
+                 [hud hide:YES];
              }];
     });
 }

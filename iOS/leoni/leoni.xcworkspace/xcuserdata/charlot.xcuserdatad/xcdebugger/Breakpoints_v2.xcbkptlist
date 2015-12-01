@@ -1482,11 +1482,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470690361.61188"
+            timestampString = "470694550.739692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "379"
-            endingLineNumber = "379">
+            startingLineNumber = "383"
+            endingLineNumber = "383">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1512,11 +1512,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470690361.61188"
+            timestampString = "470694550.739692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "382"
-            endingLineNumber = "382">
+            startingLineNumber = "386"
+            endingLineNumber = "386">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1526,11 +1526,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470690361.61188"
+            timestampString = "470694550.739692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "350"
-            endingLineNumber = "350">
+            startingLineNumber = "354"
+            endingLineNumber = "354">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1556,11 +1556,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470690361.61188"
+            timestampString = "470694550.739692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "383"
-            endingLineNumber = "383">
+            startingLineNumber = "387"
+            endingLineNumber = "387">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
