@@ -154,7 +154,6 @@
     }else if(alertView==self.downloadAlert && buttonIndex==0){
         
         self.userModel=[[UserModel alloc] init];
-        [self.userModel cleanLocalData];
         [self downloadUserData];
     }
 }
@@ -177,20 +176,26 @@
     [self.processView setHidden:NO];
     
         [self.userModel getUserInPage:page PerPage:nil :^( NSMutableArray *userEntities,NSError *error) {
-            if(userEntities && userEntities.count>0){
-                
-                NSLog(@"000::::%d", userEntities.count);
-                
-                [self.users addObjectsFromArray:userEntities];
-                
-                NSLog(@"----9999999-total: %d--count: %d", self.users.count,0);
-                [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(countDown:) userInfo:nil repeats:YES];
-            }else if(userEntities.count==0){
-                [self MessageShowTitle:@"系统提示" Content:@"服务器无数据"];
-            }
             
             if(error){
                [self MessageShowTitle:@"系统提示" Content:[error userInfo][NSLocalizedDescriptionKey]];
+                [self.processView setHidden:YES];
+            }else{
+                [self.userModel cleanLocalData];
+                if(userEntities && userEntities.count>0){
+                    
+                    NSLog(@"000::::%d", userEntities.count);
+                    
+                    [self.users addObjectsFromArray:userEntities];
+                    
+                    NSLog(@"----9999999-total: %d--count: %d", self.users.count,0);
+                    [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(countDown:) userInfo:nil repeats:YES];
+                    
+                }else if(userEntities.count==0){
+                    [self MessageShowTitle:@"系统提示" Content:@"服务器无数据"];
+                    [self.processView setHidden:YES];
+                }
+
             }
         }
        ];

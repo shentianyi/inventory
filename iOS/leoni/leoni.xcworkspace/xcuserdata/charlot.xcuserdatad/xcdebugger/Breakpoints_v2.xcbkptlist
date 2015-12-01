@@ -41,22 +41,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "leoni/SettingViewController.m"
-            timestampString = "470217515.342718"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
-            landmarkName = "-downloadUserData"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "leoni/UserModel.m"
             timestampString = "469961834.567013"
             startingColumnNumber = "9223372036854775807"
@@ -106,27 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/SettingViewController.m"
-            timestampString = "470217515.342718"
+            timestampString = "470678425.155958"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
-            landmarkName = "-downloadUserData"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "leoni/SettingViewController.m"
-            timestampString = "470217515.342718"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "-downloadUserData"
             landmarkType = "5">
          </BreakpointContent>
@@ -298,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563462.915637"
+            timestampString = "470656992.72435"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
             landmarkName = "-uploadCheckData"
             landmarkType = "5">
          </BreakpointContent>
@@ -314,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/SettingViewController.m"
-            timestampString = "470217515.342718"
+            timestampString = "470678574.379156"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
             landmarkName = "-touchScreen:"
             landmarkType = "5">
          </BreakpointContent>
@@ -522,11 +490,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563462.915637"
+            timestampString = "470656992.72435"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
             landmarkName = "-uploadCheckData"
             landmarkType = "5">
          </BreakpointContent>
@@ -1508,11 +1476,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/AFNetHelper.m"
-            timestampString = "470132874.329797"
+            timestampString = "470676911.193335"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "-UpdateServerURLwithIP:withRequest:withDeparment:withPartPrefix:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1524,11 +1492,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/AFNetHelper.m"
-            timestampString = "470132886.130014"
+            timestampString = "470676911.193335"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
             landmarkName = "-UpdateServerURLwithIP:withRequest:withDeparment:withPartPrefix:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1698,11 +1666,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/SettingViewController.m"
-            timestampString = "470217515.342718"
+            timestampString = "470678425.155958"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "-downloadUserData"
             landmarkType = "5">
          </BreakpointContent>
@@ -1810,11 +1778,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563419.762154"
+            timestampString = "470656186.100401"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "-clickSetCurrentButton:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1842,13 +1810,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563462.915637"
+            timestampString = "470678425.155958"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "426"
-            endingLineNumber = "426"
-            landmarkName = "-Checked:"
-            landmarkType = "5">
+            startingLineNumber = "401"
+            endingLineNumber = "401">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1858,11 +1824,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563419.762154"
+            timestampString = "470656186.100401"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "-clickSetCurrentButton:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1874,13 +1840,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563462.915637"
+            timestampString = "470678425.155958"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "429"
-            endingLineNumber = "429"
-            landmarkName = "-Checked:"
-            landmarkType = "5">
+            startingLineNumber = "404"
+            endingLineNumber = "404">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1890,13 +1854,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563462.915637"
+            timestampString = "470678425.155958"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
-            landmarkName = "-validateUser"
-            landmarkType = "5">
+            startingLineNumber = "372"
+            endingLineNumber = "372">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1906,11 +1868,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563419.762154"
+            timestampString = "470656186.100401"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
             landmarkName = "-alertView:clickedButtonAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1922,13 +1884,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563462.915637"
+            timestampString = "470678425.155958"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "430"
-            endingLineNumber = "430"
-            landmarkName = "-Checked:"
-            landmarkType = "5">
+            startingLineNumber = "405"
+            endingLineNumber = "405">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2082,27 +2042,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563419.762154"
+            timestampString = "470656186.100401"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
-            landmarkName = "-alertView:clickedButtonAtIndex:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563419.762154"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "-alertView:clickedButtonAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2113,13 +2057,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563419.762154"
+            filePath = "leoni/AFNetHelper.m"
+            timestampString = "470676911.193335"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
-            landmarkName = "-downloadAllCheckDataInPage"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
+            landmarkName = "-query"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2129,157 +2073,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563462.915637"
+            filePath = "leoni/AFNetHelper.m"
+            timestampString = "470657037.917937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
-            landmarkName = "-downloadAllCheckDataInPage"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__60-[CheckSynchronizeViewController downloadAllCheckDataInPage]_block_invoke_2"
-                  moduleName = "Inventory"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/charlot/project/brilliantech/inventory/iOS/leoni/leoni/CheckSynchronizeViewController.m"
-                  timestampString = "470562762.54518"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "169"
-                  endingLineNumber = "169"
-                  offsetFromSymbolStart = "355">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__60-[CheckSynchronizeViewController downloadAllCheckDataInPage]_block_invoke_3"
-                  moduleName = "Inventory"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/charlot/project/brilliantech/inventory/iOS/leoni/leoni/CheckSynchronizeViewController.m"
-                  timestampString = "470562762.545553"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "169"
-                  endingLineNumber = "169"
-                  offsetFromSymbolStart = "70">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563462.915637"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "-downloadAllCheckDataInPage"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563462.915637"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
-            landmarkName = "-downloadAllCheckDataInPage"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563419.762154"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
-            landmarkName = "-downloadAllCheckDataInPage"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__60-[CheckSynchronizeViewController downloadAllCheckDataInPage]_block_invoke_2"
-                  moduleName = "Inventory"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/charlot/project/brilliantech/inventory/iOS/leoni/leoni/CheckSynchronizeViewController.m"
-                  timestampString = "470560084.565913"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "169"
-                  endingLineNumber = "169"
-                  offsetFromSymbolStart = "355">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__60-[CheckSynchronizeViewController downloadAllCheckDataInPage]_block_invoke_3"
-                  moduleName = "Inventory"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/charlot/project/brilliantech/inventory/iOS/leoni/leoni/CheckSynchronizeViewController.m"
-                  timestampString = "470560084.566625"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "169"
-                  endingLineNumber = "169"
-                  offsetFromSymbolStart = "70">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563462.915637"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
-            landmarkName = "-downloadAllCheckDataInPage"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "leoni/CheckSynchronizeViewController.m"
-            timestampString = "470563462.915637"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
-            landmarkName = "-downloadAllCheckDataInPage"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "-basicManager"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

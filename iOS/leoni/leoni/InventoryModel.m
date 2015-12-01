@@ -600,6 +600,7 @@
     AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
     InventoryEntity *inventory = [[InventoryEntity alloc] init];
     inventory = entity;
+    
     [manager POST:[self.afnet uploadCheckData]
            parameters:@{@"id" : inventory.inventory_id,@"sn": [NSString stringWithFormat:@"%i",inventory.sn], @"department" : inventory.department, @"position" : inventory.position, @"part_nr" : inventory.part_nr,@"part_unit":inventory.part_unit, @"part_type" : inventory.part_type, @"check_qty" : inventory.check_qty, @"check_user" : inventory.check_user, @"check_time" :inventory.check_time, @"ios_created_id" : inventory.ios_created_id}
               success:^(AFHTTPRequestOperation * operation, id responseObject) {
@@ -681,8 +682,6 @@
 
 
 - (void)getTotal:(void (^)(NSInteger, NSError *))block  {
-//- (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block completion:(void(^)(BOOL finished))completion {
-//    NSString *pageSizeString = @"2";
     AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
     [manager GET:[self.afnet getTotal]
       parameters:nil
@@ -704,27 +703,9 @@
               if (block) {
                   block(0, error);
               }
-//          NSLog(@"log =========  getTotal =======%@", error.description);
           }];
     
 }
-
-//- (NSInteger)getTotal {
-//    int i = 0;
-//    AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
-//    [manager GET:[self.afnet getTotal]
-//      parameters:nil
-//         success:^(AFHTTPRequestOperation * operation, id responseObject) {
-//             if([responseObject[@"result"] integerValue]== 1 ){
-//                 int intTotal = 0;
-//                 intTotal = responseObject[@"content"];
-//                 i = intTotal;
-//            }
-//         }
-//         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//         }];
-//}
-
 
 - (void)webGetListWithPage:(NSInteger )page withPageSize: (NSString *)pageSize block:(void (^)(NSMutableArray *, NSError *))block {
     NSString *strPage = [NSString stringWithFormat:@"%ld", (long)page];
@@ -759,10 +740,6 @@
 //    return tableData;
 }
 
-- (void)downloadCheckData {
-    
-}
-
 /*
  本地清空数据
  Ryan 2015.10.12
@@ -794,23 +771,25 @@
 - (void)localCreateCheckData: (InventoryEntity *)entity {
     //NSLog(@ "is local check %@",entity.is_local_check);
     
+   // NSLog(@"======== success sn %i=========", entity.sn);
+    
     self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
     NSString *query;
     query = [NSString stringWithFormat:@"insert into inventories (inventory_id,sn, department, position, part_nr, part_type,part_unit,is_local_check, check_qty, check_user, check_time, is_local_random_check,random_check_qty, random_check_user, random_check_time, is_random_check, ios_created_id,is_check_synced,is_random_check_synced) values('%@','%i' ,'%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@','%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@')", entity.inventory_id,entity.sn, entity.department, entity.position, entity.part_nr, entity.part_type,entity.part_unit,entity.is_local_check, entity.check_qty, entity.check_user, entity.check_time,entity.is_local_random_check, entity.random_check_qty, entity.random_check_user, entity.random_check_time, entity.is_random_check, entity.ios_created_id,entity.is_check_synced,entity.is_random_check_synced];
     
     [self.db executeQuery:query];
-    if (self.db.affectedRows != 0) {
-        NSLog(@"======== success sn %i=========", entity.sn);
-        
-    }
-    else {
-        NSLog(@"======== fail sn %i=========", entity.sn);
-    }
-    NSString *queryAll = [NSString stringWithFormat:@"select * from inventories"];
-    NSString *queryRandom = [NSString stringWithFormat:@"select * from inventories where random_check_qty != '' order by random_check_time desc"];
-    NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: queryAll]];
-    NSArray *arrayRandom = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: queryRandom]];
-    NSLog(@"current count is %d, the random count is %d", [arrayData count], [arrayRandom count]);
+//    if (self.db.affectedRows != 0) {
+//        NSLog(@"======== success sn %i=========", entity.sn);
+//        
+//    }
+//    else {
+//        NSLog(@"======== fail sn %i=========", entity.sn);
+//    }
+//    NSString *queryAll = [NSString stringWithFormat:@"select * from inventories"];
+//    NSString *queryRandom = [NSString stringWithFormat:@"select * from inventories where random_check_qty != '' order by random_check_time desc"];
+//    NSArray *arrayData = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: queryAll]];
+//    NSArray *arrayRandom = [[NSArray alloc] initWithArray: [self.db loadDataFromDB: queryRandom]];
+//    NSLog(@"current count is %d, the random count is %d", [arrayData count], [arrayRandom count]);
 
 }
 

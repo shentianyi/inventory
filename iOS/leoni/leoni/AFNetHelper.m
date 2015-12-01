@@ -19,8 +19,55 @@
 }
 
 - (AFHTTPRequestOperationManager *)basicManager{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    NSURL *baseUrl = [NSURL URLWithString:[self ServerURL]];
+    
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseUrl];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    
+    // 开启检测
+    [manager.reachabilityManager startMonitoring];
+
+    
+    // 检测网络情况
+    [manager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                NSLog(@"当前网络 WWAN可用");
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                NSLog(@"当前网络 WiFi 可用");
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                NSLog(@"当前网络不可用");
+                break;
+            default:
+                break;
+        }
+        
+    }];
+
+    if ([manager.reachabilityManager isReachableViaWWAN]){
+        NSLog(@"ok");
+    }else{
+        NSLog(@"no");
+    }
+    
+    if ([manager.reachabilityManager isReachableViaWiFi]){
+        NSLog(@"ok");
+    }else{
+        NSLog(@"no");
+    }
+    
+    if ([manager.reachabilityManager isReachable]){
+        NSLog(@"ok");
+    }else{
+        NSLog(@"no");
+    }
+    
+    
     return manager;
 }
 

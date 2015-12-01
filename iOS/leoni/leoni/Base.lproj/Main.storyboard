@@ -39,7 +39,7 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="员工号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z4l-ce-Uyg">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="007" borderStyle="roundedRect" placeholder="员工号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z4l-ce-Uyg">
                                 <rect key="frame" x="10" y="261" width="300" height="30"/>
                                 <animations/>
                                 <constraints>

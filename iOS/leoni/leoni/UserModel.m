@@ -117,8 +117,8 @@
              }
              
       } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-          if(block){
-              NSError *error=[[NSError alloc] initWithDomain:@"Lenoi" code:200 userInfo:@{ NSLocalizedDescriptionKey :[NSString stringWithFormat:@"网络故障，请联系管理员"]}];
+          if(block && [error.domain isEqualToString:NSURLErrorDomain]){
+              NSError *error=[[NSError alloc] initWithDomain:@"Lenoi" code:200 userInfo:@{ NSLocalizedDescriptionKey :[NSString stringWithFormat:@"未连接服务器，请联系管理员"]}];
               block(nil,error);
           }
       }];
