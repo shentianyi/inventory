@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "AFNetHelper.h"
 
-@interface SettingViewController : UIViewController<UITextFieldDelegate, UIAlertViewDelegate>
+@interface SettingViewController : UIViewController<UITextFieldDelegate, UIAlertViewDelegate,MBProgressHUDDelegate>{
+    MBProgressHUD *hud;
+}
+
 
 @end

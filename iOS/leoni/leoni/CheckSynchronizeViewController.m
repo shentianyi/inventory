@@ -18,21 +18,15 @@
 - (IBAction)uploadAction:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *downloadButton;
 @property (strong, nonatomic) IBOutlet UIButton *uploadButton;
-@property (nonatomic, strong ) UIProgressView *progressView;
-@property (nonatomic, strong) NSTimer *myTimer;
+
 
 @property(nonatomic, strong) UIAlertView *downloadAlert;
 @property(nonatomic, strong) UIAlertView *uploadAlert;
-@property(nonatomic) NSInteger *pageSize;
 
 @property(nonatomic, strong) InventoryModel *inventoryModel;
+@property(nonatomic) NSInteger *pageSize;
 @property(nonatomic,strong) AFNetHelper *afnetHelper;
 
-
-@property NSMutableArray *requestDataArray;
-@property NSMutableArray *uploadDataArray;
-
-//@property(strong,nonatomic) UIButton *currentButton;
 @property(nonatomic,retain) UIButton *currentButton;
 
 @end
@@ -55,13 +49,6 @@
                         delegate:self
                         cancelButtonTitle:@"确定"
                         otherButtonTitles:@"取消", nil];
-    //    self.progressView.hidden = YES;
-    self.progressView = [[UIProgressView alloc]
-                         initWithProgressViewStyle:UIProgressViewStyleDefault];
-    
-    self.progressView.center = self.view.center;
-    [self.view addSubview:self.progressView];
-    [self.progressView setHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,8 +60,8 @@
     [super viewWillAppear:animated];
     
     self.inventoryModel = [[InventoryModel alloc] init];
+    
     self.afnetHelper=[[AFNetHelper alloc]init];
-    self.requestDataArray = [[NSMutableArray alloc] init];
     
     self.pageSize=[self.afnetHelper getRequestQuantity];
 }
@@ -89,14 +76,6 @@ preparation before navigation
 }
 */
 
-//- (IBAction)downloadAction:(id)sender {
-//  [self.downloadAlert show];
-//}
-//- (IBAction)uploadAction:(id)sender {
-//    [self.uploadAlert show];
-//}
-
-
 - (IBAction)clickSetCurrentButton:(UIButton *)sender {
     self.currentButton=sender;
 }
@@ -106,112 +85,90 @@ preparation before navigation
 
   if (alertView == self.uploadAlert) {
     if (buttonIndex == 0) {
-      [self validateUser];
-    } else if (buttonIndex == 1) {
-      NSLog(@"1");
+      [self uploadCheckData];
     }
   } else if(alertView == self.downloadAlert) {
     if (buttonIndex == 0) {
         [self downloadCheckData];
     }
-  } else {
   }
 }
 
 - (void)uploadCheckData {
-  self.uploadDataArray = [[NSMutableArray alloc] init];
-  self.uploadDataArray = [self.inventoryModel getLocalCheckDataListWithPosition:@"" WithUserNr:[UserModel accountNr]];
-  [self.progressView setHidden:NO];
-  self.progressView.progress = 0;
-  if ([self.uploadDataArray count] > 0) {
+   NSMutableArray *uploadDataArray =[self.inventoryModel getLocalCheckOrCreateUnsyncDataListWithUserNr:[UserModel accountNr]];
+    NSMutableArray *localCheckUnSyncDataArray =[self.inventoryModel getLocalCheckUnSyncDataListWithPosition:@"" WithUserNr:[UserModel accountNr]];
+
+  if ([uploadDataArray count] > 0) {
       UserEntity *current_user=[[[UserModel alloc]init] findUserByNr:[UserModel accountNr]];
-      if(self.uploadDataArray.count>=current_user.idSpanCount){
-        [self toggleButton:FALSE];
-        [NSTimer scheduledTimerWithTimeInterval:0.01
-                                     target:self
-                                   selector:@selector(uploadUpdateUI:)
-                                   userInfo:nil
-                                    repeats:YES];
+      if([localCheckUnSyncDataArray count]>=current_user.idSpanCount || ([localCheckUnSyncDataArray count]==0 && [uploadDataArray count]>0)){
+          hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+          hud.delegate=self;
+          //hud.mode =MBProgressHUDModeDeterminateHorizontalBar;
+          
+          hud.labelText=@"上传中...";
+          [self callHttpUpload:0 WithData:uploadDataArray];
+          
       }else{
           [self MessageShowTitle:@"系统提示" Content:@"未完成指定任务量，不可上传！"];
           NSLog(@"当前无上载数据");
-          [self.progressView setHidden:YES];
       }
   } else {
     [self MessageShowTitle:@"系统提示" Content:@"当前无上载数据"];
     NSLog(@"当前无上载数据");
-    [self.progressView setHidden:YES];
-  }
-}
-
-- (void)uploadUpdateUI:(NSTimer *)timer {
-  static int count = 0;
-  InventoryEntity *entity = [[InventoryEntity alloc] init];
-  entity = self.uploadDataArray[count];
-  [self.inventoryModel uploadCheckData:entity];
-  count++;
-  self.progressView.progress = (float)count / [self.uploadDataArray count];
-  if (count == [self.uploadDataArray count]) {
-    NSString *messageString =
-        [NSString stringWithFormat:@"已上传数据量为：%ld",
-        [self.uploadDataArray count]];
-      [self toggleButton:TRUE];
-      [self.progressView setHidden:YES];
-      count = 0;
-      [self MessageShowTitle:@"系统提示" Content:messageString];
-      [timer invalidate];
   }
 }
 
 
+- (void)callHttpUpload:(NSInteger)index WithData:(NSMutableArray *)inventories{
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
 
+     AFHTTPRequestOperationManager *manager = [self.afnetHelper basicManager];
+      
+        InventoryEntity *inventory=inventories[index];
+        
+    [manager POST:[self.afnetHelper uploadCheckData]
+       parameters:@{@"id" : inventory.inventory_id,@"sn": [NSString stringWithFormat:@"%i",inventory.sn], @"department" : inventory.department, @"position" : inventory.position, @"part_nr" : inventory.part_nr,@"part_unit":inventory.part_unit, @"part_type" : inventory.part_type, @"check_qty" : inventory.check_qty, @"check_user" : inventory.check_user, @"check_time" :inventory.check_time, @"ios_created_id" : inventory.ios_created_id}
+          success:^(AFHTTPRequestOperation * operation, id responseObject) {
+              NSLog(@"testing ========= checkWithPosition =======%@", responseObject);
+              if([responseObject[@"result"] integerValue]== 1 ){
+                 
+                  inventory.is_check_synced=@"1";
+                  [[[InventoryModel alloc] init] updateCheckSync:inventory];
+                  
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      int total=[inventories count];
+                      float progress=(index+1)/(float)total;
+                      NSLog(@"process: %f",progress);
+                      hud.progress=progress;
+                      if (progress<=1.0f) {
+                          hud.labelText=[NSString stringWithFormat:@"已上传 %i, 共 %i", index+1, total];
+                      }
+                      if((index+1)==total){
+                          [hud hide:YES];
+                          [self MessageShowTitle:@"下载提示" Content:[NSString stringWithFormat:@"共上传 %i",total]];
+                      }else{
+                          [self callHttpUpload:index+1 WithData:inventories];
+                      }
+                  });
+                  
+              }
 
-/**
- *  控制按钮的enable 2015.11.16
- *
- *  @param statusBool <#statusBool description#>
- */
-- (void)toggleButton: (BOOL)statusBool {
-    [self.downloadButton setEnabled:statusBool];
-    [self.uploadButton setEnabled:statusBool];
-
-}
-
-
-
-- (void)MessageShowTitle:(NSString *)title Content:(NSString *)content {
-  UIAlertView *message = [[UIAlertView alloc] initWithTitle:title
-                                                    message:content
-                                                   delegate:self
-                                          cancelButtonTitle:@"确定"
-                                          otherButtonTitles:@"取消", nil];
-  [message show];
-}
-
-/*
- 简单验证服务器连接
- */
-- (void)validateUser {
-  UserModel *user = [[UserModel alloc] init];
-  KeychainItemWrapper *keyChain =
-      [[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
-  [user loginWithNr:[keyChain objectForKey:(__bridge id)kSecAttrAccount]
-              block:^(UserEntity *user_entity, NSError *error) {
-                if (user_entity) {
-                  [self uploadCheckData];
-                } else {
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              if([error.domain isEqualToString:NSURLErrorDomain]){
                   [self MessageShowTitle:@"系统提示"
-                                 Content:@"网络异常，请联系管理员"];
-                }
-              }];
+                                 Content:@"未连接服务器，请联系管理员"];
+              }
+              [hud hide:YES];
+          }];
+    });
 }
 
--(void)hudWasHidden:(MBProgressHUD *)hud{
-    [hud removeFromSuperview];
-    hud=nil;
-}
 
--(void) downloadCheckData{
+
+
+-(void)downloadCheckData{
     
     AFHTTPRequestOperationManager *manager=[self.afnetHelper basicManager];
     //[manager.reachabilityManager startMonitoring];
@@ -219,8 +176,9 @@ preparation before navigation
     //if ([manager.reachabilityManager isReachable]){
         hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.delegate=self;
-        hud.mode =MBProgressHUDModeDeterminateHorizontalBar;
-        hud.labelText=@"下载中...";
+        //hud.mode =MBProgressHUDModeDeterminateHorizontalBar;
+    
+    hud.labelText=@"下载中...";
         
         
         // get total data size
@@ -277,32 +235,43 @@ preparation before navigation
                      
                      for(int i=0; i<arrayResult.count; i++){
                          InventoryEntity *inventory =[[InventoryEntity alloc] initWithObject:arrayResult[i]];
-                         
                          [self.inventoryModel localCreateCheckData:inventory];
                      }
                      
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         float progress=(pageIndex+1)/(float)totalPage;
+                         NSLog(@"process: %f",progress);
+                         hud.progress=progress;
+                         if (progress<=1.0f) {
+                             hud.labelText=[NSString stringWithFormat:@"已下载 %i%%    ", (int)round(progress*100)];
+                         }
+                         if(pageIndex==totalPage){
+                             [hud hide:YES];
+                             [self MessageShowTitle:@"下载提示" Content:[NSString stringWithFormat:@"共下载 %i",total]];
+                         }else{
+                             [self callHttpDownload:pageIndex+1 WithTotalPage:totalPage WithTotal:total];
+                         }
+                     });
                  }
-
-                 
-                 if(pageIndex<totalPage){
-                     [self callHttpDownload:pageIndex+1 WithTotalPage:totalPage WithTotal:total];
-                 }
-                 
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     float progress=(pageIndex+1)/(float)totalPage;
-                     NSLog(@"process: %f",progress);
-                     hud.progress=progress;
-                     hud.labelText=[NSString stringWithFormat:@"已下载 %i ％", (int)round(progress*100)];
-                     if(pageIndex==totalPage){
-                         [hud hide:YES];
-                     }
-                 });
              } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
                  
              }];
     });
 }
 
+- (void)MessageShowTitle:(NSString *)title Content:(NSString *)content {
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:title
+                                                      message:content
+                                                     delegate:self
+                                            cancelButtonTitle:@"确定"
+                                            otherButtonTitles:@"取消", nil];
+    [message show];
+}
+
+-(void)hudWasHidden:(MBProgressHUD *)hud{
+    [hud removeFromSuperview];
+    hud=nil;
+}
 
 -(IBAction)Checked :(UIStoryboardSegue *)segue{
     

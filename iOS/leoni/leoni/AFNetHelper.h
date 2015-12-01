@@ -32,7 +32,7 @@
 - (NSString *)getTotal;
 - (NSString *)getRandomTotal;
 - (NSString *)downloadCheckData;
+- (NSString *)downloadRandomCheckData;
 - (NSString *)randomCheckData;
-- (NSString *)getRandomCheckData;
 - (NSString *)uploadRandomCheckData;
 @end

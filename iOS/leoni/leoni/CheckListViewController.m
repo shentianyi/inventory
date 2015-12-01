@@ -17,7 +17,9 @@
 
 @property(nonatomic, strong) UITableView *table;
 @property (nonatomic, strong) NSMutableArray* localCheckInventories;
+@property (nonatomic,strong) NSMutableArray* localCheckUnSyncInventories;
 @property (nonatomic,strong) NSMutableArray* localCreateInventories;
+@property (nonatomic,strong) NSMutableArray* localCreateUnSyncInventories;
 @property (nonatomic, strong) NSMutableArray *searchResult;
 @property (nonatomic,strong) UISearchBar *searchBar;
 @property(nonatomic,strong) AFNetHelper *afnetHelper;
@@ -50,18 +52,6 @@
     
     [self initController];
 }
-
-//-(void)dismissKeyboard {
-//    NSArray *subviews = [self.view subviews];
-//    for (id objInput in subviews) {
-//        if ([objInput isKindOfClass:[UITextField class]]) {
-//            UITextField *theTextField = objInput;
-//            if ([objInput isFirstResponder]) {
-//                [theTextField resignFirstResponder];
-//            }
-//        }
-//    }
-//}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -143,7 +133,12 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSInteger localCreatedCount=[[self localCreateInventories] count];;
+    NSInteger localCheckedUnSyncCount=[self.localCheckUnSyncInventories count];
+    NSInteger localCreatedCount=[self.localCreateInventories count];
+    NSInteger localCreatedUnSyncCount=[self.localCreateUnSyncInventories count];
+    
+    NSInteger localCheckedCount=[self.localCheckInventories count]-localCreatedCount;
+    
     NSString *sectionName = @"";
     if(self.afnetHelper.listLimitUser){
        int total=0;
@@ -151,16 +146,15 @@
        if(user!=nil){
            total=user.idSpanCount;
         }
-        sectionName=[NSString stringWithFormat:@"已盘点:%i/%i 录入:%i",self.localCheckInventories.count-localCreatedCount,total,localCreatedCount];
+        sectionName=[NSString stringWithFormat:@"已盘点:%i/%i/%i 录入:%i/%i",localCheckedCount,total,localCheckedUnSyncCount,localCreatedCount,localCreatedUnSyncCount];
     }else{
-        sectionName=[NSString stringWithFormat:@"已盘点:%i 录入:%i",self.localCheckInventories.count-localCreatedCount,localCreatedCount];
+        sectionName=[NSString stringWithFormat:@"已盘点:%i/%i 录入:%i/%i",localCheckedCount,localCheckedUnSyncCount,localCreatedCount,localCreatedUnSyncCount];
     }
     return sectionName;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   
     static NSString *CellIdentifer = @"CellIdentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifer];
     
@@ -213,17 +207,27 @@
         if(self.searchBar.text.length==0){
           self.localCheckInventories=[inventory getLocalCheckDataListWithPosition:q WithUserNr:[UserModel accountNr]];
           self.localCreateInventories=[inventory getLocalCreateCheckDataListWithPoistion:q WithUserNr:[UserModel accountNr]];
+           self.localCheckUnSyncInventories=[inventory getLocalCheckUnSyncDataListWithPosition:q WithUserNr:[UserModel accountNr]];
+            self.localCreateUnSyncInventories=[inventory getLocalCreateCheckUnSyncDataListWithPoistion:q WithUserNr:[UserModel accountNr]];
         }else{
             self.localCheckInventories=[inventory searchLocalCheckDataList:q WithUserNr:[UserModel accountNr]];
             self.localCreateInventories=[inventory searchLocalCreateCheckDataList:q WithUserNr:[UserModel accountNr]];
+            self.localCheckUnSyncInventories=[inventory searchLocalCreateCheckUnSyncDataList:q WithUserNr:[UserModel accountNr]];
+            self.localCreateUnSyncInventories=[inventory searchLocalCreateCheckUnSyncDataList:q WithUserNr:[UserModel accountNr]];
         }
     }else{
         if(self.searchBar.text.length==0){
           self.localCheckInventories=[inventory getLocalCheckDataListWithPosition:q];
           self.localCreateInventories=[inventory getLocalCreateCheckDataListWithPoistion:q];
+            self.localCheckUnSyncInventories=[inventory getLocalCheckUnSyncDataListWithPosition:q];
+            self.localCreateUnSyncInventories=[inventory getLocalCreateCheckUnSyncDataListWithPoistion:q];
+
         }else{
             self.localCheckInventories=[inventory searchLocalCheckDataList:q];
             self.localCreateInventories=[inventory searchLocalCreateCheckDataList:q];
+            self.localCheckUnSyncInventories=[inventory searchLocalCreateCheckUnSyncDataList:q];
+            self.localCreateUnSyncInventories=[inventory searchLocalCreateCheckUnSyncDataList:q];
+
         }
     }
 }

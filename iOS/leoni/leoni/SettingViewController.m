@@ -15,21 +15,16 @@
 - (IBAction)backAction:(id)sender;
 - (IBAction)saveAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *ipTextField;
-//@property (weak, nonatomic) IBOutlet UITextField *portTextField;
 @property (weak, nonatomic) IBOutlet UITextField *requestTextField;
-@property (nonatomic, retain) AFNetHelper *afnet_helper;
+@property (nonatomic, retain) AFNetHelper *afnetHelper;
 
 @property (nonatomic,strong) UIAlertView *downloadAlert;
 @property (nonatomic,strong) UIAlertView *settingAlert;
 @property (strong, nonatomic) IBOutlet UIProgressView *processView;
 
-@property (weak, nonatomic) IBOutlet UISwitch *listLimitUserSwitch;
-
-
 @property (nonatomic,retain) UserModel *userModel;
-@property (nonatomic,strong) NSMutableArray *users;
+
 @property (weak, nonatomic) IBOutlet UITextField *deparmentTextField;
-@property (weak, nonatomic) IBOutlet UITextField *partPrefixTextField;
 
 - (IBAction)touchScreen:(id)sender;
 
@@ -55,27 +50,8 @@
     self.ipTextField.delegate = self;
     self.requestTextField.delegate = self;
     self.deparmentTextField.delegate=self;
-    self.partPrefixTextField.delegate=self;
     
-    _afnet_helper  = [[AFNetHelper alloc] init];
-
-    
-//    
-//        [[self navigationController] setNavigationBarHidden:YES animated:YES];
-//    
-    
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]   initWithTarget:self action:@selector(dismissKeyboard)];
-//    [self.view addGestureRecognizer:tap];
-
-//    self.processView=[[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-//    
-//    [self.view addSubview: self.processView];
- 
-    //self.processView.center=self.view.center;
-  //  self.processView.frame=self.view.bounds;
-    [self.processView setHidden: YES];
-    
-   // NSLog(@"start donloading");
+    self.afnetHelper  = [[AFNetHelper alloc] init];
 }
 
 
@@ -97,19 +73,13 @@
 }
 
 - (void)loadData {
+    self.userModel=[[UserModel alloc] init];
+ 
+    self.ipTextField.text=[self.afnetHelper ServerURL];
     
-    //NSString *serverString = [self.afnet_helper ServerURL];
-    //NSArray *serverArray = [serverString componentsSeparatedByString:@":"];
-   // self.ipTextField.text = [NSString stringWithFormat:@"%@:%@", serverArray[0], serverArray[1]];
+    self.requestTextField.text = [NSString stringWithFormat:@"%i",  [self.afnetHelper getRequestQuantity]];
     
-    self.ipTextField.text=[self.afnet_helper ServerURL];
-    
-    //self.portTextField.text = [NSString stringWithFormat:@":%@", serverArray[2]];
-    self.requestTextField.text = [NSString stringWithFormat:@"%i",  [self.afnet_helper getRequestQuantity]];
-    
-    self.deparmentTextField.text=[self.afnet_helper defaultDepartment];
-    
-    self.partPrefixTextField.text=[self.afnet_helper partNrPrefix];
+    self.deparmentTextField.text=[self.afnetHelper defaultDepartment];
     
    
 }
@@ -130,15 +100,12 @@
 
 - (IBAction)saveAction:(id)sender {
     if (self.ipTextField.text.length > 0 && self.requestTextField.text.length>0) {
-        [self.afnet_helper UpdateServerURLwithIP:self.ipTextField.text withRequest:self.requestTextField.text withDeparment:self.deparmentTextField.text withPartPrefix:@"P"];
-        
+        [self.afnetHelper UpdateServerURLwithIP:self.ipTextField.text withRequest:self.requestTextField.text withDeparment:self.deparmentTextField.text withPartPrefix:@"P"];
         [self.settingAlert show];
     }
     else {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = [NSString stringWithFormat:@"设置失败,请填写所有＊配置项"];
-        [hud hide:YES afterDelay:1.5f];
+        [self MessageShowTitle:@"设置提示" Content:[NSString stringWithFormat:@"设置失败,请填写所有＊配置项"]];
+
     }
     
 }
@@ -152,8 +119,6 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     }else if(alertView==self.downloadAlert && buttonIndex==0){
-        
-        self.userModel=[[UserModel alloc] init];
         [self downloadUserData];
     }
 }
@@ -163,62 +128,50 @@
 
 -(void)downloadUserData
 {
-    NSLog(@"start donloading");
-   // if(!self.users){
-        self.users=[[NSMutableArray alloc] init];
-    //}
-    [self.users removeAllObjects];
+    hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.delegate=self;
+    //hud.mode =MBProgressHUDModeDeterminateHorizontalBar;
     
-    self.userModel=[[UserModel alloc] init];
-    NSInteger page=1;
-    NSInteger perPage=[self.afnet_helper getRequestQuantity];
+    hud.labelText=@"下载中...";
     
-    [self.processView setHidden:NO];
-    
-        [self.userModel getUserInPage:page PerPage:nil :^( NSMutableArray *userEntities,NSError *error) {
-            
-            if(error){
-               [self MessageShowTitle:@"系统提示" Content:[error userInfo][NSLocalizedDescriptionKey]];
-                [self.processView setHidden:YES];
-            }else{
-                [self.userModel cleanLocalData];
-                if(userEntities && userEntities.count>0){
-                    
-                    NSLog(@"000::::%d", userEntities.count);
-                    
-                    [self.users addObjectsFromArray:userEntities];
-                    
-                    NSLog(@"----9999999-total: %d--count: %d", self.users.count,0);
-                    [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(countDown:) userInfo:nil repeats:YES];
-                    
-                }else if(userEntities.count==0){
-                    [self MessageShowTitle:@"系统提示" Content:@"服务器无数据"];
-                    [self.processView setHidden:YES];
-                }
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        
+        AFHTTPRequestOperationManager *manager = [self.afnetHelper basicManager];
+        
+        [manager GET:[self.afnetHelper downloadUserData]
+           parameters:@{@"page":  [NSString stringWithFormat: @"%d", 0]}
+              success:^(AFHTTPRequestOperation * operation, id responseObject) {
+                   if([responseObject[@"result"] integerValue]== 1 ){
+                      [self.userModel cleanLocalData];
+                      
+                      NSArray *users=responseObject[@"content"];
+                      NSMutableArray *userEntities=[[NSMutableArray alloc] init];
+                      for(int i=0;i<users.count;i++){
+                          [self.userModel createLocalData: [[UserEntity alloc] initWithId:users[i][@"id"] andNr:users[i][@"nr"] andName:users[i][@"name"] andRole:users[i][@"role"] andIdSpan:users[i][@"id_span"]]];
+                      }
+                      
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          int total=[users count];
+                          [hud hide:YES];
+                          [self MessageShowTitle:@"下载提示" Content:[NSString stringWithFormat:@"共下载 %i 个用户",total]];
+                          
+                      });
+                  }
+                  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  if([error.domain isEqualToString:NSURLErrorDomain]){
+                      [self MessageShowTitle:@"系统提示"
+                                     Content:@"未连接服务器，请联系管理员"];
+                  }
+                  [hud hide:YES];
+              }];
+    });
 
-            }
-        }
-       ];
+    
 
 }
 
--(void) countDown:(NSTimer *)timer{
-    static int count=0;
-    UserEntity *userEntity=self.users[count];
-    [self.userModel createLocalData:userEntity];
-    count++;
-    NSLog(@"-----total: %d--count: %d", self.users.count,count);
-    self.processView.progress=(float)count/self.users.count;
-    if(count==self.users.count){
-        
-        [self.processView setHidden:YES];
-        NSString *message=[NSString stringWithFormat:@"已下载数据量: %d",count];
-        [self MessageShowTitle:@"系统提示" Content:message];
-        
-        count=0;
-        [timer invalidate];
-    }
-}
 
 - (void)MessageShowTitle: (NSString *)title Content: (NSString *)content {
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:title
@@ -259,7 +212,10 @@
     }
 }
 
-
+-(void)hudWasHidden:(MBProgressHUD *)hud{
+    [hud removeFromSuperview];
+    hud=nil;
+}
 
 
 -(void)dismissKeyboard {

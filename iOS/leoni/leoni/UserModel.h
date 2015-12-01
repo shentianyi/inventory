@@ -21,8 +21,6 @@
 //- (void) downloadUserData:(void(^)(NSMutableArray *users,NSError *error))block;
 
 
--(NSMutableArray *) getUserInPage:(NSInteger)page PerPage:(NSInteger)perPage:(void(^)(NSMutableArray *userEntites,NSError *error))block;
-
 
 - (void) cleanLocalData;
 

@@ -255,9 +255,9 @@ NSString *listLimitUser=[[self URLDictionary] objectForKey:@"list_limit_user"];
 
 }
 
-- (NSString *)getRandomCheckData {
+- (NSString *)downloadRandomCheckData {
     NSString *server_url = [self ServerURL];
-    NSString *url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"get_random_check_data"]];
+    NSString *url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"download_random_check_data"]];
     return [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
 }

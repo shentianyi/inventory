@@ -13,6 +13,8 @@
 @interface RandomListViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property (nonatomic, strong) UITableView *randomTableView;
 @property (nonatomic, strong) NSMutableArray* arrayInventories;
+@property (nonatomic, strong) NSMutableArray* arrayUnSyncInventories;
+
 @property (nonatomic, strong) NSMutableArray *searchResult;
 @property (nonatomic,strong) UISearchBar *searchBar;
 @end
@@ -87,16 +89,6 @@
     //Do some search
     NSLog(@"=== testing search %@", searchBar.text);
     
-//    [inventory webGetRandomCheckData:searchBar.text block:^(NSMutableArray *tableArray, NSError *error) {
-//        if ([tableArray count] > 0) {
-//            self.arrayInventories = tableArray;
-//            [self.randomTableView reloadData];
-//        }
-//        else {
-//            [self.arrayInventories removeAllObjects];
-//            [self.randomTableView reloadData];
-//        }
-//    }];
     [self getData:searchBar.text];
     [self.randomTableView reloadData];
 }
@@ -120,8 +112,10 @@
     InventoryModel *inventory = [[InventoryModel alloc] init];
     if(self.searchBar.text.length==0){
       self.arrayInventories = [inventory getLocalRandomCheckDataListWithPosition:@""];
+        self.arrayUnSyncInventories=[inventory getLocalRandomCheckUnSyncDataListWithPosition:@""];
     }else{
         self.arrayInventories=[inventory searchLocalRandomCheckDataList:q];
+        self.arrayUnSyncInventories=[inventory searchLocalRandomCheckUnSyncDataList:q];
     }
 }
 
@@ -145,7 +139,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSString *sectionName = [NSString stringWithFormat: @"已抽盘 %ld", (long)self.arrayInventories.count];
+    NSString *sectionName = [NSString stringWithFormat: @"已抽盘 %i/%i", [self.arrayInventories count],[self.arrayUnSyncInventories count]];
     
     return sectionName;
 }

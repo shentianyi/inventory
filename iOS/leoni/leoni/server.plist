@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ip</key>
-	<string>http://192.168.1.11:3000</string>
+	<string>http://192.168.1.106:3000</string>
 	<key>request_quantity</key>
 	<string>200</string>
 	<key>department</key>
@@ -32,8 +32,8 @@
 	<string>/api/v1/inventory/download_check_data</string>
 	<key>random_check_data</key>
 	<string>/api/v1/inventory/random_check_data</string>
-	<key>get_random_check_data</key>
-	<string>/api/v1/inventory/get_random_check_data</string>
+	<key>download_random_check_data</key>
+	<string>/api/v1/inventory/down_random_check_data</string>
 	<key>get_random_total</key>
 	<string>/api/v1/inventory/random_total</string>
 </dict>

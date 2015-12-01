@@ -18,33 +18,6 @@
 - (instancetype)init;
 
 
-/*
- 下载全盘数据
- ryan 2015.11.4
- */
-- (void)webDownloadAllCheckDatablock:(void (^)(NSMutableArray * tableArray, NSError *error))block;
-
-- (void)webDownloadAllCheckDatablockInPage:(NSInteger)page AndPageSize:(NSInteger)pageSize block:(void(^)(NSMutableArray *dataArray, NSError *error))block;
-
-
-/*
- 下载所有抽盘数据
- */
-- (void)webDownloadRandomCheckDatablock:(void(^)(NSMutableArray *dataArray, NSError *error))block;
-
-- (void)webDownloadRandomCheckDatablockInPage:(NSInteger)page AndPageSize:(NSInteger)pageSize block:(void(^)(NSMutableArray *dataArray, NSError *error))block;
-
-/*
- 下载翻页抽盘数据
-*/
-- (void)webGetRandomCheckData: (NSInteger )page withPageSize: (NSString *)pageSize block:(void(^)(NSMutableArray *tableArray, NSError *error))block;
-
-- (void)queryWithPosition: (NSString *)positionString block:(void(^)(InventoryEntity *inventory_entity, NSError *error))block;
-
-- (void)checkWithPosition: (NSString *)position WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser block:(void(^)(NSString *msgString, NSError *error))block;
-
-- (void)webRandomCheckWithPosition: (NSString *)position WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser block:(void(^)(NSString *msgString, NSError *error))block;
-
 
 - (void)createLocalDataWithSn:(NSInteger)sn WithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType  WithPartUnit:(NSString *) partUnit WithChcekQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser block:(void(^)(NSString *msgString, NSError *error))block;
 
@@ -61,22 +34,41 @@
 // by position
 - (NSMutableArray *)searchLocalCheckDataList:(NSString *)q;
 - (NSMutableArray *)searchLocalCheckDataList:(NSString *)q WithUserNr:(NSString *)userNr;
+- (NSMutableArray *)searchLocalCheckUnSyncDataList:(NSString *)q;
+- (NSMutableArray *)searchLocalCheckUnSyncDataList:(NSString *)q WithUserNr:(NSString *)userNr;
+
+
 - (NSMutableArray *)getLocalCheckDataListWithPosition: (NSString *)position;
 - (NSMutableArray *)getLocalCheckDataListWithPosition: (NSString *)position WithUserNr:(NSString *)userNr;
+
+-(NSMutableArray *)getLocalCheckOrCreateUnsyncDataListWithUserNr:(NSString *)userNr;
+
+- (NSMutableArray *)getLocalCheckUnSyncDataListWithPosition: (NSString *)position;
+- (NSMutableArray *)getLocalCheckUnSyncDataListWithPosition: (NSString *)position WithUserNr:(NSString *)userNr;
+
 
 
 - (NSMutableArray *)searchLocalCreateCheckDataList:(NSString *)q;
 - (NSMutableArray *)searchLocalCreateCheckDataList:(NSString *)q WithUserNr:(NSString *)userNr;
+- (NSMutableArray *)searchLocalCreateCheckUnSyncDataList:(NSString *)q;
+- (NSMutableArray *)searchLocalCreateCheckUnSyncDataList:(NSString *)q WithUserNr:(NSString *)userNr;
+
 - (NSMutableArray *)getLocalCreateCheckDataListWithPoistion:(NSString *)position;
 - (NSMutableArray *)getLocalCreateCheckDataListWithPoistion:(NSString *)position WithUserNr:(NSString *) userNr;
+- (NSMutableArray *)getLocalCreateCheckUnSyncDataListWithPoistion:(NSString *)position;
+- (NSMutableArray *)getLocalCreateCheckUnSyncDataListWithPoistion:(NSString *)position WithUserNr:(NSString *) userNr;
 
 // 获取本地抽盘数据
 - (NSMutableArray *)searchLocalRandomCheckDataList:(NSString *)q;
 - (NSMutableArray *)getLocalRandomCheckDataListWithPosition: (NSString *)position;
 
+// 获取本地抽盘数据
+- (NSMutableArray *)searchLocalRandomCheckUnSyncDataList:(NSString *)q;
+- (NSMutableArray *)getLocalRandomCheckUnSyncDataListWithPosition: (NSString *)position;
 /*
  本地数据查询
  */
+//－－－全盘／录入查询－－－－
 
 // by position
 - (NSMutableArray *)getListWithPosition: (NSString *)position;
@@ -87,10 +79,10 @@
 // by position and department and part
 -(NSMutableArray *)getListWithPosition:(NSString *)position andDepartment:(NSString *)deparment andPart:(NSString *)part;
 
+//－－－抽盘查询－－－－
+
 //random by sn
 - (NSMutableArray *)getRandomListWithSn:(NSInteger)sn;
-
-
 // random by position
 - (NSMutableArray *)getRandomListWithPosition: (NSString *)position;
 // random by position and department
@@ -107,39 +99,9 @@
 -(BOOL)updateCheckFields:(InventoryEntity *)entity;
 // update random check fields
 -(BOOL)updateRandomCheckFields:(InventoryEntity *)entity;
-
-
-
-
-
-- (BOOL)uploadCheckData: (InventoryEntity *)entity;
-/*
- 上传更新random check data
- */
-- (BOOL)webUploadRandomCheckData: (InventoryEntity *)entity;
-
-/*
- 获取抽盘数据 总页数，总条数
- */
-- (void)getRandomTotal: (void (^)(NSInteger intCount, NSError *error))block;
-    
-
-- (void)getTotal: (void(^)(NSInteger intCount, NSError *error))block ;
-
-//- (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block completion:(void(^)(BOOL finished))completion;
-
-- (void)webGetListWithPage: (NSInteger )page withPageSize: (NSString *)pageSize block:(void (^)(NSMutableArray * tableArray, NSError *error))block;
-
-
-/*
- 本地根据库位 update 记录
- */
-- (NSString *)localUpdateDataByPosition: (InventoryEntity *)entity;
-
-/*
- 本地根据库位 update random check data记录
- */
-- (NSString *)localUpdateRandomCheckDataByPosition: (InventoryEntity *)entity;
+// update sync tag
+-(BOOL)updateCheckSync:(InventoryEntity *)entity;
+-(BOOL)updateRandomCheckSync:(InventoryEntity *)entity;
 
 /*
  本地查询 记录

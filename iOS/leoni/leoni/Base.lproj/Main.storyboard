@@ -162,10 +162,6 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="Naw-PX-1KZ">
-                                <rect key="frame" x="37" y="77" width="250" height="2"/>
-                                <animations/>
-                            </progressView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="默认部门" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDy-e5-ZjV">
                                 <rect key="frame" x="10" y="265" width="68" height="21"/>
                                 <animations/>
@@ -221,7 +217,6 @@
                     <connections>
                         <outlet property="deparmentTextField" destination="BfF-g7-uIS" id="ufO-yk-cAN"/>
                         <outlet property="ipTextField" destination="ezo-m3-ns7" id="FVe-JC-H7f"/>
-                        <outlet property="processView" destination="Naw-PX-1KZ" id="48p-gu-b35"/>
                         <outlet property="requestTextField" destination="0m9-JB-hBg" id="vC0-uU-8gM"/>
                     </connections>
                 </viewController>
