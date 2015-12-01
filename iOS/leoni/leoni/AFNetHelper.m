@@ -113,10 +113,14 @@
     return plistdict;
 }
 
-- (NSString *)getRequestQuantity {
+- (NSInteger *)getRequestQuantity {
     NSString *requestQuantity = [[self URLDictionary] objectForKey: @"request_quantity"];
-    return  [requestQuantity stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
+    if(requestQuantity==nil ||
+       requestQuantity.length==0){
+        requestQuantity=@"200";
+    }
+    //return  [requestQuantity stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return [requestQuantity integerValue];
 }
 
 -(NSString *) defaultDepartment{
@@ -127,6 +131,11 @@
 -(NSString *) partNrPrefix{
     NSString *partNrPrefix=[[self URLDictionary] objectForKey:@"part_prefix"];
     return [partNrPrefix stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
+-(NSString *) secretKey{
+    NSString *secretKey=[[self URLDictionary] objectForKey:@"secret_key"];
+    return [secretKey stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
 -(BOOL)listLimitUser{

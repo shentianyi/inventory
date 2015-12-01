@@ -12,6 +12,8 @@
 	<string>P</string>
 	<key>list_limit_user</key>
 	<true/>
+	<key>secret_key</key>
+	<string>39c8942e1038872a822c0dc75eedbde3</string>
 	<key>login</key>
 	<string>/api/v1/users/login</string>
 	<key>download_user_data</key>
@@ -25,7 +27,7 @@
 	<key>upload_random_check_data</key>
 	<string>/api/v1/inventory/upload_random_check_data</string>
 	<key>get_total</key>
-	<string>/api/v1/inventory/get_total</string>
+	<string>/api/v1/inventory/total</string>
 	<key>download_check_data</key>
 	<string>/api/v1/inventory/download_check_data</string>
 	<key>random_check_data</key>
@@ -33,6 +35,6 @@
 	<key>get_random_check_data</key>
 	<string>/api/v1/inventory/get_random_check_data</string>
 	<key>get_random_total</key>
-	<string>/api/v1/inventory/get_random_total</string>
+	<string>/api/v1/inventory/random_total</string>
 </dict>
 </plist>

@@ -28,7 +28,7 @@
     self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,10,self.navigationController.navigationBar.bounds.size.width,self.navigationController.navigationBar.bounds.size.height/2)];
     self.searchBar.showsCancelButton = YES;
     self.searchBar.delegate = self;
-    [self.searchBar setPlaceholder:@"搜索库位"];
+    [self.searchBar setPlaceholder:@"搜索"];
     [self.navigationController.navigationBar addSubview:self.searchBar];
     [self initTableView];
     self.searchResult = [NSMutableArray arrayWithCapacity:[self.arrayInventories count]];
@@ -86,7 +86,7 @@
     [searchBar resignFirstResponder];
     //Do some search
     NSLog(@"=== testing search %@", searchBar.text);
-    InventoryModel *inventory = [[InventoryModel alloc] init];
+    
 //    [inventory webGetRandomCheckData:searchBar.text block:^(NSMutableArray *tableArray, NSError *error) {
 //        if ([tableArray count] > 0) {
 //            self.arrayInventories = tableArray;
@@ -97,7 +97,7 @@
 //            [self.randomTableView reloadData];
 //        }
 //    }];
-    self.arrayInventories = [inventory getLocalRandomCheckDataListWithPosition:searchBar.text];
+    [self getData:searchBar.text];
     [self.randomTableView reloadData];
 }
 
@@ -112,9 +112,17 @@
 
 - (void)loadData {
     self.arrayInventories = [[NSMutableArray alloc]init];
-    InventoryModel *inventory = [[InventoryModel alloc] init];
-    self.arrayInventories = [inventory getLocalRandomCheckDataListWithPosition:@""];
+    [self getData:@""];
     [self.randomTableView reloadData];
+}
+
+-(void)getData:(NSString *)q{
+    InventoryModel *inventory = [[InventoryModel alloc] init];
+    if(self.searchBar.text.length==0){
+      self.arrayInventories = [inventory getLocalRandomCheckDataListWithPosition:@""];
+    }else{
+        self.arrayInventories=[inventory searchLocalRandomCheckDataList:q];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -162,9 +170,7 @@
     {
         InventoryEntity *entity = self.arrayInventories[indexPath.row];
         NSLog(@"entity %@%@", entity.position, entity.part_nr);
-//        cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@  零件: %@", indexPath.row+1, entity.position ,entity.part_nr];
-//        
-//        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘数量: %@ 抽盘数量: %@", entity.check_qty, entity.random_check_qty];
+        
         
         cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@ 零件:%@", entity.sn, entity.position, entity.part_nr];
         

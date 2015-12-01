@@ -105,7 +105,7 @@
     self.ipTextField.text=[self.afnet_helper ServerURL];
     
     //self.portTextField.text = [NSString stringWithFormat:@":%@", serverArray[2]];
-    self.requestTextField.text = [self.afnet_helper getRequestQuantity];
+    self.requestTextField.text = [NSString stringWithFormat:@"%i",  [self.afnet_helper getRequestQuantity]];
     
     self.deparmentTextField.text=[self.afnet_helper defaultDepartment];
     
@@ -172,7 +172,7 @@
     
     self.userModel=[[UserModel alloc] init];
     NSInteger page=1;
-    NSInteger perPage=[[self.afnet_helper getRequestQuantity] integerValue];
+    NSInteger perPage=[self.afnet_helper getRequestQuantity];
     
     [self.processView setHidden:NO];
     

@@ -9,6 +9,9 @@
 #import "RandomCheckSynchronizeViewController.h"
 #import "InventoryModel.h"
 #import "UserModel.h"
+#import "CheckUserRoleViewController.h"
+
+
 
 @interface RandomCheckSynchronizeViewController ()
 @property (nonatomic, strong) UIAlertView *downloadAlert;
@@ -20,6 +23,9 @@
 @property NSInteger countInventories;
 @property (nonatomic, strong) NSMutableArray *downloadDataArray;
 @property (nonatomic, strong) NSMutableArray *uploadDataArray;
+
+@property(nonatomic,retain) UIButton *currentButton;
+
 @end
 
 @implementation RandomCheckSynchronizeViewController
@@ -56,6 +62,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)clickSetCurrentButton:(UIButton *)sender {
+    self.currentButton=sender;
 }
 
 /*
@@ -129,7 +139,7 @@
 
 - (void)downloadRandomCheckData {
     
-    [self.model getRandomTotal: self.page_size block:^(NSInteger intCount, NSError *error)  {
+    [self.model getRandomTotal:^(NSInteger intCount, NSError *error)  {
         if (intCount > 0) {
             self.integerCount = intCount;
             
@@ -327,6 +337,25 @@
         }
     }];
     
+}
+
+
+-(IBAction)Checked :(UIStoryboardSegue *)segue{
+    
+    if([segue.sourceViewController isKindOfClass:[CheckUserRoleViewController class]]){
+        
+        NSLog(@".................");
+        
+        CheckUserRoleViewController *check=(CheckUserRoleViewController*)segue.sourceViewController;
+        
+        if(check.pass){
+            if(self.currentButton==self.randomDownloadButton){
+                [self.downloadAlert show];
+            }else if(self.currentButton ==self.randomuploadButton){
+                [self.uploadAlert show];
+            }
+        }
+    }
 }
 
 

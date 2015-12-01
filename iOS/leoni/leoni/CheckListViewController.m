@@ -41,7 +41,7 @@
     self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,10,self.navigationController.navigationBar.bounds.size.width,self.navigationController.navigationBar.bounds.size.height/2)];
     self.searchBar.showsCancelButton = YES;
     self.searchBar.delegate = self;
-    [self.searchBar setPlaceholder:@"搜索库位"];
+    [self.searchBar setPlaceholder:@"搜索"];
     [self.navigationController.navigationBar addSubview:self.searchBar];
     
     self.searchResult = [NSMutableArray arrayWithCapacity:[self.localCheckInventories count]];
@@ -206,15 +206,25 @@
     [self.table reloadData];
 }
 
--(void) getLocalCheckData:(NSString *) position{
+-(void) getLocalCheckData:(NSString *) q{
     InventoryModel *inventory = [[InventoryModel alloc] init];
 
     if(self.afnetHelper.listLimitUser){
-        self.localCheckInventories=[inventory getLocalCheckDataListWithPosition:position WithUserNr:[UserModel accountNr]];
-        self.localCreateInventories=[inventory getLocalCreateCheckDataListWithPoistion:position WithUserNr:[UserModel accountNr]];
+        if(self.searchBar.text.length==0){
+          self.localCheckInventories=[inventory getLocalCheckDataListWithPosition:q WithUserNr:[UserModel accountNr]];
+          self.localCreateInventories=[inventory getLocalCreateCheckDataListWithPoistion:q WithUserNr:[UserModel accountNr]];
+        }else{
+            self.localCheckInventories=[inventory searchLocalCheckDataList:q WithUserNr:[UserModel accountNr]];
+            self.localCreateInventories=[inventory searchLocalCreateCheckDataList:q WithUserNr:[UserModel accountNr]];
+        }
     }else{
-        self.localCheckInventories=[inventory getLocalCheckDataListWithPosition:position];
-        self.localCreateInventories=[inventory getLocalCreateCheckDataListWithPoistion:position];
+        if(self.searchBar.text.length==0){
+          self.localCheckInventories=[inventory getLocalCheckDataListWithPosition:q];
+          self.localCreateInventories=[inventory getLocalCreateCheckDataListWithPoistion:q];
+        }else{
+            self.localCheckInventories=[inventory searchLocalCheckDataList:q];
+            self.localCreateInventories=[inventory searchLocalCreateCheckDataList:q];
+        }
     }
 }
 

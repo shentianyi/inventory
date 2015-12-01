@@ -129,27 +129,27 @@
     [self clearTextFields:clearTextFields];
   }
     BOOL msgBool = NO;
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    hud.mode = MBProgressHUDModeText;
-    hud.labelText = @"加载中...";
+    NSInteger sn=[self.snTextField.text integerValue];
     
+    if([self.snTextField.text integerValue]>0){
     NSMutableArray *getData = [[NSMutableArray alloc] init];
     // NSInteger sn=[self.snTextField.text integerValue];
     getData = [self.inventory getListWithSn:[self.snTextField.text integerValue]];
     NSUInteger countGetData =[ getData count];
     if ( countGetData >1) {
-        hud.labelText = [NSString stringWithFormat:@"唯一码重复，请联系管理员"];
-        [hud hide:YES afterDelay:1.5f];
-        
+        [self showMsg:[NSString stringWithFormat:@"唯一码重复，请联系管理员"] WithTime:1.0f];
+
         [self clearAllTextFields];
     } else if (countGetData == 0) {
         msgBool = YES;
-        [hud hide:YES];
         [self.positionTextField becomeFirstResponder];
     } else if(countGetData == 1) {
-        hud.labelText = [NSString stringWithFormat:@"唯一码已存在，不可录入"];
-        [hud hide:YES afterDelay:1.5f];
+        [self showMsg:[NSString stringWithFormat:@"唯一码已存在，不可录入"] WithTime:1.0f];
+
+        [self clearAllTextFields];
+    }}else{
+        [self showMsg:[NSString stringWithFormat:@"唯一码只可以为正整数"] WithTime:1.0f];
         [self clearAllTextFields];
     }
     return msgBool;
@@ -160,7 +160,6 @@
 - (BOOL)validatePosition
 {
     BOOL msgBool = NO;
-   // hud.labelText = @"加载中...";
         NSMutableArray *getData = [[NSMutableArray alloc] init];
     
     getData = [self.inventory getListWithPosition:self.positionTextField.text andDepartment:self.departmentTextField.text andPart:self.partTextField.text];
@@ -168,13 +167,8 @@
     NSUInteger countGetData =[ getData count];
     
     if ( countGetData >0 ) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-       hud.mode = MBProgressHUDModeText;
-        hud.labelText = [NSString stringWithFormat:@"数据已存在，不可以手动录入"];
-        [hud hide:YES afterDelay:1.0f];
+        [self showMsg:[NSString stringWithFormat:@"数据已存在，不可以手动录入"] WithTime:1.0f];
     } else  {
-       // [hud hide:YES];
         msgBool = YES;
     }
     
@@ -183,8 +177,6 @@
 
 
 - (void)validateText {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeText;
     if([self.snTextField.text length]>0){
     if ([self.positionTextField.text length] >0) {
         if ([self.partTextField.text length] >0) {
@@ -192,22 +184,19 @@
                 if([self.departmentTextField.text length] >0){
                     if([self.checkQtyTextField.text length] >0 && ([self isPureFloat:self.checkQtyTextField.text] || [self isPureInt:self.checkQtyTextField.text])){
 //
-                        [hud hide:YES];
+                        
                         if ([self validateSn:NO] && [self validatePosition]) {
                             [self saveCheckData];
                         }
                     }else{
-                        if(self.firstResponder==self.checkQtyTextField){
-                            hud.yOffset=100;
-                        }
-                        
-                        hud.labelText = @"请输入全盘数量";
-                        [hud hide:YES afterDelay:0.5f];
+//                        if(self.firstResponder==self.checkQtyTextField){
+//                            hud.yOffset=100;
+//                        }
+                        [self showMsg:[NSString stringWithFormat:@"请输入全盘数量"] WithTime:1.0f];
 
                     }
                 }else{
-                    hud.labelText = @"请输入部门";
-                    [hud hide:YES afterDelay:0.5f];
+                    [self showMsg:[NSString stringWithFormat:@"请输入部门"] WithTime:1.0f];
                 }
 //            }else{
 //                hud.labelText = @"请输入类型";
@@ -215,16 +204,15 @@
 //            }
                 
         }else{
-            hud.labelText = @"请输入零件号";
-            [hud hide:YES afterDelay:0.5f];
+            [self showMsg:[NSString stringWithFormat:@"请输入零件号"] WithTime:1.0f];
         }
     } else{
-        hud.labelText = @"请输入库位";
-        [hud hide:YES afterDelay:0.5f];
+        [self showMsg:[NSString stringWithFormat:@"请输入库位"] WithTime:1.0f];
+
     }
     }else{
-        hud.labelText = @"请输入唯一码";
-        [hud hide:YES afterDelay:0.5f];
+        [self showMsg:[NSString stringWithFormat:@"请输入唯一码"] WithTime:1.0f];
+
     }
     
 }
@@ -269,18 +257,13 @@
 }
 
 - (void)saveCheckData{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    hud.mode = MBProgressHUDModeText;
     if ([self isPureFloat:self.checkQtyTextField.text] || [self isPureInt:self.checkQtyTextField.text]){
         InventoryModel *inventory = [[InventoryModel alloc] init];
         KeychainItemWrapper *keyChain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
         NSInteger sn=[self.snTextField.text integerValue];
        
         [inventory createLocalDataWithSn:sn WithPosition: self.positionTextField.text WithPart:self.partTextField.text WithDepartment:self.departmentTextField.text WithPartType:self.partTypeTextField.text WithPartUnit:self.partUnitTextField.text WithChcekQty:self.checkQtyTextField.text WithCheckUser:[keyChain objectForKey:(__bridge  id)kSecAttrAccount] block:^(NSString *msgString, NSError *error) {
-            hud.mode = MBProgressHUDModeText;
-            hud.labelText = [NSString stringWithFormat:@"%@", msgString];
-            [hud hide:YES afterDelay:0.5f];
+
             if (error == nil) {
                 [self hideKeyboard];
                 [self clearAllTextFields];
@@ -290,15 +273,12 @@
         
     }
     else {
-        hud.labelText = [NSString stringWithFormat:@"请输入全盘数量"];
-        [hud hide:YES afterDelay:1.0f];
+        [self showMsg:[NSString stringWithFormat:@"请输入正确数量"] WithTime:1.0f];
     }
 }
 
 -(IBAction)clearInputAction:(id)sender{
     [self clearAllTextFields];
-   // [self touchScreen:self.view];
-   
 }
 
 - (BOOL)isPureInt:(NSString*)string{
@@ -313,6 +293,22 @@
     float val;
     return [scan scanFloat:&val] && [scan isAtEnd];
 }
+
+
+-(void) showMsg:(NSString *)msg WithTime:(float)time{
+    
+    hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.delegate=self;
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText=msg;
+    [hud hide:YES afterDelay:time];
+}
+
+-(void)hudWasHidden:(MBProgressHUD *)hud{
+    [hud removeFromSuperview];
+    hud=nil;
+}
+
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {

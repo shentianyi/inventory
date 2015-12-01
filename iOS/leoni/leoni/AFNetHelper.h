@@ -19,10 +19,11 @@
 
 -(void) updateInventorySettingWithListLimitUser:(BOOL)listLimitUser;
 
-- (NSString *)getRequestQuantity;
+- (NSInteger *)getRequestQuantity;
 - (NSString *)defaultDepartment;
 - (NSString *)partNrPrefix;
 -(BOOL) listLimitUser;
+-(NSString *)secretKey;
 - (NSString *)login;
 - (NSString *) downloadUserData;
 - (NSString *)query;

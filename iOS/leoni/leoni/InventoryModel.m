@@ -1,4 +1,5 @@
-//
+
+///
 //  InventoryModel.m
 //  leoni
 //
@@ -36,6 +37,43 @@
 
         [manager GET:[afnet_helper getRandomCheckData]
           parameters:nil
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 NSLog(@" log==== webDownloadRandomCheckDatablock====== %@", responseObject);
+                 if([responseObject[@"result"] integerValue]== 1 ){
+                     NSArray *arrayResult = responseObject[@"content"];
+                     NSMutableArray *tableArray = [[NSMutableArray alloc] init];
+                     for(int i=0; i<arrayResult.count; i++){
+                         InventoryEntity *inventory =[[InventoryEntity alloc] initWithObject:arrayResult[i]];
+                         [tableArray addObject: inventory];
+                     }
+                     if (block) {
+                         block(tableArray, nil);
+                     }
+                 }
+                 else{
+                     if (block) {
+                         NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:responseObject[@"content"]];
+                         block(nil, error);
+                     }
+                 }
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 if (block) {
+                     NSLog(error.description);
+                     NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:[NSString stringWithFormat:@"网络故障请联系管理员" ]];
+                     block(nil, error);
+                 }
+             }
+         
+         ];
+}
+
+- (void)webDownloadRandomCheckDatablockInPage:(NSInteger)page AndPageSize:(NSInteger)pageSize block:(void(^)(NSMutableArray *, NSError *))block {
+    AFNetHelper *afnet_helper = [[AFNetHelper alloc] init];
+    AFHTTPRequestOperationManager *manager = [afnet_helper basicManager];
+
+        [manager GET:[afnet_helper getRandomCheckData]
+          parameters:@{@"page":[NSString stringWithFormat:@"%i" ,page ], @"per_page":[NSString stringWithFormat:@"%i" ,pageSize ]}
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  NSLog(@" log==== webDownloadRandomCheckDatablock====== %@", responseObject);
                  if([responseObject[@"result"] integerValue]== 1 ){
@@ -178,7 +216,7 @@
     [manager GET:[self.afnet downloadCheckData]
        parameters:nil
           success:^(AFHTTPRequestOperation * operation, id responseObject) {
-              NSLog(@"TESTING webDownloadAllCheckDatablock %@", responseObject);
+           //   NSLog(@"TESTING webDownloadAllCheckDatablock %@", responseObject);
             if([responseObject[@"result"] integerValue]== 1 ){
                 NSArray *arrayResult = responseObject[@"content"];
                 NSMutableArray *tableData = [[NSMutableArray alloc] init];
@@ -204,6 +242,45 @@
                   block(nil, error);
               }
           }];
+}
+
+- (void)webDownloadAllCheckDatablockInPage:(NSInteger)page AndPageSize:(NSInteger)pageSize block:(void(^)(NSMutableArray *, NSError *))block {
+    AFNetHelper *afnet_helper = [[AFNetHelper alloc] init];
+    
+    AFHTTPRequestOperationManager *manager = [afnet_helper basicManager];
+
+        [manager GET:[afnet_helper downloadCheckData]
+          parameters:@{@"page":[NSString stringWithFormat:@"%i" ,page ], @"per_page":[NSString stringWithFormat:@"%i" ,pageSize ]}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                // NSLog(@" log==== webDownloadRandomCheckDatablock====== %@", responseObject);
+                 if([responseObject[@"result"] integerValue]== 1 ){
+                     
+                     NSArray *arrayResult = responseObject[@"content"];
+                     NSMutableArray *tableArray = [[NSMutableArray alloc] init];
+                     for(int i=0; i<arrayResult.count; i++){
+                         InventoryEntity *inventory =[[InventoryEntity alloc] initWithObject:arrayResult[i]];
+                         [tableArray addObject: inventory];
+                     }
+                     if (block) {
+                         block(tableArray, nil);
+                     }
+                 }
+                 else{
+                     if (block) {
+                         NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:responseObject[@"content"]];
+                         block(nil, error);
+                     }
+                 }
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 if (block) {
+                     NSLog(error.description);
+                     NSError *error = [[NSError alloc]initWithDomain:@"Leoni" code:200 userInfo:[NSString stringWithFormat:@"网络故障请联系管理员" ]];
+                     block(nil, error);
+                 }
+             }
+         
+         ];
 }
 
 - (void)createLocalDataWithSn:(NSInteger)sn WithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType WithPartUnit:(NSString *) partUnit WithChcekQty:(NSString *)checkQty WithCheckUser: (NSString *)checkUser block:(void(^)(NSString *, NSError *))block{
@@ -242,8 +319,18 @@
  获取本地全盘数据
  list & upload & count
  */
+
+-(NSMutableArray *)searchLocalCheckDataList:(NSString *)q{
+    NSString *query = [NSString stringWithFormat:@"select * from inventories where (position like '%%%@%%' or sn=%i or part_nr like '%%%@%%') and check_qty != '' and is_local_check='1' order by check_time desc", q,[q integerValue],q];
+    return  [self getInventoryEnityListByQuery:query];
+}
+
+-(NSMutableArray *)searchLocalCheckDataList:(NSString *)q  WithUserNr:(NSString *)userNr;{
+    NSString *query = [NSString stringWithFormat:@"select * from inventories where (position like '%%%@%%' or sn=%i or part_nr like '%%%@%%') and check_qty != '' and is_local_check='1' and check_user='%@' order by check_time desc", q,[q integerValue],q,userNr];
+    return  [self getInventoryEnityListByQuery:query];
+}
+
 - (NSMutableArray *)getLocalCheckDataListWithPosition: (NSString *)position {
-    self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
     NSString *query;
     if ([position isEqualToString:@""]) {
         query = [NSString stringWithFormat:@"select * from inventories where check_qty != '' and is_local_check='1' order by check_time desc"];
@@ -266,8 +353,17 @@
     return  [self getInventoryEnityListByQuery:query];
 }
 
+-(NSMutableArray *)searchLocalCreateCheckDataList:(NSString *)q{
+    NSString *query = [NSString stringWithFormat:@"select * from inventories where (position like '%%%@%%' or sn=%i or part_nr like '%%%@%%') and check_qty != '' and is_local_check='1' and (ios_created_id!='' and ios_created_id!='<null>') order by check_time desc", q,[q integerValue],q];
+    return  [self getInventoryEnityListByQuery:query];
+}
+
+-(NSMutableArray *)searchLocalCreateCheckDataList:(NSString *)q  WithUserNr:(NSString *)userNr;{
+    NSString *query = [NSString stringWithFormat:@"select * from inventories where (position like '%%%@%%' or sn=%i or part_nr like '%%%@%%') and check_qty != '' and is_local_check='1' and (ios_created_id!='' and ios_created_id!='<null>') and check_user='%@' order by check_time desc", q,[q integerValue],q,userNr];
+    return  [self getInventoryEnityListByQuery:query];
+}
+
 -(NSMutableArray *)getLocalCreateCheckDataListWithPoistion:(NSString *)position{
-    self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
     NSString *query;
     if ([position isEqualToString:@""]) {
         query = [NSString stringWithFormat:@"select * from inventories where check_qty != '' and is_local_check='1' and (ios_created_id!='' and ios_created_id!='<null>') order by check_time desc"];
@@ -293,18 +389,19 @@
  本地根据库位 查询 抽盘数据
  */
 // list and upload
+-(NSMutableArray *)searchLocalRandomCheckDataList:(NSString *)q{
+  NSString *query = [NSString stringWithFormat:@"select * from inventories where (position like '%%%@%%' or sn=%i or part_nr like '%%%@%%') and random_check_qty != ''  and is_local_random_check='1' order by random_check_time desc", q,[q integerValue],q];
+    
+    return [self getInventoryEnityListByQuery:query];
+}
+
 - (NSMutableArray *)getLocalRandomCheckDataListWithPosition: (NSString *)position {
-    NSString* docsdir = [NSSearchPathForDirectoriesInDomains( NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *dbpath = [docsdir stringByAppendingPathComponent:@"inventorydb.sql"];
-    NSLog(@"--databasePath: %@", dbpath); //输出的地址就是dyobv.sqlite的路径
     NSString *query;
     if ([position isEqualToString:@""]) {
-        query = [NSString stringWithFormat:@"select * from inventories where random_check_qty != '' and is_local_random_check='1' order by random_check_time desc"];
-//        query = [NSString stringWithFormat:@"select * from inventories where random_check_qty != '' and is_random_check='1' order by random_check_time desc"];
+        query =[NSString stringWithFormat:@"select * from inventories where random_check_qty != '' and is_local_random_check='1' order by random_check_time desc"];
     }
     else {
         query = [NSString stringWithFormat:@"select * from inventories where position like '%%%@%%' and random_check_qty != ''  and is_local_random_check='1' order by random_check_time desc", position];
-//        query = [NSString stringWithFormat:@"select * from inventories where position like '%%%@%%' and random_check_qty != ''  and is_random_check='1' order by random_check_time desc", position];
     }
     
     return [self getInventoryEnityListByQuery:query];
@@ -373,20 +470,24 @@
 
 -(BOOL) updateCheckFields:(InventoryEntity *)entity{
     BOOL result=YES;
-    NSString *queryString=[NSString stringWithFormat:@"update inventories set is_local_check='%@' ,check_qty='%@', check_user='%@', check_time='%@' where inventory_id= '%@'",entity.is_local_check,entity.check_qty,entity.check_user,entity.check_time,entity.inventory_id];
+//    for (int i=0; i<1000; i++) {
+//        NSLog(@"%i",i);
+//        entity.check_qty=[NSString stringWithFormat:@"%i",i];
+    
+    NSString *queryString=[NSString stringWithFormat:@"update inventories set is_local_check='%@' ,check_qty='%@', check_user='%@', check_time='%@' ,is_check_synced='%@' where inventory_id= '%@'",entity.is_local_check,entity.check_qty,entity.check_user,entity.check_time,entity.is_check_synced,entity.inventory_id];
     // 如果是手动录入，可以更新
     if([entity.inventory_id isEqualToString:@""] && [entity.is_local_check isEqualToString:@"1"] && ![entity.ios_created_id isEqualToString:@""] && entity.ios_created_id!=nil){
-      queryString=[NSString stringWithFormat:@"update inventories set is_local_check='%@' ,check_qty='%@', check_user='%@', check_time='%@' where ios_created_id= '%@'",entity.is_local_check,entity.check_qty,entity.check_user,entity.check_time,entity.ios_created_id];
+      queryString=[NSString stringWithFormat:@"update inventories set is_local_check='%@' ,check_qty='%@', check_user='%@', check_time='%@',is_check_synced='%@' where ios_created_id= '%@'",entity.is_local_check,entity.check_qty,entity.check_user,entity.check_time,entity.is_check_synced,entity.ios_created_id];
     }
     [self.db executeQuery:queryString];
-    
+//    }
     return result;
 }
 
 
 -(BOOL) updateRandomCheckFields:(InventoryEntity *)entity{
     BOOL result=YES;
-    NSString *queryString=[NSString stringWithFormat:@"update inventories set is_local_random_check='%@' ,random_check_qty='%@', random_check_user='%@', random_check_time='%@' where inventory_id= '%@'",entity.is_local_random_check,entity.random_check_qty,entity.random_check_user,entity.random_check_time,entity.inventory_id];
+    NSString *queryString=[NSString stringWithFormat:@"update inventories set is_local_random_check='%@' ,random_check_qty='%@', random_check_user='%@', random_check_time='%@',is_random_check_synced='%@' where inventory_id= '%@'",entity.is_local_random_check,entity.random_check_qty,entity.random_check_user,entity.random_check_time,entity.is_random_check_synced,entity.inventory_id];
     [self.db executeQuery:queryString];
     
 //    NSString *get=[NSString stringWithFormat:@"select * from inventories where inventory_id='%@' limit 1",entity.inventory_id];
@@ -454,7 +555,13 @@
         
         NSString *ios_created_id = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"ios_created_id"]];
         
-        InventoryEntity *entity = [[InventoryEntity alloc] initWithId:inventory_id WithSn:sn WithPosition:position WithDepartment:department WithPartNr:part_nr WithPartUnit:part_unit WithPartType:part_type WithIsLocalCheck:is_local_check WithCheckQty:check_qty WithCheckUser:check_user WithCheckTime:check_time WithIsLocalRandomCheck:is_local_random_check WithRandomCheckQty:random_check_qty WithRandomCheckUser:random_check_user WithRandomCheckTime:random_check_time WithIsRandomCheck:is_random_check WithiOSCreatedID:ios_created_id];
+        
+        NSString *is_check_synced = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"is_check_synced"]];
+
+        NSString *is_random_check_synced = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"is_random_check_synced"]];
+
+        
+        InventoryEntity *entity = [[InventoryEntity alloc] initWithId:inventory_id WithSn:sn WithPosition:position WithDepartment:department WithPartNr:part_nr WithPartUnit:part_unit WithPartType:part_type WithIsLocalCheck:is_local_check WithCheckQty:check_qty WithCheckUser:check_user WithCheckTime:check_time WithIsLocalRandomCheck:is_local_random_check WithRandomCheckQty:random_check_qty WithRandomCheckUser:random_check_user WithRandomCheckTime:random_check_time WithIsRandomCheck:is_random_check WithiOSCreatedID:ios_created_id WithIsCheckSynced:is_check_synced WithIsRandomCheckSynced:is_random_check_synced];
         
         NSLog(@"%i========= %@,%@, qty is %@, random_check_qty is %@, %@",sn,position, part_nr, check_qty, random_check_qty,[random_check_qty isEqualToString:@"<null>"]);
         [inventoryEntities addObject:entity];
@@ -540,17 +647,17 @@
 /*
  获取抽盘数据 总页数，总条数
  */
-- (void)getRandomTotal: (NSString *)pageSize block:(void (^)(NSInteger, NSError *))block {
+- (void)getRandomTotal:(void (^)(NSInteger, NSError *))block {
     //    NSString *pageSizeString = @"2";
     AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
     [manager GET:[self.afnet getRandomTotal]
-      parameters:@{@"per_page" : pageSize}
+      parameters:nil
          success:^(AFHTTPRequestOperation * operation, id responseObject) {
 //             NSLog(@"log =========  getTotal =======%@", responseObject);
              if([responseObject[@"result"] integerValue]== 1 ){
                  
                  NSInteger intTotal = 0;
-                 intTotal = [responseObject[@"total_pages"] integerValue];
+                 intTotal = [responseObject[@"content"] integerValue];
                  if (block) {
                      block(intTotal, nil);
                  }
@@ -573,31 +680,29 @@
 
 
 
-- (void)getTotal: (NSString *)pageSize block:(void (^)(NSInteger, NSError *))block  {
+- (void)getTotal:(void (^)(NSInteger, NSError *))block  {
 //- (void)getTotal: (NSString *)pageSize block:(void(^)(NSInteger intCount, NSError *error))block completion:(void(^)(BOOL finished))completion {
 //    NSString *pageSizeString = @"2";
     AFHTTPRequestOperationManager *manager = [self.afnet basicManager];
     [manager GET:[self.afnet getTotal]
-      parameters:@{@"per_page" : pageSize}
+      parameters:nil
           success:^(AFHTTPRequestOperation * operation, id responseObject) {
 //              NSLog(@"log =========  getTotal =======%@", responseObject);
               if([responseObject[@"result"] integerValue]== 1 ){
                   NSInteger intTotal = 0;
-                  intTotal = [responseObject[@"total_pages"] integerValue];
+                  intTotal = [responseObject[@"content"] integerValue];
                   if (block) {
                       block(intTotal, nil);
                   }
-                  
               }else {
                   if (block) {
-                      block(-1, nil);
+                      block(0, nil);
                   }
               }
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
               if (block) {
-                  block(-1, error);
+                  block(0, error);
               }
 //          NSLog(@"log =========  getTotal =======%@", error.description);
           }];
@@ -691,7 +796,7 @@
     
     self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
     NSString *query;
-    query = [NSString stringWithFormat:@"insert into inventories (inventory_id,sn, department, position, part_nr, part_type,part_unit,is_local_check, check_qty, check_user, check_time, is_local_random_check,random_check_qty, random_check_user, random_check_time, is_random_check, ios_created_id) values('%@','%i' ,'%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@','%@', '%@', '%@', '%@', '%@', '%@', '%@')", entity.inventory_id,entity.sn, entity.department, entity.position, entity.part_nr, entity.part_type,entity.part_unit,entity.is_local_check, entity.check_qty, entity.check_user, entity.check_time,entity.is_local_random_check, entity.random_check_qty, entity.random_check_user, entity.random_check_time, entity.is_random_check, entity.ios_created_id];
+    query = [NSString stringWithFormat:@"insert into inventories (inventory_id,sn, department, position, part_nr, part_type,part_unit,is_local_check, check_qty, check_user, check_time, is_local_random_check,random_check_qty, random_check_user, random_check_time, is_random_check, ios_created_id,is_check_synced,is_random_check_synced) values('%@','%i' ,'%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@','%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@')", entity.inventory_id,entity.sn, entity.department, entity.position, entity.part_nr, entity.part_type,entity.part_unit,entity.is_local_check, entity.check_qty, entity.check_user, entity.check_time,entity.is_local_random_check, entity.random_check_qty, entity.random_check_user, entity.random_check_time, entity.is_random_check, entity.ios_created_id,entity.is_check_synced,entity.is_random_check_synced];
     
     [self.db executeQuery:query];
     if (self.db.affectedRows != 0) {

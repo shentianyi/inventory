@@ -10,7 +10,9 @@
 #import "Captuvo.h"
 #import "InventoryModel.h"
 
-@interface CheckCreateViewController : UIViewController<UITextFieldDelegate, CaptuvoEventsProtocol>
+@interface CheckCreateViewController : UIViewController<UITextFieldDelegate, CaptuvoEventsProtocol,MBProgressHUDDelegate>{
+    MBProgressHUD *hud;
+}
 
 
 

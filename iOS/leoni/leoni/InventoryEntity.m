@@ -12,7 +12,7 @@
 
 
 
--(id) initWithId:(NSString *)inventory_id WithSn:(NSInteger)sn WithPosition:(NSString *)position WithDepartment:(NSString *)department WithPartNr:(NSString *)part_nr WithPartUnit:(NSString*)part_unit WithPartType:(NSString *)part_type WithIsLocalCheck:(NSString *)isLocalCheck WithCheckQty:(NSString *)checkQty WithCheckUser:(NSString *)checkUser WithCheckTime:(NSString *)checkTime WithIsLocalRandomCheck:(NSString *)isLocalRandomCheck WithRandomCheckQty:(NSString *)randomCheckQty WithRandomCheckUser:(NSString *)randomCheckUser WithRandomCheckTime:(NSString *)randomCheckTime WithIsRandomCheck:(NSString *)isRandomCheck WithiOSCreatedID:(NSString *)iOSCreatedId{
+-(id) initWithId:(NSString *)inventory_id WithSn:(NSInteger)sn WithPosition:(NSString *)position WithDepartment:(NSString *)department WithPartNr:(NSString *)part_nr WithPartUnit:(NSString*)part_unit WithPartType:(NSString *)part_type WithIsLocalCheck:(NSString *)isLocalCheck WithCheckQty:(NSString *)checkQty WithCheckUser:(NSString *)checkUser WithCheckTime:(NSString *)checkTime WithIsLocalRandomCheck:(NSString *)isLocalRandomCheck WithRandomCheckQty:(NSString *)randomCheckQty WithRandomCheckUser:(NSString *)randomCheckUser WithRandomCheckTime:(NSString *)randomCheckTime WithIsRandomCheck:(NSString *)isRandomCheck WithiOSCreatedID:(NSString *)iOSCreatedId WithIsCheckSynced:(NSString *)isCheckSynced WithIsRandomCheckSynced:(NSString *)isRandomCheckSynced{
     self=[super init];
     
     if(self){
@@ -34,6 +34,9 @@
         self.is_random_check=isRandomCheck;
         
         self.ios_created_id=iOSCreatedId;
+        
+        self.is_check_synced=isCheckSynced;
+        self.is_random_check_synced=isRandomCheckSynced;
     }
     return self;
   
@@ -115,7 +118,7 @@
     if(self){
         self.inventory_id = dictionary[@"id"]?dictionary[@"id"]:@"";
         self.sn= [dictionary[@"sn"] integerValue];
-        NSLog(@"sn.........:%i",self.sn);
+       // NSLog(@"sn.........:%i",self.sn);
         self.position = dictionary[@"position"]?dictionary[@"position"]:@"";
         self.department = dictionary[@"department"]?dictionary[@"department"]:@"";
         self.part_nr = dictionary[@"part_nr"]?dictionary[@"part_nr"]:@"";
@@ -158,5 +161,15 @@
 -(NSString *) is_local_random_check{
     if (!_is_local_random_check) _is_local_random_check=@"0";
         return _is_local_random_check;
+}
+
+-(NSString *)is_check_synced{
+ if(!_is_check_synced) _is_check_synced=@"0";
+    return _is_check_synced;
+}
+
+-(NSString *)is_random_check_synced{
+ if(!_is_random_check_synced) _is_random_check_synced=@"0";
+    return  _is_random_check_synced;
 }
 @end
