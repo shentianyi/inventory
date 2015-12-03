@@ -1,10 +1,10 @@
 module Excel
   class InventoryService
     HEADERS=[
-        :sn, :department, :position, :part_nr, :part_unit, :part_type, :operation
+        :sn, :department, :position, :part_nr, :part_unit, :part_type, :wire_nr, :process_nr, :operation
     ]
 
-    INVALID_HEADERS=%w(唯一码 部门 库位号 零件号 零件单位 零件类型 operation)
+    INVALID_HEADERS=%w(唯一码 部门 库位号 零件号 零件单位 零件类型 线号 步骤号 operation)
 
     def self.full_tmp_path(file_name)
       File.join('uploadfiles', Time.now.strftime('%Y%m%d%H%M%S%L')+'-'+file_name)
@@ -33,13 +33,17 @@ module Excel
                 case operator
                   when 'new'
                     # data = {sn: row[:sn], department: row[:department], position: row[:position], part_nr: row[:part_nr], ios_created_id: '', check_time: '', random_check_time: ''}
-                    data = {sn: row[:sn], department: row[:department], position: row[:position], part_nr: row[:part_nr], part_unit: row[:part_unit], part_type: row[:part_type]}
+                    data = {sn: row[:sn], department: row[:department], position: row[:position],
+                            part_nr: row[:part_nr], part_unit: row[:part_unit], part_type: row[:part_type],
+                            wire_nr: row[:wire_nr], process_nr: row[:process_nr]}
                     Inventory.create!(data)
                   when 'update'
                     # puts "---------------testing update"
                     inventory = Inventory.where(sn: row[:sn]).first
                     if inventory
-                      inventory.update!(department: row[:department], position: row[:position], part_nr: row[:part_nr], part_unit: row[:part_unit], part_type: row[:part_type])
+                      inventory.update!(department: row[:department], position: row[:position],
+                                        part_nr: row[:part_nr], part_unit: row[:part_unit], part_type: row[:part_type],
+                                        wire_nr: row[:wire_nr], process_nr: row[:process_nr])
                     end
                   when 'delete'
                     # puts "---------------testing delte"
@@ -134,6 +138,8 @@ module Excel
 
       if row[:part_type].blank?
         msg.contents << "零件类型不能为空!"
+      else
+        msg.contents << "零件类型: #{row[:part_type]} 不存在!" unless Inventory.validate_part_type(row[:part_type])
       end
 
       if row[:operation].blank?
@@ -149,7 +155,7 @@ module Excel
             msg.contents << "此唯一码 已经被占用!"
           elsif ii=Inventory.where(part_nr: row[:part_nr], position: row[:position], department: row[:department]).first
             if ii.present?
-              msg.contents << "此部门库位已存在"
+              msg.contents << "此部门库位零件已存在"
             end
           end
         when 'update'

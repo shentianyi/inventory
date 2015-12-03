@@ -53,6 +53,8 @@
     <th>零件号</th>
     <th>零件类型</th>
     <th>零件单位</th>
+    <th>线号</th>
+    <th>步骤号</th>
     <th>全盘数量</th>
     <th>全盘员工</th>
     <th>全盘时间</th>
@@ -75,6 +77,8 @@
         <td><%= inventory.part_nr %></td>
         <td><%= inventory.part_type %></td>
         <td><%= inventory.part_unit %></td>
+        <td><%= inventory.wire_nr %></td>
+        <td><%= inventory.process_nr %></td>
         <td><%= inventory.check_qty %></td>
         <td><%= inventory.check_user %></td>
         <td><%= inventory.check_time_display%></td>
@@ -94,3 +98,9 @@
   <%= will_paginate @inventories, renderer: BootstrapPagination::Rails %>
 </div>
 <br>
+<div>
+  <h4>说明：</h4>
+  <div>
+    <p><strong>零件类型</strong>：不可空，为U, R, E</p>
+  </div>
+</div>

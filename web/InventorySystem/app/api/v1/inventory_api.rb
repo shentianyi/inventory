@@ -121,6 +121,8 @@ module V1
         requires :part_nr, type: String
         requires :part_unit, type: String
         requires :part_type, type: String
+        requires :wire_nr, type: String
+        requires :process_nr, type: String
         requires :check_qty, type: String
         requires :check_user, type: String
         requires :check_time, type: String
@@ -134,6 +136,8 @@ module V1
                                     part_nr: params[:part_nr],
                                     part_unit: params[:part_unit],
                                     part_type: params[:part_type],
+                                    wire_nr:params[:wire_nr],
+                                    process_nr:params[:process_nr],
                                     check_qty: params[:check_qty],
                                     check_user: params[:check_user],
                                     check_time: params[:check_time],

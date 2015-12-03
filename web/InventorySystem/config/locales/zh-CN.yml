@@ -13,6 +13,8 @@ zh-CN:
         part_nr: "零件号"
         part_unit: "零件单位"
         part_type: "零件类型"
+        wire_nr: "线号"
+        process_nr: "步骤号"
         check_qty: "全盘数量"
         check_user: "全盘人员"
         check_time: "全盘时间"
