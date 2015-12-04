@@ -19,7 +19,7 @@
 
 
 
-- (void)createLocalDataWithSn:(NSInteger)sn WithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType  WithPartUnit:(NSString *) partUnit WithChcekQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser block:(void(^)(NSString *msgString, NSError *error))block;
+- (void)createLocalDataWithSn:(NSInteger)sn WithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType  WithPartUnit:(NSString *) partUnit WithWireNr:(NSString *)wireNr WithProcessNr:(NSString*)processNr WithChcekQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser block:(void(^)(NSString *msgString, NSError *error))block;
 
 - (void)localDeleteData: (NSString *)strPosition;
 - (void)localCreateCheckData: (InventoryEntity *)entity;

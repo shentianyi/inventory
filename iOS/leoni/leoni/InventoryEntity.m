@@ -12,7 +12,7 @@
 
 
 
--(id) initWithId:(NSString *)inventory_id WithSn:(NSInteger)sn WithPosition:(NSString *)position WithDepartment:(NSString *)department WithPartNr:(NSString *)part_nr WithPartUnit:(NSString*)part_unit WithPartType:(NSString *)part_type WithIsLocalCheck:(NSString *)isLocalCheck WithCheckQty:(NSString *)checkQty WithCheckUser:(NSString *)checkUser WithCheckTime:(NSString *)checkTime WithIsLocalRandomCheck:(NSString *)isLocalRandomCheck WithRandomCheckQty:(NSString *)randomCheckQty WithRandomCheckUser:(NSString *)randomCheckUser WithRandomCheckTime:(NSString *)randomCheckTime WithIsRandomCheck:(NSString *)isRandomCheck WithiOSCreatedID:(NSString *)iOSCreatedId WithIsCheckSynced:(NSString *)isCheckSynced WithIsRandomCheckSynced:(NSString *)isRandomCheckSynced{
+-(id) initWithId:(NSString *)inventory_id WithSn:(NSInteger)sn WithPosition:(NSString *)position WithDepartment:(NSString *)department WithPartNr:(NSString *)part_nr WithPartUnit:(NSString*)part_unit WithPartType:(NSString *)part_type WithWireNr:(NSString *)wireNr WithProcessNr:(NSString *)processNr WithIsLocalCheck:(NSString *)isLocalCheck WithCheckQty:(NSString *)checkQty WithCheckUser:(NSString *)checkUser WithCheckTime:(NSString *)checkTime WithIsLocalRandomCheck:(NSString *)isLocalRandomCheck WithRandomCheckQty:(NSString *)randomCheckQty WithRandomCheckUser:(NSString *)randomCheckUser WithRandomCheckTime:(NSString *)randomCheckTime WithIsRandomCheck:(NSString *)isRandomCheck WithiOSCreatedID:(NSString *)iOSCreatedId WithIsCheckSynced:(NSString *)isCheckSynced WithIsRandomCheckSynced:(NSString *)isRandomCheckSynced{
     self=[super init];
     
     if(self){
@@ -23,6 +23,10 @@
         self.part_nr=part_nr;
         self.part_type=part_type;
         self.part_unit=part_unit;
+        
+        self.wire_nr=wireNr;
+        self.process_nr=processNr;
+        
         self.is_local_check=isLocalCheck;
         self.check_qty=checkQty;
         self.check_user=checkUser;
@@ -42,74 +46,74 @@
   
 }
 
-
-- (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part_nr withPartType: (NSString *)part_type {
-    self = [super init];
-    if (self) {
-        self.position = position;
-        self.department = department;
-        self.part_nr = part_nr;
-        self.part_type = part_type;
-    }
-    return self;
-}
-
-- (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part_nr withPartType: (NSString *)part_type WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser WithCheckTime: (NSString *)checkTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID:(NSString *)idString {
-    self = [super init];
-    if (self) {
-        self.position = position;
-        self.department = department;
-        self.part_nr = part_nr;
-        self.part_type = part_type;
-        self.check_qty = checkQty;
-        self.check_user = checkUser;
-        self.check_time = checkTime;
-        self.ios_created_id = iOSCreatedId;
-        self.inventory_id = idString;
-
-    }
-    return self;
-}
-
-- (id)initRandomCheckDataWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part_nr withPartType: (NSString *)part_type WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID:(NSString *)idString {
-    self = [super init];
-    if (self) {
-        self.position = position;
-        self.department = department;
-        self.part_nr = part_nr;
-        self.part_type = part_type;
-        self.random_check_qty = randomCheckQty;
-        self.random_check_user = randomCheckUser;
-        self.random_check_time = randomCheckTime;
-        self.ios_created_id = iOSCreatedId;
-        self.inventory_id = idString;
-        
-    }
-    return self;
-}
-
-/*
- 初始全数据
- */
-- (id)initDataWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part_nr withPartType: (NSString *)part_type WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser WithCheckTime: (NSString *)checkTime WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID:(NSString *)idString {
-    self = [super init];
-    if (self) {
-        self.position = position;
-        self.department = department;
-        self.part_nr = part_nr;
-        self.part_type = part_type;
-        self.check_qty = checkQty;
-        self.check_user = checkUser;
-        self.check_time = checkTime;
-        self.random_check_qty = randomCheckQty;
-        self.random_check_user = randomCheckUser;
-        self.random_check_time = randomCheckTime;
-        self.ios_created_id = iOSCreatedId;
-        self.inventory_id = idString;
-        
-    }
-    return self;
-}
+//
+//- (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part_nr withPartType: (NSString *)part_type {
+//    self = [super init];
+//    if (self) {
+//        self.position = position;
+//        self.department = department;
+//        self.part_nr = part_nr;
+//        self.part_type = part_type;
+//    }
+//    return self;
+//}
+//
+//- (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part_nr withPartType: (NSString *)part_type WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser WithCheckTime: (NSString *)checkTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID:(NSString *)idString {
+//    self = [super init];
+//    if (self) {
+//        self.position = position;
+//        self.department = department;
+//        self.part_nr = part_nr;
+//        self.part_type = part_type;
+//        self.check_qty = checkQty;
+//        self.check_user = checkUser;
+//        self.check_time = checkTime;
+//        self.ios_created_id = iOSCreatedId;
+//        self.inventory_id = idString;
+//
+//    }
+//    return self;
+//}
+//
+//- (id)initRandomCheckDataWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part_nr withPartType: (NSString *)part_type WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID:(NSString *)idString {
+//    self = [super init];
+//    if (self) {
+//        self.position = position;
+//        self.department = department;
+//        self.part_nr = part_nr;
+//        self.part_type = part_type;
+//        self.random_check_qty = randomCheckQty;
+//        self.random_check_user = randomCheckUser;
+//        self.random_check_time = randomCheckTime;
+//        self.ios_created_id = iOSCreatedId;
+//        self.inventory_id = idString;
+//        
+//    }
+//    return self;
+//}
+//
+///*
+// 初始全数据
+// */
+//- (id)initDataWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part_nr withPartType: (NSString *)part_type WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser WithCheckTime: (NSString *)checkTime WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID:(NSString *)idString {
+//    self = [super init];
+//    if (self) {
+//        self.position = position;
+//        self.department = department;
+//        self.part_nr = part_nr;
+//        self.part_type = part_type;
+//        self.check_qty = checkQty;
+//        self.check_user = checkUser;
+//        self.check_time = checkTime;
+//        self.random_check_qty = randomCheckQty;
+//        self.random_check_user = randomCheckUser;
+//        self.random_check_time = randomCheckTime;
+//        self.ios_created_id = iOSCreatedId;
+//        self.inventory_id = idString;
+//        
+//    }
+//    return self;
+//}
 
 
 -(instancetype)initWithObject:(NSDictionary *)dictionary
@@ -124,6 +128,8 @@
         self.part_nr = dictionary[@"part_nr"]?dictionary[@"part_nr"]:@"";
         self.part_type = dictionary[@"part_type"]?dictionary[@"part_type"]:@"";
         self.part_unit= dictionary[@"part_unit"]?dictionary[@"part_unit"]:@"";
+        self.wire_nr= dictionary[@"wire_nr"]?dictionary[@"wire_nr"]:@"";
+        self.process_nr= dictionary[@"process_nr"]?dictionary[@"process_nr"]:@"";
 
 //        self.check_qty = [NSString stringWithFormat:@"%@", dictionary[@"check_qty"]];
 //        if ([self.check_qty isEqualToString:@"<null>"]) {

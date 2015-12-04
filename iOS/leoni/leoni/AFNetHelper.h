@@ -25,7 +25,7 @@
 -(BOOL) listLimitUser;
 -(NSString *)secretKey;
 - (NSString *)login;
-- (NSString *) downloadUserData;
+- (NSString *)downloadUserData;
 - (NSString *)query;
 - (NSString *)check;
 - (NSString *)uploadCheckData;

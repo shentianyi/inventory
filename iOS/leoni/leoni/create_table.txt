@@ -2,5 +2,5 @@ CREATE TABLE users(id integer primary key,user_id TEXT,nr TEXT,name TEXT,role TE
 
 CREATE TABLE parts(id integer primary key,nr TEXT,nr_prefix TEXT,unit TEXT, type TEXT);
 
-CREATE TABLE inventories (id INTEGER PRIMARY KEY, inventory_id TEXT,sn integer, position TEXT, department TEXT, part_nr TEXT, part_type TEXT,part_unit TEXT,is_local_check TEXT,  check_qty TEXT, check_user TEXT, check_time TEXT,is_local_random_check TEXT, random_check_qty TEXT, random_check_user TEXT, random_check_time TEXT, is_random_check TEXT, ios_created_id TEXT,is_check_synced TEXT,is_random_check_synced TEXT);
+CREATE TABLE inventories (id INTEGER PRIMARY KEY, inventory_id TEXT,sn integer, position TEXT, department TEXT, part_nr TEXT, part_type TEXT,part_unit TEXT,wire_nr TEXT,process_nr TEXT,is_local_check TEXT,  check_qty TEXT, check_user TEXT, check_time TEXT,is_local_random_check TEXT, random_check_qty TEXT, random_check_user TEXT, random_check_time TEXT, is_random_check TEXT, ios_created_id TEXT,is_check_synced TEXT,is_random_check_synced TEXT);
 

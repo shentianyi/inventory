@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ip</key>
-	<string>http://192.168.1.106:3000</string>
+	<string>http://192.168.1.11:3000</string>
 	<key>request_quantity</key>
 	<string>200</string>
 	<key>department</key>

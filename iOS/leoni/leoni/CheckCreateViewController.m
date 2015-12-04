@@ -14,11 +14,17 @@
 @interface CheckCreateViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *snTextField;
 @property (weak, nonatomic) IBOutlet UITextField *positionTextField;
-@property (weak, nonatomic) IBOutlet UITextField *partTextField;
 @property (weak, nonatomic) IBOutlet UITextField *departmentTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *partTextField;
 @property (weak, nonatomic) IBOutlet UITextField *partUnitTextField;
 @property (weak, nonatomic) IBOutlet UITextField *partTypeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *checkQtyTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *wireNrTextField;
+@property (weak, nonatomic) IBOutlet UITextField *processNrTextField;
+ 
+
 - (IBAction)saveAction:(id)sender;
 - (IBAction)clearInputAction:(id)sender;
 
@@ -28,6 +34,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *trick;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cleanStartBI;
 
+@property(nonatomic,strong) NSMutableArray *partTypes;
+
 - (IBAction)touchScreen:(id)sender;
 
 @end
@@ -36,6 +44,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.partTypes=[[NSMutableArray alloc]initWithObjects:@"",@"U",
+                    @"L",@"E",@"M",nil];
+    [self addPickerView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,21 +94,15 @@
     self.departmentTextField.delegate = self;
     self.partTypeTextField.delegate=self;
     self.partUnitTextField.delegate=self;
+    self.wireNrTextField.delegate=self;
+    self.processNrTextField.delegate=self;
+    
     self.checkQtyTextField.delegate = self;
     self.afnet=[[AFNetHelper alloc]init];
    
     self.departmentTextField.text=[self.afnet defaultDepartment];
     
     self.inventory = [[InventoryModel alloc] init];
-    
-  //  [self.positionTextField becomeFirstResponder];
-    
-    
-//    self.positionTextField.text=@"MBA";
-//    self.departmentTextField.text=@"MB";
-//    self.partTypeTextField.text=@"ff";
-//    self.partTextField.text=@"T163";
-//    self.checkQtyTextField.text=@"100";
 }
 
 -(void)clearAllTextFields{
@@ -124,7 +130,7 @@
 - (BOOL)validateSn:(BOOL)clean
 {
     if(clean){
-    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.positionTextField,self.departmentTextField,self.partTextField,self.partTypeTextField,self.partUnitTextField,self.checkQtyTextField,nil];
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.positionTextField,self.departmentTextField,self.partTextField,self.partTypeTextField,self.partUnitTextField,self.wireNrTextField,self.processNrTextField,self.checkQtyTextField,nil];
     
     [self clearTextFields:clearTextFields];
   }
@@ -179,39 +185,52 @@
 - (void)validateText {
     if([self.snTextField.text length]>0){
     if ([self.positionTextField.text length] >0) {
+        
+        if([self.departmentTextField.text length] >0){
+            
         if ([self.partTextField.text length] >0) {
-//            if([self.partTypeTextField.text length] >0){
-                if([self.departmentTextField.text length] >0){
-                    if([self.checkQtyTextField.text length] >0 && ([self isPureFloat:self.checkQtyTextField.text] || [self isPureInt:self.checkQtyTextField.text])){
-//
-                        
-                        if ([self validateSn:NO] && [self validatePosition]) {
-                            [self saveCheckData];
-                        }
-                    }else{
-//                        if(self.firstResponder==self.checkQtyTextField){
-//                            hud.yOffset=100;
-//                        }
-                        [self showMsg:[NSString stringWithFormat:@"请输入全盘数量"] WithTime:1.0f];
+            if ([self.partUnitTextField.text length] >0) {
 
+             if(self.partTypeTextField.text.length>0 && [self.partTypes containsObject: self.partTypeTextField.text]){
+                 
+                 if((![self.partTypeTextField.text isEqualToString:@"U"]) || ([self.partTypeTextField.text isEqualToString:@"U"] && self.wireNrTextField.text.length>0 && self.processNrTextField.text.length>0)){
+                 
+                        
+                      if([self.checkQtyTextField.text length] >0 && ([self isPureFloat:self.checkQtyTextField.text] || [self isPureInt:self.checkQtyTextField.text])){
+                        if ([self validateSn:NO] && [self validatePosition]) {
+                              [self saveCheckData];
+                          }
+                      }else{
+                         [self showMsg:[NSString stringWithFormat:@"请输入全盘数量"] WithTime:1.0f WithOffset:50.0f];
                     }
+                  }else{
+                      if(self.wireNrTextField.text.length==0){
+                          [self showMsg:[NSString stringWithFormat:@"请输入线号"] WithTime:1.0f  WithOffset:50.f];
+                      }else{
+                          [self showMsg:[NSString stringWithFormat:@"请输步骤号"] WithTime:1.0f  WithOffset:50.f];
+                      }
+                  }
                 }else{
-                    [self showMsg:[NSString stringWithFormat:@"请输入部门"] WithTime:1.0f];
+                    
+                    [self showMsg:[NSString stringWithFormat:@"请选择输入正确类型"] WithTime:1.0f  WithOffset:50.f];
+                    
                 }
-//            }else{
-//                hud.labelText = @"请输入类型";
-//                [hud hide:YES afterDelay:0.5f];
-//            }
-                
+            }else{
+                [self showMsg:[NSString stringWithFormat:@"请输入单位"] WithTime:1.0f  WithOffset:50.f];
+            }
+            }else{
+                [self showMsg:[NSString stringWithFormat:@"请输入零件号"] WithTime:1.0f  WithOffset:50.f];
+            }
+            
         }else{
-            [self showMsg:[NSString stringWithFormat:@"请输入零件号"] WithTime:1.0f];
+            [self showMsg:[NSString stringWithFormat:@"请输入部门"] WithTime:1.0f  WithOffset:50.f];
         }
     } else{
-        [self showMsg:[NSString stringWithFormat:@"请输入库位"] WithTime:1.0f];
+        [self showMsg:[NSString stringWithFormat:@"请输入库位"] WithTime:1.0f  WithOffset:50.f];
 
     }
     }else{
-        [self showMsg:[NSString stringWithFormat:@"请输入唯一码"] WithTime:1.0f];
+        [self showMsg:[NSString stringWithFormat:@"请输入唯一码"] WithTime:1.0f  WithOffset:50.f];
 
     }
     
@@ -231,14 +250,19 @@
             [self.departmentTextField becomeFirstResponder];
         }
     }else if(textField==self.departmentTextField && self.departmentTextField.text.length>0){
+        [self.partTextField becomeFirstResponder];
+    }else if(textField==self.partTextField && self.partTextField.text.length>0){
         [self.partUnitTextField becomeFirstResponder];
     }else if(textField==self.partUnitTextField){
         [self.partTypeTextField becomeFirstResponder];
     }else if(textField==self.partTypeTextField){
-        [self.partTextField becomeFirstResponder];
-    }else if(textField==self.partTextField && self.partTextField.text.length>0){
+        [self.wireNrTextField becomeFirstResponder];
+    }else if(textField==self.wireNrTextField){
+        [self.processNrTextField becomeFirstResponder];
+    }else if(textField==self.processNrTextField){
         [self.checkQtyTextField becomeFirstResponder];
     }
+    
     return YES;
 }
 
@@ -262,7 +286,7 @@
         KeychainItemWrapper *keyChain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Leoni" accessGroup:nil];
         NSInteger sn=[self.snTextField.text integerValue];
        
-        [inventory createLocalDataWithSn:sn WithPosition: self.positionTextField.text WithPart:self.partTextField.text WithDepartment:self.departmentTextField.text WithPartType:self.partTypeTextField.text WithPartUnit:self.partUnitTextField.text WithChcekQty:self.checkQtyTextField.text WithCheckUser:[keyChain objectForKey:(__bridge  id)kSecAttrAccount] block:^(NSString *msgString, NSError *error) {
+        [inventory createLocalDataWithSn:sn WithPosition: self.positionTextField.text WithPart:self.partTextField.text WithDepartment:self.departmentTextField.text WithPartType:self.partTypeTextField.text WithPartUnit:self.partUnitTextField.text WithWireNr:self.wireNrTextField.text WithProcessNr:self.processNrTextField.text WithChcekQty:self.checkQtyTextField.text WithCheckUser:[keyChain objectForKey:(__bridge  id)kSecAttrAccount] block:^(NSString *msgString, NSError *error) {
 
             if (error == nil) {
                 [self hideKeyboard];
@@ -304,6 +328,16 @@
     [hud hide:YES afterDelay:time];
 }
 
+-(void) showMsg:(NSString *)msg WithTime:(float)time WithOffset:(float) offset{
+    
+    hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.delegate=self;
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText=msg;
+    hud.yOffset=offset;
+    [hud hide:YES afterDelay:time];
+}
+
 -(void)hudWasHidden:(MBProgressHUD *)hud{
     [hud removeFromSuperview];
     hud=nil;
@@ -313,17 +347,23 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     if(textField==self.snTextField){
-        UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-        textField.inputView = dummyView;
+            UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+            textField.inputView = dummyView;
+        
         [self hideKeyboard];
     }else{
            CGRect frame=textField.frame;
            int offset=frame.origin.y;
-    
-               if(textField==self.partTypeTextField || textField==self.partUnitTextField){
-                   offset=frame.origin.y-200;
-               }else if(textField==self.partTextField){
+            if(textField==self.partTextField){
+                   offset=frame.origin.y-180;
+               }else if(textField==self.partUnitTextField){
                    offset=frame.origin.y-150;
+               }else if(textField==self.partTypeTextField){
+                   offset=frame.origin.y-140;
+               }else if(textField==self.wireNrTextField){
+                   offset=frame.origin.y-135;
+               }else if(textField==self.processNrTextField){
+                   offset=frame.origin.y-130;
                }else if(textField==self.checkQtyTextField){
                    offset=frame.origin.y-200;
                }
@@ -333,7 +373,7 @@
                      animations:^{
                          self.view.frame=CGRectMake(0, -offset, self.view.bounds.size.width, self.view.bounds.size.height);
                      }];
-            }
+           }
     }
     
     self.firstResponder=textField;
@@ -370,4 +410,63 @@
                          }];
     }
 }
+
+
+-(void)addPickerView{
+    pickerArray = self.partTypes;
+    
+    self.partTypeTextField.delegate = self;
+    
+    myPickerView = [[UIPickerView alloc]init];
+    
+    myPickerView.dataSource = self;
+    myPickerView.delegate = self;
+    myPickerView.showsSelectionIndicator = YES;
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"OK" style:UIBarButtonItemStyleDone
+                                   target:self action:@selector(pickerDoneClicked)];
+     toolBar = [[UIToolbar alloc]initWithFrame:
+                          CGRectMake(0, self.view.frame.size.height-
+                                     myPickerView.frame.size.height-50, 320, 50)];
+    [toolBar setBarStyle:UIBarStyleBlackOpaque];
+    NSArray *toolbarItems = [NSArray arrayWithObjects:
+                             doneButton, nil];
+    [toolBar setItems:toolbarItems];
+    self.partTypeTextField.inputView = myPickerView;
+    self.partTypeTextField.inputAccessoryView = toolBar;
+}
+
+#pragma mark - Picker View Data source
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+-(NSInteger)pickerView:(UIPickerView *)pickerView
+numberOfRowsInComponent:(NSInteger)component{
+    return [pickerArray count];
+}
+
+
+
+
+-(void)pickerDoneClicked
+{
+    //[self.partTypeTextField resignFirstResponder];
+    [self.wireNrTextField becomeFirstResponder];
+   // self.firstResponder=self.wireNrTextField;
+   //toolBar.hidden=YES;
+   // myPickerView.hidden=YES;
+    
+}
+
+
+#pragma mark- Picker View Delegate
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:
+(NSInteger)row inComponent:(NSInteger)component{
+    [self.partTypeTextField setText:[pickerArray objectAtIndex:row]];
+}
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:
+(NSInteger)row forComponent:(NSInteger)component{
+    return [pickerArray objectAtIndex:row];
+}
+
 @end

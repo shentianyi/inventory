@@ -23,6 +23,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *partUnitTextField;
 
 @property (weak, nonatomic) IBOutlet UITextField *partTypeTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *wireNrTextField;
+@property (weak, nonatomic) IBOutlet UITextField *processNrTextField;
+
 @property (weak, nonatomic) IBOutlet UITextField *checkQtyTextField;
 @property (weak, nonatomic) IBOutlet UITextField *randomCheckQtyTextField;
 
@@ -106,6 +110,9 @@
     self.partUnitTextField.enabled = NO;
     self.partTypeTextField.enabled = NO;
     self.checkQtyTextField.enabled = NO;
+    
+    self.wireNrTextField.enabled=NO;
+    self.processNrTextField.enabled=NO;
 
     self.inventory = [[InventoryModel alloc] init];
     
@@ -208,7 +215,7 @@
 
 - (BOOL)validateSn
 {
-    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.positionTextField,self.departmentTextField,self.partTextField,self.partTypeTextField,self.partUnitTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.positionTextField,self.departmentTextField,self.partTextField,self.partTypeTextField,self.partUnitTextField,self.wireNrTextField,self.processNrTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
     
     [self clearTextFields:clearTextFields];
     
@@ -236,7 +243,7 @@
 
 - (BOOL)validatePosition
 {
-    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.snTextField,self.departmentTextField,self.partTextField,self.partTypeTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.snTextField,self.departmentTextField,self.partTextField,self.partTypeTextField,self.wireNrTextField,self.processNrTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
     
     [self clearTextFields:clearTextFields];
     
@@ -267,7 +274,7 @@
 -(BOOL)validateDepartment{
     BOOL msgBool=false;
     
-    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.snTextField,self.partTextField,self.partTypeTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.snTextField,self.partTextField,self.partTypeTextField,self.wireNrTextField,self.processNrTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
     
     [self clearTextFields:clearTextFields];
     
@@ -309,7 +316,7 @@
 -(BOOL)validatePart{
     BOOL msgBool=false;
     
-    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.snTextField,self.partTypeTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
+    NSMutableArray *clearTextFields= [NSMutableArray arrayWithObjects:self.snTextField,self.partTypeTextField,self.wireNrTextField,self.processNrTextField,self.checkQtyTextField,self.randomCheckQtyTextField,nil];
     
     [self clearTextFields:clearTextFields];
        if(self.positionTextField.text.length==0 || self.departmentTextField.text==0){
@@ -374,6 +381,8 @@ self.currentInventoryEntity.is_random_check_synced=@"0";
     self.partTextField.text = inventoryEntity.part_nr;
     self.partUnitTextField.text=inventoryEntity.part_unit;
     self.partTypeTextField.text = inventoryEntity.part_type;
+    self.wireNrTextField.text=inventoryEntity.wire_nr;
+    self.processNrTextField.text=inventoryEntity.process_nr;
     self.checkQtyTextField.text = inventoryEntity.check_qty;
     self.randomCheckQtyTextField.text=inventoryEntity.random_check_qty;
     

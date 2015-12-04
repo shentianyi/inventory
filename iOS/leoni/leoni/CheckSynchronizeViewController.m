@@ -97,10 +97,14 @@ preparation before navigation
 - (void)uploadCheckData {
    NSMutableArray *uploadDataArray =[self.inventoryModel getLocalCheckOrCreateUnsyncDataListWithUserNr:[UserModel accountNr]];
     NSMutableArray *localCheckUnSyncDataArray =[self.inventoryModel getLocalCheckUnSyncDataListWithPosition:@"" WithUserNr:[UserModel accountNr]];
+    
+    NSMutableArray *localDataArray=[self.inventoryModel getLocalCheckDataListWithPosition:@"" WithUserNr:[UserModel accountNr]];
+    NSMutableArray *locakCreateDataArray=[self.inventoryModel getLocalCreateCheckDataListWithPoistion:@"" WithUserNr:[UserModel accountNr]];
+    int localDataCount=[localDataArray count]-[locakCreateDataArray count];
 
   if ([uploadDataArray count] > 0) {
       UserEntity *current_user=[[[UserModel alloc]init] findUserByNr:[UserModel accountNr]];
-      if([localCheckUnSyncDataArray count]>=current_user.idSpanCount || ([localCheckUnSyncDataArray count]==0 && [uploadDataArray count]>0)){
+      if(localDataCount>=current_user.idSpanCount || ([localCheckUnSyncDataArray count]==0 && [locakCreateDataArray count]>0)){
           hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
           hud.delegate=self;
           //hud.mode =MBProgressHUDModeDeterminateHorizontalBar;
@@ -127,7 +131,7 @@ preparation before navigation
         InventoryEntity *inventory=inventories[index];
         
     [manager POST:[self.afnetHelper uploadCheckData]
-       parameters:@{@"id" : inventory.inventory_id,@"sn": [NSString stringWithFormat:@"%i",inventory.sn], @"department" : inventory.department, @"position" : inventory.position, @"part_nr" : inventory.part_nr,@"part_unit":inventory.part_unit, @"part_type" : inventory.part_type, @"check_qty" : inventory.check_qty, @"check_user" : inventory.check_user, @"check_time" :inventory.check_time, @"ios_created_id" : inventory.ios_created_id}
+       parameters:@{@"id" : inventory.inventory_id,@"sn": [NSString stringWithFormat:@"%i",inventory.sn], @"department" : inventory.department, @"position" : inventory.position, @"part_nr" : inventory.part_nr,@"part_unit":inventory.part_unit, @"part_type" : inventory.part_type,@"wire_nr":inventory.wire_nr,@"process_nr":inventory.process_nr, @"check_qty" : inventory.check_qty, @"check_user" : inventory.check_user, @"check_time" :inventory.check_time, @"ios_created_id" : inventory.ios_created_id}
           success:^(AFHTTPRequestOperation * operation, id responseObject) {
               NSLog(@"testing ========= checkWithPosition =======%@", responseObject);
               if([responseObject[@"result"] integerValue]== 1 ){
@@ -245,7 +249,7 @@ preparation before navigation
                          if (progress<=1.0f) {
                              hud.labelText=[NSString stringWithFormat:@"已下载 %i%%    ", (int)round(progress*100)];
                          }
-                         if(pageIndex==totalPage){
+                         if((pageIndex+1)==totalPage){
                              [hud hide:YES];
                              [self MessageShowTitle:@"下载提示" Content:[NSString stringWithFormat:@"共下载 %i",total]];
                          }else{

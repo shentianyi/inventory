@@ -30,7 +30,7 @@
 
 
 
-- (void)createLocalDataWithSn:(NSInteger)sn WithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType WithPartUnit:(NSString *) partUnit WithChcekQty:(NSString *)checkQty WithCheckUser: (NSString *)checkUser block:(void(^)(NSString *, NSError *))block{
+- (void)createLocalDataWithSn:(NSInteger)sn WithPosition: (NSString *)position WithPart: (NSString *)part WithDepartment: (NSString *)department WithPartType: (NSString *)partType WithPartUnit:(NSString *) partUnit WithWireNr:(NSString *)wireNr WithProcessNr:(NSString *)processNr WithChcekQty:(NSString *)checkQty WithCheckUser:(NSString *)checkUser block:(void (^)(NSString *, NSError *))block{
     self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
     NSString *query;
     NSString *uuid = [[NSUUID UUID] UUIDString];
@@ -39,7 +39,7 @@
     NSString *checkTime = [NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:[NSDate date]]];
 
 //    if (self.recordIDToEdit == -1) {
-        query = [NSString stringWithFormat:@"insert into inventories (id,sn,is_local_check,is_check_synced,is_random_check_synced, department, position, part_nr, part_type,part_unit, check_qty, check_user, check_time, random_check_qty, random_check_user, random_check_time, is_random_check, ios_created_id) values(null,%i,'1','0','0', '%@', '%@', '%@', '%@','%@', '%@', '%@', '%@', null, null, null, null, '%@')",sn, department, position, part, partType,partUnit, checkQty, checkUser, checkTime, uuid];
+        query = [NSString stringWithFormat:@"insert into inventories (id,sn,is_local_check,is_check_synced,is_random_check_synced, department, position, part_nr, part_type,part_unit,wire_nr,process_nr, check_qty, check_user, check_time, random_check_qty, random_check_user, random_check_time, is_random_check, ios_created_id) values(null,%i,'1','0','0', '%@', '%@', '%@', '%@','%@', '%@','%@', '%@', '%@', '%@', null, null, null, null, '%@')",sn, department, position, part, partType,partUnit,wireNr,processNr, checkQty, checkUser, checkTime, uuid];
     NSLog(@"===== query is %@", query);
         [self.db executeQuery:query];
         if (self.db.affectedRows != 0) {
@@ -376,6 +376,11 @@
         
         NSString *part_unit= [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"part_unit"]];
         
+        NSString *wire_nr= [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"wire_nr"]];
+
+        NSString *process_nr= [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"process_nr"]];
+
+        
         NSString *is_local_check = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"is_local_check"]];
 
         NSString *check_qty = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"check_qty"]];
@@ -416,7 +421,7 @@
         NSString *is_random_check_synced = [[arrayData objectAtIndex:i] objectAtIndex:[self.db.arrColumnNames indexOfObject:@"is_random_check_synced"]];
 
         
-        InventoryEntity *entity = [[InventoryEntity alloc] initWithId:inventory_id WithSn:sn WithPosition:position WithDepartment:department WithPartNr:part_nr WithPartUnit:part_unit WithPartType:part_type WithIsLocalCheck:is_local_check WithCheckQty:check_qty WithCheckUser:check_user WithCheckTime:check_time WithIsLocalRandomCheck:is_local_random_check WithRandomCheckQty:random_check_qty WithRandomCheckUser:random_check_user WithRandomCheckTime:random_check_time WithIsRandomCheck:is_random_check WithiOSCreatedID:ios_created_id WithIsCheckSynced:is_check_synced WithIsRandomCheckSynced:is_random_check_synced];
+        InventoryEntity *entity = [[InventoryEntity alloc] initWithId:inventory_id WithSn:sn WithPosition:position WithDepartment:department WithPartNr:part_nr WithPartUnit:part_unit WithPartType:part_type WithWireNr:wire_nr WithProcessNr:process_nr WithIsLocalCheck:is_local_check WithCheckQty:check_qty WithCheckUser:check_user WithCheckTime:check_time WithIsLocalRandomCheck:is_local_random_check WithRandomCheckQty:random_check_qty WithRandomCheckUser:random_check_user WithRandomCheckTime:random_check_time WithIsRandomCheck:is_random_check WithiOSCreatedID:ios_created_id WithIsCheckSynced:is_check_synced WithIsRandomCheckSynced:is_random_check_synced];
         
         NSLog(@"%i========= %@,%@, qty is %@, random_check_qty is %@, %@",sn,position, part_nr, check_qty, random_check_qty,[random_check_qty isEqualToString:@"<null>"]);
         [inventoryEntities addObject:entity];
@@ -464,7 +469,7 @@
     
     self.db = [[DBManager alloc] initWithDatabaseFilename:@"inventorydb.sql"];
     NSString *query;
-    query = [NSString stringWithFormat:@"insert into inventories (inventory_id,sn, department, position, part_nr, part_type,part_unit,is_local_check, check_qty, check_user, check_time, is_local_random_check,random_check_qty, random_check_user, random_check_time, is_random_check, ios_created_id,is_check_synced,is_random_check_synced) values('%@','%i' ,'%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@','%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@')", entity.inventory_id,entity.sn, entity.department, entity.position, entity.part_nr, entity.part_type,entity.part_unit,entity.is_local_check, entity.check_qty, entity.check_user, entity.check_time,entity.is_local_random_check, entity.random_check_qty, entity.random_check_user, entity.random_check_time, entity.is_random_check, entity.ios_created_id,entity.is_check_synced,entity.is_random_check_synced];
+    query = [NSString stringWithFormat:@"insert into inventories (inventory_id,sn, department, position, part_nr, part_type,part_unit,wire_nr,process_nr,is_local_check, check_qty, check_user, check_time, is_local_random_check,random_check_qty, random_check_user, random_check_time, is_random_check, ios_created_id,is_check_synced,is_random_check_synced) values('%@','%i' ,'%@', '%@', '%@','%@', '%@', '%@', '%@', '%@', '%@', '%@','%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@', '%@')", entity.inventory_id,entity.sn, entity.department, entity.position, entity.part_nr, entity.part_type,entity.part_unit,entity.wire_nr,entity.process_nr,entity.is_local_check, entity.check_qty, entity.check_user, entity.check_time,entity.is_local_random_check, entity.random_check_qty, entity.random_check_user, entity.random_check_time, entity.is_random_check, entity.ios_created_id,entity.is_check_synced,entity.is_random_check_synced];
     
     [self.db executeQuery:query];
 //    if (self.db.affectedRows != 0) {

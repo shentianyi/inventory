@@ -10,8 +10,13 @@
 #import "Captuvo.h"
 #import "InventoryModel.h"
 
-@interface CheckCreateViewController : UIViewController<UITextFieldDelegate, CaptuvoEventsProtocol,MBProgressHUDDelegate>{
+@interface CheckCreateViewController : UIViewController<UITextFieldDelegate, CaptuvoEventsProtocol,UIPickerViewDataSource,UIPickerViewDelegate,MBProgressHUDDelegate>{
     MBProgressHUD *hud;
+    
+    UIPickerView *myPickerView;
+    UIToolbar *toolBar;
+    NSArray *pickerArray;
+
 }
 
 

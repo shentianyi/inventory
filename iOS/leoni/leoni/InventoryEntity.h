@@ -17,6 +17,8 @@
 @property (nonatomic, copy) NSString *part_nr;
 @property (nonatomic, copy) NSString *part_type;
 @property (nonatomic, copy) NSString *part_unit;
+@property (nonatomic,copy) NSString *wire_nr;
+@property (nonatomic,copy) NSString *process_nr;
 // default 0-false, 1 true
 @property (nonatomic,copy) NSString *is_local_check;
 @property (nonatomic, copy) NSString *check_qty;
@@ -35,20 +37,20 @@
 // default 0-false, 1 true
 @property (nonatomic,copy) NSString *is_random_check_synced;
 
-- (id)initWithId:(NSString *)inventory_id WithSn:(NSInteger)sn WithPosition: (NSString *)position WithDepartment: (NSString *)department WithPartNr: (NSString *)part_nr WithPartUnit:(NSString *) part_unit WithPartType: (NSString *)part_type WithIsLocalCheck:(NSString *)isLocalCheck WithCheckQty:(NSString *)checkQty WithCheckUser:(NSString *)checkUser WithCheckTime:(NSString *)checkTime WithIsLocalRandomCheck:(NSString *)isLocalRandomCheck WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithIsRandomCheck:(NSString*)isRandomCheck WithiOSCreatedID: (NSString *)iOSCreatedId WithIsCheckSynced:(NSString *)isCheckSynced WithIsRandomCheckSynced:(NSString *) isRandomCheckSynced;
+- (id)initWithId:(NSString *)inventory_id WithSn:(NSInteger)sn WithPosition: (NSString *)position WithDepartment: (NSString *)department WithPartNr: (NSString *)part_nr WithPartUnit:(NSString *) part_unit WithPartType: (NSString *)part_type WithWireNr:(NSString *)wireNr WithProcessNr:(NSString *)processNr WithIsLocalCheck:(NSString *)isLocalCheck WithCheckQty:(NSString *)checkQty WithCheckUser:(NSString *)checkUser WithCheckTime:(NSString *)checkTime WithIsLocalRandomCheck:(NSString *)isLocalRandomCheck WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithIsRandomCheck:(NSString*)isRandomCheck WithiOSCreatedID: (NSString *)iOSCreatedId WithIsCheckSynced:(NSString *)isCheckSynced WithIsRandomCheckSynced:(NSString *) isRandomCheckSynced;
 
-
-- (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type;
-
-- (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser WithCheckTime: (NSString *)checkTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID: (NSString *)idString;
-
-- (id)initRandomCheckDataWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID: (NSString *)idString;
-
+//
+//- (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type;
+//
+//- (id)initWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser WithCheckTime: (NSString *)checkTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID: (NSString *)idString;
+//
+//- (id)initRandomCheckDataWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID: (NSString *)idString;
+//
 - (id)initWithObject: (NSDictionary *)dictionary;
-
-
-/*
- 初始全数据
- */
-- (id)initDataWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser WithCheckTime: (NSString *)checkTime WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID:(NSString *)idString;
+//
+//
+///*
+// 初始全数据
+// */
+//- (id)initDataWithPosition: (NSString *)position withDepartment: (NSString *)department withPart: (NSString *)part withPartType: (NSString *)part_type WithCheckQty: (NSString *)checkQty WithCheckUser: (NSString *)checkUser WithCheckTime: (NSString *)checkTime WithRandomCheckQty: (NSString *)randomCheckQty WithRandomCheckUser: (NSString *)randomCheckUser WithRandomCheckTime: (NSString *)randomCheckTime WithiOSCreatedID: (NSString *)iOSCreatedId WithID:(NSString *)idString;
 @end

@@ -232,15 +232,11 @@
                      
                      for(int i=0; i<arrayResult.count; i++){
                          InventoryEntity *inventory =[[InventoryEntity alloc] initWithObject:arrayResult[i]];
-                         
                          [self.inventoryModel localCreateCheckData:inventory];
                      }
                      
                  }
                  
-                 if(pageIndex<totalPage){
-                     [self callHttpDownload:pageIndex+1 WithTotalPage:totalPage WithTotal:total];
-                 }
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
                      float progress=(pageIndex+1)/(float)totalPage;
@@ -249,9 +245,11 @@
                      if (progress<=1.0f) {
                          hud.labelText=[NSString stringWithFormat:@"已下载 %i%%", (int)round(progress*100)];
                      }
-                     if(pageIndex==totalPage){
+                     if(pageIndex+1==totalPage){
                          [hud hide:YES];
                          [self MessageShowTitle:@"下载提示" Content:[NSString stringWithFormat:@"共下载 %i",total]];
+                     }else{
+                         [self callHttpDownload:pageIndex+1 WithTotalPage:totalPage WithTotal:total];
                      }
                  });
              } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {

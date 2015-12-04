@@ -49,23 +49,23 @@
         
     }];
 
-    if ([manager.reachabilityManager isReachableViaWWAN]){
-        NSLog(@"ok");
-    }else{
-        NSLog(@"no");
-    }
-    
-    if ([manager.reachabilityManager isReachableViaWiFi]){
-        NSLog(@"ok");
-    }else{
-        NSLog(@"no");
-    }
-    
-    if ([manager.reachabilityManager isReachable]){
-        NSLog(@"ok");
-    }else{
-        NSLog(@"no");
-    }
+//    if ([manager.reachabilityManager isReachableViaWWAN]){
+//        NSLog(@"ok");
+//    }else{
+//        NSLog(@"no");
+//    }
+//    
+//    if ([manager.reachabilityManager isReachableViaWiFi]){
+//        NSLog(@"ok");
+//    }else{
+//        NSLog(@"no");
+//    }
+//    
+//    if ([manager.reachabilityManager isReachable]){
+//        NSLog(@"ok");
+//    }else{
+//        NSLog(@"no");
+//    }
     
     
     return manager;
