@@ -19,9 +19,13 @@
 #
 
 class Inventory < ActiveRecord::Base
-  validates :sn, :department, :position, :part_nr, presence: true
+  PART_TYPES=%w(U L E M)
+
+
+  validates :sn, :department, :position, :part_nr,:part_unit, presence: true
   validates :part_nr, uniqueness: {scope: [:position, :department], message: '库位+部门+零件 必须唯一'}
   validates :sn, uniqueness: {message: '序列号 必须唯一'}
+  validates_inclusion_of :part_type, in: PART_TYPES, message: '零件类型不正确'#, if: Proc.new { |i| i.part_type.present? }
 
   before_save :set_default_value
 
@@ -47,14 +51,6 @@ class Inventory < ActiveRecord::Base
 
   self.per_page = 50
   default_scope { order('sn asc') }
-
-  # 配置
-  # has_settings do |s|
-  #   s.key :random, defaults: {percent: 30}
-  #   s.key :prefix, defaults: {part: 'P'}
-  # end
-
-  # alias :part_id :part_nr
 
   def self.search(search)
     if search
@@ -90,45 +86,28 @@ class Inventory < ActiveRecord::Base
     end
     inventories = inventories.where("(position between '#{position_begin}' and '#{position_end}') or position like '%#{position_begin}%' or position like '%#{position_end}%' ") if position_begin.present? & position_end.present?
     # inventories = inventories.where("position like '%#{position_end}%' ") if position_end.present?
-  inventories=inventories.where(sn:params[:sn_begin]..params[:sn_end]) if params[:sn_begin].present? && params[:sn_end].present?
-	inventories
+    inventories=inventories.where(sn: params[:sn_begin]..params[:sn_end]) if params[:sn_begin].present? && params[:sn_end].present?
+    inventories
   end
 
   def self.create_random_data
     Inventory.update_all(random_check_qty: nil, random_check_user: nil, random_check_time: nil, is_random_check: false)
 
-	page_size=200
-	
+    page_size=200
+
     self.uniq.pluck(:department).each do |deparment|
-	  ids=[]
-	  page_index=0
-	  while true
+      ids=[]
+      page_index=0
+      while true
         ids= self.where(department: deparment).offset(page_size*page_index).limit(page_size).pluck(:id)
-      # puts "#{ids}---------"
-         sample_count= (ids.count* Setting.random_percent_value).round
-      # puts "###############{ids.count}#####{Setting.random_percent_value}#######{sample_count}"
-         self.where(id: ids.sample(sample_count)).update_all(is_random_check: true)
-		 page_index+=1
-	     break if ids.count==0
-	  end
+        # puts "#{ids}---------"
+        sample_count= (ids.count* Setting.random_percent_value).round
+        # puts "###############{ids.count}#####{Setting.random_percent_value}#######{sample_count}"
+        self.where(id: ids.sample(sample_count)).update_all(is_random_check: true)
+        page_index+=1
+        break if ids.count==0
+      end
     end
-    # counter = 1
-    # samples = []
-    # areas = []
-    # inventories = Inventory.all
-    # inventories.each do |inventory|
-    #   inventory.update(random_check_qty: '', random_check_user: '', random_check_time: '', is_random_check: false)
-    #   areas << inventory
-    #   if counter == 10
-    #     counter = 1
-    #     areas.each { |x| puts "the position is #{x.position}" }
-    #     samples = areas.shuffle.sample(3)
-    #     samples.each { |x| x.update!(is_random_check: true) }
-    #     samples.clear
-    #     areas.clear
-    #   end
-    #   counter += 1
-    # end
   end
 
 
@@ -144,6 +123,11 @@ class Inventory < ActiveRecord::Base
     self.random_check_time.nil? ? nil : self.random_check_time.strftime("%Y-%m-%d %H:%M:%S")
   end
 
+  def self.validate_part_type(type)
+    PART_TYPES.include?(type)
+  end
+
+  private
 
   def set_default_value
     if self.ios_created_id.blank?
@@ -157,6 +141,7 @@ class Inventory < ActiveRecord::Base
     if self.random_check_user.blank?
       self.random_check_user=nil
     end
+
 
   end
 end

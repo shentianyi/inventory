@@ -1,7 +1,7 @@
 module Excel
   class UserService
     HEADERS=[
-        :nr, :name, :role,:id_span, :operation
+        :nr, :name, :role, :id_span, :operation
     ]
 
     INVALID_HEADERS=%w(员工号 姓名 权限 任务ID operation)
@@ -33,10 +33,10 @@ module Excel
 
                 case operator
                   when 'new'
-                    User.create!(nr: row[:nr], name: row[:name], role: row[:role],id_span:row[:id_span])
+                    User.create!(nr: row[:nr], name: row[:name], role: row[:role], id_span: row[:id_span])
                   when 'update'
                     if user= User.where(nr: row[:nr]).first
-                      user.update!(name: row[:name], role: row[:role],id_span:row[:id_span])
+                      user.update!(name: row[:name], role: row[:role], id_span: row[:id_span])
                     end
                   when 'delete'
                     user = User.where(nr: row[:nr]).first
@@ -90,13 +90,13 @@ module Excel
 
           mssg = validate_import_row(row, line)
           if mssg.result
-            sheet.add_row row.values,types:[:string]
+            sheet.add_row row.values, types: [:string]
           else
             if msg.result
               msg.result = false
               msg.content = "下载错误文件<a href='/files/#{Base64.urlsafe_encode64(tmp_file)}'>#{::File.basename(tmp_file)}</a>"
             end
-            sheet.add_row row.values<<mssg.content,types:[:string]
+            sheet.add_row row.values<<mssg.content, types: [:string]
           end
         end
       end
@@ -120,9 +120,9 @@ module Excel
         msg.contents << "权限不能为空!"
       end
 
-      if row[:role].present?
-        msg.contents << "权限: #{row[:role]} 不存在!" unless User.validate_role(row[:role])
-      end
+
+      msg.contents << "权限: #{row[:role]} 不存在!" unless User.validate_role(row[:role])
+
 
       if row[:operation].blank?
         msg.contents << "操作不能为空!"
