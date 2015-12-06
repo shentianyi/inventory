@@ -653,7 +653,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)";
-				PRODUCT_BUNDLE_IDENTIFIER = ClearInsight.Inventory;
+				PRODUCT_BUNDLE_IDENTIFIER = Leoni.Inventory;
 				PRODUCT_NAME = Inventory;
 				PROVISIONING_PROFILE = "";
 			};
@@ -664,15 +664,15 @@
 			baseConfigurationReference = 94EE4129EF8FEB5C1ADB5023 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/leoni/leoni-Prefix.pch";
 				INFOPLIST_FILE = leoni/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)";
-				PRODUCT_BUNDLE_IDENTIFIER = ClearInsight.Inventory;
+				PRODUCT_BUNDLE_IDENTIFIER = Leoni.Inventory;
 				PRODUCT_NAME = Inventory;
 				PROVISIONING_PROFILE = "";
 			};
