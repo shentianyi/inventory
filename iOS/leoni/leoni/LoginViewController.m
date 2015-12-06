@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *settingButton;
+@property (weak, nonatomic) IBOutlet UILabel *vesrionLabel;
 
 
 - (IBAction)SettingAction:(id)sender;
@@ -37,7 +38,7 @@
 //    [self.view addGestureRecognizer:tap];
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
-    
+    self.vesrionLabel.text=[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 }
 
 - (void)didReceiveMemoryWarning {

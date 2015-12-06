@@ -166,7 +166,7 @@
     return  [self getInventoryEnityListByQuery:query];
 }
 
--(NSMutableArray *)searchLocalCreateCheckUnSyncDataList:(NSString *)q  WithUserNr:(NSString *)userNr;{
+-(NSMutableArray *)searchLocalCreateCheckUnSyncDataList:(NSString *)q  WithUserNr:(NSString *)userNr{
     NSString *query = [NSString stringWithFormat:@"select * from inventories where (position like '%%%@%%' or sn=%i or part_nr like '%%%@%%') and check_qty != '' and is_local_check='1' and is_check_synced='0'  and (ios_created_id!='' and ios_created_id!='<null>') and check_user='%@' order by check_time desc", q,[q integerValue],q,userNr];
     return  [self getInventoryEnityListByQuery:query];
 }

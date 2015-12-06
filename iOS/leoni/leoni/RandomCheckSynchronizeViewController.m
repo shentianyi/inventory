@@ -144,7 +144,7 @@
                           }
                           if((index+1)==total){
                               [hud hide:YES];
-                              [self MessageShowTitle:@"下载提示" Content:[NSString stringWithFormat:@"共上传 %i",total]];
+                              [self MessageShowTitle:@"上传提示" Content:[NSString stringWithFormat:@"共上传 %i",total]];
                           }else{
                               [self callHttpUpload:index+1 WithData:inventories];
                           }

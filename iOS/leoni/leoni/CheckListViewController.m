@@ -212,7 +212,7 @@
         }else{
             self.localCheckInventories=[inventory searchLocalCheckDataList:q WithUserNr:[UserModel accountNr]];
             self.localCreateInventories=[inventory searchLocalCreateCheckDataList:q WithUserNr:[UserModel accountNr]];
-            self.localCheckUnSyncInventories=[inventory searchLocalCreateCheckUnSyncDataList:q WithUserNr:[UserModel accountNr]];
+            self.localCheckUnSyncInventories=[inventory searchLocalCheckUnSyncDataList:q WithUserNr:[UserModel accountNr]];
             self.localCreateUnSyncInventories=[inventory searchLocalCreateCheckUnSyncDataList:q WithUserNr:[UserModel accountNr]];
         }
     }else{

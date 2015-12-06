@@ -81,6 +81,20 @@
                                     <action selector="SettingAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GRJ-NY-9iq"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="version:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H1b-kD-C0A">
+                                <rect key="frame" x="69" y="510" width="92" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.017576685175299644" green="0.7457769513130188" blue="0.96681493520736694" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="x.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gvN-mG-Zwj">
+                                <rect key="frame" x="169" y="510" width="62" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.1240359486" green="0.70224702859999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -100,13 +114,14 @@
                         <outlet property="loginButton" destination="4Qe-18-PIu" id="JaW-rw-7ht"/>
                         <outlet property="nameTextField" destination="z4l-ce-Uyg" id="4Yi-PP-HLc"/>
                         <outlet property="settingButton" destination="qjx-5g-onx" id="iUh-xC-tEk"/>
+                        <outlet property="vesrionLabel" destination="gvN-mG-Zwj" id="4pg-az-WN4"/>
                         <segue destination="pg4-yL-PFc" kind="modal" identifier="toSetting" id="vYI-0z-wHP"/>
                         <segue destination="jKI-Pg-xdC" kind="modal" identifier="toDashboard" id="aI3-DI-KsQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="112.53333333333333" y="253.23333333333332"/>
+            <point key="canvasLocation" x="112" y="253"/>
         </scene>
         <!--系统设置-->
         <scene sceneID="aNs-Rn-WsJ">
