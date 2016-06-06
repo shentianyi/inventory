@@ -132,7 +132,7 @@
     hud.delegate=self;
     //hud.mode =MBProgressHUDModeDeterminateHorizontalBar;
     
-    hud.labelText=@"下载中...";
+    hud.labelText=@"下载中1...";
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         

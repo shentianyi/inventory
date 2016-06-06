@@ -105,23 +105,23 @@
 }
 
 - (void)initController {
-    self.snTextField.delegate=self;
-    self.positionTextField.delegate =self;
+    self.snTextField.delegate = self;
+    self.positionTextField.delegate = self;
     //[self.positionTextField becomeFirstResponder];
     
     self.partTextField.delegate = self;
     self.departmentTextField.delegate = self;
     self.qtyTextField.delegate = self;
     
-    self.partUnitTextField.enabled=NO;
-    self.partUnitTextField.delegate=self;
+    self.partUnitTextField.enabled = NO;
+    self.partUnitTextField.delegate = self;
     self.partTypeTextField.enabled = NO;
-    self.partTypeTextField.delegate =self;
+    self.partTypeTextField.delegate = self;
     
-    self.wireNrTextField.enabled=NO;
-    self.wireNrTextField.delegate=self;
-    self.processNrTextField.enabled=NO;
-    self.processNrTextField.delegate=self;
+    self.wireNrTextField.enabled = NO;
+    self.wireNrTextField.delegate = self;
+    self.processNrTextField.enabled = NO;
+    self.processNrTextField.delegate = self;
     
     self.inventory = [[InventoryModel alloc] init];
     self.currentUserEntity=[[[UserModel alloc]init] findUserByNr:[UserModel accountNr]];
@@ -306,7 +306,7 @@
 - (void)validateText {
     
     if([self.snTextField.text length]>0){
-    if ([self.positionTextField.text length] >0) {
+        if ([self.positionTextField.text length] >0) {
         if ([self.partTextField.text length] >0) {
            // if([self.partTypeTextField.text length] >0){
                 if([self.departmentTextField.text length] >0){

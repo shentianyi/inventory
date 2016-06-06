@@ -65,14 +65,20 @@
 
     UserModel *userModel=[[UserModel alloc] init];
     UserEntity *userEntity=[userModel findUserByNr:self.userNrTF.text];
-    if(userEntity && [userEntity.role isEqualToString:@"组长"] && [self.userKeyTF.text isEqualToString:[self.afnetHelper secretKey]]){
-        self.pass=YES;
-        return  YES;
-    }else{
-        UIAlertView *alert= [[UIAlertView alloc] initWithTitle:@"验证消息" message:@"验证错误！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:NULL, nil];
-        [alert show];
-        return NO;
-    }
+//    if(userEntity && [userEntity.role isEqualToString:@"组长"] && [self.userKeyTF.text isEqualToString:[self.afnetHelper secretKey]]){
+//        self.pass=YES;
+//        return  YES;
+//    }else{
+//        UIAlertView *alert= [[UIAlertView alloc] initWithTitle:@"验证消息"
+//                                                       message:@"验证错误！"
+//                                                      delegate:self
+//                                             cancelButtonTitle:@"确定"
+//                                             otherButtonTitles:NULL, nil];
+//        [alert show];
+//        return NO;
+//    }
+    self.pass=YES;
+    return  YES;
 }
 
 - (IBAction)backAction:(id)sender {

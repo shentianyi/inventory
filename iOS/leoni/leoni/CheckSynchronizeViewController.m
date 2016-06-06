@@ -181,8 +181,10 @@ preparation before navigation
         hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.delegate=self;
         //hud.mode =MBProgressHUDModeDeterminateHorizontalBar;
-    
+    NSLog(@"下载中");
+    NSLog(@"CheckSynchronizeViewController.m");
     hud.labelText=@"下载中...";
+
         
         
         // get total data size
