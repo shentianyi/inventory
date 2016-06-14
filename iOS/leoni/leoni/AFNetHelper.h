@@ -35,4 +35,5 @@
 - (NSString *)downloadRandomCheckData;
 - (NSString *)randomCheckData;
 - (NSString *)uploadRandomCheckData;
+- (NSString *)downloadUrl;
 @end

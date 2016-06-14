@@ -34,6 +34,7 @@
 @property (nonatomic, strong) NSURLSession* session;
 @property (weak, nonatomic) IBOutlet UIProgressView *myPregress;
 @property (weak, nonatomic) IBOutlet UILabel *pgLabel;
+@property NSString *filePath;
 
 @end
 
@@ -320,7 +321,7 @@ preparation before navigation
 }
 - (IBAction)mydownload:(UIButton *)sender {
 //     NSURL* url = [NSURL URLWithString:@"http://pic32.nipic.com/20130829/12906030_124355855000_2.png"];
-//    
+//
 //
 //    // 创建任务
 //    self.downloadTask = [self.session downloadTaskWithURL:url];
@@ -328,36 +329,87 @@ preparation before navigation
 //    // 开始任务
 //    [self.downloadTask resume];
     // 1.得到session对象
-    NSURL* url = [NSURL URLWithString:@"http://pic32.nipic.com/20130829/12906030_124355855000_2.png"];
-    
-    // 得到session对象
-    self.session = [NSURLSession sharedSession];
-    
-    // 创建任务
-     self.downloadTask = [self.session downloadTaskWithURL:url completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-        // location : 临时文件的路径（下载好的文件）
-        
-        NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-        // response.suggestedFilename ： 建议使用的文件名，一般跟服务器端的文件名一致
-        NSString *file = [caches stringByAppendingPathComponent:response.suggestedFilename];
-        
-        // 将临时文件剪切或者复制Caches文件夹
-        NSFileManager *mgr = [NSFileManager defaultManager];
-         NSLog(@"3");
-        
-        // AtPath : 剪切前的文件路径
-        // ToPath : 剪切后的文件路径
-        [mgr moveItemAtPath:location.path toPath:file error:nil];
-         NSLog(@"1");
-         // 提示下载完成
-         [[[UIAlertView alloc] initWithTitle:@"下载完成" message:self.downloadTask.response.suggestedFilename delegate:self cancelButtonTitle:@"知道了" otherButtonTitles: nil] show];
-         NSLog(@"2");
-    }];
 
-    // 开始任务
-    [self.downloadTask resume];
-
+     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+    AFHTTPRequestOperationManager *manager=[self.afnetHelper basicManager];
     
+    
+    [manager GET:[self.afnetHelper downloadUrl]
+      parameters:@""
+         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+             if([responseObject[@"result"] integerValue]== 1 ){
+                 NSString *UrlReturn = responseObject[@"content"];
+
+                 NSURL* url = [NSURL URLWithString:UrlReturn];
+                 
+                 // 得到session对象
+                 self.session = [NSURLSession sharedSession];
+                 
+                 // 创建任务
+                 self.downloadTask = [self.session downloadTaskWithURL:url completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+                     // location : 临时文件的路径（下载好的文件）
+                     
+                     NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                     // response.suggestedFilename ： 建议使用的文件名，一般跟服务器端的文件名一致
+                     NSString *file = [caches stringByAppendingPathComponent:response.suggestedFilename];
+                     
+                     // 将临时文件剪切或者复制Caches文件夹
+                     NSFileManager *mgr = [NSFileManager defaultManager];
+                     NSLog(@"3");
+                     // AtPath : 剪切前的文件路径
+                     // ToPath : 剪切后的文件路径
+                     [mgr moveItemAtPath:location.path toPath:file error:nil];
+                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+                     NSString *cachesDir = [paths objectAtIndex:0];
+                     self.filePath =[cachesDir stringByAppendingPathComponent:@"data.json"];
+                     NSFileManager *fileManager = [NSFileManager defaultManager];
+                     if ([fileManager fileExistsAtPath:self.filePath]) {
+                         NSLog(@"文件存在");
+                         NSInputStream *inStream = [[NSInputStream alloc]initWithFileAtPath:self.filePath];
+                         [inStream open];
+                         NSError *error;
+                         id streamObject = [NSJSONSerialization JSONObjectWithStream:inStream options:NSJSONReadingAllowFragments error:&error];
+                         if ([streamObject isKindOfClass:[NSDictionary class]]) {
+                             NSDictionary *jsonDictionaryRead = (NSDictionary*)streamObject;
+                             NSNumber *Number = (NSNumber*)[jsonDictionaryRead valueForKey:@"inventories"];
+                             NSLog(@"username:%@ And ID:%d",[jsonDictionaryRead valueForKey:@"department"],[Number intValue]);
+                         }
+                         [inStream close];
+                         
+                        [[[UIAlertView alloc] initWithTitle:@"下载完成"
+                                                    message:self.downloadTask.response.suggestedFilename
+                                                   delegate:self
+                                          cancelButtonTitle:@"知道了"
+                                          otherButtonTitles: nil] show];
+                     }
+                     // 提示下载完成
+                     NSLog(@"2");
+                 }];
+                 
+                 // 开始任务
+                 [self.downloadTask resume];
+
+             }
+             
+             
+         }
+         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+     
+         }];
+     });
+}
+
+-(void)ReadFile{
+    NSInputStream *inStream = [[NSInputStream alloc]initWithFileAtPath:self.filePath];
+    [inStream open];
+    NSError *error;
+    id streamObject = [NSJSONSerialization JSONObjectWithStream:inStream options:NSJSONReadingAllowFragments error:&error];
+    if ([streamObject isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *jsonDictionaryRead = (NSDictionary*)streamObject;
+        NSNumber *Number = (NSNumber*)[jsonDictionaryRead valueForKey:@"id"];
+        NSLog(@"username:%@ And ID:%d",[jsonDictionaryRead valueForKey:@"department"],[Number intValue]);
+    }
+    [inStream close];
     
 }
 
