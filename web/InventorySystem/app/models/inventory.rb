@@ -134,27 +134,29 @@ class Inventory < ActiveRecord::Base
       file=InventoryFile.new()
 
       Inventory.all.each do |i|
-        # info={}
-        # info['id']=i.id
-        # info['department']=i.department
-        # info['position']=i.position
-        # info['part_nr']=i.part_nr
-        # info['check_qty']=i.check_qty
-        #
-        # info['check_user']=i.check_user
-        # info['check_time']=i.check_time
-        # info['random_check_qty']=i.random_check_qty
-        # info['random_check_user']=i.random_check_user
-        # info['random_check_time']=i.random_check_time
-        #
-        # info['is_random_check']=i.is_random_check
-        # info['ios_created_id']=i.ios_created_id
-        # info['sn']=i.sn
-        # info['part_unit']=i.part_unit
-        # info['part_type']=i.part_type
-        #
-        # info['wire_nr']=i.wire_nr
-        # info['process_nr']=i.process_nr
+        info={}
+        info['id']=i.id
+        info['department']=i.department
+        info['position']=i.position
+        info['part_nr']=i.part_nr
+        info['check_qty']=i.check_qty
+
+        info['check_user']=i.check_user
+        info['check_time']=i.check_time
+        info['random_check_qty']=i.random_check_qty
+        info['random_check_user']=i.random_check_user
+        info['random_check_time']=i.random_check_time
+
+        info['is_random_check']=i.is_random_check
+        info['ios_created_id']=i.ios_created_id
+        info['sn']=i.sn
+        info['part_unit']=i.part_unit
+        info['part_type']=i.part_type
+
+        info['wire_nr']=i.wire_nr
+        info['process_nr']=i.process_nr
+
+        data<<info
 
         # data[:inventories]<<{
         #     id: i.id,
@@ -176,25 +178,25 @@ class Inventory < ActiveRecord::Base
         #     process_nr: i.process_nr
         # }
 
-        data<<{
-            id: i.id,
-            department: i.department,
-            position: i.position,
-            part_nr: i.part_nr,
-            check_qty: i.check_qty,
-            check_user: i.check_user,
-            check_time: i.check_time,
-            random_check_qty: i.random_check_qty,
-            random_check_user: i.random_check_user,
-            random_check_time: i.random_check_time,
-            is_random_check: i.is_random_check,
-            ios_created_id: i.ios_created_id,
-            sn: i.sn,
-            part_unit: i.part_unit,
-            part_type: i.part_type,
-            wire_nr: i.wire_nr,
-            process_nr: i.process_nr
-        }
+        # data<<{
+        #     id: i.id,
+        #     department: i.department,
+        #     position: i.position,
+        #     part_nr: i.part_nr,
+        #     check_qty: i.check_qty,
+        #     check_user: i.check_user,
+        #     check_time: i.check_time,
+        #     random_check_qty: i.random_check_qty,
+        #     random_check_user: i.random_check_user,
+        #     random_check_time: i.random_check_time,
+        #     is_random_check: i.is_random_check,
+        #     ios_created_id: i.ios_created_id,
+        #     sn: i.sn,
+        #     part_unit: i.part_unit,
+        #     part_type: i.part_type,
+        #     wire_nr: i.wire_nr,
+        #     process_nr: i.process_nr
+        # }
       end
 
       File.open('uploadfiles/data/data.json', 'w+') do |f|
