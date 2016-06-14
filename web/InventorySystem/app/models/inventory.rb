@@ -135,26 +135,26 @@ class Inventory < ActiveRecord::Base
 
       Inventory.all.each do |i|
         info={}
-        info['id']=i.id
-        info['department']=i.department
-        info['position']=i.position
-        info['part_nr']=i.part_nr
-        info['check_qty']=i.check_qty
+        info['id']=i.id.to_s
+        info['department']=i.department.to_s
+        info['position']=i.position.to_s
+        info['part_nr']=i.part_nr.to_s
+        info['check_qty']=i.check_qty.to_s
 
-        info['check_user']=i.check_user
-        info['check_time']=i.check_time
-        info['random_check_qty']=i.random_check_qty
-        info['random_check_user']=i.random_check_user
-        info['random_check_time']=i.random_check_time
+        info['check_user']=i.check_user.to_s
+        info['check_time']=i.check_time.to_s
+        info['random_check_qty']=i.random_check_qty.to_s
+        info['random_check_user']=i.random_check_user.to_s
+        info['random_check_time']=i.random_check_time.to_s
 
-        info['is_random_check']=i.is_random_check
-        info['ios_created_id']=i.ios_created_id
-        info['sn']=i.sn
-        info['part_unit']=i.part_unit
-        info['part_type']=i.part_type
+        info['is_random_check']=i.is_random_check.to_s
+        info['ios_created_id']=i.ios_created_id.to_s
+        info['sn']=i.sn.to_s
+        info['part_unit']=i.part_unit.to_s
+        info['part_type']=i.part_type.to_s
 
-        info['wire_nr']=i.wire_nr
-        info['process_nr']=i.process_nr
+        info['wire_nr']=i.wire_nr.to_s
+        info['process_nr']=i.process_nr.to_s
 
         data<<info
 
@@ -200,7 +200,7 @@ class Inventory < ActiveRecord::Base
       end
 
       File.open('uploadfiles/data/data.json', 'w+') do |f|
-        f.write(data.to_s)
+        f.write(data.to_json.to_s)
         file.path = f
       end
 
