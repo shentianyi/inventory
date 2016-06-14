@@ -35,6 +35,9 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cleanStartBI;
 
 @property(nonatomic,strong) NSMutableArray *partTypes;
+@property(nonatomic,strong) NSMutableArray *departmentTypes;
+
+@property NSInteger *textFieldGet;
 
 - (IBAction)touchScreen:(id)sender;
 
@@ -44,10 +47,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.departmentTypes=[[NSMutableArray alloc]initWithObjects:@"",@"SR01",@"SRCP",@"SRGM",@"SRJLR",@"SRMB",@"SRQP01",@"SRVM",@"3",@"3CP",@"3GM",@"3JLR",@"3LWCC",@"3LWSL",@"3MB",@"3QP",@"3VW",nil];
     
     self.partTypes=[[NSMutableArray alloc]initWithObjects:@"",@"U",
                     @"L",@"E",@"M",nil];
-    [self addPickerView];
+//    [self addPickerView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -359,6 +363,8 @@
                }else if(textField==self.partUnitTextField){
                    offset=frame.origin.y-150;
                }else if(textField==self.partTypeTextField){
+                   self.textFieldGet = 2;
+                   [self addPickerView];
                    offset=frame.origin.y-140;
                }else if(textField==self.wireNrTextField){
                    offset=frame.origin.y-135;
@@ -366,6 +372,10 @@
                    offset=frame.origin.y-130;
                }else if(textField==self.checkQtyTextField){
                    offset=frame.origin.y-200;
+               }else if (textField==self.departmentTextField)
+               {
+                   self.textFieldGet = 1;
+                   [self addPickerView];
                }
            if(offset!=frame.origin.y){
            NSTimeInterval animationDuration=0.30f;
@@ -413,9 +423,17 @@
 
 
 -(void)addPickerView{
+    
+    //bad methods!why use tag doesn‘s work?
+    
+    if (self.textFieldGet == 1) {
+        pickerArray = self.departmentTypes;
+    }else{
     pickerArray = self.partTypes;
+    }
     
     self.partTypeTextField.delegate = self;
+    self.departmentTextField.delegate = self;
     
     myPickerView = [[UIPickerView alloc]init];
     
@@ -432,8 +450,13 @@
     NSArray *toolbarItems = [NSArray arrayWithObjects:
                              doneButton, nil];
     [toolBar setItems:toolbarItems];
-    self.partTypeTextField.inputView = myPickerView;
-    self.partTypeTextField.inputAccessoryView = toolBar;
+
+        self.departmentTextField.inputView = myPickerView;
+        self.departmentTextField.inputAccessoryView = toolBar;
+        self.partTypeTextField.inputView = myPickerView;
+        self.partTypeTextField.inputAccessoryView = toolBar;
+
+    
 }
 
 #pragma mark - Picker View Data source
@@ -451,7 +474,11 @@ numberOfRowsInComponent:(NSInteger)component{
 -(void)pickerDoneClicked
 {
     //[self.partTypeTextField resignFirstResponder];
+    if (self.firstResponder.tag == 3) {
+        [self.partTextField becomeFirstResponder];
+    }else{
     [self.wireNrTextField becomeFirstResponder];
+    }
    // self.firstResponder=self.wireNrTextField;
    //toolBar.hidden=YES;
    // myPickerView.hidden=YES;
@@ -462,7 +489,11 @@ numberOfRowsInComponent:(NSInteger)component{
 #pragma mark- Picker View Delegate
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:
 (NSInteger)row inComponent:(NSInteger)component{
-    [self.partTypeTextField setText:[pickerArray objectAtIndex:row]];
+    if (self.firstResponder.tag == 3) {
+        [self.departmentTextField setText:[pickerArray objectAtIndex:row]];
+    }else{
+        [self.partTypeTextField setText:[pickerArray objectAtIndex:row]];
+    }
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:
 (NSInteger)row forComponent:(NSInteger)component{

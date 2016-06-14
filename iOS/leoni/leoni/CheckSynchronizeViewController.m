@@ -13,12 +13,13 @@
 #import "CheckUserRoleViewController.h"
 #import "AFNetHelper.h"
 
-@interface CheckSynchronizeViewController ()
+@interface CheckSynchronizeViewController ()<NSURLSessionDownloadDelegate>
 - (IBAction)downloadAction:(id)sender;
 - (IBAction)uploadAction:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *downloadButton;
 @property (strong, nonatomic) IBOutlet UIButton *uploadButton;
 
+- (IBAction)mydownload:(UIButton *)sender;
 
 @property(nonatomic, strong) UIAlertView *downloadAlert;
 @property(nonatomic, strong) UIAlertView *uploadAlert;
@@ -28,6 +29,11 @@
 @property(nonatomic,strong) AFNetHelper *afnetHelper;
 
 @property(nonatomic,retain) UIButton *currentButton;
+
+@property (nonatomic, strong) NSURLSessionDownloadTask* downloadTask;
+@property (nonatomic, strong) NSURLSession* session;
+@property (weak, nonatomic) IBOutlet UIProgressView *myPregress;
+@property (weak, nonatomic) IBOutlet UILabel *pgLabel;
 
 @end
 
@@ -300,5 +306,107 @@ preparation before navigation
         }
     }
 }
+
+
+
+- (NSURLSession *)session
+{
+    if (nil == _session) {
+        
+        NSURLSessionConfiguration *cfg = [NSURLSessionConfiguration defaultSessionConfiguration];
+        self.session = [NSURLSession sessionWithConfiguration:cfg delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+    }
+    return _session;
+}
+- (IBAction)mydownload:(UIButton *)sender {
+//     NSURL* url = [NSURL URLWithString:@"http://pic32.nipic.com/20130829/12906030_124355855000_2.png"];
+//    
+//
+//    // 创建任务
+//    self.downloadTask = [self.session downloadTaskWithURL:url];
+//    
+//    // 开始任务
+//    [self.downloadTask resume];
+    // 1.得到session对象
+    NSURL* url = [NSURL URLWithString:@"http://pic32.nipic.com/20130829/12906030_124355855000_2.png"];
+    
+    // 得到session对象
+    self.session = [NSURLSession sharedSession];
+    
+    // 创建任务
+     self.downloadTask = [self.session downloadTaskWithURL:url completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+        // location : 临时文件的路径（下载好的文件）
+        
+        NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+        // response.suggestedFilename ： 建议使用的文件名，一般跟服务器端的文件名一致
+        NSString *file = [caches stringByAppendingPathComponent:response.suggestedFilename];
+        
+        // 将临时文件剪切或者复制Caches文件夹
+        NSFileManager *mgr = [NSFileManager defaultManager];
+         NSLog(@"3");
+        
+        // AtPath : 剪切前的文件路径
+        // ToPath : 剪切后的文件路径
+        [mgr moveItemAtPath:location.path toPath:file error:nil];
+         NSLog(@"1");
+         // 提示下载完成
+         [[[UIAlertView alloc] initWithTitle:@"下载完成" message:self.downloadTask.response.suggestedFilename delegate:self cancelButtonTitle:@"知道了" otherButtonTitles: nil] show];
+         NSLog(@"2");
+    }];
+
+    // 开始任务
+    [self.downloadTask resume];
+
+    
+    
+}
+
+#pragma mark -- NSURLSessionDownloadDelegate
+/**
+ *  下载完毕会调用
+ *
+ *  @param location     文件临时地址
+ */
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
+didFinishDownloadingToURL:(NSURL *)location
+{
+    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    // response.suggestedFilename ： 建议使用的文件名，一般跟服务器端的文件名一致
+    NSString *file = [caches stringByAppendingPathComponent:downloadTask.response.suggestedFilename];
+    
+    // 将临时文件剪切或者复制Caches文件夹
+    NSFileManager *mgr = [NSFileManager defaultManager];
+    
+    // AtPath : 剪切前的文件路径
+    // ToPath : 剪切后的文件路径
+    [mgr moveItemAtPath:location.path toPath:file error:nil];
+    NSLog(@"4");
+    // 提示下载完成
+    [[[UIAlertView alloc] initWithTitle:@"下载完成"
+                                message:downloadTask.response.suggestedFilename
+                               delegate:self
+                      cancelButtonTitle:@"知道了"
+                      otherButtonTitles: nil] show];
+
+}
+/**
+ *  每次写入沙盒完毕调用
+ *  在这里面监听下载进度，totalBytesWritten/totalBytesExpectedToWrite
+ *
+ *  @param bytesWritten              这次写入的大小
+ *  @param totalBytesWritten         已经写入沙盒的大小
+ *  @param totalBytesExpectedToWrite 文件总大小
+ */
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
+      didWriteData:(int64_t)bytesWritten
+ totalBytesWritten:(int64_t)totalBytesWritten
+totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
+{
+    NSLog(@"12345");
+    self.myPregress.progress = (double)totalBytesWritten/totalBytesExpectedToWrite;
+    self.pgLabel.text = [NSString stringWithFormat:@"下载进度:%f",(double)totalBytesWritten/totalBytesExpectedToWrite];
+}
+
+
 
 @end

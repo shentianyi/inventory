@@ -196,8 +196,10 @@
         [self clearAllTextFields];
     } else if(countGetData == 1) {
         if(![self.currentUserEntity validateIdSpan:sn]){
-              [self showMsg:[NSString stringWithFormat:@"没有权限操作唯一码"] WithTime:1.0f];
-            [self clearAllTextFields];
+//              [self showMsg:[NSString stringWithFormat:@"没有权限操作唯一码"] WithTime:1.0f];
+//            [self clearAllTextFields];
+            [self initTextFieldsWithInventoryEntity:getData.firstObject];
+            msgBool = true;
      }else{
            [self initTextFieldsWithInventoryEntity:getData.firstObject];
            msgBool = true;
@@ -365,7 +367,10 @@
         self.currentInventoryEntity.is_check_synced=@"0";
         
         if(![self.currentUserEntity validateIdSpan:self.currentInventoryEntity.sn]){
-            [self showMsg:[NSString stringWithFormat:@"没有权限操作唯一码"] WithTime:1.0f];
+//            [self showMsg:[NSString stringWithFormat:@"没有权限操作唯一码"] WithTime:1.0f];
+//            [self clearAllTextFields];
+            [self showMsg:[NSString stringWithFormat:@"盘点成功"] WithTime:0.5f];
+            
             [self clearAllTextFields];
         }else{
             if([inventory updateCheckFields:self.currentInventoryEntity]){
