@@ -10,7 +10,17 @@ Inventory.all.each do |i|
       part_nr: i.part_nr,
       check_qty: i.check_qty,
       check_user: i.check_user,
-      check_time: i.check_time
+      check_time: i.check_time,
+      random_check_qty: i.random_check_qty,
+      random_check_user: i.random_check_user,
+      random_check_time: i.random_check_time,
+      is_random_check: i.is_random_check,
+      ios_created_id: i.ios_created_id,
+      sn: i.sn,
+      part_unit: i.part_unit,
+      part_type: i.part_type,
+      wire_nr: i.wire_nr,
+      process_nr: i.process_nr
   }
 end
 
@@ -20,26 +30,3 @@ File.open('uploadfiles/data/data.json', 'w+') do |f|
 end
 
 file.save
-
-#
-#
-#
-# |           | int(11)      | NO   | PRI | NULL    | auto_increment |
-# |         | varchar(255) | NO   |     | NULL    |                |
-# |           | varchar(255) | NO   | MUL | NULL    |                |
-# |            | varchar(255) | NO   | MUL | NULL    |                |
-# |          | float        | YES  |     | NULL    |                |
-# |         | varchar(255) | YES  |     | NULL    |                |
-# |         | datetime     | YES  |     | NULL    |                |
-# | random_check_qty  | float        | YES  |     | NULL    |                |
-# | random_check_user | varchar(255) | YES  |     | NULL    |                |
-# | random_check_time | datetime     | YES  |     | NULL    |                |
-# | is_random_check   | tinyint(1)   | YES  |     | 0       |                |
-# | ios_created_id    | varchar(255) | YES  |     | NULL    |                |
-# | created_at        | datetime     | NO   |     | NULL    |                |
-# | updated_at        | datetime     | NO   |     | NULL    |                |
-# | sn                | int(11)      | YES  |     | NULL    |                |
-# | part_unit         | varchar(255) | YES  |     | NULL    |                |
-# | part_type         | varchar(255) | YES  |     | NULL    |                |
-# | wire_nr           | varchar(255) | YES  |     | NULL    |                |
-# | process_nr

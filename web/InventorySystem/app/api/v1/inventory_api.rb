@@ -226,6 +226,24 @@ module V1
           {result: 0, content: '当前无数据'}
         end
       end
+
+      desc "upload inventory file"
+      params do
+        requires :user_id, type: Integer
+        requires :type, type: Integer
+        requires :data, type: String
+      end
+      post :upload_inventory_file do
+
+
+        if file=Inventory.generate_file
+          present :result, 1
+          present :content, request.base_url + file.path.url
+        else
+          {result: 0, content: '当前无数据'}
+        end
+      end
+
     end
   end
 end
