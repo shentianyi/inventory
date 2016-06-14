@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+  resources :inventory_files
   resources :settings
   resources :parts do
     collection do

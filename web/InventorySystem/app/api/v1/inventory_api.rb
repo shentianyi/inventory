@@ -214,5 +214,18 @@ module V1
       end
 
     end
+
+    namespace :inventory_file do
+
+      desc "downlaod inventory file"
+      get :download_inventory_file do
+        if file=Inventory.generate_file
+          present :result, 1
+          present :content, request.base_url + file.path.url
+        else
+          {result: 0, content: '当前无数据'}
+        end
+      end
+    end
   end
 end

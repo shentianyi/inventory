@@ -127,6 +127,36 @@ class Inventory < ActiveRecord::Base
     PART_TYPES.include?(type)
   end
 
+  def self.generate_file
+    Inventory.transaction do
+      data={inventories: []}
+      file=InventoryFile.new()
+
+      Inventory.all.each do |i|
+        data[:inventories]<<{
+            id: i.id,
+            department: i.department,
+            position: i.position,
+            part_nr: i.part_nr,
+            check_qty: i.check_qty,
+            check_user: i.check_user,
+            check_time: i.check_time
+        }
+      end
+
+      File.open('uploadfiles/data/data.json', 'w+') do |f|
+        f.write(data.to_s)
+        file.path = f
+      end
+
+      if file.save
+        file
+      else
+        nil
+      end
+    end
+  end
+
   private
 
   def set_default_value

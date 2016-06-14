@@ -57,7 +57,7 @@ class InventoriesController < ApplicationController
         end
       end
     else
-      @inventories = @inventories.paginate(page: params[:page])
+      @inventories = @inventories.order(sn: :asc).paginate(page: params[:page])
     end
   end
 
