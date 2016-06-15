@@ -50,14 +50,6 @@ ActiveRecord::Schema.define(version: 20160614093947) do
   add_index "inventories", ["part_nr"], name: "index_inventories_on_part_nr", using: :btree
   add_index "inventories", ["position"], name: "index_inventories_on_position", using: :btree
 
-  create_table "inventory_data", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "path",       limit: 255
-    t.string   "size",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
   create_table "inventory_files", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "path",       limit: 255
