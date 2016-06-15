@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
 
 
-  resources :file_tasks
+  resources :file_tasks do
+    collection do
+      get :search
+    end
+  end
   resources :inventory_files
   resources :settings
   resources :parts do

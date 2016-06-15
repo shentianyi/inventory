@@ -12,7 +12,7 @@ module InventorySystem
    
     config.autoload_paths += %W(#{config.root}/lib)
     
-    %w{api service uploaders}.each do |namespace|
+    %w{models api service uploaders}.each do |namespace|
       config.paths.add File.join('app', namespace), glob: File.join('**', '*.rb')
       config.autoload_paths += Dir[Rails.root.join('app', namespace, '**')]
     end

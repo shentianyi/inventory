@@ -4,6 +4,7 @@
     <li class=<%= 'active' if 'users' ==@current_controller %>><%= link_to '用户管理', users_path %></li>
     <!--<li class=<%= 'active' if 'parts' ==@current_controller %>><%= link_to '零件管理', parts_path %></li>-->
     <li class=<%= 'active' if 'inventories'==@current_controller %>><%= link_to '盘点数据管理', inventories_path %></li>
+    <li class=<%= 'active' if 'file_tasks'==@current_controller %>><%= link_to '上传数据列表', file_tasks_path %></li>
     <li class=<%= 'active' if 'settings'==@current_controller %>><%= link_to '系统配置', settings_path %></li>
   </ul>
 </div>

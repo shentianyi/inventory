@@ -4,7 +4,10 @@ class FileTasksController < ApplicationController
   # GET /file_tasks
   # GET /file_tasks.json
   def index
-    @file_tasks = FileTask.all
+    @http_host=request.env["HTTP_HOST"]
+    @file_tasks = FileTask
+    @file_tasks = @file_tasks.search(params[:search]) if params[:search]
+    @file_tasks = @file_tasks.order(status: :desc).paginate(page: params[:page])
   end
 
   # GET /file_tasks/1
@@ -62,13 +65,13 @@ class FileTasksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_file_task
-      @file_task = FileTask.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_file_task
+    @file_task = FileTask.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def file_task_params
-      params.require(:file_task).permit(:user_id, :data_file_id, :err_file_id, :status, :remark, :type)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def file_task_params
+    params.require(:file_task).permit(:user_id, :data_file_id, :err_file_id, :status, :remark, :type)
+  end
 end

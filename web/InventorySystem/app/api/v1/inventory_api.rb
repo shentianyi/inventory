@@ -216,7 +216,6 @@ module V1
     end
 
     namespace :inventory_file do
-
       desc "downlaod inventory file"
       get :download_inventory_file do
         if file=Inventory.generate_file
@@ -229,18 +228,19 @@ module V1
 
       desc "upload inventory file"
       params do
-        requires :user_id, type: Integer
+        requires :user_id, type: String
         requires :type, type: Integer
         requires :data, type: String
       end
       post :upload_inventory_file do
+        unless user=User.find_by_nr(params[:user_id])
+          return {result: 0, content: "员工号#{params[:user_id]}不存在"}
+        end
 
-
-        if file=Inventory.generate_file
-          present :result, 1
-          present :content, request.base_url + file.path.url
+        if FileTaskService.create_file_task params, user
+          {result: 1, content: '数据上传成功'}
         else
-          {result: 0, content: '当前无数据'}
+          {result: 0, content: '数据上传失败'}
         end
       end
 
