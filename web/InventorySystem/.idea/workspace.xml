@@ -38,8 +38,8 @@
       <file leaf-file-name="inventory.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/inventory.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.63375795" vertical-offset="2343" max-vertical-offset="3540">
-              <caret line="196" column="9" selection-start-line="196" selection-start-column="9" selection-end-line="196" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.44267517" vertical-offset="1803" max-vertical-offset="3570">
+              <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -679,8 +679,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/inventory.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63375795" vertical-offset="2343" max-vertical-offset="3540">
-          <caret line="196" column="9" selection-start-line="196" selection-start-column="9" selection-end-line="196" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.44267517" vertical-offset="1803" max-vertical-offset="3570">
+          <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
           <folding />
         </state>
       </provider>
