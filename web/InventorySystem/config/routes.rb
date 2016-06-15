@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 
   resources :file_tasks do
     collection do

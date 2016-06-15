@@ -22,10 +22,10 @@ class Inventory < ActiveRecord::Base
   PART_TYPES=%w(U L E M)
 
 
-  validates :sn, :department, :position, :part_nr,:part_unit, presence: true
+  validates :sn, :department, :position, :part_nr, :part_unit, presence: true
   validates :part_nr, uniqueness: {scope: [:position, :department], message: '库位+部门+零件 必须唯一'}
   validates :sn, uniqueness: {message: '序列号 必须唯一'}
-  validates_inclusion_of :part_type, in: PART_TYPES, message: '零件类型不正确'#, if: Proc.new { |i| i.part_type.present? }
+  validates_inclusion_of :part_type, in: PART_TYPES, message: '零件类型不正确' #, if: Proc.new { |i| i.part_type.present? }
 
   before_save :set_default_value
 

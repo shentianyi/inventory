@@ -40,7 +40,7 @@
   <% @file_tasks.each_with_index do |file_task, index| %>
       <tr class="">
         <td><%= index+1 %></td>
-        <td><%= file_task.user_id %></td>
+        <td><%= file_task.user.blank? ? '' : file_task.user.nr %></td>
         <td><a href="http://<%= InventoryFile.url(file_task.data_file_id, @http_host) %>" target="_blank"> <%= InventoryFile.url(file_task.data_file_id, @http_host) %></a></td>
         <td><a href="http://<%= InventoryFile.url(file_task.err_file_id, @http_host) %>" target="_blank">  <%= InventoryFile.url(file_task.err_file_id, @http_host) %></a></td>
         <td><%= FileUploadStatus.display(file_task.status) %></td>

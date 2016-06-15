@@ -237,6 +237,10 @@ module V1
           return {result: 0, content: "员工号#{params[:user_id]}不存在"}
         end
 
+        if params[:data].length<1
+          return {result: 0, content: "数据为空"}
+        end
+
         if FileTaskService.create_file_task params, user
           {result: 1, content: '数据上传成功'}
         else
