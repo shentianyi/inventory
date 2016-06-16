@@ -147,10 +147,8 @@ preparation before navigation
         
         for (int i= 0; i<[inventories count]; i++) {
             inventory=inventories[i];
-            NSString *string = [NSString stringWithFormat:@"{\"id\":\"%@\",\"sn\":\"%@\",\"department\":\"%@\",\"position\":\"%@\",\"part_nr\":\"%@\",\"part_unit\":\"%@\",\"part_type\":\"%@\",\"wire_nr\":\"%@\",\"process_nr\":\"%@\",\"check_qty\":\"%@\",\"check_user\":\"%@\",\"check_time\":\"%@\",\"ios_created_id\":\"%@\"},",inventory.inventory_id,[NSString stringWithFormat:@"%i",inventory.sn],inventory.department,inventory.position,inventory.part_nr,inventory.part_unit,inventory.part_type,inventory.wire_nr,inventory.process_nr,inventory.check_qty,inventory.check_user,inventory.check_time,inventory.ios_created_id];
+            NSString *string = [NSString stringWithFormat:@"{\"id\":\"%@\",\"sn\":\"%@\",\"department\":\"%@\",\"position\":\"%@\",\"part_nr\":\"%@\",\"part_unit\":\"%@\",\"part_type\":\"%@\",\"wire_nr\":\"%@\",\"process_nr\":\"%@\",\"check_qty\":\"%@\",\"check_user\":\"%@\",\"check_time\":\"%@\",\"ios_created_id\":\"%@\"},",inventory.inventory_id,[NSString stringWithFormat:@"%li",(long)inventory.sn],inventory.department,inventory.position,inventory.part_nr,inventory.part_unit,inventory.part_type,inventory.wire_nr,inventory.process_nr,inventory.check_qty,inventory.check_user,inventory.check_time,inventory.ios_created_id];
             [jsonString appendString:string];
-            inventory.is_check_synced=@"1";
-            [[[InventoryModel alloc] init] updateCheckSync:inventory];
         }
         NSUInteger location = [jsonString length]-1;
         NSRange range       = NSMakeRange(location, 1);
@@ -159,11 +157,16 @@ preparation before navigation
         AFHTTPRequestOperationManager *manager = [self.afnetHelper basicManager];     
 
         [manager POST:[self.afnetHelper uploadloadUrl]
-           parameters:@{@"user_id":inventory.check_user,@"type":@1111,@"data":jsonString}
+           parameters:@{@"user_id":inventory.check_user,@"type":@100,@"data":jsonString}
           success:^(AFHTTPRequestOperation * operation, id responseObject) {
               NSLog(@"testing ========= checkWithPosition =======%@", responseObject);
               if([responseObject[@"result"] integerValue]== 1 ){
-
+                  //修改状态
+                  for (int i= 0; i<[inventories count]; i++) {
+                      InventoryEntity *inventoryUpdata = inventories[i];
+                      inventoryUpdata.is_check_synced=@"1";
+                      [[[InventoryModel alloc] init] updateCheckSync:inventory];
+                  }
                   dispatch_async(dispatch_get_main_queue(), ^{
                       int total=[inventories count];
                       NSLog(@"jsonString :%@",jsonString);
@@ -249,7 +252,7 @@ preparation before navigation
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         AFHTTPRequestOperationManager *manager=[self.afnetHelper basicManager];
         [manager GET:[self.afnetHelper downloadUrl]
-          parameters:@""
+          parameters:@{@"type":@100}
              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
                  if([responseObject[@"result"] integerValue]== 1 ){
                      NSString *UrlReturn = responseObject[@"content"];

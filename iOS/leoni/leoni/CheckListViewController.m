@@ -196,7 +196,9 @@
     [searchBar resignFirstResponder];
     //Do some search
     NSLog(@"=== testing search %@", searchBar.text);
+    //搜索信息
     [self getLocalCheckData:self.searchBar.text];
+    
     [self.table reloadData];
 }
 
@@ -215,7 +217,14 @@
             self.localCheckUnSyncInventories=[inventory searchLocalCheckUnSyncDataList:q WithUserNr:[UserModel accountNr]];
             self.localCreateUnSyncInventories=[inventory searchLocalCreateCheckUnSyncDataList:q WithUserNr:[UserModel accountNr]];
         }
-    }else{
+    }else if ([self.searchBar.text isEqualToString:@"no"]) {
+            [[[UIAlertView alloc] initWithTitle:@"下载完成"
+                                        message:@"HH"
+                                       delegate:self
+                              cancelButtonTitle:@"知道了"
+                              otherButtonTitles: nil] show];
+            
+        }else{
         if(self.searchBar.text.length==0){
           self.localCheckInventories=[inventory getLocalCheckDataListWithPosition:q];
           self.localCreateInventories=[inventory getLocalCreateCheckDataListWithPoistion:q];
