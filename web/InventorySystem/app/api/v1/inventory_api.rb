@@ -237,6 +237,10 @@ module V1
           return {result: 0, content: "员工号#{params[:user_id]}不存在"}
         end
 
+        unless [FileUploadType::OVERALL, FileUploadType::SPOTCHECK].include?(params[:type])
+          return {result: 0, content: "盘点类型#{params[:type]}不正确"}
+        end
+
         if params[:data].length<1
           return {result: 0, content: "数据为空"}
         end

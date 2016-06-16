@@ -32,27 +32,26 @@ class FileTaskService
         case type
           when FileUploadType::OVERALL
             data.each do |i|
-
-              if i[:id].blank? && Inventory.find_by_sn(i[:sn]).blank?
-                inventory = Inventory.new(sn: i[:sn],
-                                          department: i[:department],
-                                          position: i[:position],
-                                          part_nr: i[:part_nr],
-                                          part_unit: i[:part_unit],
-                                          part_type: i[:part_type],
-                                          wire_nr: i[:wire_nr],
-                                          process_nr: i[:process_nr],
-                                          check_qty: i[:check_qty],
-                                          check_user: i[:check_user],
-                                          check_time: i[:check_time],
-                                          ios_created_id: i[:ios_created_id])
+              if i['id'].blank? && Inventory.find_by_sn(i['sn']).blank?
+                inventory = Inventory.new(sn: i['sn'],
+                                          department: i['department'],
+                                          position: i['position'],
+                                          part_nr: i['part_nr'],
+                                          part_unit: i['part_unit'],
+                                          part_type: i['part_type'],
+                                          wire_nr: i['wire_nr'],
+                                          process_nr: i['process_nr'],
+                                          check_qty: i['check_qty'],
+                                          check_user: i['check_user'],
+                                          check_time: i['check_time'],
+                                          ios_created_id: i['ios_created_id'])
                 unless inventory.save!
                   msg.contents<<(i.to_s + "CREATE NEW DATA FAILED")
                 end
               else
-                inventory = i[:id].blank? ? Inventory.find_by_sn(i[:sn]) : Inventory.find_by_id(i[:id])
+                inventory = i['id'].blank? ? Inventory.find_by_sn(i['sn']) : Inventory.find_by_id(i['id'])
                 if inventory.present?
-                  if inventory.update!(check_qty: i[:check_qty], check_user: i[:check_user], check_time: i[:check_time])
+                  if inventory.update!(check_qty: i['check_qty'], check_user: i['check_user'], check_time: i['check_time'])
                   else
                     msg.contents<<(i.to_s + "UPDATE NEW DATA FAILED")
                   end
