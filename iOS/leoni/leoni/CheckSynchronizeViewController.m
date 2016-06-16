@@ -359,7 +359,6 @@ preparation before navigation
     json = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:&error];
     for (NSDictionary *item in json)
     {
-        NSLog(@"........");
         InventoryEntity *inventory = [[InventoryEntity alloc] initWithObject:item];
         [self.inventoryModel localCreateCheckData:inventory];
     }
