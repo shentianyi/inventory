@@ -290,7 +290,7 @@
 
 
 -(NSMutableArray *)getRandomListWithSn:(NSInteger)sn{
-    NSString *queryString = [NSString stringWithFormat:@"select * from inventories where sn= %i and is_random_check='1'", sn];
+    NSString *queryString = [NSString stringWithFormat:@"select * from inventories where sn= %li and is_random_check = 'true'", (long)sn];
     return [self getInventoryEnityListByQuery:queryString];
 
 }

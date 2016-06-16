@@ -156,7 +156,7 @@
                       for (int i= 0; i<[inventories count]; i++) {
                           InventoryEntity *inventoryUpdata = inventories[i];
                           inventory.is_random_check_synced=@"1";
-                          [self.inventoryModel updateRandomCheckSync:inventory];
+                          [self.inventoryModel updateRandomCheckSync:inventoryUpdata];
                       }
                       
                       dispatch_async(dispatch_get_main_queue(), ^{
@@ -165,6 +165,7 @@
                           [hud hide:YES];
                           self.pgLabel.hidden=YES;
                           self.reminder.hidden=YES;
+                          self.reminder.text=@"提 示";
                           [self MessageShowTitle:@"上传提示" Content:[NSString stringWithFormat:@"共上传 %i",total]];
                       });
                       
@@ -321,6 +322,7 @@
                          hud.labelText = @"正在拼命加载数据...";
                          self.pgLabel.hidden=NO;
                          self.reminder.hidden=NO;
+                         self.reminder.text=@"提 示";
                          self.pgLabel.text=@"加载数据时无需联网，此过大约需要十分钟，请耐心等待";
                          NSData* data = [NSData dataWithContentsOfFile:self.filePath];
                          NSThread* fetchThread = [[NSThread alloc] initWithTarget:self
@@ -351,8 +353,10 @@
     json = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:&error];
     for (NSDictionary *item in json)
     {
+        
         InventoryEntity *inventory = [[InventoryEntity alloc] initWithObject:item];
         [self.inventoryModel localCreateCheckData:inventory];
+        NSLog(@"sn:%ld and is_random_check:%@",(long)inventory.sn,inventory.is_random_check);
     }
     [self performSelectorOnMainThread:@selector(finishAlert) withObject:nil waitUntilDone:YES];
     
