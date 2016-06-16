@@ -379,7 +379,30 @@ preparation before navigation
                                               otherButtonTitles:nil];
     
     [alertView show];
+    [self deleteFile];
 }
+-(void)deleteFile {
+    NSFileManager* fileManager=[NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask, YES);
+    
+    //文件名
+    NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:@"data.json"];
+    BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+    if (!blHave) {
+        NSLog(@"no  have");
+        return ;
+    }else {
+        NSLog(@" have");
+        BOOL blDele= [fileManager removeItemAtPath:uniquePath error:nil];
+        if (blDele) {
+            NSLog(@"dele success");
+        }else {
+            NSLog(@"dele fail");
+        }
+        
+    }
+}
+
 
 
 - (void)MessageShowTitle:(NSString *)title Content:(NSString *)content {

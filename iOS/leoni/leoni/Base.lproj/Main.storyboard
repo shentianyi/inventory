@@ -1669,6 +1669,18 @@
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zjq-Te-CBN">
+                                <rect key="frame" x="125" y="364" width="70" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6k-nY-Y1Y">
+                                <rect key="frame" x="20" y="412" width="280" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.67843137249999996" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1678,8 +1690,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="抽盘" id="gtF-Qp-W6N"/>
                     <connections>
+                        <outlet property="pgLabel" destination="B6k-nY-Y1Y" id="4zx-qU-Es6"/>
                         <outlet property="randomDownloadButton" destination="nf7-9n-Ih4" id="XEL-9d-uGa"/>
                         <outlet property="randomuploadButton" destination="JxW-iH-TQx" id="K88-yx-LzL"/>
+                        <outlet property="reminder" destination="Zjq-Te-CBN" id="Gxe-iI-Pl1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Ea-W3-JPO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1806,6 +1820,6 @@
         <image name="home" width="15" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Z6m-A8-zEj"/>
+        <segue reference="CDK-qM-dVs"/>
     </inferredMetricsTieBreakers>
 </document>
