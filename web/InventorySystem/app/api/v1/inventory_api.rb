@@ -217,8 +217,15 @@ module V1
 
     namespace :inventory_file do
       desc "downlaod inventory file"
+      params do
+        requires :type, type: Integer
+      end
       get :download_inventory_file do
-        if file=Inventory.generate_file
+        unless [FileUploadType::OVERALL, FileUploadType::SPOTCHECK].include?(params[:type])
+          return {result: 0, content: "盘点类型#{params[:type]}不正确"}
+        end
+
+        if file=Inventory.generate_file(params[:type])
           present :result, 1
           present :content, request.base_url + file.path.url
         else

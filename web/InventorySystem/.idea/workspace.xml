@@ -35,21 +35,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="file_task_service.rb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="file_task_service.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/services/file_task_service.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.18827508" vertical-offset="343" max-vertical-offset="1515">
-              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+            <state vertical-scroll-proportion="-5.102941" vertical-offset="613" max-vertical-offset="1515">
+              <caret line="64" column="40" selection-start-line="64" selection-start-column="10" selection-end-line="64" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="inventory.rb" pinned="false" current-in-tab="false">
+      <file leaf-file-name="inventory.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/inventory.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="36.558823" vertical-offset="2696" max-vertical-offset="3570">
-              <caret line="14" column="53" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
+            <state vertical-scroll-proportion="0.33295193" vertical-offset="324" max-vertical-offset="3075">
+              <caret line="41" column="8" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -79,7 +79,17 @@
         <entry file="file://$PROJECT_DIR$/app/models/file_task.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
-              <caret line="5" column="22" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="22" />
+              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="inventory_api.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/api/v1/inventory_api.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2298" max-vertical-offset="4050">
+              <caret line="176" column="46" selection-start-line="176" selection-start-column="34" selection-end-line="176" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -103,7 +113,6 @@
         <option value="$PROJECT_DIR$/config/sidekiq.yml" />
         <option value="$PROJECT_DIR$/config/application.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
-        <option value="$PROJECT_DIR$/app/models/inventory.rb" />
         <option value="$PROJECT_DIR$/app/views/file_tasks/index.html.erb" />
         <option value="$PROJECT_DIR$/app/models/file_task.rb" />
         <option value="$PROJECT_DIR$/app/workers/file_task_worker.rb" />
@@ -112,8 +121,9 @@
         <option value="$PROJECT_DIR$/app/views/shared/_sidebar.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/dashboard.scss" />
         <option value="$PROJECT_DIR$/config/database.yml" />
-        <option value="$PROJECT_DIR$/app/api/v1/inventory_api.rb" />
         <option value="$PROJECT_DIR$/app/services/file_task_service.rb" />
+        <option value="$PROJECT_DIR$/app/api/v1/inventory_api.rb" />
+        <option value="$PROJECT_DIR$/app/models/inventory.rb" />
       </list>
     </option>
   </component>
@@ -224,28 +234,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="InventorySystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="InventorySystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="type" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -820,26 +808,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/god/config.god">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
-          <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.16111708" vertical-offset="0" max-vertical-offset="931">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/workers/file_task_worker.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465">
-          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -852,18 +824,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/api/v1/inventory_api.rb">
+    <entry file="file://$PROJECT_DIR$/app/workers/file_task_worker.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.69745225" vertical-offset="2943" max-vertical-offset="3945">
-          <caret line="240" column="62" selection-start-line="240" selection-start-column="62" selection-end-line="240" selection-end-column="62" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/file_task.rb">
+    <entry file="file://$PROJECT_DIR$/config/god/config.god">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
+          <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
           <folding />
         </state>
       </provider>
@@ -876,18 +848,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/inventory.rb">
+    <entry file="file://$PROJECT_DIR$/app/services/file_task_service.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="36.558823" vertical-offset="2696" max-vertical-offset="3570">
-          <caret line="14" column="53" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
+        <state vertical-scroll-proportion="-5.102941" vertical-offset="613" max-vertical-offset="1515">
+          <caret line="64" column="40" selection-start-line="64" selection-start-column="10" selection-end-line="64" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/services/file_task_service.rb">
+    <entry file="file://$PROJECT_DIR$/app/api/v1/inventory_api.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18827508" vertical-offset="343" max-vertical-offset="1515">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2298" max-vertical-offset="4050">
+          <caret line="176" column="46" selection-start-line="176" selection-start-column="34" selection-end-line="176" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/file_task.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/inventory.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33295193" vertical-offset="324" max-vertical-offset="3075">
+          <caret line="41" column="8" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="8" />
           <folding />
         </state>
       </provider>
