@@ -244,15 +244,15 @@ preparation before navigation
              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
                  if([responseObject[@"result"] integerValue]== 1 ){
                      NSString *UrlReturn = responseObject[@"content"];
-//                     NSString *UrlReturn = @"http://img4.imgtn.bdimg.com/it/u=783533256,80770954&fm=21&gp=0.jpg";
-
+                     //                     NSString *UrlReturn = @"http://img4.imgtn.bdimg.com/it/u=783533256,80770954&fm=21&gp=0.jpg";
+                     
                      NSURL* url = [NSURL URLWithString:UrlReturn];
-                    NSDate *begin =[NSDate date];
+                     NSDate *begin =[NSDate date];
                      NSLog(@"begin :%@",begin);
                      
                      // 得到session对象
                      self.session = [NSURLSession sharedSession];
-                   
+                     
                      // 创建任务
                      self.downloadTask = [self.session downloadTaskWithURL:url completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
                          // location : 临时文件的路径（下载好的文件）
@@ -266,7 +266,7 @@ preparation before navigation
                          NSLog(@"3");
                          // AtPath : 剪切前的文件路径
                          // ToPath : 剪切后的文件路径
-
+                         
                          NSError *errorformoveitem;
                          @try {
                              [mgr moveItemAtPath:location.path toPath:file error:&errorformoveitem];
@@ -288,10 +288,9 @@ preparation before navigation
                              
                          }
                          
-                         dispatch_async(dispatch_get_main_queue(), ^{
-                             [hud hide:YES];
-                     
-                             if(error){
+                         if(error){
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 [hud hide:YES];
                                  NSLog(@"Error is not null , Has Error== %@" ,error);
                                  
                                  UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"下载出错"
@@ -301,60 +300,31 @@ preparation before navigation
                                                                            otherButtonTitles:nil];
                                  
                                  [alertView show];
-                             }else{
-                                 NSDate *finish =[NSDate date];
-                                 NSLog(@"finish :%@",finish);
-//                                
-//                                 hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//                                 hud.delegate=self;
-                                 
-                                 //显示对话框
-                                 [hud showAnimated:YES whileExecutingBlock:^{
-                                     //对话框显示时需要执行的操作
-                                     float progress = 0.0f;
-                                     while (progress < 1.0f) {
-                                         progress += 0.01f;
-                                         hud.progress = progress;
-                                         usleep(50000);  
-                                     }
-                                 } completionBlock:^{
-                                     [self hudWasHidden:hud];
-                                 }];
-                                
-                            
-
-                                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-                                     NSString *cachesDir = [paths objectAtIndex:0];
-                                     
-                                     self.filePath =[cachesDir stringByAppendingPathComponent:@"data.json"];
-                                     NSFileManager *fileManager = [NSFileManager defaultManager];
-                                 
-                                     if ([fileManager fileExistsAtPath:self.filePath]==YES) {
-
-                                         
-                                         NSData* data = [NSData dataWithContentsOfFile:self.filePath];
-                                         //处理数据
-                                         [self performSelectorOnMainThread:@selector(ReadFile:) withObject:data waitUntilDone:YES];
-                                        
-                                         [hud hide:YES];
-                                     }
- 
-                                     
-                                     UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"完成"
-                                                                                         message:self.downloadTask.response.suggestedFilename
-                                                                                        delegate:nil
-                                                                               cancelButtonTitle:@"确定"
-                                                                               otherButtonTitles:nil];
-                                     
-                                     [alertView show];
-                                 
-                                 }
-                         });
-                             
+                             });
+                         }else{
+                             NSDate *finish =[NSDate date];
+                             NSLog(@"finish :%@",finish);
+                         }
                      }];
-                     
                      // 开始任务
                      [self.downloadTask resume];
+                     
+                     
+                     //处理数据
+                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+                     NSString *cachesDir = [paths objectAtIndex:0];
+                     self.filePath =[cachesDir stringByAppendingPathComponent:@"data.json"];
+                     NSFileManager *fileManager = [NSFileManager defaultManager];
+                     
+                     if ([fileManager fileExistsAtPath:self.filePath]==YES) {
+                         NSData* data = [NSData dataWithContentsOfFile:self.filePath];
+                         //[self performSelectorOnMainThread:@selector(ReadFile:) withObject:data waitUntilDone:YES];
+                         NSThread* fetchThread = [[NSThread alloc] initWithTarget:self
+                                                                         selector:@selector(ReadFile:)
+                                                                           object:data];
+                         [fetchThread start];
+                         hud.labelText = @"正在拼命加载数据...";
+                     }
                  }
              }
              failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
@@ -365,28 +335,32 @@ preparation before navigation
                                                            otherButtonTitles:nil];
                  [alertView show];
                  [hud hide:YES];
-
+                 
              }];
     });
-
+    
 }
 -(void)ReadFile:(NSData *)responseData{
     NSError *error;
     NSMutableArray *json = [[NSMutableArray alloc]init];
     json = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:&error];
-    
     for (NSDictionary *item in json)
     {
-        NSString *department;
-        department= [item objectForKey:@"department"];
-    
         InventoryEntity *inventory = [[InventoryEntity alloc] initWithObject:item];
         [self.inventoryModel localCreateCheckData:inventory];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//        self.myPregress.progress = item.count/json.count;
-//        });
     }
+    [self performSelectorOnMainThread:@selector(finishAlert) withObject:nil waitUntilDone:YES];
     
+}
+-(void)finishAlert{
+    [hud hide:YES];
+    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"完成"
+                                                        message:@"可以开始盘点"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil];
+    
+    [alertView show];
 }
 
 
@@ -414,7 +388,7 @@ preparation before navigation
         
         if(check.pass){
             if(self.currentButton==self.downloadButton){
-               [self.downloadAlert show];
+                [self.downloadAlert show];
             }else if(self.currentButton ==self.uploadButton){
                 [self.uploadAlert show];
             }
