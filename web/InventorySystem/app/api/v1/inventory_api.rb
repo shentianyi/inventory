@@ -159,7 +159,6 @@ module V1
         end
       end
 
-
       desc "get random check total"
       get :random_total do
         {result: 1, content: Inventory.random_check.count}

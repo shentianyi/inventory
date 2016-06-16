@@ -140,7 +140,7 @@ class Inventory < ActiveRecord::Base
       data=[]
       file=InventoryFile.new()
 
-      Inventory.all.each do |i|
+      inventories.each do |i|
         info={}
         info['id']=i.id.to_s
         info['department']=i.department.to_s
