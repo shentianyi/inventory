@@ -1128,15 +1128,18 @@
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="无" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecS-Ig-U7G">
-                                <rect key="frame" x="79" y="421" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="加载数据时无需联网，此过大约需要十分钟，请耐心等待" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecS-Ig-U7G">
+                                <rect key="frame" x="17" y="399" width="286" height="53"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Vn-eK-EAV">
-                                <rect key="frame" x="79" y="458" width="150" height="2"/>
-                            </progressView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="提   示" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qAD-k4-u4x">
+                                <rect key="frame" x="136" y="370" width="48" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.67843137249999996" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1149,8 +1152,8 @@
                     <navigationItem key="navigationItem" title="全盘" id="lfR-Hm-C5f"/>
                     <connections>
                         <outlet property="downloadButton" destination="iqV-yb-4Mq" id="cL9-Td-Buc"/>
-                        <outlet property="myPregress" destination="4Vn-eK-EAV" id="HI1-8v-S5b"/>
                         <outlet property="pgLabel" destination="ecS-Ig-U7G" id="QlL-g7-UYh"/>
+                        <outlet property="reminder" destination="qAD-k4-u4x" id="Ygu-t4-rIg"/>
                         <outlet property="uploadButton" destination="rPQ-Es-YtL" id="sov-XC-7To"/>
                     </connections>
                 </viewController>

@@ -31,8 +31,8 @@
 
 @property (nonatomic, strong) NSURLSessionDownloadTask* downloadTask;
 @property (nonatomic, strong) NSURLSession* session;
-@property (weak, nonatomic) IBOutlet UIProgressView *myPregress;
 @property (weak, nonatomic) IBOutlet UILabel *pgLabel;
+@property (weak, nonatomic) IBOutlet UILabel *reminder;
 @property NSString *filePath;
 
 @end
@@ -119,6 +119,9 @@ preparation before navigation
           //hud.mode =MBProgressHUDModeDeterminateHorizontalBar;
           
           hud.labelText=@"上传中...";
+          self.pgLabel.hidden=NO;
+          self.reminder.hidden=NO;
+          self.pgLabel.text=@"上传数据时请确保网络连接，此过程大约需要一分钟";
           [self callHttpUpload:0 WithData:uploadDataArray];
           
       }else{
@@ -134,36 +137,42 @@ preparation before navigation
 
 - (void)callHttpUpload:(NSInteger)index WithData:(NSMutableArray *)inventories{
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-
-     AFHTTPRequestOperationManager *manager = [self.afnetHelper basicManager];
       
         InventoryEntity *inventory=inventories[index];
+
         
-    [manager POST:[self.afnetHelper uploadCheckData]
-       parameters:@{@"id" : inventory.inventory_id,@"sn": [NSString stringWithFormat:@"%i",inventory.sn], @"department" : inventory.department, @"position" : inventory.position, @"part_nr" : inventory.part_nr,@"part_unit":inventory.part_unit, @"part_type" : inventory.part_type,@"wire_nr":inventory.wire_nr,@"process_nr":inventory.process_nr, @"check_qty" : inventory.check_qty, @"check_user" : inventory.check_user, @"check_time" :inventory.check_time, @"ios_created_id" : inventory.ios_created_id}
+        NSMutableString *jsonString = [[NSMutableString alloc] initWithString:@"["];
+        
+        //2. 遍历数组，取出键值对并按json格式存放
+        
+        for (int i= 0; i<[inventories count]; i++) {
+            inventory=inventories[i];
+            NSString *string = [NSString stringWithFormat:@"{\"id\":\"%@\",\"sn\":\"%@\",\"department\":\"%@\",\"position\":\"%@\",\"part_nr\":\"%@\",\"part_unit\":\"%@\",\"part_type\":\"%@\",\"wire_nr\":\"%@\",\"process_nr\":\"%@\",\"check_qty\":\"%@\",\"check_user\":\"%@\",\"check_time\":\"%@\",\"ios_created_id\":\"%@\"},",inventory.inventory_id,[NSString stringWithFormat:@"%i",inventory.sn],inventory.department,inventory.position,inventory.part_nr,inventory.part_unit,inventory.part_type,inventory.wire_nr,inventory.process_nr,inventory.check_qty,inventory.check_user,inventory.check_time,inventory.ios_created_id];
+            [jsonString appendString:string];
+            inventory.is_check_synced=@"1";
+            [[[InventoryModel alloc] init] updateCheckSync:inventory];
+        }
+        NSUInteger location = [jsonString length]-1;
+        NSRange range       = NSMakeRange(location, 1);
+        [jsonString replaceCharactersInRange:range withString:@"]"];
+
+        AFHTTPRequestOperationManager *manager = [self.afnetHelper basicManager];     
+
+        [manager POST:[self.afnetHelper uploadloadUrl]
+           parameters:@{@"user_id":inventory.check_user,@"type":@1111,@"data":jsonString}
           success:^(AFHTTPRequestOperation * operation, id responseObject) {
               NSLog(@"testing ========= checkWithPosition =======%@", responseObject);
               if([responseObject[@"result"] integerValue]== 1 ){
-                 
-                  inventory.is_check_synced=@"1";
-                  [[[InventoryModel alloc] init] updateCheckSync:inventory];
-                  
+
                   dispatch_async(dispatch_get_main_queue(), ^{
                       int total=[inventories count];
-                      float progress=(index+1)/(float)total;
-                      NSLog(@"process: %f",progress);
-                      hud.progress=progress;
-                      if (progress<=1.0f) {
-                          hud.labelText=[NSString stringWithFormat:@"已上传 %i, 共 %i", index+1, total];
-                      }
-                      if((index+1)==total){
-                          [hud hide:YES];
-                          [self MessageShowTitle:@"上传提示" Content:[NSString stringWithFormat:@"共上传 %i",total]];
-                      }else{
-                          [self callHttpUpload:index+1 WithData:inventories];
-                      }
+                      NSLog(@"jsonString :%@",jsonString);
+                      [hud hide:YES];
+                      self.pgLabel.hidden=YES;
+                      self.reminder.hidden=YES;
+                      [self MessageShowTitle:@"上传提示" Content:[NSString stringWithFormat:@"共上传 %i",total]];
                   });
-                  
+  
               }
 
               
@@ -317,13 +326,17 @@ preparation before navigation
                      NSFileManager *fileManager = [NSFileManager defaultManager];
                      
                      if ([fileManager fileExistsAtPath:self.filePath]==YES) {
+                         hud.labelText = @"正在拼命加载数据...";
+                         self.pgLabel.hidden=NO;
+                         self.reminder.hidden=NO;
+                         self.pgLabel.text=@"加载数据时无需联网，此过大约需要十分钟，请耐心等待";
                          NSData* data = [NSData dataWithContentsOfFile:self.filePath];
                          //[self performSelectorOnMainThread:@selector(ReadFile:) withObject:data waitUntilDone:YES];
                          NSThread* fetchThread = [[NSThread alloc] initWithTarget:self
                                                                          selector:@selector(ReadFile:)
                                                                            object:data];
                          [fetchThread start];
-                         hud.labelText = @"正在拼命加载数据...";
+
                      }
                  }
              }
@@ -346,6 +359,7 @@ preparation before navigation
     json = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:&error];
     for (NSDictionary *item in json)
     {
+        NSLog(@"........");
         InventoryEntity *inventory = [[InventoryEntity alloc] initWithObject:item];
         [self.inventoryModel localCreateCheckData:inventory];
     }
@@ -354,6 +368,8 @@ preparation before navigation
 }
 -(void)finishAlert{
     [hud hide:YES];
+    self.pgLabel.hidden=YES;
+    self.reminder.hidden=YES;
     UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"完成"
                                                         message:@"可以开始盘点"
                                                        delegate:nil

@@ -38,5 +38,7 @@
 	<string>/api/v1/inventory/random_total</string>
 	<key>download_address</key>
 	<string>/api/v1/inventory_file/download_inventory_file</string>
+	<key>upload_address</key>
+	<string>/api/v1/inventory_file/upload_inventory_file</string>
 </dict>
 </plist>
