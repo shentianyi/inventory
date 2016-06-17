@@ -10,6 +10,7 @@
 #import "InventoryModel.h"
 #import "MBProgressHUD.h"
 #import "UserModel.h"
+#import "UserEntity.h"
 #import "CheckUserRoleViewController.h"
 #import "AFNetHelper.h"
 
@@ -34,6 +35,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *pgLabel;
 @property (weak, nonatomic) IBOutlet UILabel *reminder;
 @property NSString *filePath;
+
+@property (strong,nonatomic) UserEntity *currentUserEntity;
 
 @end
 
@@ -71,6 +74,8 @@
     self.afnetHelper=[[AFNetHelper alloc]init];
     
     self.pageSize=[self.afnetHelper getRequestQuantity];
+    
+    self.currentUserEntity=[[[UserModel alloc]init] findUserByNr:[UserModel accountNr]];
 }
 /*
 #pragma mark - Navigation
@@ -149,6 +154,7 @@ preparation before navigation
             inventory=inventories[i];
             NSString *string = [NSString stringWithFormat:@"{\"id\":\"%@\",\"sn\":\"%@\",\"department\":\"%@\",\"position\":\"%@\",\"part_nr\":\"%@\",\"part_unit\":\"%@\",\"part_type\":\"%@\",\"wire_nr\":\"%@\",\"process_nr\":\"%@\",\"check_qty\":\"%@\",\"check_user\":\"%@\",\"check_time\":\"%@\",\"ios_created_id\":\"%@\"},",inventory.inventory_id,[NSString stringWithFormat:@"%li",(long)inventory.sn],inventory.department,inventory.position,inventory.part_nr,inventory.part_unit,inventory.part_type,inventory.wire_nr,inventory.process_nr,inventory.check_qty,inventory.check_user,inventory.check_time,inventory.ios_created_id];
             [jsonString appendString:string];
+            NSLog(@"sn :%@",[NSString stringWithFormat:@"%li",(long)inventory.sn]);
         }
         NSUInteger location = [jsonString length]-1;
         NSRange range       = NSMakeRange(location, 1);
@@ -160,12 +166,15 @@ preparation before navigation
            parameters:@{@"user_id":inventory.check_user,@"type":@100,@"data":jsonString}
           success:^(AFHTTPRequestOperation * operation, id responseObject) {
               NSLog(@"testing ========= checkWithPosition =======%@", responseObject);
+                NSLog(@"resule %d",[responseObject[@"result"] integerValue]);
               if([responseObject[@"result"] integerValue]== 1 ){
+                  InventoryEntity *inventoryUpdata = [[InventoryEntity alloc]init];
                   //修改状态
                   for (int i= 0; i<[inventories count]; i++) {
-                      InventoryEntity *inventoryUpdata = inventories[i];
+                      inventoryUpdata = inventories[i];
                       inventoryUpdata.is_check_synced=@"1";
-                      [[[InventoryModel alloc] init] updateCheckSync:inventory];
+                      NSLog(@"3sn :%@",[NSString stringWithFormat:@"%li",(long)inventoryUpdata.sn]);
+                      [[[InventoryModel alloc] init] updateCheckSync:inventoryUpdata];
                   }
                   dispatch_async(dispatch_get_main_queue(), ^{
                       int total=[inventories count];
@@ -176,16 +185,31 @@ preparation before navigation
                       [self MessageShowTitle:@"上传提示" Content:[NSString stringWithFormat:@"共上传 %i",total]];
                   });
   
+              }else{
+
+                   dispatch_async(dispatch_get_main_queue(), ^{
+                  [self MessageShowTitle:@"系统提示"
+                                 Content:@"未能成功上传，请重试或联系管理员"];
+                         });
+                  
               }
 
               
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              dispatch_async(dispatch_get_main_queue(), ^{
               if([error.domain isEqualToString:NSURLErrorDomain]){
+                  
                   [self MessageShowTitle:@"系统提示"
                                  Content:@"未连接服务器，请联系管理员"];
+              }else{
+                  [self MessageShowTitle:@"未知错误"
+                                 Content:@"未连接服务器，请联系管理员"];
               }
-              [hud hide:YES];
+                  self.pgLabel.hidden=YES;
+                  self.reminder.hidden=YES;
+                  [hud hide:YES];
+                });
           }];
     });
 }
@@ -332,7 +356,7 @@ preparation before navigation
                          hud.labelText = @"正在拼命加载数据...";
                          self.pgLabel.hidden=NO;
                          self.reminder.hidden=NO;
-                         self.pgLabel.text=@"加载数据时无需联网，此过大约需要十分钟，请耐心等待";
+                         self.pgLabel.text=@"加载数据时无需联网，此过程大约需要几分钟，请耐心等待";
                          NSData* data = [NSData dataWithContentsOfFile:self.filePath];
                          //[self performSelectorOnMainThread:@selector(ReadFile:) withObject:data waitUntilDone:YES];
                          NSThread* fetchThread = [[NSThread alloc] initWithTarget:self
@@ -363,7 +387,14 @@ preparation before navigation
     for (NSDictionary *item in json)
     {
         InventoryEntity *inventory = [[InventoryEntity alloc] initWithObject:item];
-        [self.inventoryModel localCreateCheckData:inventory];
+//        inventory.is_random_check = @"false";
+        if ([self.currentUserEntity validateIdSpan:inventory.sn]) {
+//            inventory.is_random_check = @"true";
+            [self.inventoryModel localCreateCheckData:inventory];
+//            NSLog(@"used sn :%ld",(long)inventory.sn);
+        }
+//        NSLog(@"sn :%ld",(long)inventory.sn);
+//        [self.inventoryModel localCreateCheckData:inventory];
     }
     [self performSelectorOnMainThread:@selector(finishAlert) withObject:nil waitUntilDone:YES];
     

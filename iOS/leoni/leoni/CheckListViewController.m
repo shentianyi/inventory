@@ -58,6 +58,7 @@
     [super viewWillAppear:animated];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [self initController];
+    [self.table reloadData];
     
 }
 
@@ -126,8 +127,9 @@
     }
     else
     {
-        NSLog(@"===  %ld",self.localCheckInventories.count);
+        NSLog(@"===  %ld",(unsigned long)self.localCheckInventories.count);
         return self.localCheckInventories.count;
+        //list
     }
 }
 
@@ -170,10 +172,13 @@
     }
     else
     {
-        InventoryEntity *entity = self.localCheckInventories[indexPath.row];
+        InventoryEntity *entity = self.localCheckInventories[indexPath.row];  //list
         NSLog(@"entity %@%@", entity.position, entity.part_nr);
+        if (entity.check_qty.length == 0) {
+            cell.backgroundColor = [UIColor colorWithRed:224.0f/255.0f green:155.0f/255.0f blue:90.0f/255.0f alpha:0.3f];
+        }
        
-        cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@ 零件:%@", entity.sn, entity.position, entity.part_nr];
+        cell.textLabel.text = [NSString stringWithFormat:@"%ld. 库位:%@ 零件:%@", (long)entity.sn, entity.position, entity.part_nr];
     
         cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘: %@ 抽盘: %@  单位:%@ #%@", entity.check_qty, entity.random_check_qty,entity.part_unit,entity.check_user];
         
@@ -207,7 +212,7 @@
 
     if(self.afnetHelper.listLimitUser){
         if(self.searchBar.text.length==0){
-          self.localCheckInventories=[inventory getLocalCheckDataListWithPosition:q WithUserNr:[UserModel accountNr]];
+          self.localCheckInventories=[inventory getAllLocalCheckDataListWithPosition:q WithUserNr:[UserModel accountNr]];
           self.localCreateInventories=[inventory getLocalCreateCheckDataListWithPoistion:q WithUserNr:[UserModel accountNr]];
            self.localCheckUnSyncInventories=[inventory getLocalCheckUnSyncDataListWithPosition:q WithUserNr:[UserModel accountNr]];
             self.localCreateUnSyncInventories=[inventory getLocalCreateCheckUnSyncDataListWithPoistion:q WithUserNr:[UserModel accountNr]];
@@ -217,14 +222,7 @@
             self.localCheckUnSyncInventories=[inventory searchLocalCheckUnSyncDataList:q WithUserNr:[UserModel accountNr]];
             self.localCreateUnSyncInventories=[inventory searchLocalCreateCheckUnSyncDataList:q WithUserNr:[UserModel accountNr]];
         }
-    }else if ([self.searchBar.text isEqualToString:@"no"]) {
-            [[[UIAlertView alloc] initWithTitle:@"下载完成"
-                                        message:@"HH"
-                                       delegate:self
-                              cancelButtonTitle:@"知道了"
-                              otherButtonTitles: nil] show];
-            
-        }else{
+    }else{
         if(self.searchBar.text.length==0){
           self.localCheckInventories=[inventory getLocalCheckDataListWithPosition:q];
           self.localCreateInventories=[inventory getLocalCreateCheckDataListWithPoistion:q];

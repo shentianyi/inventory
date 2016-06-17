@@ -115,6 +115,15 @@
     return  [self getInventoryEnityListByQuery:query];
 }
 
+- (NSMutableArray *)getAllLocalCheckDataListWithPosition: (NSString *)position WithUserNr:(NSString *)userNr{
+    NSString *query;
+
+    query = [NSString stringWithFormat:@"select * from inventories order by check_time desc"];
+
+    return  [self getInventoryEnityListByQuery:query];
+    
+}
+
 -(NSMutableArray *)getLocalCheckOrCreateUnsyncDataListWithUserNr:(NSString *)userNr {
     NSString *query= [NSString stringWithFormat:@"select * from inventories where check_qty != '' and is_local_check='1'  and is_check_synced='0'   and check_user='%@' order by check_time desc",userNr];
     

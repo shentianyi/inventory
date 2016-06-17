@@ -15,6 +15,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *userSpanIdTF;
 @property (nonatomic,strong) NSString *nr;
 @property (nonatomic,strong) UserModel *userModel;
+@property (weak, nonatomic) IBOutlet UILabel *labelTitle;
+@property (weak, nonatomic) IBOutlet UILabel *labelText;
+
 @property (nonatomic,strong) UserEntity *user;
 @end
 
@@ -31,6 +34,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    self.labelTitle.text=@"提示";
+    self.labelText.text=@"请到服务器端更新任务ID";
     [super viewWillAppear:animated];
     [self initController];
 }
@@ -47,12 +52,13 @@
 }
 
 - (IBAction)saveUserSet:(id)sender {
-    if(self.user){
-        self.user.idSpan=self.userSpanIdTF.text;
-        [self.userModel save:self.user];
-    }
-    
-    [self backAction:sender];
+//    if(self.user){
+//        self.user.idSpan=self.userSpanIdTF.text;
+//        [self.userModel save:self.user];
+//    }
+//    
+//    [self backAction:sender];
+    [[[UIAlertView alloc] initWithTitle:@"提示" message:@"请到服务器修改任务" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles: nil] show];
 }
 - (IBAction)backAction:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];

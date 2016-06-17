@@ -367,9 +367,8 @@
         self.currentInventoryEntity.is_check_synced=@"0";
         
         if(![self.currentUserEntity validateIdSpan:self.currentInventoryEntity.sn]){
-//            [self showMsg:[NSString stringWithFormat:@"没有权限操作唯一码"] WithTime:1.0f];
-//            [self clearAllTextFields];
-            [self showMsg:[NSString stringWithFormat:@"盘点成功"] WithTime:0.5f];
+            [self showMsg:[NSString stringWithFormat:@"没有权限操作唯一码"] WithTime:1.0f];
+            [self clearAllTextFields];
             
             [self clearAllTextFields];
         }else{
