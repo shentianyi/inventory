@@ -176,9 +176,6 @@
     {
         InventoryEntity *entity = self.localCheckInventories[indexPath.row];  //list
         NSLog(@"entity %@%@", entity.position, entity.part_nr);
-//        if (entity.check_qty.length == 0) {
-//            cell.backgroundColor = [UIColor colorWithRed:224.0f/255.0f green:155.0f/255.0f blue:90.0f/255.0f alpha:0.3f];
-//        }
        
         cell.textLabel.text = [NSString stringWithFormat:@"%ld. 库位:%@ 零件:%@", (long)entity.sn, entity.position, entity.part_nr];
     
