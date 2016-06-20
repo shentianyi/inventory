@@ -126,7 +126,7 @@ preparation before navigation
           hud.labelText=@"上传中...";
           self.pgLabel.hidden=NO;
           self.reminder.hidden=NO;
-          self.pgLabel.text=@"上传数据时请确保网络连接，此过程大约需要一分钟";
+          self.pgLabel.text=@"上传数据时请确保网络连接，片刻就好";
           [self callHttpUpload:0 WithData:uploadDataArray];
           
       }else{
@@ -234,9 +234,12 @@ preparation before navigation
     NSLog(@"下载中");
     NSLog(@"CheckSynchronizeViewController.m");
     hud.labelText=@"下载中...";
+    self.pgLabel.hidden=NO;
+    self.reminder.hidden=NO;
+    self.pgLabel.text=@"若长时间未下载成功，请返回主菜单后重新下载";
 
-        
-        
+    
+    
         // get total data size
         [manager GET: [self.afnetHelper getTotal]
           parameters:nil
@@ -356,7 +359,7 @@ preparation before navigation
                          hud.labelText = @"正在拼命加载数据...";
                          self.pgLabel.hidden=NO;
                          self.reminder.hidden=NO;
-                         self.pgLabel.text=@"加载数据时无需联网，此过程大约需要几分钟，请耐心等待";
+                         self.pgLabel.text=@"加载数据时无需联网，依个人任务量需要一到八分钟，请耐心等待";
                          NSData* data = [NSData dataWithContentsOfFile:self.filePath];
                          //[self performSelectorOnMainThread:@selector(ReadFile:) withObject:data waitUntilDone:YES];
                          NSThread* fetchThread = [[NSThread alloc] initWithTarget:self
