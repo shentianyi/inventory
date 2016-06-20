@@ -16,5 +16,5 @@ tmp
 .idea/*.*
 uploadfiles/*.xlsx
 
-.idea/*
+**/.idea/workspace.xml
 public/uploads/*
