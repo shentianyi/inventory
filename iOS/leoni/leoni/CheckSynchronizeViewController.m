@@ -347,8 +347,6 @@ preparation before navigation
                      }];
                      // 开始任务
                      [self.downloadTask resume];
-                     
-                     
                      //处理数据
                      NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
                      NSString *cachesDir = [paths objectAtIndex:0];
@@ -356,6 +354,7 @@ preparation before navigation
                      NSFileManager *fileManager = [NSFileManager defaultManager];
                      
                      if ([fileManager fileExistsAtPath:self.filePath]==YES) {
+                         NSLog(@"in");
                          hud.labelText = @"正在拼命加载数据...";
                          self.pgLabel.hidden=NO;
                          self.reminder.hidden=NO;
