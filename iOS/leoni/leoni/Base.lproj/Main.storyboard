@@ -1233,7 +1233,13 @@
         <scene sceneID="GIm-Py-Vt3">
             <objects>
                 <viewController id="nCU-aW-g79" customClass="CheckListViewController" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="gyA-RL-pxo"/>
+                    <navigationItem key="navigationItem" id="gyA-RL-pxo">
+                        <barButtonItem key="rightBarButtonItem" title="显示未盘" id="wL9-xA-46f">
+                            <connections>
+                                <action selector="contentSelect:" destination="nCU-aW-g79" id="0ky-MT-maA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mf8-ZI-t6y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1834,6 +1840,6 @@
         <image name="home" width="15" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9ji-Bp-T1j"/>
+        <segue reference="Z6m-A8-zEj"/>
     </inferredMetricsTieBreakers>
 </document>

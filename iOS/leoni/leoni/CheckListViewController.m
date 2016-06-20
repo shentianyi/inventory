@@ -15,6 +15,7 @@
 
 @interface CheckListViewController ()
 
+- (IBAction)contentSelect:(UIBarButtonItem *)sender;
 @property(nonatomic, strong) UITableView *table;
 @property (nonatomic, strong) NSMutableArray* localCheckInventories;
 @property (nonatomic,strong) NSMutableArray* localCheckUnSyncInventories;
@@ -40,8 +41,9 @@
 //    [barWrapper addSubview:searchBar];
 //    self.navigationItem.titleView = barWrapper;
     
-    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,10,self.navigationController.navigationBar.bounds.size.width,self.navigationController.navigationBar.bounds.size.height/2)];
+    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,10,self.navigationController.navigationBar.bounds.size.width*2/3,self.navigationController.navigationBar.bounds.size.height/2)];
     self.searchBar.showsCancelButton = YES;
+    self.searchBar.showsScopeBar = YES;
     self.searchBar.delegate = self;
     [self.searchBar setPlaceholder:@"搜索"];
     [self.navigationController.navigationBar addSubview:self.searchBar];
@@ -174,13 +176,13 @@
     {
         InventoryEntity *entity = self.localCheckInventories[indexPath.row];  //list
         NSLog(@"entity %@%@", entity.position, entity.part_nr);
-        if (entity.check_qty.length == 0) {
-            cell.backgroundColor = [UIColor colorWithRed:224.0f/255.0f green:155.0f/255.0f blue:90.0f/255.0f alpha:0.3f];
-        }
+//        if (entity.check_qty.length == 0) {
+//            cell.backgroundColor = [UIColor colorWithRed:224.0f/255.0f green:155.0f/255.0f blue:90.0f/255.0f alpha:0.3f];
+//        }
        
         cell.textLabel.text = [NSString stringWithFormat:@"%ld. 库位:%@ 零件:%@", (long)entity.sn, entity.position, entity.part_nr];
     
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘: %@ 抽盘: %@  单位:%@ #%@", entity.check_qty, entity.random_check_qty,entity.part_unit,entity.check_user];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘: %@ 抽盘: %@  单位:%@ 用户:%@", entity.check_qty, entity.random_check_qty,entity.part_unit,entity.check_user];
         
         UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 15.0 ];
         
@@ -212,7 +214,7 @@
 
     if(self.afnetHelper.listLimitUser){
         if(self.searchBar.text.length==0){
-          self.localCheckInventories=[inventory getAllLocalCheckDataListWithPosition:q WithUserNr:[UserModel accountNr]];
+          self.localCheckInventories=[inventory getLocalCheckUnSyncDataListWithPosition:q WithUserNr:[UserModel accountNr]];
           self.localCreateInventories=[inventory getLocalCreateCheckDataListWithPoistion:q WithUserNr:[UserModel accountNr]];
            self.localCheckUnSyncInventories=[inventory getLocalCheckUnSyncDataListWithPosition:q WithUserNr:[UserModel accountNr]];
             self.localCreateUnSyncInventories=[inventory getLocalCreateCheckUnSyncDataListWithPoistion:q WithUserNr:[UserModel accountNr]];
@@ -275,4 +277,10 @@
 }
 */
 
+- (IBAction)contentSelect:(UIBarButtonItem *)sender {
+    InventoryModel *inventory = [[InventoryModel alloc] init];
+//    [[[UIAlertView alloc] initWithTitle:@"pan" message:@"here" delegate:self cancelButtonTitle:@"cancel" otherButtonTitles:nil] show];
+    self.localCheckInventories=[inventory getAllLocalCheckDataListWithPosition: [UserModel accountNr]];
+    [self.table reloadData];
+}
 @end

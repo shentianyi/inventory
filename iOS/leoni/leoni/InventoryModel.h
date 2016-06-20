@@ -40,7 +40,7 @@
 
 - (NSMutableArray *)getLocalCheckDataListWithPosition: (NSString *)position;
 - (NSMutableArray *)getLocalCheckDataListWithPosition: (NSString *)position WithUserNr:(NSString *)userNr;
-- (NSMutableArray *)getAllLocalCheckDataListWithPosition: (NSString *)position WithUserNr:(NSString *)userNr;
+- (NSMutableArray *)getAllLocalCheckDataListWithPosition: (NSString *)userNr;
 
 -(NSMutableArray *)getLocalCheckOrCreateUnsyncDataListWithUserNr:(NSString *)userNr;
 
