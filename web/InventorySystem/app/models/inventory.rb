@@ -22,10 +22,10 @@ class Inventory < ActiveRecord::Base
   PART_TYPES=%w(U L E M)
 
 
-  validates :sn, :department, :position, :part_nr,:part_unit, presence: true
+  validates :sn, :department, :position, :part_nr, :part_unit, presence: true
   validates :part_nr, uniqueness: {scope: [:position, :department], message: '库位+部门+零件 必须唯一'}
   validates :sn, uniqueness: {message: '序列号 必须唯一'}
-  validates_inclusion_of :part_type, in: PART_TYPES, message: '零件类型不正确'#, if: Proc.new { |i| i.part_type.present? }
+  validates_inclusion_of :part_type, in: PART_TYPES, message: '零件类型不正确' #, if: Proc.new { |i| i.part_type.present? }
 
   before_save :set_default_value
 
@@ -125,6 +125,58 @@ class Inventory < ActiveRecord::Base
 
   def self.validate_part_type(type)
     PART_TYPES.include?(type)
+  end
+
+  def self.generate_file type
+    inventories=[]
+    case type
+      when FileUploadType::OVERALL
+        inventories=Inventory.all
+      when FileUploadType::SPOTCHECK
+        inventories=Inventory.random_check
+    end
+
+    Inventory.transaction do
+      data=[]
+      file=InventoryFile.new()
+
+      inventories.each do |i|
+        info={}
+        info['id']=i.id.to_s
+        info['department']=i.department.to_s
+        info['position']=i.position.to_s
+        info['part_nr']=i.part_nr.to_s
+        info['check_qty']=i.check_qty.to_s
+
+        info['check_user']=i.check_user.to_s
+        info['check_time']=i.check_time.to_s
+        info['random_check_qty']=i.random_check_qty.to_s
+        info['random_check_user']=i.random_check_user.to_s
+        info['random_check_time']=i.random_check_time.to_s
+
+        info['is_random_check']=i.is_random_check.to_s
+        info['ios_created_id']=i.ios_created_id.to_s
+        info['sn']=i.sn.to_s
+        info['part_unit']=i.part_unit.to_s
+        info['part_type']=i.part_type.to_s
+
+        info['wire_nr']=i.wire_nr.to_s
+        info['process_nr']=i.process_nr.to_s
+
+        data<<info
+      end
+
+      File.open('uploadfiles/data/data.json', 'w+') do |f|
+        f.write(data.to_json.to_s)
+        file.path = f
+      end
+
+      if file.save
+        file
+      else
+        nil
+      end
+    end
   end
 
   private

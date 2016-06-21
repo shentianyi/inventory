@@ -13,7 +13,7 @@ config/database.yml
 log/*
 !/log/.keep
 tmp
-.idea/*
 uploadfiles/*.xlsx
 
-.idea/
+.idea
+public/uploads/*

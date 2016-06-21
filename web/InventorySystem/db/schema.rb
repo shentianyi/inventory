@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151203013352) do
+ActiveRecord::Schema.define(version: 20160614093947) do
+
+  create_table "file_tasks", force: :cascade do |t|
+    t.integer  "user_id",      limit: 4
+    t.integer  "data_file_id", limit: 4
+    t.integer  "err_file_id",  limit: 4
+    t.integer  "status",       limit: 4
+    t.string   "remark",       limit: 255
+    t.integer  "type",         limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "file_tasks", ["user_id"], name: "index_file_tasks_on_user_id", using: :btree
 
   create_table "inventories", force: :cascade do |t|
     t.string   "department",        limit: 255,                 null: false
@@ -36,6 +49,14 @@ ActiveRecord::Schema.define(version: 20151203013352) do
 
   add_index "inventories", ["part_nr"], name: "index_inventories_on_part_nr", using: :btree
   add_index "inventories", ["position"], name: "index_inventories_on_position", using: :btree
+
+  create_table "inventory_files", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "path",       limit: 255
+    t.string   "size",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "parts", force: :cascade do |t|
     t.string   "nr",         limit: 255
@@ -62,4 +83,5 @@ ActiveRecord::Schema.define(version: 20151203013352) do
     t.string   "id_span",    limit: 255
   end
 
+  add_foreign_key "file_tasks", "users"
 end

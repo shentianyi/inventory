@@ -159,7 +159,6 @@ module V1
         end
       end
 
-
       desc "get random check total"
       get :random_total do
         {result: 1, content: Inventory.random_check.count}
@@ -210,6 +209,52 @@ module V1
             {result: 0, content: '查无此数据'}
 
           end
+        end
+      end
+
+    end
+
+    namespace :inventory_file do
+      desc "downlaod inventory file"
+      params do
+        requires :type, type: Integer
+      end
+      get :download_inventory_file do
+        unless [FileUploadType::OVERALL, FileUploadType::SPOTCHECK].include?(params[:type])
+          return {result: 0, content: "盘点类型#{params[:type]}不正确"}
+        end
+
+        if file=Inventory.generate_file(params[:type])
+          present :result, 1
+          present :content, request.base_url + file.path.url
+        else
+          {result: 0, content: '当前无数据'}
+        end
+      end
+
+      desc "upload inventory file"
+      params do
+        requires :user_id, type: String
+        requires :type, type: Integer
+        requires :data, type: String
+      end
+      post :upload_inventory_file do
+        unless user=User.find_by_nr(params[:user_id])
+          return {result: 0, content: "员工号#{params[:user_id]}不存在"}
+        end
+
+        unless [FileUploadType::OVERALL, FileUploadType::SPOTCHECK].include?(params[:type])
+          return {result: 0, content: "盘点类型#{params[:type]}不正确"}
+        end
+
+        if params[:data].length<1
+          return {result: 0, content: "数据为空"}
+        end
+
+        if FileTaskService.create_file_task params, user
+          {result: 1, content: '数据上传成功'}
+        else
+          {result: 0, content: '数据上传失败'}
         end
       end
 
