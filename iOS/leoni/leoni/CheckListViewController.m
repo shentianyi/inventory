@@ -155,7 +155,7 @@
         }
             //really bad method!
         if ([self.contentSelectSender isEqualToString:@"click"]) {
-            sectionName=[NSString stringWithFormat:@"未盘点:%i/%i/%i 录入:%i/%i",localCheckedCount,total,localCheckedUnSyncCount,localCreatedCount,localCreatedUnSyncCount];
+            sectionName=[NSString stringWithFormat:@"未盘点:%i/%i/%i 录入:%i/%i",[self.localCheckInventories count],total,localCheckedUnSyncCount,localCreatedCount,localCreatedUnSyncCount];
         }else{
             sectionName=[NSString stringWithFormat:@"已盘点:%i/%i/%i 录入:%i/%i",localCheckedCount,total,localCheckedUnSyncCount,localCreatedCount,localCreatedUnSyncCount];}
     }else{
@@ -218,7 +218,7 @@
 
     if(self.afnetHelper.listLimitUser){
         if(self.searchBar.text.length==0){
-          self.localCheckInventories=[inventory getLocalCheckUnSyncDataListWithPosition:q WithUserNr:[UserModel accountNr]];
+          self.localCheckInventories=[inventory getLocalCheckDataListWithPosition:q WithUserNr:[UserModel accountNr]];
           self.localCreateInventories=[inventory getLocalCreateCheckDataListWithPoistion:q WithUserNr:[UserModel accountNr]];
            self.localCheckUnSyncInventories=[inventory getLocalCheckUnSyncDataListWithPosition:q WithUserNr:[UserModel accountNr]];
             self.localCreateUnSyncInventories=[inventory getLocalCreateCheckUnSyncDataListWithPoistion:q WithUserNr:[UserModel accountNr]];
@@ -283,6 +283,7 @@
 
 - (IBAction)contentSelect:(UIBarButtonItem *)sender {
     InventoryModel *inventory = [[InventoryModel alloc] init];
+    self.localCheckInventories = [[NSMutableArray alloc]init];
 //    [[[UIAlertView alloc] initWithTitle:@"pan" message:@"here" delegate:self cancelButtonTitle:@"cancel" otherButtonTitles:nil] show];
     
     //really bad method!

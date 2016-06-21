@@ -168,7 +168,7 @@
         
         cell.textLabel.text = [NSString stringWithFormat:@"%d. 库位:%@ 零件:%@", entity.sn, entity.position, entity.part_nr];
         
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘: %@ 抽盘: %@  单位:%@ #%@", entity.check_qty, entity.random_check_qty,entity.part_unit,entity.random_check_user];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"全盘: %@ 抽盘: %@  单位:%@ 用户%@", entity.check_qty, entity.random_check_qty,entity.part_unit,entity.random_check_user];
         
         
         UIFont *myFont = [ UIFont fontWithName: @"Arial" size: 15.0 ];
