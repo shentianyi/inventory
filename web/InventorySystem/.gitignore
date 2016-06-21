@@ -18,4 +18,4 @@ uploadfiles/*.xlsx
 .idea
 public/uploads/*
 
-.idea/
+/.idea
