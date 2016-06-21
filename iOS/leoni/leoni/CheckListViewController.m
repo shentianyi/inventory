@@ -16,6 +16,7 @@
 @interface CheckListViewController ()
 
 - (IBAction)contentSelect:(UIBarButtonItem *)sender;
+@property NSString *contentSelectSender;
 @property(nonatomic, strong) UITableView *table;
 @property (nonatomic, strong) NSMutableArray* localCheckInventories;
 @property (nonatomic,strong) NSMutableArray* localCheckUnSyncInventories;
@@ -60,6 +61,7 @@
     [super viewWillAppear:animated];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [self initController];
+    self.contentSelectSender = @"";
     [self.table reloadData];
     
 }
@@ -99,6 +101,7 @@
     self.table.contentInset = adjustForTabbarInsets;
     self.table.scrollIndicatorInsets = adjustForTabbarInsets;
     self.table.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        self.contentSelectSender = @"click";
         [self loadData];
         [self.table.header endRefreshing];
     }];
@@ -111,7 +114,7 @@
 - (void)loadData {
     self.localCheckInventories = [[NSMutableArray alloc]init];
     self.localCreateInventories=[[NSMutableArray alloc]init];
-    
+    self.contentSelectSender = @"";
     [self getLocalCheckData:@""];
     [self.table reloadData];
 }
@@ -150,7 +153,11 @@
        if(user!=nil){
            total=user.idSpanCount;
         }
-        sectionName=[NSString stringWithFormat:@"已盘点:%i/%i/%i 录入:%i/%i",localCheckedCount,total,localCheckedUnSyncCount,localCreatedCount,localCreatedUnSyncCount];
+            //really bad method!
+        if ([self.contentSelectSender isEqualToString:@"click"]) {
+            sectionName=[NSString stringWithFormat:@"未盘点:%i/%i/%i 录入:%i/%i",localCheckedCount,total,localCheckedUnSyncCount,localCreatedCount,localCreatedUnSyncCount];
+        }else{
+            sectionName=[NSString stringWithFormat:@"已盘点:%i/%i/%i 录入:%i/%i",localCheckedCount,total,localCheckedUnSyncCount,localCreatedCount,localCreatedUnSyncCount];}
     }else{
         sectionName=[NSString stringWithFormat:@"已盘点:%i/%i 录入:%i/%i",localCheckedCount,localCheckedUnSyncCount,localCreatedCount,localCreatedUnSyncCount];
     }
@@ -201,8 +208,8 @@
     //Do some search
     NSLog(@"=== testing search %@", searchBar.text);
     //搜索信息
+    self.contentSelectSender = @"";
     [self getLocalCheckData:self.searchBar.text];
-    
     [self.table reloadData];
 }
 
@@ -277,6 +284,9 @@
 - (IBAction)contentSelect:(UIBarButtonItem *)sender {
     InventoryModel *inventory = [[InventoryModel alloc] init];
 //    [[[UIAlertView alloc] initWithTitle:@"pan" message:@"here" delegate:self cancelButtonTitle:@"cancel" otherButtonTitles:nil] show];
+    
+    //really bad method!
+    self.contentSelectSender = @"click";
     self.localCheckInventories=[inventory getAllLocalCheckDataListWithPosition: [UserModel accountNr]];
     [self.table reloadData];
 }
