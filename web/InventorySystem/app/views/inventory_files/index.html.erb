@@ -1,28 +1,31 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Inventory Files</h1>
+<ol class="breadcrumb">
+  <li><span>Inventory System</span></li>
+  <li><span>Listing Inventory Files</span></li>
+</ol>
 
 <table>
   <thead>
-    <tr>
-      <th>Name</th>
-      <th>Path</th>
-      <th>Size</th>
-      <th colspan="3"></th>
-    </tr>
+  <tr>
+    <th>Name</th>
+    <th>Path</th>
+    <th>Size</th>
+    <th colspan="3"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @inventory_files.each do |inventory_file| %>
+  <% @inventory_files.each do |inventory_file| %>
       <tr>
         <td><%= inventory_file.name %></td>
         <td><%= inventory_file.path %></td>
         <td><%= inventory_file.size %></td>
         <td><%= link_to 'Show', inventory_file %></td>
         <td><%= link_to 'Edit', edit_inventory_file_path(inventory_file) %></td>
-        <td><%= link_to 'Destroy', inventory_file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', inventory_file, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
 

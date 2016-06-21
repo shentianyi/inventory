@@ -1,5 +1,9 @@
+<ol class="breadcrumb">
+  <li><span>Inventory System</span></li>
+  <li><span>系统配置</span></li>
+</ol>
+
 <div>
-  <h1>系统配置</h1>
   <table class="table table-striped table-hover table-bordered" id="editable-sample">
     <thead>
     <tr>
@@ -15,7 +19,7 @@
           <th><%= setting.name %></th>
           <th><%= setting.code %></th>
           <th><%= setting.value %></th>
-          <th><%= link_to '编辑',edit_setting_path(setting) %></th>
+          <th><%= link_to '编辑', edit_setting_path(setting) %></th>
         </tr>
     <% end %>
     </tbody>

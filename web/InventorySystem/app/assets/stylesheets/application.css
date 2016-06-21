@@ -16,25 +16,28 @@
  
  */
 
-.page_info{
+.page_info {
     font-size: 18px;
-    border-left:2px solid  blue;
+    border-left: 2px solid blue;
 }
 
-.col-md-10{
- min-width: 1500px;
+.col-md-10 {
+    min-width: 1500px;
 }
 
-.sidebar{
-   width: 150px;
+.sidebar {
+    width: 150px;
 }
 
-.main{
+.main {
     margin-left: 150px;
 }
 
-.footer{
-    margin-right: 250px;
-    float: right;
-    margin-bottom: 10px;
+.footer {
+    margin-left: 45%;
+}
+
+.breadcrumb {
+    font-size: 1.4em;
+    padding: 20px 15px;
 }

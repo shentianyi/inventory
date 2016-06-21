@@ -1,30 +1,43 @@
-
-
 <p id="notice"><%= notice %></p>
 
-<h1>盘点数据上传记录</h1>
-<hr/>
-<div>
+<ol class="breadcrumb">
+  <li><span>Inventory System</span></li>
+  <li><span>盘点数据上传记录</span></li>
+</ol>
+
+<div class="alert alert-danger" role="alert">
   <p><strong>搜索说明</strong>：搜索框为状态栏和盘点类型服务</p>
+
   <p><strong>状态栏说明</strong>：上传成功->100, 执行中->200, 结束->300, 出错->400 </p>
+
   <p><strong>盘点类型说明</strong>：全盘->100, 抽盘->200 </p>
 </div>
-<div>
-  <%= form_tag file_tasks_path, :method => 'get' do %>
-      <p>
-        <%= text_field_tag :search, params[:search] %>
-        <%= submit_tag "查询", :name => nil %>
-      </p>
-  <% end %>
+
+<div class="panel panel-primary">
+  <div class="panel-body">
+    <div class="col-md-2" style="text-align: center;">
+      <h4>查询：</h4>
+    </div>
+    <div class="col-md-6">
+      <%= form_tag file_tasks_path, :method => 'get' do %>
+          <div class="input-group">
+            <%= text_field_tag :search, params[:search], class: 'form-control', placeholder: '' %>
+            <span class="input-group-btn">
+             <%= submit_tag "查询", :name => nil, class: 'btn btn-default', style: 'width:150px;' %>
+            </span>
+          </div>
+      <% end %>
+    </div>
+  </div>
 </div>
 
 <div class="pull-right">
-
   <div class="page_info">
     <%= page_entries_info @file_tasks %>
   </div>
   <%= will_paginate @file_tasks, renderer: BootstrapPagination::Rails %>
 </div>
+
 <table class="table table-striped table-hover table-bordered" id="editable-sample">
   <thead>
   <tr>
@@ -42,8 +55,12 @@
       <tr class="">
         <td><%= index+1 %></td>
         <td><%= file_task.user.blank? ? '' : file_task.user.nr %></td>
-        <td><a href="http://<%= InventoryFile.url(file_task.data_file_id, @http_host) %>" target="_blank"> <%= InventoryFile.url(file_task.data_file_id, @http_host) %></a></td>
-        <td><a href="http://<%= InventoryFile.url(file_task.err_file_id, @http_host) %>" target="_blank">  <%= InventoryFile.url(file_task.err_file_id, @http_host) %></a></td>
+        <td>
+          <a href="http://<%= InventoryFile.url(file_task.data_file_id, @http_host) %>" target="_blank"> <%= InventoryFile.url(file_task.data_file_id, @http_host) %></a>
+        </td>
+        <td>
+          <a href="http://<%= InventoryFile.url(file_task.err_file_id, @http_host) %>" target="_blank">  <%= InventoryFile.url(file_task.err_file_id, @http_host) %></a>
+        </td>
         <td><%= FileUploadStatus.display(file_task.status) %></td>
         <td><%= FileUploadType.display(file_task.type) %></td>
         <td><%= file_task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
