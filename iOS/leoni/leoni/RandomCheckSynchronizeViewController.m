@@ -319,11 +319,11 @@
                      NSFileManager *fileManager = [NSFileManager defaultManager];
                      
                      if ([fileManager fileExistsAtPath:self.filePath]==YES) {
-                         hud.labelText = @"正在拼命加载数据...";
+                         hud.labelText = @"下载完成，正在拼命解析...";
                          self.pgLabel.hidden=NO;
                          self.reminder.hidden=NO;
                          self.reminder.text=@"提 示";
-                         self.pgLabel.text=@"加载数据时无需联网，此过大约需要十分钟，请耐心等待";
+                         self.pgLabel.text=@"解析数据时无需联网，此过程大约需要五分钟，请耐心等待";
                          NSData* data = [NSData dataWithContentsOfFile:self.filePath];
                          NSThread* fetchThread = [[NSThread alloc] initWithTarget:self
                                                                          selector:@selector(ReadFile:)
