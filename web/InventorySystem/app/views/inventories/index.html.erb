@@ -4,45 +4,126 @@
         data_upload("#item-data-uploader", 'xlsx');
     });
 </script>
-<h3>盘点数据管理</h3>
-<hr/>
-<div>
-  <%= form_tag inventories_path, :method => 'get' do %>
-      <p>
+
+<style>
+    .col-md-12 {
+        margin-bottom: 10px;
+    }
+
+    .input-group > span {
+        min-width: 150px;
+    }
+</style>
+
+<ol class="breadcrumb">
+  <li><span>Inventory System</span></li>
+  <li><span>盘点数据管理</span></li>
+</ol>
+<div class="panel panel-primary">
+  <div class="panel-body">
+    <%= form_tag inventories_path, :method => 'get' do %>
         <%= hidden_field_tag :search, value=true %>
-        部门：<%= text_field_tag :department, params[:department] %>
-        全盘员工号：<%= text_field_tag :check_user, params[:check_user] %>
-        抽盘员工号：<%= text_field_tag :random_check_user, params[:random_check_user] %><br/>
-	    唯一码：从<%=text_field_tag :sn_begin,params[:sn_begin]%>到<%=text_field_tag :sn_end,params[:sn_end]%>
-		库位号：从<%= text_field_tag :position_begin, params[:position_begin] %>
-        到<%= text_field_tag :position_end, params[:position_end] %>
-        零件号：<%= text_field_tag :part_nr, params[:part_nr] %>
-        是否是iOS新建：<%= select_tag :ios_created_id, options_for_select([["否", 0], ["是", 1]],params[:ios_created_id]), {prompt: '选择'} %>
-        是否是抽盘：<%= select_tag :is_random_check, options_for_select([["否", 0], ["是", 1]],params[:is_random_check]), {prompt: '选择'} %>
-        <br/>
-        显示方式:
-        <%= select_tag :format, options_for_select([["Web", "html"], ["Excel File(MS 07 or later)", "xlsx"]], "html") %>
-        <%= submit_tag "查询", :name => nil, class: 'btn btn-primary' %>
-      </p>
-  <% end %>
-</div>
-<div class="btn-group">
-  <%= link_to '创建盘点数据', new_inventory_path, class: 'btn btn-default' %>
-  <a name="down_template" href="/files/download?folder=inventory&file=inventory_template.xlsx" class='btn btn-default'>下载模版</a>
-  <!--	<input id="item-data-uploader" type="file" name="files[]" data-url="/inventories/import"/>
-      <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>-->
-  <%= link_to '上传数据', import_inventories_path, class: 'btn btn-info' %>
-  <%= link_to '盘点统计', root_path, class: 'btn btn-warning' %>
-  <%= link_to '生成抽盘数据', random_inventories_path, remote: true, :data => {confirm:"抽盘数据将被还原到初始化，确定生成？",:"disable-with" => "生成中，请稍等..."}, class: 'btn btn-primary' %>
-</div>
-<br/>
-<div class="btn-group pull-left">
-<br/>
-  <div class="page_info">
-    <%= page_entries_info @inventories %>
+        <div class="col-md-12">
+          <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon" id="sizing-addon1">部门：</span>
+              <%= text_field_tag :department, params[:department], class: 'form-control' %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon" id="sizing-addon1">全盘员工号：</span>
+              <%= text_field_tag :check_user, params[:check_user], class: 'form-control' %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+          <span class="input-group-addon">
+            抽盘员工号：
+          </span>
+              <%= text_field_tag :random_check_user, params[:random_check_user], class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">
+                唯一码：
+              </span>
+              <%= text_field_tag :sn_begin, params[:sn_begin], class: 'form-control' %>
+              <%= text_field_tag :sn_end, params[:sn_end], class: 'form-control' %>
+            </div>
+
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+          <span class="input-group-addon">
+            库位号：
+          </span>
+              <%= text_field_tag :position_begin, params[:position_begin], class: 'form-control' %>
+              <%= text_field_tag :position_end, params[:position_end], class: 'form-control' %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+          <span class="input-group-addon">
+            零件号：
+          </span>
+              <%= text_field_tag :part_nr, params[:part_nr], class: 'form-control' %>
+            </div>
+
+            <div class="input-group">
+          <span class="input-group-addon">
+            是否是iOS新建：
+          </span>
+              <%= select_tag :ios_created_id, options_for_select([["否", 0], ["是", 1]], params[:ios_created_id]), {prompt: '选择', class: 'form-control'} %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="col-md-4">
+            <div class="input-group">
+          <span class="input-group-addon">
+          是否是抽盘：
+        </span>
+              <%= select_tag :is_random_check, options_for_select([["否", 0], ["是", 1]], params[:is_random_check]), {prompt: '选择', class: 'form-control'} %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group"><span class="input-group-addon">
+          显示方式:
+        </span>
+              <%= select_tag :format, options_for_select([["Web", "html"], ["Excel File(MS 07 or later)", "xlsx"]], "html"), class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <%= submit_tag "查询", :name => nil, class: 'btn btn-primary', style: 'width:200px;' %>
+          </div>
+        </div>
+    <% end %>
+    <div class="col-md-12">
+      <div class="btn-group" style="margin-left: 15px;">
+        <%= link_to '创建盘点数据', new_inventory_path, class: 'btn btn-default' %>
+        <a name="down_template" href="/files/download?folder=inventory&file=inventory_template.xlsx" class='btn btn-default'>下载模版</a>
+        <!--	<input id="item-data-uploader" type="file" name="files[]" data-url="/inventories/import"/>
+            <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>-->
+        <%= link_to '上传数据', import_inventories_path, class: 'btn btn-info' %>
+        <%= link_to '盘点统计', root_path, class: 'btn btn-warning' %>
+        <%= link_to '生成抽盘数据', random_inventories_path, remote: true, :data => {confirm: "抽盘数据将被还原到初始化，确定生成？", :"disable-with" => "生成中，请稍等..."}, class: 'btn btn-primary' %>
+      </div>
+    </div>
   </div>
-  <%= will_paginate @inventories, renderer: BootstrapPagination::Rails %>
 </div>
+
+<%= will_paginate @inventories, renderer: BootstrapPagination::Rails %>
+
+<div class="page_info">
+  <%= page_entries_info @inventories %>
+</div>
+
 <table class="table table-striped table-hover table-bordered" id="editable-sample">
   <thead>
   <tr>
@@ -70,7 +151,7 @@
   <tbody>
   <% @inventories.each_with_index do |inventory, index| %>
       <tr>
-        <td style="background-color: lightgray;"><%=index+1%></td>
+        <td style="background-color: lightgray;"><%= index+1 %></td>
         <td><%= inventory.sn %></td>
         <td><%= inventory.department %></td>
         <td><%= inventory.position %></td>
@@ -81,7 +162,7 @@
         <td><%= inventory.process_nr %></td>
         <td><%= inventory.check_qty %></td>
         <td><%= inventory.check_user %></td>
-        <td><%= inventory.check_time_display%></td>
+        <td><%= inventory.check_time_display %></td>
         <td><%= inventory.random_check_qty %></td>
         <td><%= inventory.random_check_user %></td>
         <td><%= inventory.random_check_time_display %></td>
@@ -94,13 +175,15 @@
   <% end %>
   </tbody>
 </table>
+
 <div class="pull-right">
   <%= will_paginate @inventories, renderer: BootstrapPagination::Rails %>
 </div>
 <br>
 <div>
   <h4>说明：</h4>
+
   <div>
-    <p><strong>零件类型</strong>：不可空，为<%=Inventory::PART_TYPES.join(',')%></p>
+    <p><strong>零件类型</strong>：不可空，为<%= Inventory::PART_TYPES.join(',') %></p>
   </div>
 </div>
