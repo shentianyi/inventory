@@ -159,7 +159,6 @@ module V1
         end
       end
 
-
       desc "get random check total"
       get :random_total do
         {result: 1, content: Inventory.random_check.count}
@@ -217,8 +216,15 @@ module V1
 
     namespace :inventory_file do
       desc "downlaod inventory file"
+      params do
+        requires :type, type: Integer
+      end
       get :download_inventory_file do
-        if file=Inventory.generate_file
+        unless [FileUploadType::OVERALL, FileUploadType::SPOTCHECK].include?(params[:type])
+          return {result: 0, content: "盘点类型#{params[:type]}不正确"}
+        end
+
+        if file=Inventory.generate_file(params[:type])
           present :result, 1
           present :content, request.base_url + file.path.url
         else
@@ -235,6 +241,10 @@ module V1
       post :upload_inventory_file do
         unless user=User.find_by_nr(params[:user_id])
           return {result: 0, content: "员工号#{params[:user_id]}不存在"}
+        end
+
+        unless [FileUploadType::OVERALL, FileUploadType::SPOTCHECK].include?(params[:type])
+          return {result: 0, content: "盘点类型#{params[:type]}不正确"}
         end
 
         if params[:data].length<1

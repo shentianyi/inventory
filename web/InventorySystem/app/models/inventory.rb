@@ -127,13 +127,20 @@ class Inventory < ActiveRecord::Base
     PART_TYPES.include?(type)
   end
 
-  def self.generate_file
+  def self.generate_file type
+    inventories=[]
+    case type
+      when FileUploadType::OVERALL
+        inventories=Inventory.all
+      when FileUploadType::SPOTCHECK
+        inventories=Inventory.random_check
+    end
+
     Inventory.transaction do
-      # data={inventories: []}
       data=[]
       file=InventoryFile.new()
 
-      Inventory.all.each do |i|
+      inventories.each do |i|
         info={}
         info['id']=i.id.to_s
         info['department']=i.department.to_s
@@ -157,46 +164,6 @@ class Inventory < ActiveRecord::Base
         info['process_nr']=i.process_nr.to_s
 
         data<<info
-
-        # data[:inventories]<<{
-        #     id: i.id,
-        #     department: i.department,
-        #     position: i.position,
-        #     part_nr: i.part_nr,
-        #     check_qty: i.check_qty,
-        #     check_user: i.check_user,
-        #     check_time: i.check_time,
-        #     random_check_qty: i.random_check_qty,
-        #     random_check_user: i.random_check_user,
-        #     random_check_time: i.random_check_time,
-        #     is_random_check: i.is_random_check,
-        #     ios_created_id: i.ios_created_id,
-        #     sn: i.sn,
-        #     part_unit: i.part_unit,
-        #     part_type: i.part_type,
-        #     wire_nr: i.wire_nr,
-        #     process_nr: i.process_nr
-        # }
-
-        # data<<{
-        #     id: i.id,
-        #     department: i.department,
-        #     position: i.position,
-        #     part_nr: i.part_nr,
-        #     check_qty: i.check_qty,
-        #     check_user: i.check_user,
-        #     check_time: i.check_time,
-        #     random_check_qty: i.random_check_qty,
-        #     random_check_user: i.random_check_user,
-        #     random_check_time: i.random_check_time,
-        #     is_random_check: i.is_random_check,
-        #     ios_created_id: i.ios_created_id,
-        #     sn: i.sn,
-        #     part_unit: i.part_unit,
-        #     part_type: i.part_type,
-        #     wire_nr: i.wire_nr,
-        #     process_nr: i.process_nr
-        # }
       end
 
       File.open('uploadfiles/data/data.json', 'w+') do |f|
