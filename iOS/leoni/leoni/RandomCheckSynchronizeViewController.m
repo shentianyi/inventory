@@ -137,6 +137,7 @@
         InventoryEntity *inventory=inventories[index];
          NSMutableString *jsonString = [[NSMutableString alloc] initWithString:@"["];
         for (int i= 0; i<[inventories count]; i++) {
+            inventory=inventories[i];
             NSString *string = [NSString stringWithFormat:@"{\"id\":\"%@\",\"random_check_qty\":\"%@\",\"random_check_user\":\"%@\",\"random_check_time\":\"%@\"},",inventory.inventory_id,inventory.random_check_qty,inventory.random_check_user,inventory.random_check_time];
 
             [jsonString appendString:string];
@@ -153,9 +154,10 @@
               success:^(AFHTTPRequestOperation * operation, id responseObject) {
                   NSLog(@"testing ========= checkWithPosition =======%@", responseObject);
                   if([responseObject[@"result"] integerValue]== 1 ){
+                      InventoryEntity *inventoryUpdata = [[InventoryEntity alloc]init];
                       for (int i= 0; i<[inventories count]; i++) {
-                          InventoryEntity *inventoryUpdata = inventories[i];
-                          inventory.is_random_check_synced=@"1";
+                          inventoryUpdata = inventories[i];
+                          inventoryUpdata.is_random_check_synced=@"1";
                           [self.inventoryModel updateRandomCheckSync:inventoryUpdata];
                       }
                       
@@ -196,6 +198,10 @@
     NSLog(@"下载中");
     NSLog(@"RandomCheckSynchronizeViewController.m");
     hud.labelText=@"下载中...";
+    self.pgLabel.hidden=NO;
+    self.reminder.hidden=NO;
+    self.reminder.text=@"提 示";
+    self.pgLabel.text=@"若1分钟未下载成功，请返回主菜单后重新下载";
 
     
     
@@ -323,7 +329,7 @@
                          self.pgLabel.hidden=NO;
                          self.reminder.hidden=NO;
                          self.reminder.text=@"提 示";
-                         self.pgLabel.text=@"解析数据时无需联网，此过程大约需要五分钟，请耐心等待";
+                         self.pgLabel.text=@"解析数据大约需要五分钟，请耐心等待";
                          NSData* data = [NSData dataWithContentsOfFile:self.filePath];
                          NSThread* fetchThread = [[NSThread alloc] initWithTarget:self
                                                                          selector:@selector(ReadFile:)

@@ -173,7 +173,7 @@ preparation before navigation
                   for (int i= 0; i<[inventories count]; i++) {
                       inventoryUpdata = inventories[i];
                       inventoryUpdata.is_check_synced=@"1";
-                      NSLog(@"3sn :%@",[NSString stringWithFormat:@"%li",(long)inventoryUpdata.sn]);
+//                      NSLog(@"3sn :%@",[NSString stringWithFormat:@"%li",(long)inventoryUpdata.sn]);
                       [[[InventoryModel alloc] init] updateCheckSync:inventoryUpdata];
                   }
                   dispatch_async(dispatch_get_main_queue(), ^{
