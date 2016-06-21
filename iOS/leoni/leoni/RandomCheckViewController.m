@@ -230,7 +230,7 @@
        [self clearAllTextFields];
         
     } else if (countGetData == 0) {
-        [self showMsg:[NSString stringWithFormat:@"非抽盘数据，不可抽盘"] WithTime:1.0f];
+        [self showMsg:[NSString stringWithFormat:@"非抽盘数据2，不可抽盘"] WithTime:1.0f];
        [self clearAllTextFields];
     } else if(countGetData == 1) {
         [self initTextFieldsWithInventoryEntity:getData.firstObject];
@@ -261,7 +261,7 @@
             [self textFieldShouldReturn:self.departmentTextField];
         }
     } else if (countGetData == 0) {
-        [self showMsg:[NSString stringWithFormat:@"非抽盘数据，不可抽盘"] WithTime:1.0f];
+        [self showMsg:[NSString stringWithFormat:@"非抽盘数据3，不可抽盘"] WithTime:1.0f];
         [self clearAllTextFields];
     } else if(countGetData == 1) {
         [self initTextFieldsWithInventoryEntity:getData.firstObject];
@@ -284,7 +284,8 @@
         NSMutableArray *inventories=[self.inventory getRandomListWithPosition:self.positionTextField.text andDepartment:self.departmentTextField.text];
         
         if(inventories.count==0){
-            [self showMsg:[NSString stringWithFormat:@"非抽盘数据，不可抽盘"] WithTime:1.0f];
+//            NSLog(@"position= '%@' and department='%@' and part_nr='%@'  and is_random_check='%@'", position,deparment,part,inventories.is_ra")
+            [self showMsg:[NSString stringWithFormat:@"非抽盘数据4，不可抽盘"] WithTime:1.0f];
             [self clearAllTextFields];
         }else if(inventories.count>1){
             [self showMsg:[NSString stringWithFormat:@"库位和部门多个零件，输入零件"] WithTime:1.0f];
@@ -325,7 +326,7 @@
         NSMutableArray *inventories=[self.inventory getRandomListWithPosition:self.positionTextField.text andDepartment:self.departmentTextField.text andPart:self.partTextField.text];
         
         if(inventories.count==0){
-            [self showMsg:[NSString stringWithFormat:@"非抽盘数据，不可抽盘"] WithTime:1.0f];
+            [self showMsg:[NSString stringWithFormat:@"非抽盘数据1，不可抽盘"] WithTime:1.0f];
             [self clearAllTextFields];
         }else if(inventories.count>1){
             [self showMsg:[NSString stringWithFormat:@"系统数据问题，请联系管理员"] WithTime:1.0f];

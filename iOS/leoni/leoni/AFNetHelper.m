@@ -248,6 +248,19 @@ NSString *listLimitUser=[[self URLDictionary] objectForKey:@"list_limit_user"];
     return [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
+//上传下载 version 2.0  downloadUrl ADN uploadloadUrl
+- (NSString *)downloadUrl {
+    NSString *server_url = [self ServerURL];
+    NSString *url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"download_address"]];
+    return [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+- (NSString *)uploadloadUrl {
+    NSString *server_url = [self ServerURL];
+    NSString *url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"upload_address"]];
+    return [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
+
 - (NSString *)randomCheckData {
     NSString *server_url = [self ServerURL];
     NSString *url = [server_url stringByAppendingString: [[self URLDictionary] objectForKey:@"random_check_data"]];
