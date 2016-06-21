@@ -362,7 +362,7 @@
         
         InventoryEntity *inventory = [[InventoryEntity alloc] initWithObject:item];
         [self.inventoryModel localCreateCheckData:inventory];
-        NSLog(@"sn:%ld and is_random_check:%@",(long)inventory.sn,inventory.is_random_check);
+//        NSLog(@"sn:%ld and is_random_check:%@",(long)inventory.sn,inventory.is_random_check);
     }
     [self performSelectorOnMainThread:@selector(finishAlert) withObject:nil waitUntilDone:YES];
     
