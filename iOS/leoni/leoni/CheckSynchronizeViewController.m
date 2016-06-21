@@ -355,7 +355,7 @@ preparation before navigation
                      
                      if ([fileManager fileExistsAtPath:self.filePath]==YES) {
                          NSLog(@"in");
-                         hud.labelText = @"正在拼命加载数据...";
+                         hud.labelText = @"下载完成，正在解析数据...";
                          self.pgLabel.hidden=NO;
                          self.reminder.hidden=NO;
                          self.pgLabel.text=@"加载数据时无需联网，依个人任务量需要一到八分钟，请耐心等待";
