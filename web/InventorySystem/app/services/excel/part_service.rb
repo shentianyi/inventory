@@ -107,7 +107,8 @@ module Excel
 
     def self.validate_import_row(row, line)
       msg = Message.new(contents: [])
-
+puts row
+puts '11111111111111111111111111111'
       if row[:nr].blank?
         msg.contents << "零件号不能为空!"
       end
