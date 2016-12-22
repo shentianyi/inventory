@@ -17,6 +17,7 @@ tmp
 uploadfiles/*.xlsx
 
 .idea
+.idea/*
 public/uploads/*
 
 /.idea
