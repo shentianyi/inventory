@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   resources :file_tasks do
+    member do
+      get :manual_update
+    end
+
     collection do
       get :search
     end
