@@ -1,5 +1,5 @@
 class FileTasksController < ApplicationController
-  before_action :set_file_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_file_task, only: [:show, :edit, :update, :destroy, :manual_update]
 
   # GET /file_tasks
   # GET /file_tasks.json
@@ -62,6 +62,31 @@ class FileTasksController < ApplicationController
       format.html { redirect_to file_tasks_url, notice: 'File task was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def manual_update
+    puts 'gogogo'
+
+    if @file_task.data_file.blank?
+      flash[:notice] = '没有数据，无法更新'
+    else
+      msg=FileTaskService.update_check_data(JSON.parse(File.read("public" + @file_task.data_file.path.url)), @file_task.type)
+      if msg.result
+        @file_task.update_attributes(status: FileUploadStatus::ENDING)
+      else
+        @file_task.update_attributes(status: FileUploadStatus::ERROR)
+
+        file=InventoryFile.new()
+        File.open('uploadfiles/data/error.json', 'w+') do |f|
+          f.write(msg.content)
+          file.path = f
+        end
+        @file_task.err_file=file
+        @file_task.save
+      end
+    end
+
+    redirect_to action: :index
   end
 
   private

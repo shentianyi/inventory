@@ -48,6 +48,7 @@
     <th>状态</th>
     <th>盘点类型</th>
     <th>创建时间</th>
+    <th>操作</th>
   </tr>
   </thead>
   <tbody>
@@ -64,6 +65,11 @@
         <td><%= FileUploadStatus.display(file_task.status) %></td>
         <td><%= FileUploadType.display(file_task.type) %></td>
         <td><%= file_task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td>
+          <% if file_task.status != FileUploadStatus::ENDING %>
+              <%= link_to '手动更新盘点数据', manual_update_file_task_path(file_task), :class => "marco-btn-primary", :title => "手动更新盘点数据" %>
+          <% end %>
+        </td>
       </tr>
   <% end %>
   </tbody>
