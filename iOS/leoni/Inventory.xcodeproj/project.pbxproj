@@ -394,6 +394,7 @@
 					942E942F1BC01A4A00FB5CD0 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 58FSFGRL4P;
+						ProvisioningStyle = Manual;
 					};
 					942E944B1BC01A4A00FB5CD0 = {
 						CreatedOnToolsVersion = 6.4;
@@ -647,6 +648,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/leoni/leoni-Prefix.pch";
 				INFOPLIST_FILE = leoni/Info.plist;
@@ -656,6 +658,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Leoni.Inventory;
 				PRODUCT_NAME = Inventory;
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -666,6 +669,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = 58FSFGRL4P;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/leoni/leoni-Prefix.pch";
 				INFOPLIST_FILE = leoni/Info.plist;
@@ -674,7 +678,8 @@
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)";
 				PRODUCT_BUNDLE_IDENTIFIER = Leoni.Inventory;
 				PRODUCT_NAME = Inventory;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e950cebe-1f91-4687-a344-c6adc8738558";
+				PROVISIONING_PROFILE_SPECIFIER = "XC Ad Hoc: *";
 			};
 			name = Release;
 		};
